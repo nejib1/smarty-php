@@ -1,0 +1,23 @@
+This directory contains the documentation for Smarty. All files are in docbook
+format with an .xml extention. Different subdirs contain different available languages.
+
+
+		NEW BUILD SYSTEM
+		================
+Firstly issue these commands:
+1) autoconf
+2) ./configure --with-lang=xx [DEFAULT=en]
+
+TEST:
+ * make test
+
+MAKE:
+ * make (to make plain html)
+ * make web (to make docs for website)
+
+Revision Tracking (for translations):
+ * make revcheck (this will create revcheck.html)
+
+
+You should have libxml and autoconf installed in your system.
+Read http://php.net/manual/howto/chapter-tools.html for more info.
