@@ -1,0 +1,194 @@
+Version 1.4.4
+-------------
+    - fixed problem with including insecure templates with security enabled
+      (Monte)
+    - numerous documentation updates. (Monte) 
+    - added ENT_QUOTES to escapement of html. (Monte, Sam Beckwith)
+    - implemented access to request variables via auto-assigned $smarty
+      template variable.  (Andrei)
+    - fixed a bug with parsing function arguments inside {if} tags if a comma
+      was present. (Andrei)
+    - updated debug console with config file vars. (Monte)
+    - added SMARTY_DIR constant as an alternative to relying on include_path
+      (Monte)
+    - added popup_init and popup functions, (requires overlib.js) (Monte)
+    - updated debug console with config file vars. (Monte)
+    - added debugging url control. (Monte)
+    - added 'quotes' type to escape modifier. (Monte, Mike Krus)
+    - added 'total' and 'iteration' section properties. (Andrei)
+    - added 'start', 'max', and 'step' section attributes/properties. (Andrei)
+    - fixed a bug with security checking of functions inside {if} tags.
+      (Andrei)
+    - fixed a bug in Config_File that would incorrectly booleanize values that
+      weren't really booleans. (Andrei)
+
+Version 1.4.3
+-------------
+    - added regex_replace modifier, documented. (Monte)
+    - added debugging console feature and custom function assign_debug_info,
+      documented. (Monte)
+    - added 'scope' attribute for {config_load}, 'global' is now deprecated but
+      is still supported. (Andrei)
+    - reduced template symbol table pollution by moving config array into the
+      class itself. (Andrei)
+    - fixed a bug with passing quoted arguments to modifiers inside {if}
+      statements. (Andrei, Sam Beckwith)
+    - added security features for third party template editing, documented
+      (Monte)
+    - added assign custom function, documented. (Monte)
+    - fixed bug with template header using version instead of _version. (Monte)
+    - fixed a problem with putting $ followed by numbers inside {strip} and
+      {/strip} tags. (Andrei)
+    - fixed Config_File class to allow empty config paths (defaults to current
+      directory). (Andrei)
+
+Version 1.4.2
+-------------
+    - move $version to internal variable, remove from docs. (Monte)
+    - cleaned up compiled templates global scope by moving some variables into
+      the class itself. (Andrei)
+    - fixed a bug that would not allow referring to a section in the including
+      file from the included file. (Andrei)
+    - configs directory missing from 1.4.1 release, added back in. (Monte)
+    - added windows include_path setup instructions to FAQ & QUICKSTART.
+      (Monte)
+
+Version 1.4.1
+-------------
+    - fix LOCK_EX logic for all windows platforms (Monte)
+    - fixed indexing by section properties with the new syntax. (Andrei)
+    - updated Smarty to use absolute paths when requiring/including Smarty
+      components. (Andrei, John Lim)
+
+Version 1.4.0
+-------------
+    - added {capture}{/capture} function, documented (Monte)
+    - added {counter} function, documented (Monte) 
+
+Version 1.4.0b2
+---------------
+    - fixed issue in Config_File.class with referencing blank sections (Andrei)
+    - fixed problem with passing variables to included files (Andrei)
+    - fixed resource path recognition for windows (Monte)
+
+Version 1.4.0b1
+---------------
+    - added "componentized templates" tip into documentation (Monte)
+    - added {php}{/php} tags for embedding php code into templates (Monte)
+    - changed default value of $show_info_header to false (Monte)
+    - implemented '->' syntax for accessing properties of objects passed to the
+      template. (Andrei)
+    - allowed custom functions to receive Smarty object as the second
+      parameter; this can be used to dynamically change template variables, for
+      example. (Andrei)
+    - added custom compiler functions support, register_compiler_function() and
+      unregister_compiler_function() API functions. (Andrei, Ivo Jansch).
+    - updated GLOBAL_ASSIGN to take SCRIPT_NAME from HTTP_SERVER_VARS
+      instead of global variable. You can also assign several variables
+      in one shot with an array. (Monte, Roman Neuhauser)
+    - added template prefilters, register_prefilter() and
+      unregister_prefilter() API functions. (Monte)
+    - added RELEASE_NOTES file to distribution. (Monte)
+    - moved CREDITS out of manual into its own file. (Monte)
+    - added register_resource() and unregister_resource() API functions. (Monte)
+    - changed the syntax of indexing template variables, thus supporting
+      structures of arbitrary complexity; supplied fix_vars.php script to fix
+      old syntax. (Andrei)
+    - added $insert_tag_check to speed up cached pages if {insert ...} is not
+      used. (Monte)
+    - added $compiler_class variable to allow specifying a different compiler
+      class. (Andrei)
+    - changed Smarty to compile templates at runtime, allowing for arbitrary
+      template resources. (Monte)
+    - added fix for LOCK_EX under Windows and changed a couple of file
+      permissions for security. (Monte, Fernando Nunes)
+    - allow arbitrary date strings to date_format, html_select_date and
+      html_select_time (Monte)
+
+Version 1.3.2
+-------------
+    - fixed a bug that caused some nested includes to loop infinitely. (Andrei)
+    - added optional HTML header to output. (Monte)
+    - significantly improved config_load performance. (Andrei)
+    - added format attribute to math function. (Monte)
+    - added html_select_time custom function. (Andrei)
+    - fixed minor PHP warning when attempting to unset an unset variable
+      (Monte)
+    - added count_characters, count_words, count_sentences, count_paragraphs
+      modifiers (Monte)
+
+Version 1.3.1pl1
+--------------
+    - bug fix, recovered missing _syntax_error function (Monte)
+
+Version 1.3.1
+-------------
+    - document first, last, index_prev, index_next (Monte)
+    - added 'first' and 'last' section properties. (Andrei)
+    - split out compiling code to separate class for faster template execution
+      time (Monte)
+    - fixed a couple of minor PHP warnings (Monte)
+    - added and documented unregister_modifier() and unregister_function() API
+      calls. (Monte)
+    - added and documented 'fetch' and 'math' functions. (Monte)
+    - added ability to index looped variables by section properties, e.g.
+      $foo.index_prev/bar. (Andrei)
+    - added index_prev and index_next section properties. (Andrei)
+    - fixed issue with php executing in literal blocks. (Monte)
+
+Version 1.3.0
+-------------
+    - moved license from GPL to LGPL (Monte)
+    - implemented workaround for PHP "feature" that eats carriage returns
+      if the PHP tag is at the end of the line. (Andrei)
+    - removed $allow_php, added $php_handling logic (Monte)
+    - added file locking to prevent reader/writer problem. (Andrei)
+    - made Smarty catch unimplemented modifiers and custom functions and output
+      error messages during compilation instead of failing during run time.
+      (Andrei)
+    - removed short-tags at the top of the smarty scripts (Monte)
+    - added register_function() and register_modifier() API calls to make
+      registering stuff easier. (Andrei)
+    - added template results caching capability. (Monte, Andrei)
+    - added optional 'options' attribute to html_options custom function
+      that allows passing associative arrays for values/output. (Andrei)
+    - modifier arguments can now contain '|' and ':' characters inside quoted
+      strings. (Andrei)
+
+Version 1.2.2
+-------------
+    - fixed bug that would not respect nested template directories and would
+      put all compiled files into top-level one. (Andrei)
+    - fixed bug using $PHP_VERSION instead of environment var PHP_VERSION.
+      (Monte)
+    - a couple small warning fixes. (Monte)
+
+Version 1.2.1
+-------------
+    - added $compile_dir, removed $compile_dir_ext, simplified usage. (Monte)
+    - added tips & tricks chapter to documentation. (Monte)
+    - misc documentation updates. (Monte)
+
+Version 1.2.0
+-------------
+    - updated documentation (Monte)
+    - added file and line number information to syntax error messages. (Andrei)
+    - added ability to index template vars by a key. (Andrei)
+
+Version 1.1.0
+-------------
+    - misc documentation changes, official stable release
+
+Version 1.0b
+------------
+    - fixed the bug that prevented using non-array values for 'loop' attribute.
+      (Andrei)
+    - many misc documentation changes & additions (Monte)
+
+Version 1.0a
+------------
+    - fixed bug that caused templates to recompile every time (Monte)
+
+Version 1.0
+------------
+    - initial release
