@@ -1,0 +1,7 @@
+<!-- $Revision$ -->
+<!-- EN-Revision: 1.1 Maintainer: tony2001 Status: ready -->
+
+<!ENTITY SMARTYManual      "Руководство по Smarty">
+<!ENTITY SMARTYDesigners   "Smarty для дизайнеров шаблонов">
+<!ENTITY SMARTYProgrammers "Smarty для программистов">
+<!ENTITY Appendixes        "Приложения">
