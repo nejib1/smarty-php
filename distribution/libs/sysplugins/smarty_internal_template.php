@@ -35,7 +35,7 @@ class Smarty_Internal_Template extends Smarty_Internal_Data {
     // Template source
     public $template_filepath = null;
     public $template_source = null;
-    private $template_timestamp = null; 
+    public $template_timestamp = null; 
     // Compiled template
     private $compiled_filepath = null;
     public $compiled_template = null;
@@ -54,9 +54,9 @@ class Smarty_Internal_Template extends Smarty_Internal_Data {
 //    private $cache_resource_object = null;
     private $cacheFileChecked = false; 
     // template variables
-    public $tpl_vars = array();
-    public $parent = null;
-    public $config_vars = array(); 
+//    public $tpl_vars = array();
+//    public $parent = null;
+//    public $config_vars = array(); 
     // storage for plugin
     public $plugin_data = array(); 
     // special properties
@@ -176,7 +176,7 @@ class Smarty_Internal_Template extends Smarty_Internal_Data {
     {
         $this->isExisting(true);
         if ($this->mustCompile === null) {
-            $this->mustCompile = ($this->resource_object->usesCompiler && ($this->smarty->force_compile || $this->resource_object->isEvaluated || $this->getCompiledTimestamp () === false || 
+            $this->mustCompile = (!($this->resource_object instanceof Smarty_Resource_Uncompiled) && ($this->smarty->force_compile || $this->resource_object instanceof Smarty_Resource_Recompiled || $this->getCompiledTimestamp () === false || 
                     // ($this->smarty->compile_check && $this->getCompiledTimestamp () !== $this->getTemplateTimestamp ())));
                     ($this->smarty->compile_check && $this->getCompiledTimestamp () < $this->getTemplateTimestamp ())));
         } 
@@ -191,7 +191,7 @@ class Smarty_Internal_Template extends Smarty_Internal_Data {
     public function getCompiledFilepath ()
     {
         return $this->compiled_filepath === null ?
-        ($this->compiled_filepath = !$this->resource_object->isEvaluated ? $this->resource_object->getCompiledFilepath($this) : false) :
+        ($this->compiled_filepath = !($this->resource_object instanceof Smarty_Resource_Recompiled) ? $this->resource_object->getCompiledFilepath($this) : false) :
         $this->compiled_filepath;
     } 
 
@@ -203,7 +203,7 @@ class Smarty_Internal_Template extends Smarty_Internal_Data {
     public function getCompiledTimestamp ()
     {
         return $this->compiled_timestamp === null ?
-        ($this->compiled_timestamp = (!$this->resource_object->isEvaluated && file_exists($this->getCompiledFilepath())) ? filemtime($this->getCompiledFilepath()) : false) :
+        ($this->compiled_timestamp = (!($this->resource_object instanceof Smarty_Resource_Recompiled) && file_exists($this->getCompiledFilepath())) ? filemtime($this->getCompiledFilepath()) : false) :
         $this->compiled_timestamp;
     } 
 
@@ -222,7 +222,7 @@ class Smarty_Internal_Template extends Smarty_Internal_Data {
                 $this->compileTemplateSource();
             } else {
                 if ($this->compiled_template === null) {
-                    $this->compiled_template = !$this->resource_object->isEvaluated && $this->resource_object->usesCompiler ? file_get_contents($this->getCompiledFilepath()) : false;
+                    $this->compiled_template = !($this->resource_object instanceof Smarty_Resource_Recompiled) && !($this->resource_object instanceof Smarty_Resource_Uncompiled) ? file_get_contents($this->getCompiledFilepath()) : false;
                 } 
             } 
         } 
@@ -236,7 +236,7 @@ class Smarty_Internal_Template extends Smarty_Internal_Data {
      */
     public function compileTemplateSource ()
     {
-        if (!$this->resource_object->isEvaluated) {
+        if (!($this->resource_object instanceof Smarty_Resource_Recompiled)) {
             $this->properties['file_dependency'] = array();
             $this->properties['file_dependency'][$this->templateUid] = array($this->getTemplateFilepath(), $this->getTemplateTimestamp(),$this->resource_type);
         } 
@@ -250,7 +250,7 @@ class Smarty_Internal_Template extends Smarty_Internal_Data {
             $this->compiler_object = new $this->resource_object->compiler_class($this->resource_object->template_lexer_class, $this->resource_object->template_parser_class, $this->smarty);
         } 
         // compile locking
-        if ($this->smarty->compile_locking && !$this->resource_object->isEvaluated) {
+        if ($this->smarty->compile_locking && !($this->resource_object instanceof Smarty_Resource_Recompiled)) {
             if ($saved_timestamp = $this->getCompiledTimestamp()) {
                 touch($this->getCompiledFilepath());
             } 
@@ -261,15 +261,18 @@ class Smarty_Internal_Template extends Smarty_Internal_Data {
         } 
         catch (Exception $e) {
             // restore old timestamp in case of error
-            if ($this->smarty->compile_locking && !$this->resource_object->isEvaluated && $saved_timestamp) {
+            if ($this->smarty->compile_locking && !($this->resource_object instanceof Smarty_Resource_Recompiled) && $saved_timestamp) {
                 touch($this->getCompiledFilepath(), $saved_timestamp);
             } 
             throw $e;
         } 
         // compiling succeded
-        if (!$this->resource_object->isEvaluated && $this->write_compiled_code) {
+        if (!($this->resource_object instanceof Smarty_Resource_Recompiled) && $this->write_compiled_code) {
             // write compiled template
-            Smarty_Internal_Write_File::writeFile($this->getCompiledFilepath(), $this->compiled_template, $this->smarty);
+            $_filepath = $this->getCompiledFilepath();
+            if($_filepath === false)
+                throw new SmartyException( 'getCompiledFilepath() did not return a destination to save the compiled template to' );
+            Smarty_Internal_Write_File::writeFile($_filepath, $this->compiled_template, $this->smarty);
         } 
         if ($this->smarty->debugging) {
             Smarty_Internal_Debug::end_compile($this);
@@ -286,7 +289,7 @@ class Smarty_Internal_Template extends Smarty_Internal_Data {
     public function getCachedFilepath ()
     {
         return $this->cached_filepath === null ?
-        $this->cached_filepath = ($this->resource_object->isEvaluated || !($this->caching == Smarty::CACHING_LIFETIME_CURRENT || $this->caching == Smarty::CACHING_LIFETIME_SAVED)) ? false : $this->cache_resource_object->getCachedFilepath($this) :
+        $this->cached_filepath = ($this->resource_object instanceof Smarty_Resource_Recompiled || !($this->caching == Smarty::CACHING_LIFETIME_CURRENT || $this->caching == Smarty::CACHING_LIFETIME_SAVED)) ? false : $this->cache_resource_object->getCachedFilepath($this) :
         $this->cached_filepath;
     } 
 
@@ -300,7 +303,7 @@ class Smarty_Internal_Template extends Smarty_Internal_Data {
     public function getCachedTimestamp ()
     {
         return $this->cached_timestamp === null ?
-        $this->cached_timestamp = ($this->resource_object->isEvaluated || !($this->caching == Smarty::CACHING_LIFETIME_CURRENT || $this->caching == Smarty::CACHING_LIFETIME_SAVED)) ? false : $this->cache_resource_object->getCachedTimestamp($this) :
+        $this->cached_timestamp = ($this->resource_object instanceof Smarty_Resource_Recompiled || !($this->caching == Smarty::CACHING_LIFETIME_CURRENT || $this->caching == Smarty::CACHING_LIFETIME_SAVED)) ? false : $this->cache_resource_object->getCachedTimestamp($this) :
         $this->cached_timestamp;
     } 
 
@@ -312,7 +315,7 @@ class Smarty_Internal_Template extends Smarty_Internal_Data {
     public function getCachedContent ()
     {
         return $this->rendered_content === null ?
-        $this->rendered_content = ($this->resource_object->isEvaluated || !($this->caching == Smarty::CACHING_LIFETIME_CURRENT || $this->caching == Smarty::CACHING_LIFETIME_SAVED)) ? false : $this->cache_resource_object->getCachedContents($this) :
+        $this->rendered_content = ($this->resource_object instanceof Smarty_Resource_Recompiled || !($this->caching == Smarty::CACHING_LIFETIME_CURRENT || $this->caching == Smarty::CACHING_LIFETIME_SAVED)) ? false : $this->cache_resource_object->getCachedContents($this) :
         $this->rendered_content;
     } 
 
@@ -321,7 +324,7 @@ class Smarty_Internal_Template extends Smarty_Internal_Data {
      */
     public function writeCachedContent ($content)
     {
-        if ($this->resource_object->isEvaluated || !($this->caching == Smarty::CACHING_LIFETIME_CURRENT || $this->caching == Smarty::CACHING_LIFETIME_SAVED)) {
+        if ($this->resource_object instanceof Smarty_Resource_Recompiled || !($this->caching == Smarty::CACHING_LIFETIME_CURRENT || $this->caching == Smarty::CACHING_LIFETIME_SAVED)) {
             // don't write cache file
             return false;
         } 
@@ -350,7 +353,7 @@ class Smarty_Internal_Template extends Smarty_Internal_Data {
   		}
         if ($this->isCached === null) {
             $this->isCached = false;
-            if (($this->caching == Smarty::CACHING_LIFETIME_CURRENT || $this->caching == Smarty::CACHING_LIFETIME_SAVED) && !$this->resource_object->isEvaluated) {
+            if (($this->caching == Smarty::CACHING_LIFETIME_CURRENT || $this->caching == Smarty::CACHING_LIFETIME_SAVED) && !($this->resource_object instanceof Smarty_Resource_Recompiled)) {
                 $cachedTimestamp = $this->getCachedTimestamp();
                 if ($cachedTimestamp === false || $this->smarty->force_compile || $this->smarty->force_cache) {
                     return $this->isCached;
@@ -377,15 +380,7 @@ class Smarty_Internal_Template extends Smarty_Internal_Data {
                         $resource_type = null;
                         $resource_name = null;
                         foreach ($this->properties['file_dependency'] as $_file_to_check) {
-                            If ($_file_to_check[2] == 'file' || $_file_to_check[2] == 'extends' || $_file_to_check[2] == 'php') {
-                                $mtime = filemtime($_file_to_check[0]);
-                            } else {
-                                $this->getResourceTypeName($_file_to_check[0], $resource_type, $resource_name);
-                                $resource_handler = $this->loadTemplateResourceHandler($resource_type);
-                                $mtime = $resource_handler->getTemplateTimestampTypeName($resource_type, $resource_name);
-                            } 
-                            // If ($mtime > $this->getCachedTimestamp()) {
-                            If ($mtime > $_file_to_check[1]) {
+                            if (Smarty_Resource::isModifiedSince($this, $_file_to_check[2], $_file_to_check[0], $_file_to_check[1])) {
                                 $this->tpl_vars = array();
                                 $this->rendered_content = null;
                                 return $this->isCached;
@@ -408,7 +403,7 @@ class Smarty_Internal_Template extends Smarty_Internal_Data {
      */
     public function renderTemplate ()
     {
-        if ($this->resource_object->usesCompiler) {
+        if (!($this->resource_object instanceof Smarty_Resource_Uncompiled)) {
             if ($this->mustCompile() && $this->compiled_template === null) {
                 $this->compileTemplateSource();
             } 
@@ -417,7 +412,7 @@ class Smarty_Internal_Template extends Smarty_Internal_Data {
             } 
             $_smarty_tpl = $this;
             ob_start();
-            if ($this->resource_object->isEvaluated) {
+            if ($this->resource_object instanceof Smarty_Resource_Recompiled) {
                 eval("?>" . $this->compiled_template);
             } else {
                 include($this->getCompiledFilepath ()); 
@@ -428,18 +423,10 @@ class Smarty_Internal_Template extends Smarty_Internal_Data {
                         $resource_type = null;
                         $resource_name = null;
                         foreach ($this->properties['file_dependency'] as $_file_to_check) {
-                            If ($_file_to_check[2] == 'file' || $_file_to_check[2] == 'extends' || $_file_to_check[2] == 'php') {
-                                $mtime = filemtime($_file_to_check[0]);
-                            } else {
-                            	$this->getResourceTypeName($_file_to_check[0], $resource_type, $resource_name);
-                                $resource_handler = $this->loadTemplateResourceHandler($resource_type);
-                                $mtime = $resource_handler->getTemplateTimestampTypeName($resource_type, $resource_name);
-                            } 
-                            // If ($mtime != $_file_to_check[1]) {
-                            If ($mtime > $_file_to_check[1]) {
+                            if (Smarty_Resource::isModifiedSince($this, $_file_to_check[2], $_file_to_check[0], $_file_to_check[1])) {
                                 $this->mustCompile = true;
                                 break;
-                            } 
+                            }
                         } 
                         if ($this->mustCompile) {
                             // recompile and render again
@@ -452,7 +439,7 @@ class Smarty_Internal_Template extends Smarty_Internal_Data {
                 } 
             } 
         } else {
-            if (is_callable(array($this->resource_object, 'renderUncompiled'))) {
+            if ($this->resource_object instanceof Smarty_Resource_Uncompiled) {
                 if ($this->smarty->debugging) {
                     Smarty_Internal_Debug::start_render($this);
                 } 
@@ -463,7 +450,7 @@ class Smarty_Internal_Template extends Smarty_Internal_Data {
             } 
         } 
         $this->rendered_content = ob_get_clean();
-        if (!$this->resource_object->isEvaluated && empty($this->properties['file_dependency'][$this->templateUid])) {
+        if (!($this->resource_object instanceof Smarty_Resource_Recompiled) && empty($this->properties['file_dependency'][$this->templateUid])) {
             $this->properties['file_dependency'][$this->templateUid] = array($this->getTemplateFilepath(), $this->getTemplateTimestamp(),$this->resource_type);
         } 
         if ($this->parent instanceof Smarty_Internal_Template) {
@@ -480,7 +467,7 @@ class Smarty_Internal_Template extends Smarty_Internal_Data {
             Smarty_Internal_Debug::end_render($this);
         } 
         // write to cache when nessecary
-        if (!$this->resource_object->isEvaluated && ($this->caching == Smarty::CACHING_LIFETIME_SAVED || $this->caching == Smarty::CACHING_LIFETIME_CURRENT)) {
+        if (!($this->resource_object instanceof Smarty_Resource_Recompiled) && ($this->caching == Smarty::CACHING_LIFETIME_SAVED || $this->caching == Smarty::CACHING_LIFETIME_CURRENT)) {
             if ($this->smarty->debugging) {
                 Smarty_Internal_Debug::start_cache($this);
             } 
@@ -534,7 +521,7 @@ class Smarty_Internal_Template extends Smarty_Internal_Data {
     public function getRenderedTemplate ()
     { 
         // disable caching for evaluated code
-        if ($this->resource_object->isEvaluated) {
+        if ($this->resource_object instanceof Smarty_Resource_Recompiled) {
             $this->caching = false;
         } 
         // checks if template exists
@@ -564,71 +551,27 @@ class Smarty_Internal_Template extends Smarty_Internal_Data {
     } 
 
     /**
-     * Parse a template resource in its name and type
-     * Load required resource handler
+     * Load the Smarty_Resource 
      * 
-     * @param string $template_resource template resource specification
-     * @param string $resource_type return resource type
-     * @param string $resource_name return resource name
-     * @param object $resource_handler return resource handler object
+     * @param string $resource_type the Resource type to load. If not specified the type is parsed from $this->template_resource
+     * @return Smarty_Resource Resource Handler object
      */
-    public function parseResourceName($template_resource, &$resource_type, &$resource_name, &$resource_handler)
+    public function loadTemplateResource($resource_type=null)
     {
-        if (empty($template_resource))
-            return false;
-        $this->getResourceTypeName($template_resource, $resource_type, $resource_name);
-        $resource_handler = $this->loadTemplateResourceHandler($resource_type); 
+        if ($resource_type)
+            return Smarty_Resource::load($this, $resource_type);
+            
+        if (empty($this->template_resource))
+            throw new SmartyException ("Unable to parse resource name \"{$this->template_resource}\"");
+        
+        Smarty_Resource::parse($this, $this->template_resource, $this->resource_type, $this->resource_name);
+        $this->resource_object = Smarty_Resource::load($this, $this->resource_type); 
         // cache template object under a unique ID
         // do not cache eval resources
-        if ($resource_type != 'eval') {
+        if ($this->resource_type != 'eval') {
             $this->smarty->template_objects[sha1($this->template_resource . $this->cache_id . $this->compile_id)] = $this;
-        } 
-        return true;
-    } 
-
-    /**
-     * get system filepath to template
-     */
-    public function buildTemplateFilepath ($file = null)
-    {
-        if ($file == null) {
-            $file = $this->resource_name;
         }
-        // relative file name? 
-        if (!preg_match('/^([\/\\\\]|[a-zA-Z]:[\/\\\\])/', $file)) {
-	        foreach((array)$this->smarty->template_dir as $_template_dir) {
-           		if (strpos('/\\', substr($_template_dir, -1)) === false) {
-                	$_template_dir .= DS;
-            	} 
-            	$_filepath = $_template_dir . $file;
-            	if (file_exists($_filepath)) {
-                	return $_filepath;
-            	}
-        		if (!preg_match('/^([\/\\\\]|[a-zA-Z]:[\/\\\\])/', $_template_dir)) {
-        			// try PHP include_path
-        			if (($_filepath = Smarty_Internal_Get_Include_Path::getIncludePath($_filepath)) !== false) {
-        				return $_filepath;
-        			}
-        		}
-       		}
-       	}
-        // try absolute filepath
-        if (file_exists($file)) return $file;
-        // no tpl file found
-        if (!empty($this->smarty->default_template_handler_func)) {
-            if (!is_callable($this->smarty->default_template_handler_func)) {
-                throw new SmartyException("Default template handler not callable");
-            } else {
-                $_return = call_user_func_array($this->smarty->default_template_handler_func,
-                    array($this->resource_type, $this->resource_name, &$this->template_source, &$this->template_timestamp, $this));
-                if (is_string($_return)) {
-                    return $_return;
-                } elseif ($_return === true) {
-                    return $file;
-                } 
-            } 
-        } 
-        return false;
+        return $this->resource_object;
     } 
 
     /**
@@ -687,72 +630,6 @@ class Smarty_Internal_Template extends Smarty_Internal_Data {
     } 
 
     /**
-     * Split a template resource in its name and type
-     * 
-     * @param string $template_resource template resource specification
-     * @param string $resource_type return resource type
-     * @param string $resource_name return resource name
-     */
-    protected function getResourceTypeName ($template_resource, &$resource_type, &$resource_name)
-    {
-        if (strpos($template_resource, ':') === false) {
-            // no resource given, use default
-            $resource_type = $this->smarty->default_resource_type;
-            $resource_name = $template_resource;
-        } else {
-            // get type and name from path
-            list($resource_type, $resource_name) = explode(':', $template_resource, 2);
-            if (strlen($resource_type) == 1) {
-                // 1 char is not resource type, but part of filepath
-                $resource_type = 'file';
-                $resource_name = $template_resource;
-            }
-        } 
-    } 
-
-    /**
-     * Load template resource handler by type
-     * 
-     * @param string $resource_type template resource type
-     * @return object resource handler object
-     */
-    protected function loadTemplateResourceHandler ($resource_type)
-    { 
-        // try registered resource
-        if (isset($this->smarty->registered_resources[$resource_type])) {
-            return new Smarty_Internal_Resource_Registered($this);
-        } else {
-            // try sysplugins dir
-            if (in_array($resource_type, array('file', 'string', 'extends', 'php', 'stream', 'eval'))) {
-                $_resource_class = 'Smarty_Internal_Resource_' . ucfirst($resource_type);
-                return new $_resource_class($this->smarty);
-            } else {
-                // try plugins dir
-                $_resource_class = 'Smarty_Resource_' . ucfirst($resource_type);
-                if ($this->smarty->loadPlugin($_resource_class)) {
-                    if (class_exists($_resource_class, false)) {
-                        return new $_resource_class($this->smarty);
-                    } else {
-                        return new Smarty_Internal_Resource_Registered($this, $resource_type);
-                    } 
-                } else {
-                    // try streams
-                    $_known_stream = stream_get_wrappers();
-                    if (in_array($resource_type, $_known_stream)) {
-                        // is known stream
-                        if (is_object($this->smarty->security_policy)) {
-                            $this->smarty->security_policy->isTrustedStream($resource_type);
-                        } 
-                        return new Smarty_Internal_Resource_Stream($this->smarty);
-                    } else {
-                        throw new SmartyException('Unkown resource type \'' . $resource_type . '\'');
-                    } 
-                } 
-            } 
-        } 
-    } 
-
-    /**
      * Create property header
      */
     public function createPropertyHeader ($cache = false)
@@ -764,7 +641,9 @@ class Smarty_Internal_Template extends Smarty_Internal_Data {
                 $plugins_string = '<?php ';
                 foreach($this->required_plugins['compiled'] as $tmp) {
                     foreach($tmp as $data) {
-                        $plugins_string .= "if (!is_callable('{$data['function']}')) include '{$data['file']}';\n";
+                        $this->smarty->loadPlugin($data['function']);
+                        $_function = class_exists($data['function'],false) ? "array('{$data['function']}','run')" : "'{$data['function']}'";
+                        $plugins_string .= "if (!is_callable({$_function})) include '{$data['file']}';\n";
                     } 
                 } 
                 $plugins_string .= '?>';
@@ -774,7 +653,9 @@ class Smarty_Internal_Template extends Smarty_Internal_Data {
                 $plugins_string .= "<?php echo '/*%%SmartyNocache:{$this->properties['nocache_hash']}%%*/<?php ";
                 foreach($this->required_plugins['nocache'] as $tmp) {
                     foreach($tmp as $data) {
-                        $plugins_string .= "if (!is_callable(\'{$data['function']}\')) include \'{$data['file']}\';\n";
+                        $this->smarty->loadPlugin($data['function']);
+                        $_function = class_exists($data['function'],false) ? "array(\'{$data['function']}\',\'run\')" : "\'{$data['function']}\'";
+                        $plugins_string .= "if (!is_callable({$_function})) include \'{$data['file']}\';\n";
                     } 
                 } 
                 $plugins_string .= "?>/*/%%SmartyNocache:{$this->properties['nocache_hash']}%%*/';?>\n";
@@ -931,11 +812,7 @@ class Smarty_Internal_Template extends Smarty_Internal_Data {
     {
     	if ($property_name == 'resource_object') {
     		// load template resource
-    		$this->resource_object = null;
-        	if (!$this->parseResourceName ($this->template_resource, $this->resource_type, $this->resource_name, $this->resource_object)) {
-            	throw new SmartyException ("Unable to parse resource name \"{$template_resource}\"");
-        	}
-        	return $this->resource_object;
+    		return $this->loadTemplateResource();
         }
         if ($property_name == 'cache_resource_object') { 
         	// load cache resource

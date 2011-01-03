@@ -196,12 +196,7 @@ class Smarty_Internal_TemplateCompilerBase {
                     if ($plugin_type == Smarty::PLUGIN_BLOCK && $this->smarty->loadPlugin('smarty_compiler_' . $tag)) {
                         $plugin = 'smarty_compiler_' . $tag;
                         if (is_callable($plugin)) {
-                        	// convert arguments format for old compiler plugins
-                            $new_args = array();
-                            foreach ($args as $mixed) {
-                                $new_args = array_merge($new_args, $mixed);
-                            } 
-                            return $plugin($new_args, $this->smarty);
+                            return $plugin($args, $this->smarty);
                         } 
                         if (class_exists($plugin, false)) {
                             $plugin_object = new $plugin;
@@ -365,7 +360,7 @@ class Smarty_Internal_TemplateCompilerBase {
         // If the template is not evaluated and we have a nocache section and or a nocache tag
         if ($is_code && !empty($content)) {
             // generate replacement code
-            if ((!$this->template->resource_object->isEvaluated || $this->template->forceNocache) && $this->template->caching && !$this->suppressNocacheProcessing &&
+            if ((!($this->template->resource_object instanceof Smarty_Resource_Recompiled) || $this->template->forceNocache) && $this->template->caching && !$this->suppressNocacheProcessing &&
                     ($this->nocache || $this->tag_nocache || $this->template->forceNocache == 2)) {
                 $this->template->has_nocache_code = true;
                 $_output = str_replace("'", "\'", $content);

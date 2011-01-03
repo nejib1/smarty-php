@@ -9,29 +9,29 @@
  * @subpackage TemplateResources
  * @author Uwe Tews 
  */
-
-/**
- * Smarty Internal Plugin Resource PHP
- */
-class Smarty_Internal_Resource_PHP {
+class Smarty_Internal_Resource_PHP extends Smarty_Resource_Uncompiled {
     /**
-     * Class constructor, enable short open tags
+     * container for short_open_tag directive's value before executing PHP templates
+     * @var string
      */
-    public function __construct($smarty)
+    protected $short_open_tag;
+    
+    /**
+     * Create a new PHP Resource
+     *
+     */
+    public function __construct()
     {
-        $this->smarty = $smarty;
-        ini_set('short_open_tag', '1');
+        $this->short_open_tag = ini_get( 'short_open_tag' );
     } 
-    // properties
-    public $usesCompiler = false;
-    public $isEvaluated = false;
-
+    
     /**
-     * Return flag if template source is existing
+     * Test if the template source exists
      * 
-     * @return boolean true
+     * @param Smarty_Internal_Template $_template template object
+     * @return boolean true if exists, false else
      */
-    public function isExisting($template)
+    public function isExisting(Smarty_Internal_Template $template)
     {
         if ($template->getTemplateFilepath() === false) {
             return false;
@@ -41,43 +41,28 @@ class Smarty_Internal_Resource_PHP {
     } 
 
     /**
-     * Get filepath to template source
+     * Get timestamp (epoch) the template source was modified
      * 
-     * @param object $_template template object
-     * @return string filepath to template source file
+     * @param Smarty_Internal_Template $_template template object
+     * @param string $resource_name name of the resource to get modification time of, if null, $_template->resource_name is used
+     * @return boolean false as php resources have no timestamp
      */
-    public function getTemplateFilepath($_template)
-    {
-        $_filepath = $_template->buildTemplateFilepath ();
-
-        if (is_object($_template->smarty->security_policy)) {
-            $_template->smarty->security_policy->isTrustedResourceDir($_filepath);
-        } 
-        $_template->templateUid = sha1($_filepath);
-        return $_filepath;
-    } 
-
-    /**
-     * Get timestamp to template source
-     * 
-     * @param object $_template template object
-     * @return integer timestamp of template source file
-     */
-    public function getTemplateTimestamp($_template)
+    public function getTemplateTimestamp(Smarty_Internal_Template $_template, $_resource_name=null)
     {
         return filemtime($_template->getTemplateFilepath());
     } 
 
     /**
-     * Read template source from file
+     * Load template's source from file into current template object
      * 
-     * @param object $_template template object
-     * @return string content of template source file
+     * @note: The loaded source is assigned to $_template->template_source directly.
+     * @param Smarty_Internal_Template $_template current template
+     * @return boolean success: true for success, false for failure
      */
-    public function getTemplateSource($_template)
+    public function getTemplateSource(Smarty_Internal_Template $_template)
     {
         if (file_exists($_tfp = $_template->getTemplateFilepath())) {
-            $_template->template_source = file_get_contents($_tfp);
+            //$_template->template_source = file_get_contents($_tfp);
             return true;
         } else {
             return false;
@@ -85,42 +70,27 @@ class Smarty_Internal_Resource_PHP {
     } 
 
     /**
-     * Get filepath to compiled template
-     * 
-     * @param object $_template template object
-     * @return boolean return false as compiled template is not stored
+     * Render and output the template (without using the compiler)
+     *
+     * @param Smarty_Internal_Template $_template template object
+     * @return void
+     * @throws SmartyException if template cannot be loaded or allow_php_templates is disabled
      */
-    public function getCompiledFilepath($_template)
-    { 
-        // no filepath for PHP templates
-        return false;
-    } 
-
-    /**
-     * renders the PHP template
-     */
-    public function renderUncompiled($_smarty_template)
+    public function renderUncompiled(Smarty_Internal_Template $_template)
     {
-        if (!$this->smarty->allow_php_templates) {
+        $_smarty_template = $_template;
+        if (!$_template->smarty->allow_php_templates) {
             throw new SmartyException("PHP templates are disabled");
         } 
         if ($this->getTemplateFilepath($_smarty_template) === false) {
             throw new SmartyException("Unable to load template \"{$_smarty_template->resource_type} : {$_smarty_template->resource_name}\"");
         } 
         // prepare variables
-        $_smarty_ptr = $_smarty_template;
-        do {
-            foreach ($_smarty_ptr->tpl_vars as $_smarty_var => $_smarty_var_object) {
-                if (isset($_smarty_var_object->value)) {
-                    $$_smarty_var = $_smarty_var_object->value;
-                } 
-            } 
-            $_smarty_ptr = $_smarty_ptr->parent;
-        } while ($_smarty_ptr != null);
-        unset ($_smarty_var, $_smarty_var_object, $_smarty_ptr); 
-        // include PHP template
+        extract($_template->getTemplateVars());
+        // include PHP template with short open tags enabled
+        ini_set( 'short_open_tag', '1' );
         include($this->getTemplateFilepath($_smarty_template));
-        return;
+        ini_set( 'short_open_tag', $this->short_open_tag );
     } 
 } 
 

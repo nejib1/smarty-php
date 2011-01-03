@@ -16,6 +16,24 @@
 class Smarty_Internal_Data {
     // class used for templates
     public $template_class = 'Smarty_Internal_Template';
+    // template variables
+    public $tpl_vars = array();
+    public $parent = null;
+    public $config_vars = array();
+    
+    /**
+    * clean up properties on cloned object
+     */
+    public function __clone()
+    {
+    	// clear config vars
+    	$this->config_vars = array(); 
+    	// clear assigned tpl vars
+    	$this->tpl_vars = array();
+    	// clear objects for external methods
+    	unset($this->register);  
+    	unset($this->filter);  
+	}
 
     /**
      * assigns a Smarty variable
@@ -30,12 +48,22 @@ class Smarty_Internal_Data {
         if (is_array($tpl_var)) {
             foreach ($tpl_var as $_key => $_val) {
                 if ($_key != '') {
-                    $this->tpl_vars[$_key] = new Smarty_variable($_val, $nocache);
+                    if (isset($this->tpl_vars[$_key])) {
+                        $this->tpl_vars[$_key]->value = $_val;
+                        $this->tpl_vars[$_key]->nocache = $nocache;
+                    } else {
+                        $this->tpl_vars[$_key] = new Smarty_variable($_val, $nocache);
+                    }
                 } 
             } 
         } else {
             if ($tpl_var != '') {
-                $this->tpl_vars[$tpl_var] = new Smarty_variable($value, $nocache);
+                if (isset($this->tpl_vars[$tpl_var])) {
+                    $this->tpl_vars[$tpl_var]->value = $value;
+                    $this->tpl_vars[$tpl_var]->nocache = $nocache;
+                } else {
+                    $this->tpl_vars[$tpl_var] = new Smarty_variable($value, $nocache);
+                }
             } 
         } 
     } 
@@ -196,9 +224,7 @@ class Smarty_Internal_Data {
                 $_ptr = $this;
             } while ($_ptr !== null) {
                 foreach ($_ptr->tpl_vars AS $key => $var) {
-                    if (!array_key_exists($key, $_result)) {
-                        $_result[$key] = $var->value;
-                    }
+                    $_result[$key] = $var->value;
                 } 
                 // not found, try at parent
                 if ($search_parents) {
@@ -209,6 +235,7 @@ class Smarty_Internal_Data {
             } 
             if ($search_parents && isset(Smarty::$global_tpl_vars)) {
                 foreach (Smarty::$global_tpl_vars AS $key => $var) {
+                    // isset() returns false on null, which may be the desired value, though
                     if (!array_key_exists($key, $_result)) {
                         $_result[$key] = $var->value;
                     }

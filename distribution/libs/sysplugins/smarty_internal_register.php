@@ -32,7 +32,7 @@ class Smarty_Internal_Register {
 	{
 		if (isset($this->smarty->registered_plugins[$type][$tag])) {
         	throw new Exception("Plugin tag \"{$tag}\" already registered");
-    	} elseif (!is_callable($callback)) {
+    	} elseif (!is_callable($callback) && (!is_string($callback) || !class_exists($callback))) {
         	throw new Exception("Plugin \"{$tag}\" not callable");
     	} else {
        		$this->smarty->registered_plugins[$type][$tag] = array($callback, (bool) $cacheable, (array) $cache_attr);
@@ -56,11 +56,11 @@ class Smarty_Internal_Register {
      * Registers a resource to fetch a template
      * 
      * @param string $type name of resource type
-     * @param array $callback array of callbacks to handle resource
+     * @param Smarty_Resource|array $callback or instance of Smarty_Resource, or array of callbacks to handle resource (deprecated)
      */
  	public function registerResource($type, $callback)
 	{
-       	$this->smarty->registered_resources[$type] = array($callback, false);
+       	$this->smarty->registered_resources[$type] = $callback instanceof Smarty_Resource ? $callback : array($callback, false);
     }
 
     /**
@@ -68,13 +68,38 @@ class Smarty_Internal_Register {
      * 
      * @param string $type name of resource type
      */
-   function unregisterResource($type)
+    function unregisterResource($type)
     {
         if (isset($this->smarty->registered_resources[$type])) {
             unset($this->smarty->registered_resources[$type]);
         } 
     } 
+    
+    /**
+     * Registers a cache resource to cache a template's output
+     * 
+     * @param string $type name of cache resource type
+     * @param Smarty_CacheResource $callback instance of Smarty_CacheResource to handle output caching
+     */
+ 	public function registerCacheResource($type, $callback)
+	{
+	    if (!($callback instanceof Smarty_CacheResource)) {
+	        throw new SmartyException("CacheResource handlers must implement Smarty_CacheResource");
+	    }
+       	$this->smarty->registered_cache_resources[$type] = $callback;
+    }
 
+    /**
+     * Unregisters a cache resource 
+     * 
+     * @param string $type name of cache resource type
+     */
+    function unregisterCacheResource($type)
+    {
+        if (isset($this->smarty->registered_cache_resources[$type])) {
+            unset($this->smarty->registered_cache_resources[$type]);
+        } 
+    }
 
     /**
      * Registers object to be used in templates
