@@ -14,6 +14,7 @@
 {
 	  const Err1 = "Security error: Call to private object member not allowed";
 	  const Err2 = "Security error: Call to dynamic object member not allowed";
+	  const Err3 = "PHP in template not allowed. Use SmartyBC to enable it";
     // states whether the parse was successful or not
     public $successful = true;
     public $retvalue = 0;
@@ -48,7 +49,16 @@
        return '?<?php ?>>';
     }
 
-    
+    public function compileVariable($variable) {
+    	 if (strpos($variable,'(') == 0) {
+    	 		// not a variable variable
+    	 		$var = trim($variable,'\'');
+			 		$this->compiler->tag_nocache=$this->compiler->tag_nocache|$this->template->getVariable($var, null, true, false)->nocache;
+			 		$this->template->properties['variables'][$var] = $this->compiler->tag_nocache|$this->compiler->nocache;
+			 }
+//			 return '(isset($_smarty_tpl->tpl_vars['. $variable .'])?$_smarty_tpl->tpl_vars['. $variable .']->value:$_smarty_tpl->getVariable('. $variable .')->value)';
+			 return '$_smarty_tpl->tpl_vars['. $variable .']->value';
+    }
 } 
 
 
@@ -123,6 +133,9 @@ template_element(res)::= PHPSTARTTAG(st). {
                                       } elseif ($this->php_handling == Smarty::PHP_QUOTE) {
                                        res = new _smarty_text($this, htmlspecialchars(st, ENT_QUOTES));
                                       }elseif ($this->php_handling == Smarty::PHP_ALLOW) {
+                                       if (!($this->smarty instanceof SmartyBC)) {
+                                         $this->compiler->trigger_template_error (self::Err3);
+																			 }
                                        res = new _smarty_text($this, $this->compiler->processNocacheCode('<?php', true));
                                       }elseif ($this->php_handling == Smarty::PHP_REMOVE) {
                                        res = new _smarty_text($this, '');
@@ -154,6 +167,9 @@ template_element(res)::= ASPSTARTTAG(st). {
                                        res = new _smarty_text($this, htmlspecialchars(st, ENT_QUOTES));
                                       }elseif ($this->php_handling == Smarty::PHP_ALLOW) {
                                         if ($this->asp_tags) {
+                                          if (!($this->smarty instanceof SmartyBC)) {
+                                            $this->compiler->trigger_template_error (self::Err3);
+																			    }
                                           res = new _smarty_text($this, $this->compiler->processNocacheCode('<%', true));
                                         } else {
                                          res = new _smarty_text($this, '<<?php ?>%');
@@ -289,7 +305,11 @@ smartytag(res)   ::= LDELFOREACH SPACE expr(e) AS DOLLAR varvar(v0) attributes(a
                                                             res = $this->compiler->compileTag('foreach',array_merge(a,array(array('from'=>e),array('item'=>v0))));}
 smartytag(res)   ::= LDELFOREACH SPACE expr(e) AS DOLLAR varvar(v1) APTR DOLLAR varvar(v0) attributes(a) RDEL. { 
                                                             res = $this->compiler->compileTag('foreach',array_merge(a,array(array('from'=>e),array('item'=>v0),array('key'=>v1))));}
-
+									// {setfilter}
+smartytag(res)   ::= LDELSETFILTER ID(m) modparameters(p) RDEL. { 
+                                                            res = $this->compiler->compileTag('setfilter',array(),array('modifier_list'=>array(array_merge(array(m),p))));}
+smartytag(res)   ::= LDELSETFILTER ID(m) modparameters(p) modifierlist(l) RDEL. { 
+                                                            res = $this->compiler->compileTag('setfilter',array(),array('modifier_list'=>array_merge(array(array_merge(array(m),p)),l)));}
 									// {$smarty.block.child}
 smartytag(res)   ::= SMARTYBLOCKCHILD. { res = SMARTY_INTERNAL_COMPILE_BLOCK::compileChildBlock($this->compiler);}
 									
@@ -385,7 +405,7 @@ expr(res)        ::= value(v1) INSTANCEOF(i) value(v2). {$this->prefix_number++;
 //
 // ternary
 //
-ternary(res)				::= OPENP expr(v) CLOSEP  QMARK DOLLAR ID(e1) COLON  expr(e2). { res = v.' ? $_smarty_tpl->getVariable(\''. e1 .'\')->value : '.e2;  $this->compiler->tag_nocache=$this->compiler->tag_nocache|$this->template->getVariable('e1', null, true, false)->nocache;}
+ternary(res)				::= OPENP expr(v) CLOSEP  QMARK DOLLAR ID(e1) COLON  expr(e2). { res = v.' ? '. $this->compileVariable("'".e1."'") . ' : '.e2;}
 ternary(res)				::= OPENP expr(v) CLOSEP  QMARK  expr(e1) COLON  expr(e2). { res = v.' ? '.e1.' : '.e2;}
 
 								 // value
@@ -431,7 +451,7 @@ value(res)	     ::= ID(c) DOUBLECOLON static_class_access(r). {if (!$this->secur
                                                                 }
                                                                }
 value(res)    ::= varindexed(vi) DOUBLECOLON static_class_access(r). { if (vi['var'] == '\'smarty\'') { res =  $this->compiler->compileTag('private_special_variable',array(),vi['smarty_internal_index']).'::'.r;} else {
-                                                         res = '$_smarty_tpl->getVariable('. vi['var'] .')->value'.vi['smarty_internal_index'].'::'.r; $this->compiler->tag_nocache=$this->compiler->tag_nocache|$this->template->getVariable(trim(vi['var'],"'"), null, true, false)->nocache;}}
+                                                         res = $this->compileVariable(vi['var']).vi['smarty_internal_index'].'::'.r;}}
 								  // Smarty tag
 value(res)	     ::= smartytag(st). { $this->prefix_number++; $this->compiler->prefix_code[] = '<?php ob_start();?>'.st.'<?php $_tmp'.$this->prefix_number.'=ob_get_clean();?>'; res = '$_tmp'.$this->prefix_number; }
 value(res)       ::= value(v) modifierlist(l). {  res = $this->compiler->compileTag('private_modifier',array(),array('value'=>v,'modifierlist'=>l)); }
@@ -441,7 +461,7 @@ value(res)       ::= value(v) modifierlist(l). {  res = $this->compiler->compile
 // variables 
 //
 									// simplest Smarty variable
-//variable(res)    ::= DOLLAR varvar(v).  { res = '$_smarty_tpl->getVariable(\''. v .'\')->value'; $this->compiler->tag_nocache=$this->compiler->tag_nocache|$this->template->getVariable('v', null, true, false)->nocache;}
+//variable(res)    ::= DOLLAR varvar(v).  { res = $this->compileVariable(v);}
 									// Smarty variable (optional array)
 variable(res)    ::= varindexed(vi). {if (vi['var'] == '\'smarty\'') {
 																				$smarty_var = $this->compiler->compileTag('private_special_variable',array(),vi['smarty_internal_index']);
@@ -450,21 +470,11 @@ variable(res)    ::= varindexed(vi). {if (vi['var'] == '\'smarty\'') {
                                       	// used for array reset,next,prev,end,current 
                                       	$this->last_variable = vi['var'];
                                       	$this->last_index = vi['smarty_internal_index'];
-                                      	if (isset($this->compiler->local_var[vi['var']])) {
-                                          res = '$_smarty_tpl->tpl_vars['. vi['var'] .']->value'.vi['smarty_internal_index'];
-                                      	} else {
-                                          res = '$_smarty_tpl->getVariable('. vi['var'] .')->value'.vi['smarty_internal_index'];
-                                      	}
-                                      	$this->compiler->tag_nocache=$this->compiler->tag_nocache|$this->template->getVariable(trim(vi['var'],"'"), null, true, false)->nocache;
-                                     }
+                                        res = $this->compileVariable(vi['var']).vi['smarty_internal_index'];
+                                      }
                                     }
 									// variable with property
-variable(res)    ::= DOLLAR varvar(v) AT ID(p). {if (isset($this->compiler->local_var[v])) {
-                                                  res = '$_smarty_tpl->tpl_vars['. v .']->'.p;
-                                                 } else {
-                                                  res = '$_smarty_tpl->getVariable('. v .')->'.p;
-                                                 }
-                                                  $this->compiler->tag_nocache=$this->compiler->tag_nocache|$this->template->getVariable(trim(v,"'"), null, true, false)->nocache;}
+variable(res)    ::= DOLLAR varvar(v) AT ID(p). {res = '$_smarty_tpl->tpl_vars['. v .']->'.p;}
 									// object
 variable(res)    ::= object(o). { res = o; }
                   // config variable
@@ -484,8 +494,8 @@ arrayindex        ::= . {return;}
 
 // single index definition
 										// Smarty2 style index 
-indexdef(res)    ::= DOT DOLLAR varvar(v).  { res = '[$_smarty_tpl->getVariable('. v .')->value]'; $this->compiler->tag_nocache=$this->compiler->tag_nocache|$this->template->getVariable('v', null, true, false)->nocache;}
-indexdef(res)    ::= DOT DOLLAR varvar(v) AT ID(p). { res = '[$_smarty_tpl->getVariable('. v .')->'.p.']'; $this->compiler->tag_nocache=$this->compiler->tag_nocache|$this->template->getVariable(trim(v,"'"), null, true, false)->nocache;}
+indexdef(res)    ::= DOT DOLLAR varvar(v).  { res = '['.$this->compileVariable(v).']';}
+indexdef(res)    ::= DOT DOLLAR varvar(v) AT ID(p). { res = '['.$this->compileVariable(v).'->'.p.']';}
 indexdef(res)   ::= DOT ID(i). { res = "['". i ."']";}
 indexdef(res)   ::= DOT INTEGER(n). { res = "[". n ."]";}
 indexdef(res)   ::= DOT LDEL expr(e) RDEL. { res = "[". e ."]";}
@@ -513,7 +523,7 @@ varvarele(res)	 ::= LDEL expr(e) RDEL. {res = '('.e.')';}
 // objects
 //
 object(res)    ::= varindexed(vi) objectchain(oc). { if (vi['var'] == '\'smarty\'') { res =  $this->compiler->compileTag('private_special_variable',array(),vi['smarty_internal_index']).oc;} else {
-                                                         res = '$_smarty_tpl->getVariable('. vi['var'] .')->value'.vi['smarty_internal_index'].oc; $this->compiler->tag_nocache=$this->compiler->tag_nocache|$this->template->getVariable(trim(vi['var'],"'"), null, true, false)->nocache;}}
+                                                         res = $this->compileVariable(vi['var']).vi['smarty_internal_index'].oc;}}
 										// single element
 objectchain(res) ::= objectelement(oe). {res  = oe; }
 										// chain of elements 
@@ -527,7 +537,7 @@ objectelement(res)::= PTR ID(i) arrayindex(a).	    {if ($this->security && subst
 objectelement(res)::= PTR DOLLAR varvar(v) arrayindex(a).	    {if ($this->security) {
                                                                  $this->compiler->trigger_template_error (self::Err2);
 																															 }
-                                                               res = '->{$_smarty_tpl->getVariable('. v .')->value'.a.'}'; $this->compiler->tag_nocache=$this->compiler->tag_nocache|$this->template->getVariable(trim(v,"'"), null, true, false)->nocache;
+                                                               res = '->{'.$this->compileVariable("'".v."'").a.'}';
                                                                }
 objectelement(res)::= PTR LDEL expr(e) RDEL arrayindex(a).	    {if ($this->security) {
                                                                  $this->compiler->trigger_template_error (self::Err2);
@@ -584,7 +594,7 @@ method(res)     ::= ID(f) OPENP params(p) CLOSEP.	{if ($this->security && substr
 method(res)     ::= DOLLAR ID(f) OPENP params(p) CLOSEP.	{if ($this->security) {
                                                               $this->compiler->trigger_template_error (self::Err2);
 																													 }
-                                                           $this->prefix_number++; $this->compiler->prefix_code[] = '<?php $_tmp'.$this->prefix_number.'=$_smarty_tpl->getVariable(\''. f .'\')->value;?>'; res = '$_tmp'.$this->prefix_number.'('. implode(',',p) .')';
+                                                           $this->prefix_number++; $this->compiler->prefix_code[] = '<?php $_tmp'.$this->prefix_number.'='.$this->compileVariable("'".f."'").';?>'; res = '$_tmp'.$this->prefix_number.'('. implode(',',p) .')';
                                                           }
 
 // function/method parameter
@@ -669,13 +679,7 @@ doublequoted(res)          ::= doublequotedcontent(o). { res = new _smarty_doubl
 
 doublequotedcontent(res)           ::=  BACKTICK variable(v) BACKTICK. { res = new _smarty_code($this, v); }
 doublequotedcontent(res)           ::=  BACKTICK expr(e) BACKTICK. { res = new _smarty_code($this, e); }
-doublequotedcontent(res)           ::=  DOLLARID(i). {if (isset($this->compiler->local_var["'".substr(i,1)."'"])) {
-                                                       res = new _smarty_code($this, '$_smarty_tpl->tpl_vars[\''. substr(i,1) .'\']->value');
-                                                      } else {
-                                                       res = new _smarty_code($this, '$_smarty_tpl->getVariable(\''. substr(i,1) .'\')->value');
-                                                      }
-                                                      $this->compiler->tag_nocache = $this->compiler->tag_nocache | $this->template->getVariable(trim(i,"'"), null, true, false)->nocache;
-  }
+doublequotedcontent(res)           ::=  DOLLARID(i). {res = new _smarty_code($this, '$_smarty_tpl->tpl_vars[\''. substr(i,1) .'\']->value');}
 doublequotedcontent(res)           ::=  LDEL variable(v) RDEL. { res = new _smarty_code($this, v); }
 doublequotedcontent(res)           ::=  LDEL expr(e) RDEL. { res = new _smarty_code($this, '('.e.')'); }
 doublequotedcontent(res) 	   ::=  smartytag(st). {
