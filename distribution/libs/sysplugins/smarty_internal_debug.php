@@ -86,19 +86,21 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data {
 		ksort($_assigned_vars);
 		$_config_vars = $ptr->config_vars;
 		ksort($_config_vars);
-		$smarty->left_delimiter = '{';
-		$smarty->right_delimiter = '}';
 		$smarty->registered_filters = array();
 		$smarty->autoload_filters = array();
 		$smarty->default_modifiers = array();
+		$smarty->force_compile = false;
+		$smarty->left_delimiter = '{';
+		$smarty->right_delimiter = '}';
+		$smarty->debugging = false;
+		$smarty->force_compile = false;
 		$_template = new Smarty_Internal_Template ($smarty->debug_tpl, $smarty);
 		$_template->caching = false;
-		$_template->force_compile = false;
 		$_template->disableSecurity();
 		$_template->cache_id = null;
 		$_template->compile_id = null;
 		if ($obj instanceof Smarty_Internal_Template) {
-			$_template->assign('template_name',$obj->resource_type.':'.$obj->resource_name);
+			$_template->assign('template_name',$obj->source->type.':'.$obj->source->name);
 		}
 		if ($obj instanceof Smarty) {
 			$_template->assign('template_data', self::$template_data);
@@ -108,7 +110,7 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data {
 		$_template->assign('assigned_vars', $_assigned_vars);
 		$_template->assign('config_vars', $_config_vars);
 		$_template->assign('execution_time', microtime(true) - $smarty->start_time);
-		echo $_template->getRenderedTemplate();
+		echo $_template->fetch();
 	}
 	/*
 	* Recursively gets variables from all template/data scopes
@@ -120,7 +122,7 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data {
 		foreach ($obj->tpl_vars as $key => $var) {
 			$tpl_vars[$key] = clone $var;
 			if ($obj instanceof Smarty_Internal_Template) {
-				$tpl_vars[$key]->scope = $obj->resource_type.':'.$obj->resource_name;
+				$tpl_vars[$key]->scope = $obj->source->type.':'.$obj->source->name;
 			} elseif ($obj instanceof Smarty_Data) {
 				$tpl_vars[$key]->scope = 'Data object';
 			} else {
@@ -150,14 +152,14 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data {
 	static function get_key($template)
 	{
 		// calculate Uid if not already done
-		if ($template->templateUid == '') {
-			$template->getTemplateFilepath();
+		if ($template->source->uid == '') {
+			$template->source->filepath;
 		}
-		$key = $template->templateUid;
+		$key = $template->source->uid;
 		if (isset(self::$template_data[$key])) {
 			return $key;
 		} else {
-			self::$template_data[$key]['name'] = $template->getTemplateFilepath();
+			self::$template_data[$key]['name'] = $template->source->filepath;
 			self::$template_data[$key]['compile_time'] = 0;
 			self::$template_data[$key]['render_time'] = 0;
 			self::$template_data[$key]['cache_time'] = 0;

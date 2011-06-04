@@ -33,12 +33,6 @@
  */
 
 class Smarty_Internal_Utility {
-    protected $smarty;
-
-    function __construct($smarty)
-    {
-        $this->smarty = $smarty;
-    } 
 
     /**
      * Compile all template files
@@ -49,24 +43,21 @@ class Smarty_Internal_Utility {
      * @param int $max_errors 
      * @return integer number of template files recompiled
      */
-    function compileAllTemplates($extention = '.tpl', $force_compile = false, $time_limit = 0, $max_errors = null)
+    static function compileAllTemplates($extention = '.tpl', $force_compile = false, $time_limit = 0, $max_errors = null, $smarty)
     { 
         // switch off time limit
         if (function_exists('set_time_limit')) {
             @set_time_limit($time_limit);
         } 
-        $this->smarty->force_compile = $force_compile;
+        $smarty->force_compile = $force_compile;
         $_count = 0;
         $_error_count = 0; 
         // loop over array of template directories
-        foreach((array)$this->smarty->template_dir as $_dir) {
-            if (strpos('/\\', substr($_dir, -1)) === false) {
-                $_dir .= DS;
-            } 
+        foreach($smarty->getTemplateDir() as $_dir) {
             $_compileDirs = new RecursiveDirectoryIterator($_dir);
             $_compile = new RecursiveIteratorIterator($_compileDirs);
             foreach ($_compile as $_fileinfo) {
-                if (substr($_fileinfo->getBasename(),0,1) == '.') continue;
+                if (substr($_fileinfo->getBasename(),0,1) == '.' || strpos($_fileinfo, '.svn') !== false) continue;
                 $_file = $_fileinfo->getFilename();
                 if (!substr_compare($_file, $extention, - strlen($extention)) == 0) continue;
                 if ($_fileinfo->getPath() == substr($_dir, 0, -1)) {
@@ -78,7 +69,7 @@ class Smarty_Internal_Utility {
                 flush();
                 $_start_time = microtime(true);
                 try {
-                    $_tpl = $this->smarty->createTemplate($_template_file,null,null,null,false);
+                    $_tpl = $smarty->createTemplate($_template_file,null,null,null,false);
                     if ($_tpl->mustCompile()) {
                         $_tpl->compileTemplateSource();
                         echo ' compiled in  ', microtime(true) - $_start_time, ' seconds';
@@ -93,7 +84,7 @@ class Smarty_Internal_Utility {
                     $_error_count++;
                 } 
 				// free memory
-                $this->smarty->template_objects = array();
+                $smarty->template_objects = array();
                 $_tpl->smarty->template_objects = array();
                 $_tpl = null;
                 if ($max_errors !== null && $_error_count == $max_errors) {
@@ -114,24 +105,21 @@ class Smarty_Internal_Utility {
      * @param int $max_errors 
      * @return integer number of template files recompiled
      */
-    function compileAllConfig($extention = '.conf', $force_compile = false, $time_limit = 0, $max_errors = null)
+    static function compileAllConfig($extention = '.conf', $force_compile = false, $time_limit = 0, $max_errors = null, $smarty)
     { 
         // switch off time limit
         if (function_exists('set_time_limit')) {
             @set_time_limit($time_limit);
         } 
-        $this->smarty->force_compile = $force_compile;
+        $smarty->force_compile = $force_compile;
         $_count = 0;
         $_error_count = 0; 
         // loop over array of template directories
-        foreach((array)$this->smarty->config_dir as $_dir) {
-            if (strpos('/\\', substr($_dir, -1)) === false) {
-                $_dir .= DS;
-            } 
+        foreach($smarty->getConfigDir() as $_dir) {
             $_compileDirs = new RecursiveDirectoryIterator($_dir);
             $_compile = new RecursiveIteratorIterator($_compileDirs);
             foreach ($_compile as $_fileinfo) {
-            if (substr($_fileinfo->getBasename(),0,1) == '.') continue;
+            	if (substr($_fileinfo->getBasename(),0,1) == '.' || strpos($_fileinfo, '.svn') !== false) continue;
                 $_file = $_fileinfo->getFilename();
                 if (!substr_compare($_file, $extention, - strlen($extention)) == 0) continue;
                 if ($_fileinfo->getPath() == substr($_dir, 0, -1)) {
@@ -143,7 +131,7 @@ class Smarty_Internal_Utility {
                 flush();
                 $_start_time = microtime(true);
                 try {
-                    $_config = new Smarty_Internal_Config($_config_file, $this->smarty);
+                    $_config = new Smarty_Internal_Config($_config_file, $smarty);
                     if ($_config->mustCompile()) {
                         $_config->compileConfigSource();
                         echo ' compiled in  ', microtime(true) - $_start_time, ' seconds';
@@ -174,28 +162,29 @@ class Smarty_Internal_Utility {
      * @param integer $exp_time expiration time
      * @return integer number of template files deleted
      */
-    function clearCompiledTemplate($resource_name = null, $compile_id = null, $exp_time = null)
+    static function clearCompiledTemplate($resource_name = null, $compile_id = null, $exp_time = null, $smarty)
     {
+        $_compile_dir = $smarty->getCompileDir();
         $_compile_id = isset($compile_id) ? preg_replace('![^\w\|]+!', '_', $compile_id) : null;
-        $_dir_sep = $this->smarty->use_sub_dirs ? DS : '^';
+        $_dir_sep = $smarty->use_sub_dirs ? DS : '^';
         if (isset($resource_name)) {
             $_resource_part_1 = $resource_name . '.php';
             $_resource_part_2 = $resource_name . '.cache' . '.php';
         } else {
             $_resource_part = '';
         } 
-        $_dir = $this->smarty->compile_dir;
-        if ($this->smarty->use_sub_dirs && isset($_compile_id)) {
+        $_dir = $_compile_dir;
+        if ($smarty->use_sub_dirs && isset($_compile_id)) {
             $_dir .= $_compile_id . $_dir_sep;
         } 
         if (isset($_compile_id)) {
-            $_compile_id_part = $this->smarty->compile_dir . $_compile_id . $_dir_sep;
+            $_compile_id_part = $_compile_dir . $_compile_id . $_dir_sep;
         } 
         $_count = 0;
         $_compileDirs = new RecursiveDirectoryIterator($_dir);
         $_compile = new RecursiveIteratorIterator($_compileDirs, RecursiveIteratorIterator::CHILD_FIRST);
         foreach ($_compile as $_file) {
-            if (substr($_file->getBasename(),0,1) == '.') continue;
+            if (substr($_file->getBasename(),0,1) == '.' || strpos($_file, '.svn') !== false) continue;
             if ($_file->isDir()) {
                 if (!$_compile->isDot()) {
                     // delete folder if empty
@@ -224,14 +213,14 @@ class Smarty_Internal_Utility {
      * @param object $templae template object
      * @return array of tag/attributes
      */
-	function getTags(Smarty_Internal_Template $template) 
+	static function getTags(Smarty_Internal_Template $template) 
 	{
 		$template->smarty->get_used_tags = true;
 		$template->compileTemplateSource();
-		return $template->compiler_object->used_tags;
+		return $template->compiler->used_tags;
 	}	
 	
-    function testInstall()
+    static function testInstall($smarty)
     {
         echo "<PRE>\n";
 
@@ -239,7 +228,7 @@ class Smarty_Internal_Utility {
 
         echo "Testing template directory...\n";
 
-        foreach((array)$this->smarty->template_dir as $template_dir) {
+        foreach($smarty->getTemplateDir() as $template_dir) {
             if (!is_dir($template_dir))
                 echo "FAILED: $template_dir is not a directory.\n";
             elseif (!is_readable($template_dir))
@@ -250,18 +239,19 @@ class Smarty_Internal_Utility {
 
         echo "Testing compile directory...\n";
 
-        if (!is_dir($this->smarty->compile_dir))
-            echo "FAILED: {$this->smarty->compile_dir} is not a directory.\n";
-        elseif (!is_readable($this->smarty->compile_dir))
-            echo "FAILED: {$this->smarty->compile_dir} is not readable.\n";
-        elseif (!is_writable($this->smarty->compile_dir))
-            echo "FAILED: {$this->smarty->compile_dir} is not writable.\n";
+        $_compile_dir = $smarty->getCompileDir();
+        if (!is_dir($_compile_dir))
+            echo "FAILED: {$_compile_dir} is not a directory.\n";
+        elseif (!is_readable($_compile_dir))
+            echo "FAILED: {$_compile_dir} is not readable.\n";
+        elseif (!is_writable($_compile_dir))
+            echo "FAILED: {$_compile_dir} is not writable.\n";
         else
-            echo "{$this->smarty->compile_dir} is OK.\n";
+            echo "{$_compile_dir} is OK.\n";
 
         echo "Testing plugins directory...\n";
 
-        foreach((array)$this->smarty->plugins_dir as $plugin_dir) {
+        foreach($smarty->getPluginsDir() as $plugin_dir) {
             if (!is_dir($plugin_dir))
                 echo "FAILED: $plugin_dir is not a directory.\n";
             elseif (!is_readable($plugin_dir))
@@ -272,23 +262,26 @@ class Smarty_Internal_Utility {
 
         echo "Testing cache directory...\n";
 
-        if (!is_dir($this->smarty->cache_dir))
-            echo "FAILED: {$this->smarty->cache_dir} is not a directory.\n";
-        elseif (!is_readable($this->smarty->cache_dir))
-            echo "FAILED: {$this->smarty->cache_dir} is not readable.\n";
-        elseif (!is_writable($this->smarty->cache_dir))
-            echo "FAILED: {$this->smarty->cache_dir} is not writable.\n";
+        $_cache_dir = $smarty->getCacheDir();
+        if (!is_dir($_cache_dir))
+            echo "FAILED: {$_cache_dir} is not a directory.\n";
+        elseif (!is_readable($_cache_dir))
+            echo "FAILED: {$_cache_dir} is not readable.\n";
+        elseif (!is_writable($_cache_dir))
+            echo "FAILED: {$_cache_dir} is not writable.\n";
         else
-            echo "{$this->smarty->cache_dir} is OK.\n";
+            echo "{$_cache_dir} is OK.\n";
 
         echo "Testing configs directory...\n";
 
-        if (!is_dir($this->smarty->config_dir))
-            echo "FAILED: {$this->smarty->config_dir} is not a directory.\n";
-        elseif (!is_readable($this->smarty->config_dir))
-            echo "FAILED: {$this->smarty->config_dir} is not readable.\n";
-        else
-            echo "{$this->smarty->config_dir} is OK.\n";
+        foreach($smarty->getConfigDir() as $config_dir) {
+            if (!is_dir($config_dir))
+                echo "FAILED: $config_dir is not a directory.\n";
+            elseif (!is_readable($config_dir))
+                echo "FAILED: $config_dir is not readable.\n";
+            else
+                echo "$config_dir is OK.\n";
+        }
 
         echo "Tests complete.\n";
 

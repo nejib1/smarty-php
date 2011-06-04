@@ -6,7 +6,7 @@
  * This file contains the basic classes and methodes for template and variable creation
  *
  * @package Smarty
- * @subpackage Templates
+ * @subpackage Template
  * @author Uwe Tews
  */
 
@@ -16,6 +16,10 @@
 class Smarty_Internal_Data {
     // class used for templates
     public $template_class = 'Smarty_Internal_Template';
+    // template variables
+    public $tpl_vars = array();
+    public $parent = null;
+    public $config_vars = array();
 
     /**
      * assigns a Smarty variable
@@ -30,12 +34,22 @@ class Smarty_Internal_Data {
         if (is_array($tpl_var)) {
             foreach ($tpl_var as $_key => $_val) {
                 if ($_key != '') {
-                    $this->tpl_vars[$_key] = new Smarty_variable($_val, $nocache);
+                    if (isset($this->tpl_vars[$_key])) {
+                        $this->tpl_vars[$_key]->value = $_val;
+                        $this->tpl_vars[$_key]->nocache = $nocache;
+                    } else {
+                        $this->tpl_vars[$_key] = new Smarty_variable($_val, $nocache);
+                    }
                 }
             }
         } else {
             if ($tpl_var != '') {
-                $this->tpl_vars[$tpl_var] = new Smarty_variable($value, $nocache);
+                if (isset($this->tpl_vars[$tpl_var])) {
+                    $this->tpl_vars[$tpl_var]->value = $value;
+                    $this->tpl_vars[$tpl_var]->nocache = $nocache;
+                } else {
+                    $this->tpl_vars[$tpl_var] = new Smarty_variable($value, $nocache);
+                }
             }
         }
     }
@@ -67,18 +81,6 @@ class Smarty_Internal_Data {
         }
     }
 
-    /**
-     * wrapper function for Smarty 2 BC
-     *
-     * @param string $tpl_var the template variable name
-     * @param mixed $ &$value the referenced value to assign
-     */
-    public function assign_by_ref($tpl_var, &$value)
-    {
-       	if($this->smarty->deprecation_notices)
-        	trigger_error("function call 'assign_by_ref' is unknown or deprecated, use 'assignByRef'", E_USER_NOTICE);
-        $this->assignByRef($tpl_var, $value);
-    }
     /**
      * appends values to template variables
      *
@@ -163,18 +165,6 @@ class Smarty_Internal_Data {
         }
     }
 
-     /**
-     *
-     * @param string $tpl_var the template variable name
-     * @param mixed $ &$value the referenced value to append
-     * @param boolean $merge flag if array elements shall be merged
-     */
-    public function append_by_ref($tpl_var, &$value, $merge = false)
-    {
-       	if($this->smarty->deprecation_notices)
-        	trigger_error("function call 'append_by_ref' is unknown or deprecated, use 'appendByRef'", E_USER_NOTICE);
-        $this->appendByRef($tpl_var, $value, $merge);
-    }
     /**
      * Returns a single or all template variables
      *
@@ -284,14 +274,10 @@ class Smarty_Internal_Data {
             return Smarty::$global_tpl_vars[$_variable];
         }
         if ($this->smarty->error_unassigned && $error_enable) {
-            throw new SmartyException('Undefined Smarty variable "' . $_variable . '"');
-        } else {
-        	if ($error_enable) {
-				// force a notice
-				$x = $$_variable;
-        	}
-            return new Undefined_Smarty_Variable;
+			// force a notice
+			$x = $$_variable;
         }
+		return new Undefined_Smarty_Variable;
     }
     /**
      * gets  a config variable
@@ -311,12 +297,10 @@ class Smarty_Internal_Data {
             $_ptr = $_ptr->parent;
         }
         if ($this->smarty->error_unassigned) {
-            throw new SmartyException('Undefined config variable "' . $_variable . '"');
-        } else {
 			// force a notice
 			$x = $$_variable;
-            return null;
-        }
+		}
+		return null;
     }
 
     /**
@@ -402,12 +386,6 @@ class Smarty_Internal_Data {
  * @param object $parent tpl_vars next higher level of Smarty variables
  */
 class Smarty_Data extends Smarty_Internal_Data {
-    // array of variable objects
-    public $tpl_vars = array();
-    // back pointer to parent object
-    public $parent = null;
-    // config vars
-    public $config_vars = array();
     // Smarty object
     public $smarty = null;
     /**
