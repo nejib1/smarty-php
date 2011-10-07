@@ -50,7 +50,7 @@ class Smarty_Internal_Compile_Block extends Smarty_Internal_CompileBase {
     {
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);
-        $save = array($_attr, $compiler->parser->current_buffer, $compiler->nocache, $compiler->smarty->merge_compiled_includes);
+        $save = array($_attr, $compiler->parser->current_buffer, $compiler->nocache, $compiler->smarty->merge_compiled_includes, $compiler->merged_templates);
         $this->openTag($compiler, 'block', $save);
         if ($_attr['nocache'] == true) {
             $compiler->nocache = true;
@@ -144,7 +144,7 @@ class Smarty_Internal_Compile_Block extends Smarty_Internal_CompileBase {
             $compiler->trigger_template_error('{$smarty.block.child} used out of context', $compiler->lex->taglineno);
         }
         // undefined child?
-        if (!isset($compiler->template->block_data[$_name]['source'])) {
+        if (!isset($compiler->template->block_data[$_name])) {
             return '';
         }
         $_tpl = new Smarty_Internal_template ('string:' . $compiler->template->block_data[$_name]['source'], $compiler->smarty, $compiler->template, $compiler->template->cache_id,
@@ -152,7 +152,6 @@ class Smarty_Internal_Compile_Block extends Smarty_Internal_CompileBase {
         $_tpl->variable_filters = $compiler->template->variable_filters;
         $_tpl->properties['nocache_hash'] = $compiler->template->properties['nocache_hash'];
         $_tpl->source->filepath = $compiler->template->block_data[$_name]['file'];
-        $_tpl->allow_relative_path = true;
         if ($compiler->nocache) {
             $_tpl->compiler->forceNocache = 2;
         } else {
@@ -213,9 +212,11 @@ class Smarty_Internal_Compile_Blockclose extends Smarty_Internal_CompileBase {
         $saved_data = $this->closeTag($compiler, array('block'));
         $_name = trim($saved_data[0]['name'], "\"'");
         if (isset($compiler->template->block_data[$_name]) && !isset($compiler->template->block_data[$_name]['compiled'])) {
+            $compiler->merged_templates = $saved_data[4];
             $_output = Smarty_Internal_Compile_Block::compileChildBlock($compiler, $_name);
         } else {
             if (isset($saved_data[0]['hide']) && !isset($compiler->template->block_data[$_name]['source'])) {
+                $compiler->merged_templates = $saved_data[4];
                 $_output = '';
             } else {
                 $_output = $compiler->parser->current_buffer->to_smarty_php();

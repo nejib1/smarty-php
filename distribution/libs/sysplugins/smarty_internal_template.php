@@ -42,6 +42,19 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase {
      */
     public $cache_lifetime = null;
     /**
+     * Class name
+     * @var string
+     */
+    public $cacher_class = null;
+    /**
+     * caching type
+     *
+     * Must be an element of $cache_resource_types.
+     *
+     * @var string
+     */
+    public $caching_type = null;
+    /**
      * Template resource
      * @var string
      */
@@ -88,11 +101,6 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase {
      * @var array
      */
     public $used_tags = array();
-    /**
-     * internal flag to allow relative path in child template blocks
-     * @var bool
-     */
-    public $allow_relative_path = false;
 
     /**
      * Create template data object
@@ -137,12 +145,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase {
     public function mustCompile()
     {
         if (!$this->source->exists) {
-            if ($this->parent instanceof Smarty_Internal_Template) {
-                $parent_resource = " in '$this->parent->template_resource}'";
-            } else {
-                $parent_resource = '';
-            }
-            throw new SmartyException("Unable to load template {$this->source->type} '{$this->source->name}'{$parent_resource}");
+            throw new SmartyException("Unable to load template {$this->source->type} '{$this->source->name}'");
         }
         if ($this->mustCompile === null) {
             $this->mustCompile = (!$this->source->uncompiled && ($this->smarty->force_compile || $this->source->recompiled || $this->compiled->timestamp === false ||
@@ -217,12 +220,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase {
         }
         $this->properties['cache_lifetime'] = $this->cache_lifetime;
         $this->properties['unifunc'] = 'content_' . uniqid();
-        $content = $this->createTemplateCodeFrame($content, true);
-        $_smarty_tpl = $this;
-        eval("?>" . $content);
-        $this->cached->valid = true;
-        $this->cached->processed = true;
-        return $this->cached->write($this, $content);
+        return $this->cached->write($this, $this->createTemplateCodeFrame($content, true));
     }
 
     /**
@@ -240,7 +238,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase {
     public function getSubTemplate($template, $cache_id, $compile_id, $caching, $cache_lifetime, $data, $parent_scope)
     {
         // already in template cache?
-        $_templateId = sha1($this->smarty->joined_template_dir.$template . $cache_id . $compile_id);
+        $_templateId = sha1($template . $cache_id . $compile_id);
         if (isset($this->smarty->template_objects[$_templateId])) {
             // clone cached template object because of possible recursive call
             $tpl = clone $this->smarty->template_objects[$_templateId];
@@ -269,7 +267,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase {
                 $tpl->tpl_vars[$_key] = new Smarty_variable($_val);
             }
         }
-        return $tpl->fetch(null, null, null, null, false, false, true);
+        return $tpl->fetch(null, null, null, null, false, false);
     }
 
     /**
@@ -360,14 +358,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase {
                 // copy code of {function} tags called in nocache mode
                 foreach ($this->smarty->template_functions as $name => $function_data) {
                     if (isset($function_data['called_nocache'])) {
-                        foreach ($function_data['called_functions'] as $func_name) {
-                            $this->smarty->template_functions[$func_name]['called_nocache'] = true;
-                        }
-                    }
-                }
-                 foreach ($this->smarty->template_functions as $name => $function_data) {
-                    if (isset($function_data['called_nocache'])) {
-                        unset($function_data['called_nocache'], $function_data['called_functions'], $this->smarty->template_functions[$name]['called_nocache']);
+                        unset($function_data['called_nocache'], $this->smarty->template_functions[$name]['called_nocache']);
                         $this->properties['function'][$name] = $function_data;
                     }
                 }
@@ -415,26 +406,21 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase {
             $this->properties['function'] = array_merge($this->properties['function'], $properties['function']);
             $this->smarty->template_functions = array_merge($this->smarty->template_functions, $properties['function']);
         }
-        $this->properties['version'] = (isset($properties['version'])) ? $properties['version'] : '';
+        $this->properties['version'] = $properties['version'];
         $this->properties['unifunc'] = $properties['unifunc'];
         // check file dependencies at compiled code
         $is_valid = true;
         if ($this->properties['version'] != Smarty::SMARTY_VERSION) {
             $is_valid = false;
-        } else if (((!$cache && $this->smarty->compile_check && empty($this->compiled->_properties) && !$this->compiled->isCompiled) || $cache && ($this->smarty->compile_check === true || $this->smarty->compile_check === Smarty::COMPILECHECK_ON)) && !empty($this->properties['file_dependency'])) {
+        } else if (((!$cache && $this->smarty->compile_check) || $this->smarty->compile_check === true || $this->smarty->compile_check === Smarty::COMPILECHECK_ON) && !empty($this->properties['file_dependency'])) {
             foreach ($this->properties['file_dependency'] as $_file_to_check) {
-                if ($_file_to_check[2] == 'file' || $_file_to_check[2] == 'php') {
-                    if ($this->source->filepath == $_file_to_check[0] && isset($this->source->timestamp)) {
-                        // do not recheck current template
-                        $mtime = $this->source->timestamp;
-                    } else {
-                        // file and php types can be checked without loading the respective resource handlers
-                        $mtime = filemtime($_file_to_check[0]);
-                    }
+                if ($_file_to_check[2] == 'file') {
+                    // file and php types can be checked without loading the respective resource handlers
+                    $mtime = filemtime($_file_to_check[0]);
                 } elseif ($_file_to_check[2] == 'string') {
                     continue;
                 } else {
-                    $source = Smarty_Resource::source(null, $this->smarty, $_file_to_check[0]);
+                    $source = Smarty_Resource::source($this, $this->smarty, $_file_to_check[0]);
                     $mtime = $source->timestamp;
                 }
                 if ($mtime > $_file_to_check[1]) {
@@ -447,10 +433,6 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase {
             $this->cached->valid = $is_valid;
         } else {
             $this->mustCompile = !$is_valid;
-        }
-        // store data in reusable Smarty_Template_Compiled
-        if (!$cache) {
-            $this->compiled->_properties = $properties;
         }
         return $is_valid;
     }
@@ -490,7 +472,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase {
         } elseif ($scope == Smarty::SCOPE_ROOT && !empty($this->parent)) {
             $ptr = $this->parent;
             while (!empty($ptr->parent)) {
-                $ptr = $ptr->parent;
+                $ptr = $this->parent;
             }
             return $ptr->tpl_vars;
         } elseif ($scope == Smarty::SCOPE_GLOBAL) {
@@ -513,7 +495,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase {
         } elseif ($scope == Smarty::SCOPE_ROOT && !empty($this->parent)) {
             $ptr = $this->parent;
             while (!empty($ptr->parent)) {
-                $ptr = $ptr->parent;
+                $ptr = $this->parent;
             }
             return $ptr;
         }
@@ -530,12 +512,11 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase {
     {
         if (is_array($value) === true || $value instanceof Countable) {
             return count($value);
-        } elseif ($value instanceof IteratorAggregate) {
-            // Note: getIterator() returns a Traversable, not an Iterator
-            // thus rewind() and valid() methods may not be present
-            return iterator_count($value->getIterator());
         } elseif ($value instanceof Iterator) {
-            return iterator_count($value);
+            $value->rewind();
+            if ($value->valid()) {
+                return iterator_count($value);
+            }
         } elseif ($value instanceof PDOStatement) {
             return $value->rowCount();
         } elseif ($value instanceof Traversable) {
@@ -593,7 +574,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase {
                 // cache template object under a unique ID
                 // do not cache eval resources
                 if ($this->source->type != 'eval') {
-                    $this->smarty->template_objects[sha1($this->smarty->joined_template_dir.$this->template_resource . $this->cache_id . $this->compile_id)] = $this;
+                    $this->smarty->template_objects[sha1($this->template_resource . $this->cache_id . $this->compile_id)] = $this;
                 }
                 return $this->source;
 
@@ -621,17 +602,6 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase {
         }
 
         throw new SmartyException("template property '$property_name' does not exist.");
-    }
-
-    /**
-     * Template data object destrutor
-     *
-     */
-    public function __destruct()
-    {
-        if ($this->smarty->cache_locking && isset($this->cached) && $this->cached->is_locked) {
-            $this->cached->handler->releaseLock($this->smarty, $this->cached);
-        }
     }
 
 }

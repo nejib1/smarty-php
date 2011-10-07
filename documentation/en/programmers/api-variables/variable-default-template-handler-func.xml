@@ -6,14 +6,8 @@
   This function is called when a template cannot be obtained from
   its resource.
  </para>
- <note>
-  <para>
-   The default handler is currently only invoked for file resources. 
-   It is not triggered when the resource itself cannot be found, in which case a SmartyException is thrown.
-  </para>
- </note>
  <example>
-  <title>$default_template_handler_func</title>
+  <title>getTemplateDir()</title>
   <programlisting role="php">
 <![CDATA[
 <?php

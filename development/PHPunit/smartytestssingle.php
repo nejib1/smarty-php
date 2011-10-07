@@ -31,7 +31,7 @@ class SmartyTests extends PHPUnit_Framework_TestSuite {
         $smarty->plugins_dir = array(SMARTY_PLUGINS_DIR);
         $smarty->cache_dir = '.' . DS . 'cache' . DS;
         $smarty->config_dir = array('.' . DS . 'configs' . DS);
-        $smarty->template_objects = array();
+        $smarty->template_objects = null;
         $smarty->config_vars = array();
         Smarty::$global_tpl_vars = array();
         $smarty->template_functions = array();
@@ -45,7 +45,6 @@ class SmartyTests extends PHPUnit_Framework_TestSuite {
         $smarty->registered_plugins = array();
         $smarty->default_plugin_handler_func = null;
         $smarty->registered_objects = array();
-        $smarty->default_modifiers = array();
         $smarty->registered_filters = array();
         $smarty->autoload_filters = array();
         $smarty->escape_html = false;
@@ -69,9 +68,6 @@ class SmartyTests extends PHPUnit_Framework_TestSuite {
         self::_init(SmartyTests::$smarty);
         self::_init(SmartyTests::$smartyBC);
         SmartyTests::$smartyBC->registerPlugin('block','php','smarty_php_tag');
-        Smarty_Resource::$sources = array();
-        Smarty_Resource::$compileds = array();
-//        Smarty_Resource::$resources = array();
     }
     /**
      * look for test units and run them
@@ -79,7 +75,7 @@ class SmartyTests extends PHPUnit_Framework_TestSuite {
     public static function suite()
     {
         $testorder = array(
-            'PluginFunctionHtmlCheckboxesTests'
+            'ClearCompiledTests'
         );
         $smarty_libs_dir = dirname(__FILE__) . '/../../distribution/libs';
         if (method_exists('PHPUnit_Util_Filter', $smarty_libs_dir)) {

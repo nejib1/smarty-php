@@ -48,7 +48,6 @@ class Smarty_Internal_Compile_Config_Load extends Smarty_Internal_CompileBase {
      */
     public function compile($args, $compiler)
     {
-        static $_is_legal_scope = array('local' => true,'parent' => true,'root' => true,'global' => true);
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);
 
@@ -68,7 +67,7 @@ class Smarty_Internal_Compile_Config_Load extends Smarty_Internal_CompileBase {
         // scope setup
         if (isset($_attr['scope'])) {
             $_attr['scope'] = trim($_attr['scope'], "'\"");
-            if (isset($_is_legal_scope[$_attr['scope']])) {
+            if (in_array($_attr['scope'],array('local','parent','root','global'))) {
                 $scope = $_attr['scope'];
            } else {
                 $compiler->trigger_template_error('illegal value for "scope" attribute', $compiler->lex->taglineno);

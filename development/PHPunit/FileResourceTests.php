@@ -245,30 +245,15 @@ class FileResourceTests extends PHPUnit_Framework_TestCase {
         $this->assertTrue($tpl->isCached());
     }
     /**
-    * test force_cache
-    */
-    public function testForceCache()
-    {
-        $this->smarty->caching = true;
-        $this->smarty->force_cache = true;
-        $this->smarty->cache_lifetime = 1000;
-        $tpl = $this->smarty->createTemplate('helloworld.tpl');
-        $this->assertFalse($tpl->isCached());
-    }
-    /**
     * test isCached on touched source
     */
-    public function testIsCachedTouchedSourcePrepare()
-    {
-        $tpl = $this->smarty->createTemplate('helloworld.tpl');
-        sleep(1);
-        touch ($tpl->source->filepath);
-    }
     public function testIsCachedTouchedSource()
     {
         $this->smarty->caching = true;
         $this->smarty->cache_lifetime = 1000;
         $tpl = $this->smarty->createTemplate('helloworld.tpl');
+        sleep(1);
+        touch ($tpl->source->filepath);
         $this->assertFalse($tpl->isCached());
     }
     /**
@@ -338,6 +323,30 @@ class FileResourceTests extends PHPUnit_Framework_TestCase {
     {
         $tpl = $this->smarty->createTemplate('helloworld.tpl');
         $this->assertFalse($this->smarty->isCached($tpl));
+    }
+
+    public function testRelativeDot()
+    {
+        try {
+            $this->smarty->fetch('./helloworld.tpl');
+        }
+        catch (Exception $e) {
+            $this->assertContains("may not start with ../ or ./", $e->getMessage());
+            return;
+        }
+        $this->fail('Exception for relative filepath has not been raised.');
+    }
+
+    public function testRelativeDotDot()
+    {
+        try {
+            $this->smarty->fetch('../helloworld.tpl');
+        }
+        catch (Exception $e) {
+            $this->assertContains("may not start with ../ or ./", $e->getMessage());
+            return;
+        }
+        $this->fail('Exception for relative filepath has not been raised.');
     }
 
     public function testRelativeInclude()

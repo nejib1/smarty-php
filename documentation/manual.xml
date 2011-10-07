@@ -50,16 +50,14 @@
 
  <part id="smarty.for.programmers">
   <title>&SMARTYProgrammers;</title>
-  
-  &programmers.charset;
+
   &programmers.smarty-constants;
+  <!-- &programmers.charset; -->
   &programmers.api-variables;
   &programmers.api-functions;
   &programmers.caching;
-  &programmers.resources;
   &programmers.advanced-features;
   &programmers.plugins;
-  &programmers.bc;
  </part>
  
 <part id="appendixes">

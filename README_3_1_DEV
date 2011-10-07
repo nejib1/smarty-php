@@ -52,8 +52,8 @@ prevent entities from being encoded again.
 The capitalize modifier now know the $lc_rest option, which makes sure
 all letters following a captial letter are lower-cased.
 
-The count_sentences modifier now accepts (.?!) as
-legitimate endings of a sentence - previously only (.) was
+The count_sentences modifier now accepts ».?!« as
+legitimate endings of a sentence - previously only ».« was
 accepted
 
 The new unescape modifier is there to reverse the effects of the
@@ -97,6 +97,8 @@ function default_template_handler_func($type, $name, &$content, &$modified, Smar
 }
 
   Stuff done to the compiler
+
+@todo uwe.tews
 
 Many performance improvements have happened internally. One notable
 improvement is that all compiled templates are now handled as PHP
@@ -186,10 +188,6 @@ Note that old-fashioned registration of $cache_handler is not possible
 anymore. As the functionality had not been ported to Smarty 3.0.x
 properly, it has been dropped from 3.1 completely.
 
-Locking facilities have been implemented to avoid concurrent cache 
-generation. Enable cache locking by setting 
-$smarty->cache_locking = true;
-
   Relative Paths in Templates (File-Resource)
 
 As of Smarty 3.1 {include file="../foo.tpl"} and {include
@@ -258,9 +256,7 @@ default_config_handler_func() has been introduced.
 
   default_plugin_handler_func()
 
-An optional default_plugin_handler_func() can be defined which gets called 
-by the compiler on tags which can't be resolved internally or by plugins.
-The default_plugin_handler() can map tags to plugins on the fly.
+@todo uwe.tews
 
 New getters/setters
 

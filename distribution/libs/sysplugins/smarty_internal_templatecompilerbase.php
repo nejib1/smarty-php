@@ -98,16 +98,6 @@ abstract class Smarty_Internal_TemplateCompilerBase {
      */
     public $write_compiled_code = true;
     /**
-     * flag if currently a template function is compiled
-     * @var bool
-     */
-    public $compiles_template_function = false;
-    /**
-     * called subfuntions from template function
-     * @var array
-     */
-    public $called_functions = array();
-    /**
      * flags for used modifier plugins
      * @var array
      */
@@ -139,8 +129,6 @@ abstract class Smarty_Internal_TemplateCompilerBase {
         $this->tag_nocache = false;
         // save template object in compiler class
         $this->template = $template;
-        // reset has noche code flag
-        $this->template->has_nocache_code = false; 
         $this->smarty->_current_file = $saved_filepath = $this->template->source->filepath;
         // template header code
         $template_header = '';
@@ -270,12 +258,8 @@ abstract class Smarty_Internal_TemplateCompilerBase {
                         // if compiler function plugin call it now
                         if ($plugin_type == Smarty::PLUGIN_COMPILER) {
                             $new_args = array();
-                            foreach ($args as $key => $mixed) {
-                            	if (is_array($mixed)) {
-                                	$new_args = array_merge($new_args, $mixed);
-                                } else {
-                                	$new_args[$key] = $mixed;
-                                }
+                            foreach ($args as $mixed) {
+                                $new_args = array_merge($new_args, $mixed);
                             }
                             if (!$this->smarty->registered_plugins[$plugin_type][$tag][1]) {
                                 $this->tag_nocache = true;
@@ -303,12 +287,8 @@ abstract class Smarty_Internal_TemplateCompilerBase {
                         if (is_callable($plugin)) {
                             // convert arguments format for old compiler plugins
                             $new_args = array();
-                            foreach ($args as $key => $mixed) {
-                            	if (is_array($mixed)) {
-                                	$new_args = array_merge($new_args, $mixed);
-                                } else {
-                                	$new_args[$key] = $mixed;
-                                }
+                            foreach ($args as $mixed) {
+                                $new_args = array_merge($new_args, $mixed);
                             }
                             return $plugin($new_args, $this->smarty);
                         }
@@ -554,9 +534,8 @@ abstract class Smarty_Internal_TemplateCompilerBase {
             ($this->nocache || $this->tag_nocache || $this->forceNocache == 2)) {
                 $this->template->has_nocache_code = true;
                 $_output = str_replace("'", "\'", $content);
-                $_output = str_replace('\\\\', '\\\\\\\\', $_output);
                 $_output = str_replace("^#^", "'", $_output);
-                $_output = "<?php echo '/*%%SmartyNocache:{$this->nocache_hash}%%*/" . $_output . "/*/%%SmartyNocache:{$this->nocache_hash}%%*/';?>\n";
+                $_output = "<?php echo '/*%%SmartyNocache:{$this->nocache_hash}%%*/" . $_output . "/*/%%SmartyNocache:{$this->nocache_hash}%%*/';?>";
                 // make sure we include modifer plugins for nocache code
                 foreach ($this->modifier_plugins as $plugin_name => $dummy) {
                     if (isset($this->template->required_plugins['compiled'][$plugin_name]['modifier'])) {

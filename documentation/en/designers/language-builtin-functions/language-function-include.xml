@@ -45,7 +45,7 @@
 
   <listitem><para>
   Use the syntax for <link
-  linkend="resources">template resources</link> to
+  linkend="template.resources">template resources</link> to
   <varname>{include}</varname> files outside of the
   <link linkend="variable.template.dir"><parameter>$template_dir</parameter></link>  directory.
   </para></listitem>
@@ -276,18 +276,6 @@
 ]]>
    </programlisting>
  </example>
- 
- <example>
-    <title>{include} with relative paths</title>
-    <para>This example includes another template relative to the directory of the current template.</para>
-    <programlisting>
-<![CDATA[
-   {include 'template-in-a-template_dir-directory.tpl'}
-   {include './template-in-same-directory.tpl'}
-   {include '../template-in-parent-directory.tpl'}
-]]>
-    </programlisting>
-  </example>
 
  <example>
   <title>Various {include} resource examples</title>
@@ -321,7 +309,7 @@
   <link linkend="language.function.include.php"><varname>{include_php}</varname></link>,
   <link linkend="language.function.insert"><varname>{insert}</varname></link>,
   <link linkend="language.function.php"><varname>{php}</varname></link>,
-  <link linkend="resources">template resources</link> and
+  <link linkend="template.resources">template resources</link> and
   <link linkend="tips.componentized.templates">componentized templates</link>.
  </para>
 </sect1>

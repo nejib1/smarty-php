@@ -6,15 +6,6 @@
  * @subpackage Security
  * @author Uwe Tews
  */
- 
-/*
- * FIXME: Smarty_Security API
- *      - getter and setter instead of public properties would allow cultivating an internal cache properly
- *      - current implementation of isTrustedResourceDir() assumes that Smarty::$template_dir and Smarty::$config_dir are immutable
- *        the cache is killed every time either of the variables change. That means that two distinct Smarty objects with differing
- *        $template_dir or $config_dir should NOT share the same Smarty_Security instance, 
- *        as this would lead to (severe) performance penalty! how should this be handled? 
- */
 
 /**
  * This class does contain the security settings
@@ -98,17 +89,17 @@ class Smarty_Security {
     /**
      * This is an array of allowed modifier plugins.
      *
-     * If empty no restriction by allowed_modifiers.
+     * If empty no restriction by allowed_modifier.
      * @var array
      */
-    public $allowed_modifiers = array();
+    public $allowed_modifier = array();
     /**
      * This is an array of disabled modifier plugins.
      *
-     * If empty no restriction by disabled_modifiers.
+     * If empty no restriction by disabled_modifier.
      * @var array
      */
-    public $disabled_modifiers = array();
+    public $disabled_modifier = array();
     /**
      * This is an array of trusted streams.
      *
@@ -129,45 +120,38 @@ class Smarty_Security {
     public $allow_super_globals = true;
 
     /**
-     * Cache for $resource_dir lookups
-     * @var array
-     */
-    protected $_resource_dir = null;
-    /**
-     * Cache for $template_dir lookups
-     * @var array
-     */
-    protected $_template_dir = null;
-    /**
-     * Cache for $config_dir lookups
-     * @var array
-     */
-    protected $_config_dir = null;
-    /**
-     * Cache for $secure_dir lookups
-     * @var array
-     */
-    protected $_secure_dir = null;
-    /**
-     * Cache for $php_resource_dir lookups
-     * @var array
-     */
-    protected $_php_resource_dir = null;
-    /**
-     * Cache for $trusted_dir lookups
-     * @var array
-     */
-    protected $_trusted_dir = null;
-    
-    
-    /**
-     * @param Smarty $smarty
+     * @param Smarty $smarty 
      */
     public function __construct($smarty)
     {
         $this->smarty = $smarty;
     }
-    
+
+    /**
+     * @var string
+     */
+    protected $_resource_dir = null;
+    /**
+     * @var string
+     */
+    protected $_template_dir = null;
+    /**
+     * @var string
+     */
+    protected $_config_dir = null;
+    /**
+     * @var string
+     */
+    protected $_secure_dir = null;
+    /**
+     * @var string
+     */
+    protected $_php_resource_dir = null;
+    /**
+     * @var string
+     */
+    protected $_trusted_dir = null;
+
     /**
      * Check if PHP function is trusted.
      *
@@ -267,13 +251,13 @@ class Smarty_Security {
             return true;
         }
         // check security settings
-        if (empty($this->allowed_modifiers)) {
-            if (empty($this->disabled_modifiers) || !in_array($modifier_name, $this->disabled_modifiers)) {
+        if (empty($this->allowed_modifier)) {
+            if (empty($this->disabled_modifier) || !in_array($modifier_name, $this->disabled_modifier)) {
                 return true;
             } else {
                 $compiler->trigger_template_error("modifier '{$modifier_name}' disabled by security setting", $compiler->lex->taglineno);
             }
-        } else if (in_array($modifier_name, $this->allowed_modifiers) && !in_array($modifier_name, $this->disabled_modifiers)) {
+        } else if (in_array($modifier_name, $this->allowed_modifier) && !in_array($modifier_name, $this->disabled_modifier)) {
             return true;
         } else {
             $compiler->trigger_template_error("modifier '{$modifier_name}' not allowed by security setting", $compiler->lex->taglineno);
@@ -364,7 +348,7 @@ class Smarty_Security {
                 return true;
             }
             // abort if we've reached root
-            if (($pos = strrpos($directory, DS)) === false || !isset($directory[1])) {
+            if (($pos = strrpos($directory, DS)) === false || strlen($directory) < 2) {
                 break;
             }
             // bubble up one level
@@ -412,7 +396,7 @@ class Smarty_Security {
                 return true;
             }
             // abort if we've reached root
-            if (($pos = strrpos($directory, DS)) === false || !isset($directory[2])) {
+            if (($pos = strrpos($directory, DS)) === false || strlen($directory) < 2) {
                 break;
             }
             // bubble up one level

@@ -26,12 +26,12 @@ class SmartyTests extends PHPUnit_Framework_TestSuite {
 
     protected static function _init($smarty)
     {
-        $smarty->setTemplateDir('.' . DS . 'templates' . DS);
-        $smarty->setCompileDir('.' . DS . 'templates_c' . DS);
-        $smarty->setPluginsDir(SMARTY_PLUGINS_DIR);
-        $smarty->setCacheDir('.' . DS . 'cache' . DS);
-        $smarty->setConfigDir('.' . DS . 'configs' . DS);
-        $smarty->template_objects = array();
+        $smarty->template_dir = array('.' . DS . 'templates' . DS);
+        $smarty->compile_dir = '.' . DS . 'templates_c' . DS;
+        $smarty->plugins_dir = array(SMARTY_PLUGINS_DIR);
+        $smarty->cache_dir = '.' . DS . 'cache' . DS;
+        $smarty->config_dir = array('.' . DS . 'configs' . DS);
+        $smarty->template_objects = null;
         $smarty->config_vars = array();
         Smarty::$global_tpl_vars = array();
         $smarty->template_functions = array();
@@ -45,7 +45,6 @@ class SmartyTests extends PHPUnit_Framework_TestSuite {
         $smarty->registered_plugins = array();
         $smarty->default_plugin_handler_func = null;
         $smarty->registered_objects = array();
-        $smarty->default_modifiers = array();
         $smarty->registered_filters = array();
         $smarty->autoload_filters = array();
         $smarty->escape_html = false;
@@ -61,7 +60,6 @@ class SmartyTests extends PHPUnit_Framework_TestSuite {
         $smarty->error_reporting = null;
         $smarty->error_unassigned = true;
         $smarty->caching_type = 'file';
-        $smarty->cache_locking = false;
     }
 
     public static function init()
@@ -69,9 +67,6 @@ class SmartyTests extends PHPUnit_Framework_TestSuite {
         error_reporting(E_ALL | E_STRICT);
         self::_init(SmartyTests::$smarty);
         self::_init(SmartyTests::$smartyBC);
-        Smarty_Resource::$sources = array();
-        Smarty_Resource::$compileds = array();
-//        Smarty_Resource::$resources = array();
         SmartyTests::$smartyBC->registerPlugin('block','php','smarty_php_tag');
     }
     /**

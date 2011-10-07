@@ -78,36 +78,31 @@ function smarty_block_textformat($params, $content, $template, &$repeat)
     $_paragraphs = preg_split('![\r\n]{2}!', $content);
     $_output = '';
 
-
-    foreach ($_paragraphs as &$_paragraph) {
-        if (!$_paragraph) {
+    for($_x = 0, $_y = count($_paragraphs); $_x < $_y; $_x++) {
+        if ($_paragraphs[$_x] == '') {
             continue;
         }
         // convert mult. spaces & special chars to single space
-        $_paragraph = preg_replace(array('!\s+!u', '!(^\s+)|(\s+$)!u'), array(' ', ''), $_paragraph);
+        $_paragraphs[$_x] = preg_replace(array('!\s+!u', '!(^\s+)|(\s+$)!u'), array(' ', ''), $_paragraphs[$_x]);
         // indent first line
         if ($indent_first > 0) {
-            $_paragraph = str_repeat($indent_char, $indent_first) . $_paragraph;
+            $_paragraphs[$_x] = str_repeat($indent_char, $indent_first) . $_paragraphs[$_x];
         }
         // wordwrap sentences
         if (SMARTY_MBSTRING /* ^phpunit */&&empty($_SERVER['SMARTY_PHPUNIT_DISABLE_MBSTRING'])/* phpunit$ */) {
             require_once(SMARTY_PLUGINS_DIR . 'shared.mb_wordwrap.php');
-            $_paragraph = smarty_mb_wordwrap($_paragraph, $wrap - $indent, $wrap_char, $wrap_cut);
+            $_paragraphs[$_x] = smarty_mb_wordwrap($_paragraphs[$_x], $wrap - $indent, $wrap_char, $wrap_cut);
         } else {
-            $_paragraph = wordwrap($_paragraph, $wrap - $indent, $wrap_char, $wrap_cut);
+            $_paragraphs[$_x] = wordwrap($_paragraphs[$_x], $wrap - $indent, $wrap_char, $wrap_cut);
         }
         // indent lines
         if ($indent > 0) {
-            $_paragraph = preg_replace('!^!m', str_repeat($indent_char, $indent), $_paragraph);
+            $_paragraphs[$_x] = preg_replace('!^!m', str_repeat($indent_char, $indent), $_paragraphs[$_x]);
         }
     }
     $_output = implode($wrap_char . $wrap_char, $_paragraphs);
-    
-    if ($assign) {
-        $template->assign($assign, $_output);
-    } else {
-        return $_output;
-    }
+
+    return $assign ? $template->assign($assign, $_output) : $_output;
 }
 
 ?>

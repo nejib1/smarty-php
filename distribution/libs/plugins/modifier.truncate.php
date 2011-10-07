@@ -43,7 +43,7 @@ function smarty_modifier_truncate($string, $length = 80, $etc = '...', $break_wo
     }
     
     // no MBString fallback
-    if (isset($string[$length])) {
+    if (strlen($string) > $length) {
         $length -= min($length, strlen($etc));
         if (!$break_words && !$middle) {
             $string = preg_replace('/\s+?(\S+)?$/', '', substr($string, 0, $length + 1));

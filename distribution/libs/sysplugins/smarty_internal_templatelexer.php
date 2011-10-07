@@ -22,58 +22,58 @@ class Smarty_Internal_Templatelexer
     public $state = 1;
     public $strip = false;
     private $heredoc_id_stack = Array();
-    public $smarty_token_names = array (		// Text for parser error messages
-    				'IDENTITY'	=> '===',
-    				'NONEIDENTITY'	=> '!==',
-    				'EQUALS'	=> '==',
-    				'NOTEQUALS'	=> '!=',
-    				'GREATEREQUAL' => '(>=,ge)',
-    				'LESSEQUAL' => '(<=,le)',
-    				'GREATERTHAN' => '(>,gt)',
-    				'LESSTHAN' => '(<,lt)',
-    				'MOD' => '(%,mod)',
-    				'NOT'			=> '(!,not)',
-    				'LAND'		=> '(&&,and)',
-    				'LOR'			=> '(||,or)',
-    				'LXOR'			=> 'xor',
-    				'OPENP'		=> '(',
-    				'CLOSEP'	=> ')',
-    				'OPENB'		=> '[',
-    				'CLOSEB'	=> ']',
-    				'PTR'			=> '->',
-    				'APTR'		=> '=>',
-    				'EQUAL'		=> '=',
-    				'NUMBER'	=> 'number',
-    				'UNIMATH'	=> '+" , "-',
-    				'MATH'		=> '*" , "/" , "%',
-    				'INCDEC'	=> '++" , "--',
-    				'SPACE'		=> ' ',
-    				'DOLLAR'	=> '$',
-    				'SEMICOLON' => ';',
-    				'COLON'		=> ':',
-    				'DOUBLECOLON'		=> '::',
-    				'AT'		=> '@',
-    				'HATCH'		=> '#',
-    				'QUOTE'		=> '"',
-    				'BACKTICK'		=> '`',
-    				'VERT'		=> '|',
-    				'DOT'			=> '.',
-    				'COMMA'		=> '","',
-    				'ANDSYM'		=> '"&"',
-    				'QMARK'		=> '"?"',
-    				'ID'			=> 'identifier',
-    				'OTHER'		=> 'text',
-    				'LINEBREAK'		=> 'newline',
-     				'FAKEPHPSTARTTAG'	=> 'Fake PHP start tag',
-     				'PHPSTARTTAG'	=> 'PHP start tag',
-     				'PHPENDTAG'	=> 'PHP end tag',
- 						'LITERALSTART'  => 'Literal start',
- 						'LITERALEND'    => 'Literal end',
-    				'LDELSLASH' => 'closing tag',
-    				'COMMENT' => 'comment',
-    				'AS' => 'as',
-    				'TO' => 'to',
-    				);
+    public $smarty_token_names = array (        // Text for parser error messages
+                    'IDENTITY'    => '===',
+                    'NONEIDENTITY'    => '!==',
+                    'EQUALS'    => '==',
+                    'NOTEQUALS'    => '!=',
+                    'GREATEREQUAL' => '(>=,ge)',
+                    'LESSEQUAL' => '(<=,le)',
+                    'GREATERTHAN' => '(>,gt)',
+                    'LESSTHAN' => '(<,lt)',
+                    'MOD' => '(%,mod)',
+                    'NOT'            => '(!,not)',
+                    'LAND'        => '(&&,and)',
+                    'LOR'            => '(||,or)',
+                    'LXOR'            => 'xor',
+                    'OPENP'        => '(',
+                    'CLOSEP'    => ')',
+                    'OPENB'        => '[',
+                    'CLOSEB'    => ']',
+                    'PTR'            => '->',
+                    'APTR'        => '=>',
+                    'EQUAL'        => '=',
+                    'NUMBER'    => 'number',
+                    'UNIMATH'    => '+" , "-',
+                    'MATH'        => '*" , "/" , "%',
+                    'INCDEC'    => '++" , "--',
+                    'SPACE'        => ' ',
+                    'DOLLAR'    => '$',
+                    'SEMICOLON' => ';',
+                    'COLON'        => ':',
+                    'DOUBLECOLON'        => '::',
+                    'AT'        => '@',
+                    'HATCH'        => '#',
+                    'QUOTE'        => '"',
+                    'BACKTICK'        => '`',
+                    'VERT'        => '|',
+                    'DOT'            => '.',
+                    'COMMA'        => '","',
+                    'ANDSYM'        => '"&"',
+                    'QMARK'        => '"?"',
+                    'ID'            => 'identifier',
+                    'OTHER'        => 'text',
+                    'LINEBREAK'        => 'newline',
+                     'FAKEPHPSTARTTAG'    => 'Fake PHP start tag',
+                     'PHPSTARTTAG'    => 'PHP start tag',
+                     'PHPENDTAG'    => 'PHP end tag',
+                         'LITERALSTART'  => 'Literal start',
+                         'LITERALEND'    => 'Literal end',
+                    'LDELSLASH' => 'closing tag',
+                    'COMMENT' => 'comment',
+                    'AS' => 'as',
+                    'TO' => 'to',
+                    );
 
 
     function __construct($data,$compiler)
@@ -87,9 +87,8 @@ class Smarty_Internal_Templatelexer
         $this->ldel = preg_quote($this->smarty->left_delimiter,'/');
         $this->ldel_length = strlen($this->smarty->left_delimiter);
         $this->rdel = preg_quote($this->smarty->right_delimiter,'/');
-        $this->smarty_token_names['LDEL'] =	$this->smarty->left_delimiter;
-        $this->smarty_token_names['RDEL'] =	$this->smarty->right_delimiter;
-        $this->mbstring_overload = ini_get('mbstring.func_overload') & 2;
+        $this->smarty_token_names['LDEL'] =    $this->smarty->left_delimiter;
+        $this->smarty_token_names['RDEL'] =    $this->smarty->right_delimiter;
      }
 
 
@@ -153,7 +152,7 @@ class Smarty_Internal_Templatelexer
         $yy_global_pattern = "/\G(".$this->ldel."[$]smarty\\.block\\.child".$this->rdel.")|\G(\\{\\})|\G(".$this->ldel."\\*([\S\s]*?)\\*".$this->rdel.")|\G([\t ]*[\r\n]+[\t ]*)|\G(".$this->ldel."strip".$this->rdel.")|\G(".$this->ldel."\\s{1,}strip\\s{1,}".$this->rdel.")|\G(".$this->ldel."\/strip".$this->rdel.")|\G(".$this->ldel."\\s{1,}\/strip\\s{1,}".$this->rdel.")|\G(".$this->ldel."\\s*literal\\s*".$this->rdel.")|\G(".$this->ldel."\\s{1,}\/)|\G(".$this->ldel."\\s*(if|elseif|else if|while)\\s+)|\G(".$this->ldel."\\s*for\\s+)|\G(".$this->ldel."\\s*foreach(?![^\s]))|\G(".$this->ldel."\\s*setfilter\\s+)|\G(".$this->ldel."\\s{1,})|\G(".$this->ldel."\/)|\G(".$this->ldel.")|\G(<\\?(?:php\\w+|=|[a-zA-Z]+)?)|\G(\\?>)|\G(<%)|\G(%>)|\G(([\S\s]*?)(?=([\t ]*[\r\n]+[\t ]*|".$this->ldel."|<\\?|\\?>|<%|%>)))|\G([\S\s]+)|\G(.)/iS";
 
         do {
-            if ($this->mbstring_overload ? preg_match($yy_global_pattern, substr($this->data, $this->counter), $yymatches) : preg_match($yy_global_pattern,$this->data, $yymatches, null, $this->counter)) {
+            if (preg_match($yy_global_pattern,$this->data, $yymatches, null, $this->counter)) {
                 $yysubmatches = $yymatches;
                 $yymatches = array_filter($yymatches, 'strlen'); // remove empty sub-patterns
                 if (!count($yymatches)) {
@@ -463,7 +462,7 @@ class Smarty_Internal_Templatelexer
         $yy_global_pattern = "/\G('[^'\\\\]*(?:\\\\.[^'\\\\]*)*')|\G(".$this->ldel."\\s{1,}\/)|\G(".$this->ldel."\\s*(if|elseif|else if|while)\\s+)|\G(".$this->ldel."\\s*for\\s+)|\G(".$this->ldel."\\s*foreach(?![^\s]))|\G(".$this->ldel."\\s{1,})|\G(\\s{1,}".$this->rdel.")|\G(".$this->ldel."\/)|\G(".$this->ldel.")|\G(".$this->rdel.")|\G(\\s+is\\s+in\\s+)|\G(\\s+as\\s+)|\G(\\s+to\\s+)|\G(\\s+step\\s+)|\G(\\s+instanceof\\s+)|\G(\\s*===\\s*)|\G(\\s*!==\\s*)|\G(\\s*==\\s*|\\s+eq\\s+)|\G(\\s*!=\\s*|\\s*<>\\s*|\\s+(ne|neq)\\s+)|\G(\\s*>=\\s*|\\s+(ge|gte)\\s+)|\G(\\s*<=\\s*|\\s+(le|lte)\\s+)|\G(\\s*>\\s*|\\s+gt\\s+)|\G(\\s*<\\s*|\\s+lt\\s+)|\G(\\s+mod\\s+)|\G(!\\s*|not\\s+)|\G(\\s*&&\\s*|\\s*and\\s+)|\G(\\s*\\|\\|\\s*|\\s*or\\s+)|\G(\\s*xor\\s+)|\G(\\s+is\\s+odd\\s+by\\s+)|\G(\\s+is\\s+not\\s+odd\\s+by\\s+)|\G(\\s+is\\s+odd)|\G(\\s+is\\s+not\\s+odd)|\G(\\s+is\\s+even\\s+by\\s+)|\G(\\s+is\\s+not\\s+even\\s+by\\s+)|\G(\\s+is\\s+even)|\G(\\s+is\\s+not\\s+even)|\G(\\s+is\\s+div\\s+by\\s+)|\G(\\s+is\\s+not\\s+div\\s+by\\s+)|\G(\\((int(eger)?|bool(ean)?|float|double|real|string|binary|array|object)\\)\\s*)|\G(\\(\\s*)|\G(\\s*\\))|\G(\\[\\s*)|\G(\\s*\\])|\G(\\s*->\\s*)|\G(\\s*=>\\s*)|\G(\\s*=\\s*)|\G(\\+\\+|--)|\G(\\s*(\\+|-)\\s*)|\G(\\s*(\\*|\/|%)\\s*)|\G(\\$)|\G(\\s*;)|\G(::)|\G(\\s*:\\s*)|\G(@)|\G(#)|\G(\")|\G(`)|\G(\\|)|\G(\\.)|\G(\\s*,\\s*)|\G(\\s*&\\s*)|\G(\\s*\\?\\s*)|\G(0[xX][0-9a-fA-F]+)|\G([0-9]*[a-zA-Z_]\\w*)|\G(\\d+)|\G(\\s+)|\G(.)/iS";
 
         do {
-            if ($this->mbstring_overload ? preg_match($yy_global_pattern, substr($this->data, $this->counter), $yymatches) : preg_match($yy_global_pattern,$this->data, $yymatches, null, $this->counter)) {
+            if (preg_match($yy_global_pattern,$this->data, $yymatches, null, $this->counter)) {
                 $yysubmatches = $yymatches;
                 $yymatches = array_filter($yymatches, 'strlen'); // remove empty sub-patterns
                 if (!count($yymatches)) {
@@ -905,7 +904,7 @@ class Smarty_Internal_Templatelexer
         $yy_global_pattern = "/\G(".$this->ldel."\\s*literal\\s*".$this->rdel.")|\G(".$this->ldel."\\s*\/literal\\s*".$this->rdel.")|\G([\t ]*[\r\n]+[\t ]*)|\G(<\\?(?:php\\w+|=|[a-zA-Z]+)?)|\G(\\?>)|\G(<%)|\G(%>)|\G(([\S\s]*?)(?=([\t ]*[\r\n]+[\t ]*|".$this->ldel."\/?literal".$this->rdel."|<\\?|<%)))|\G(.)/iS";
 
         do {
-            if ($this->mbstring_overload ? preg_match($yy_global_pattern, substr($this->data, $this->counter), $yymatches) : preg_match($yy_global_pattern,$this->data, $yymatches, null, $this->counter)) {
+            if (preg_match($yy_global_pattern,$this->data, $yymatches, null, $this->counter)) {
                 $yysubmatches = $yymatches;
                 $yymatches = array_filter($yymatches, 'strlen'); // remove empty sub-patterns
                 if (!count($yymatches)) {
@@ -1030,7 +1029,7 @@ class Smarty_Internal_Templatelexer
         $yy_global_pattern = "/\G(".$this->ldel."\\s{1,}\/)|\G(".$this->ldel."\\s*(if|elseif|else if|while)\\s+)|\G(".$this->ldel."\\s*for\\s+)|\G(".$this->ldel."\\s*foreach(?![^\s]))|\G(".$this->ldel."\\s{1,})|\G(".$this->ldel."\/)|\G(".$this->ldel.")|\G(\")|\G(`\\$)|\G(\\$[0-9]*[a-zA-Z_]\\w*)|\G(\\$)|\G(([^\"\\\\]*?)((?:\\\\.[^\"\\\\]*?)*?)(?=(".$this->ldel."|\\$|`\\$|\")))|\G([\S\s]+)|\G(.)/iS";
 
         do {
-            if ($this->mbstring_overload ? preg_match($yy_global_pattern, substr($this->data, $this->counter), $yymatches) : preg_match($yy_global_pattern,$this->data, $yymatches, null, $this->counter)) {
+            if (preg_match($yy_global_pattern,$this->data, $yymatches, null, $this->counter)) {
                 $yysubmatches = $yymatches;
                 $yymatches = array_filter($yymatches, 'strlen'); // remove empty sub-patterns
                 if (!count($yymatches)) {
