@@ -42,6 +42,16 @@ class AssignByRefTests extends PHPUnit_Framework_TestCase {
         $bar = 'newbar';
         $this->assertEquals('newbar', $this->smartyBC->fetch('eval:{$foo}'));
     }
+    /**
+    * test Smarty2's behaviour of assign_By_Ref (Issue 88)
+    */
+    public function testSmarty2AssignByRef2()
+    {
+        $bar = 'bar';
+        $this->smartyBC->assign_by_ref('foo', $bar);
+        $this->smartyBC->fetch('eval:{$foo = "newbar"}');
+        $this->assertEquals('newbar', $bar);
+    }
 }
 
 ?>
