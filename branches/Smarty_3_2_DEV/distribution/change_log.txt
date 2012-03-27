@@ -1,4 +1,7 @@
 ﻿===== Smarty 3.2-DEV  =====
+27.03.2012
+- bugfix whitespace control
+
 12.03.2012
 - add whitespace control by tag (Forum Topic 20064)
 

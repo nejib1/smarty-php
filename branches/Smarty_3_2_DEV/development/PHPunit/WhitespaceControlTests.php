@@ -15,6 +15,7 @@ class WhitespaceControlTests extends PHPUnit_Framework_TestCase {
     {
         $this->smarty = SmartyTests::$smarty;
         SmartyTests::init();
+        $this->smarty->assign('foo',1);
     }
 
     public static function isRunnable()
@@ -28,8 +29,8 @@ class WhitespaceControlTests extends PHPUnit_Framework_TestCase {
     */
     public function testFrontWhitespace1()
     {
-         $this->assertEquals("text \n\n1", $this->smarty->fetch("eval:text \n\n\t {-counter}"));
-         $this->assertEquals("text \n\n\t text1", $this->smarty->fetch("eval:text \n\n\t text\t {-counter}"));
+         $this->assertEquals("text \n\n1", $this->smarty->fetch("eval:text \n\n\t {-\$foo}"));
+         $this->assertEquals("text \n\n\t text1", $this->smarty->fetch("eval:text \n\n\t text\t {-\$foo}"));
     }
 
     /**
@@ -37,8 +38,8 @@ class WhitespaceControlTests extends PHPUnit_Framework_TestCase {
     */
     public function testInfrontWhitespace2()
     {
-         $this->assertEquals("text1", $this->smarty->fetch("eval:text \n\n\t {--counter}"));
-         $this->assertEquals("text \n\n\t text1", $this->smarty->fetch("eval:text \n\n\t text\t {--counter}"));
+         $this->assertEquals("text1", $this->smarty->fetch("eval:text \n\n\t {--\$foo}"));
+         $this->assertEquals("text \n\n\t text1", $this->smarty->fetch("eval:text \n\n\t text\t {--\$foo}"));
     }
 
     /**
@@ -46,8 +47,8 @@ class WhitespaceControlTests extends PHPUnit_Framework_TestCase {
     */
     public function testAfterWhitespace1()
     {
-         $this->assertEquals("1\n\n\t text", $this->smarty->fetch("eval:{counter-} \n\n\t text"));
-         $this->assertEquals("1text \n\n\t text", $this->smarty->fetch("eval:{counter-} text \n\n\t text"));
+         $this->assertEquals("1\n\n\t text", $this->smarty->fetch("eval:{\$foo -} \n\n\t text"));
+         $this->assertEquals("1text \n\n\t text", $this->smarty->fetch("eval:{\$foo -} text \n\n\t text"));
     }
 
     /**
@@ -55,7 +56,7 @@ class WhitespaceControlTests extends PHPUnit_Framework_TestCase {
     */
     public function testAfterWhitespace2()
     {
-         $this->assertEquals("1text", $this->smarty->fetch("eval:{counter--} \n\n\t text"));
-         $this->assertEquals("1text \n\n\t text", $this->smarty->fetch("eval:{counter--} text \n\n\t text"));
+         $this->assertEquals("1text", $this->smarty->fetch("eval:{\$foo --} \n\n\t text"));
+         $this->assertEquals("1text \n\n\t text", $this->smarty->fetch("eval:{\$foo --} text \n\n\t text"));
     }
 }
