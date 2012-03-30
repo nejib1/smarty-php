@@ -31,7 +31,6 @@ class SmartyTests extends PHPUnit_Framework_TestSuite {
         $smarty->setCacheDir('.' . DS . 'cache' . DS);
         $smarty->setConfigDir('.' . DS . 'configs' . DS);
         $smarty->template_objects = array();
-        Smarty::$global_tpl_vars = new Smarty_Variable_Container();
         $smarty->tpl_vars = new Smarty_Variable_Container($smarty);
         $smarty->template_functions = array();
         $smarty->force_compile = false;
@@ -39,7 +38,6 @@ class SmartyTests extends PHPUnit_Framework_TestSuite {
         $smarty->auto_literal = true;
         $smarty->caching = false;
         $smarty->debugging = false;
-        Smarty::$_smarty_vars = array();
         $smarty->registered_plugins = array();
         $smarty->default_plugin_handler_func = null;
         $smarty->registered_objects = array();
@@ -61,6 +59,7 @@ class SmartyTests extends PHPUnit_Framework_TestSuite {
         $smarty->caching_type = 'file';
         $smarty->cache_locking = false;
         $smarty->default_resource_type = 'file';
+        $smarty->_cacheresource_handlers = array();
     }
 
     public static function init()
@@ -70,7 +69,9 @@ class SmartyTests extends PHPUnit_Framework_TestSuite {
         self::_init(SmartyTests::$smartyBC);
         Smarty_Resource::$sources = array();
         Smarty_Compiled::$compileds = array();
-//        Smarty_Resource::$resources = array();
+        Smarty::$global_tpl_vars = new Smarty_Variable_Container();
+        Smarty::$_smarty_vars = array();
+        Smarty_CacheResource::$resources = array();
         SmartyTests::$smartyBC->registerPlugin('block','php','smarty_php_tag');
     }
     /**

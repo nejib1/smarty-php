@@ -104,7 +104,7 @@ class PhpResourceTests extends PHPUnit_Framework_TestCase {
         $this->smarty->caching = true;
         $this->smarty->cache_lifetime = 1000;
         $tpl = $this->smarty->createTemplate('php:phphelloworld.php');
-        $expected = './cache/'.sha1($this->smarty->getTemplateDir(0) . 'phphelloworld.php').'.phphelloworld.php.php';
+        $expected = './cache/^^'.sha1($this->smarty->getTemplateDir(0) . 'phphelloworld.php').'.phphelloworld.php.php';
         $this->assertEquals($expected, $this->relative($tpl->cached->filepath));
     }
     /**
@@ -236,7 +236,7 @@ class PhpResourceTests extends PHPUnit_Framework_TestCase {
         $this->smarty->caching = true;
         $this->smarty->cache_lifetime = 1000;
         $tpl = $this->smarty->createTemplate('php:[foo]helloworld.php');
-	    $expected = './cache/'.sha1($this->smarty->getTemplateDir('foo') .'helloworld.php').'.helloworld.php.php';
+	    $expected = './cache/^^'.sha1($this->smarty->getTemplateDir('foo') .'helloworld.php').'.helloworld.php.php';
         $this->assertEquals($expected, $this->relative($tpl->cached->filepath));
     }
 

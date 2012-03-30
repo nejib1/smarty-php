@@ -89,7 +89,7 @@ class IndexedFileResourceTests extends PHPUnit_Framework_TestCase {
         $this->smarty->caching = true;
         $this->smarty->cache_lifetime = 1000;
         $tpl = $this->smarty->createTemplate('[foo]dirname.tpl');
-	    $expected = './cache/'.sha1($this->smarty->getTemplateDir('foo').'dirname.tpl').'.dirname.tpl.php';
+	    $expected = './cache/^^'.sha1($this->smarty->getTemplateDir('foo').'dirname.tpl').'.dirname.tpl.php';
         $this->assertEquals($expected, $this->relative($tpl->cached->filepath));
     }
 

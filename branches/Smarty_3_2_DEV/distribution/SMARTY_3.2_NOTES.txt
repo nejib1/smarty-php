@@ -8,13 +8,17 @@ Enhancements
 Befor 3.2 the brower cache was not used with cached subtemplates which did have individual cache_lifetime.
 Smarty 3.2 does now also check the update time of each cached subtemplate. 
 
-
+    $use_sub_dirs and $cache_id
+In previous versions of Smarty the $use_sub_dirs did not really help when you created cache files with a large
+number of different $cache_id's. The subfolder structure for cache files has now been changed that a cache_id hash
+is included to limit the number of files in single folders.
+    
 Default settings
 ----------------
 
     $merge_compiled_include
 For maximum redering speed this option is enabled now by default.
-Because of this you will no longer see compiled template files in $compile_dir as the compiled code
+Because of this you will no longer see compiled template files of subtemplates in $compile_dir as the compiled code
 is merged into the compiled main templates.
 
 

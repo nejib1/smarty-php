@@ -925,7 +925,7 @@ class Smarty extends Smarty_Internal_TemplateBase {
      * @param string  $type          resource type
      * @return integer number of cache files deleted
      */
-    public function clearCache($template_name, $cache_id = null, $compile_id = null, $exp_time = null, $type = null) {
+    public function clearCache($template_name = null, $cache_id = null, $compile_id = null, $exp_time = null, $type = null) {
         // load cache resource and call clear
         $_cache_resource = Smarty_CacheResource::load($this, $type);
         Smarty_CacheResource::invalidLoadedCache($this);
