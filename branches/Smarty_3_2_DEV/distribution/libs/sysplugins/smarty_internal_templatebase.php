@@ -50,7 +50,7 @@ abstract class Smarty_Internal_TemplateBase extends Smarty_Internal_Data {
         // merge all variable from scopes into template
         if ($merge_tpl_vars && $_template->parent != null) {
             // save local variables
-            $saved_tpl_vars = clone $_template->tpl_vars;
+            $saved_tpl_vars = $_template->tpl_vars;
             $_template->tpl_vars = clone $_template->parent->tpl_vars;
             // merge local vars
             foreach ($saved_tpl_vars as $key => $var) {

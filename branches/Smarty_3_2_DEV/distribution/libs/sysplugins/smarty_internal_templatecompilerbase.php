@@ -655,7 +655,7 @@ abstract class Smarty_Internal_TemplateCompilerBase {
                 if ($make_nocache_code) {
                     $this->template->has_nocache_code = true;
                 }
-                $_output = str_replace(array("'", '\\\\', "^#^"), array("\'", '\\\\\\', "'"), $content);
+                $_output = str_replace(array("'", '\\\\', "^#^"), array("\'", '\\\\\\\\', "'"), $content);
                 $_output = preg_replace('/(\?><\?php)|(\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|"[^"\\\\]*(?:\\\\.[^"\\\\]*)*")/', '$2', $_output);
                 $_output = "<?php echo '/*%%SmartyNocache:{$this->nocache_hash}%%*/" . $_output . "/*/%%SmartyNocache:{$this->nocache_hash}%%*/';?>\n";
                 // make sure we include modifer plugins for nocache code

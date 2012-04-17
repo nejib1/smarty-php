@@ -2328,7 +2328,7 @@ static public $yy_action = array(
     if ($this->is_xml) {
         $this->compiler->nocache_nolog = true;
         $this->is_xml = false;
-        $this->_retvalue = new _smarty_text($this, $this->compiler->processNocacheCode("<?php echo '?>';?>", true));
+        $this->_retvalue = new _smarty_text($this, $this->compiler->processNocacheCode("<?php echo '?>';?>\n", true));
     } elseif ($this->php_handling == Smarty::PHP_PASSTHRU) {
         $this->_retvalue = new _smarty_text($this, '?<?php ?>>');
     } elseif ($this->php_handling == Smarty::PHP_QUOTE) {
