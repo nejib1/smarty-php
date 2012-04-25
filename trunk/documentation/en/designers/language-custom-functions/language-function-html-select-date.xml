@@ -90,14 +90,14 @@
      <entry>Whether to display years or not</entry>
     </row>
     <row>
-     <entry>month_format</entry>
+     <entry>month_names</entry>
      <entry>array</entry>
      <entry>No</entry>
      <entry>null</entry>
      <entry>List of strings to display for months. array(1 => 'Jan', …, 12 => 'Dec')</entry>
     </row>
 	<row>
-     <entry>month_names</entry>
+     <entry>month_format</entry>
      <entry>string</entry>
      <entry>No</entry>
      <entry>%B</entry>
