@@ -28,7 +28,7 @@
    <para>
      When extending a variable parent like <literal>{extends file=$parent_file}</literal>, 
      make sure you include <varname>$parent_file</varname> in the 
-     <link linkend="variable.cache.id"><varname>$cache_id</varname></link>. Otherwise Smarty
+     <link linkend="variable.compile.id"><varname>$compile_id</varname></link>. Otherwise Smarty
      cannot distinguish between different <varname>$parent_file</varname>s.
    </para>
   </note>
