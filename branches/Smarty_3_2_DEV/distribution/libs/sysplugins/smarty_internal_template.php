@@ -348,7 +348,11 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase {
         return 0;
     }
 
-    // TODO: document
+    /**
+     * Identify and get top-level template instance
+     *
+     * @return Smarty_Internal_Template
+     */
     public function findRootTemplate() {
         $tpl = $this;
         while ($tpl->parent && $tpl->parent instanceof Smarty_Internal_Template) {
@@ -361,7 +365,14 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase {
         
         return $this->rootTemplate = $tpl;
     }
-    // TODO: document
+
+    /**
+     * Save value to persistent cache storage
+     *
+     * @param string|array $key   key to store data under, or array of key => values to store
+     * @param mixed        $value value to store for $key, ignored if key is an array
+     * @return Smarty_Internal_Template $this for chaining
+     */
     public function assignCached($key, $value=null) {
         if (!$this->rootTemplate) {
             $this->findRootTemplate();
@@ -381,7 +392,13 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase {
         
         return $this;
     }
-    // TODO: document
+    
+    /**
+     * Get value from persistent cache storage
+     *
+     * @param string $key key of value to retrieve, null for all values (default)
+     * @return mixed value or array of values
+     */
     public function getCachedVars($key=null) {
         if (!$this->rootTemplate) {
             $this->findRootTemplate();
