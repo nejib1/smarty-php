@@ -1,4 +1,7 @@
 ﻿===== Smarty 3.2-DEV  =====
+30.04.2012
+- bugfix output filter should not run before cache file written with nocache code
+
 30.03.2012
 - implement new subfolder structure for cache files using a cache_id hash (Forum Topic 21143 and other)
 

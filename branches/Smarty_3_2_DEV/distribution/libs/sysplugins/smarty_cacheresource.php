@@ -379,7 +379,7 @@ class Smarty_Template_Cached {
                         $output .= preg_replace("!/\*/?%%SmartyNocache:{$_template->properties['nocache_hash']}%%\*/!", '', $cache_parts[0][$curr_idx]);
                     }
                 }
-                if (!$no_output_filter && (isset($obj->smarty->autoload_filters['output']) || isset($obj->smarty->registered_filters['output']))) {
+                if (!$no_output_filter && !$_template->has_nocache_code && (isset($obj->smarty->autoload_filters['output']) || isset($obj->smarty->registered_filters['output']))) {
                     $output = Smarty_Internal_Filter_Handler::runFilter('output', $output, $_template);
                 }
                 // rendering (must be done before writing cache file because of {function} nocache handling)

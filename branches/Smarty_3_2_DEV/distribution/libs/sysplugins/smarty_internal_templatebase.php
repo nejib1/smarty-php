@@ -139,7 +139,7 @@ abstract class Smarty_Internal_TemplateBase extends Smarty_Internal_Data {
         } else {
             $_output = $_template->compiled->getRenderedTemplate($this, $_template);
         }
-        if ((!$this->caching || $_template->source->recompiled) && !$no_output_filter && (isset($this->smarty->autoload_filters['output']) || isset($this->smarty->registered_filters['output']))) {
+        if ((!$this->caching ||  $_template->has_nocache_code || $_template->source->recompiled) && !$no_output_filter && (isset($this->smarty->autoload_filters['output']) || isset($this->smarty->registered_filters['output']))) {
             $_output = Smarty_Internal_Filter_Handler::runFilter('output', $_output, $_template);
         }
         if (isset($this->error_reporting)) {
