@@ -19,6 +19,7 @@ these changes must reflect on the documentation at some point…
 * modifiercompiler.noprint.php (don't forget @link in file!)
 * How does registerObject() handle __call()ed functions and __get()ed attributes?
 * {$x = $k cachevalue} to make the value of $k available as nocache variable $x (Forum Topic 20123)
+* Smarty_Internal_Template::assignCached(), Smarty_Internal_Template::getCachedVars(), Smarty_Internal_Template::findRootTemplate()
 
 
 ## Properties ##

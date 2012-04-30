@@ -93,6 +93,13 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase {
      * @internal
      */
     public $smarty = null;
+    
+    /**
+     * root template of hierarchy
+     *
+     * @var Smarty_Internal_Template
+     */
+    public $rootTemplate = null;
 
     /**
      * blocks for template inheritance
@@ -341,6 +348,56 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase {
         return 0;
     }
 
+    // TODO: document
+    public function findRootTemplate() {
+        $tpl = $this;
+        while ($tpl->parent && $tpl->parent instanceof Smarty_Internal_Template) {
+            if ($tpl->rootTemplate) {
+                return $this->rootTemplate = $tpl->rootTemplate;
+            }
+            
+            $tpl = $tpl->parent;
+        }
+        
+        return $this->rootTemplate = $tpl;
+    }
+    // TODO: document
+    public function assignCached($key, $value=null) {
+        if (!$this->rootTemplate) {
+            $this->findRootTemplate();
+        }
+        
+        if (is_array($key)) {
+            foreach ($key as $_key => $_value) {
+                if ($_key !== '') {
+                    $this->rootTemplate->properties['cachedValues'][$_key] = $_value;
+                }
+            }
+        } else {
+            if ($key !== '') {
+                $this->rootTemplate->properties['cachedValues'][$key] = $value;
+            }
+        }
+        
+        return $this;
+    }
+    // TODO: document
+    public function getCachedVars($key=null) {
+        if (!$this->rootTemplate) {
+            $this->findRootTemplate();
+        }
+        
+        if ($key === null) {
+            return isset($this->rootTemplate->properties['cachedValues'])
+                ? $this->rootTemplate->properties['cachedValues']
+                : array();
+        }
+        
+        return isset($this->rootTemplate->properties['cachedValues'][$key])
+            ? $this->rootTemplate->properties['cachedValues'][$key]
+            : null;
+    }
+
     /**
      * runtime error for not matching capture tags
      *
@@ -377,6 +434,9 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase {
         }
         $this->properties['version'] = (isset($properties['version'])) ? $properties['version'] : '';
         $this->properties['unifunc'] = $properties['unifunc'];
+        if (isset($properties['cachedValues'])) {
+            $this->properties['cachedValues'] = $properties['cachedValues'];
+        }
         // check file dependencies at compiled code
         $is_valid = true;
         if ($this->properties['version'] != Smarty::SMARTY_VERSION) {
