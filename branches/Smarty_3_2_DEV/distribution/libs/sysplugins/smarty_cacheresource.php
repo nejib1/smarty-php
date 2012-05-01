@@ -384,6 +384,7 @@ class Smarty_Template_Cached {
                 }
                 // rendering (must be done before writing cache file because of {function} nocache handling)
                 $_smarty_tpl = $_template;
+                $_template->is_nocache = true;
                 try {
                     ob_start();
                     eval("?>" . $output);
@@ -392,6 +393,7 @@ class Smarty_Template_Cached {
                     ob_get_clean();
                     throw $e;
                 }
+                $_template->is_nocache = false;
                 // write cache file content
                 if (!$_template->source->recompiled && ($_template->caching == Smarty::CACHING_LIFETIME_CURRENT || $_template->caching == Smarty::CACHING_LIFETIME_SAVED)) {
                     $_template->properties['cache_lifetime'] = $_template->cache_lifetime;
@@ -410,6 +412,7 @@ class Smarty_Template_Cached {
             if ($obj->smarty->debugging) {
                 Smarty_Internal_Debug::start_cache($_template);
             }
+            $_template->is_nocache = true;
             try {
                 ob_start();
                 array_unshift($_template->_capture_stack, array());
@@ -427,6 +430,7 @@ class Smarty_Template_Cached {
                 ob_get_clean();
                 throw $e;
             }
+            $_template->is_nocache = false;
             if ($obj->smarty->debugging) {
                 Smarty_Internal_Debug::end_cache($_template);
             }

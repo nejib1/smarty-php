@@ -72,6 +72,13 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase {
     public $has_nocache_code = false;
 
     /**
+     * flag set when nocache code sections are executed
+     * @var boolean
+     * @internal
+     */
+    public $is_nocache = false;
+
+    /**
      * special compiled and cached template properties
      * @var array
      * @internal
@@ -93,7 +100,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase {
      * @internal
      */
     public $smarty = null;
-    
+
     /**
      * root template of hierarchy
      *
@@ -359,10 +366,10 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase {
             if ($tpl->rootTemplate) {
                 return $this->rootTemplate = $tpl->rootTemplate;
             }
-            
+
             $tpl = $tpl->parent;
         }
-        
+
         return $this->rootTemplate = $tpl;
     }
 
@@ -377,7 +384,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase {
         if (!$this->rootTemplate) {
             $this->findRootTemplate();
         }
-        
+
         if (is_array($key)) {
             foreach ($key as $_key => $_value) {
                 if ($_key !== '') {
@@ -389,10 +396,10 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase {
                 $this->rootTemplate->properties['cachedValues'][$key] = $value;
             }
         }
-        
+
         return $this;
     }
-    
+
     /**
      * Get value from persistent cache storage
      *
@@ -403,13 +410,13 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase {
         if (!$this->rootTemplate) {
             $this->findRootTemplate();
         }
-        
+
         if ($key === null) {
             return isset($this->rootTemplate->properties['cachedValues'])
                 ? $this->rootTemplate->properties['cachedValues']
                 : array();
         }
-        
+
         return isset($this->rootTemplate->properties['cachedValues'][$key])
             ? $this->rootTemplate->properties['cachedValues'][$key]
             : null;

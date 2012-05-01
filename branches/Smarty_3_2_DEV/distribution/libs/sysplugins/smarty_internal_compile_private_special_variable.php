@@ -65,6 +65,12 @@ class Smarty_Internal_Compile_Private_Special_Variable extends Smarty_Internal_C
             case 'current_dir':
                 return 'dirname($_smarty_tpl->source->filepath)';
 
+            case 'is_cached':
+                return '$_smarty_tpl->cached->valid';
+
+            case 'is_nocache':
+                return '$_smarty_tpl->is_nocache';
+
             case 'version':
                 $_version = Smarty::SMARTY_VERSION;
                 return "'$_version'";
