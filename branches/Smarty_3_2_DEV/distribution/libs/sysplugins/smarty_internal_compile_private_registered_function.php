@@ -55,7 +55,9 @@ class Smarty_Internal_Compile_Private_Registered_Function extends Smarty_Interna
         // convert attributes into parameter string
         $result = $this->getPluginParameterString($function, $_attr, $compiler, false, $tag_info[2]);
         // compile code
-        if (!is_array($function)) {
+        if ($function instanceof Closure) {
+            $output = "<?php echo \$_smarty_tpl->smarty->registered_plugins[Smarty::PLUGIN_FUNCTION]['{$tag}'][0]({$result});?>\n";
+        } else if (!is_array($function)) {
             $output = "<?php echo {$function}({$result});?>\n";
         } else if (is_object($function[0])) {
             $output = "<?php echo \$_smarty_tpl->smarty->registered_plugins[Smarty::PLUGIN_FUNCTION]['{$tag}'][0][0]->{$function[1]}({$result});?>\n";

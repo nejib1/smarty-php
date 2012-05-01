@@ -451,7 +451,11 @@ abstract class Smarty_Internal_TemplateBase extends Smarty_Internal_Data {
             throw new SmartyException("registerFilter(): Invalid filter type \"{$type}\"");
         }
         if (is_callable($callback)) {
-            $this->smarty->registered_filters[$type][$this->_get_filter_name($callback)] = $callback;
+            if ($callback instanceof Closure) {
+                $this->smarty->registered_filters[$type][] = $callback;
+            } else {
+                $this->smarty->registered_filters[$type][$this->_get_filter_name($callback)] = $callback;
+            }
         } else {
             throw new SmartyException("registerFilter(): Invalid callback");
         }
@@ -466,10 +470,21 @@ abstract class Smarty_Internal_TemplateBase extends Smarty_Internal_Data {
      * @return Smarty_Internal_Templatebase current Smarty_Internal_Templatebase (or Smarty or Smarty_Internal_Template) instance for chaining
      */
     public function unregisterFilter($type, $callback) {
-        // TODO: uwe.tews $callback could be a closure ($callback instanceof Closure) - use reflection?
-        $name = $this->_get_filter_name($callback);
-        if (isset($this->smarty->registered_filters[$type][$name])) {
-            unset($this->smarty->registered_filters[$type][$name]);
+        if (!isset($this->smarty->registered_filters[$type])) {
+            return $this;
+        }
+        if ($callback instanceof Closure) {
+            foreach ($this->smarty->registered_filters[$type] as $key => $_callback) {
+                if ($callback === $_callback) {
+                    unset($this->smarty->registered_filters[$type][$key]);
+                    return $this;
+                }
+            }
+        } else {
+            $name = $this->_get_filter_name($callback);
+            if (isset($this->smarty->registered_filters[$type][$name])) {
+                unset($this->smarty->registered_filters[$type][$name]);
+            }
         }
         return $this;
     }
