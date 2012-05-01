@@ -274,6 +274,8 @@ class Smarty_Compiled {
 
                 if ($unlink && @unlink($_filepath)) {
                     $_count++;
+                    // notify listeners of deleted file
+                    Smarty::triggerCallback('filesystem:delete', array($smarty, $_filepath));
                 }
             }
         }

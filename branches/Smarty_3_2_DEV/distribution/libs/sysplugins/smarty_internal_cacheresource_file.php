@@ -259,6 +259,8 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource {
                             }
                             $_count += @unlink($path) ? 1 : 0;
                             $_deleted[$i] = true;
+                            // notify listeners of deleted file
+                            Smarty::triggerCallback('filesystem:delete', array($smarty, $path));
                         }
                     }
                     unset($_cacheDirs, $_cacheDirs1);
@@ -295,6 +297,8 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource {
                     continue;
                 }
                 $_count += @unlink($path) ? 1 : 0;
+                // notify listeners of deleted file
+                Smarty::triggerCallback('filesystem:delete', array($smarty, $path));
             }
         }
         return $_count;

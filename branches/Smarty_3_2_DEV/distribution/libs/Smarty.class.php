@@ -179,7 +179,13 @@ class Smarty extends Smarty_Internal_TemplateBase {
      * @internal
      */
     public static $_muted_directories = array();
-
+    
+    /**
+     * contains callbacks to invoke on events
+     * @internal
+     */
+    public static $_callbacks = array();
+    
     /**
      * Flag denoting if Multibyte String functions are available
      */
@@ -1604,7 +1610,39 @@ class Smarty extends Smarty_Internal_TemplateBase {
     public static function unmuteExpectedErrors() {
         restore_error_handler();
     }
+    
+    /*
+        EVENTS:
+            filesystem:write 
+            filesystem:delete 
+    */
+    // TODO: document registerCallback()
+    public static function registerCallback($event, $callback=null) {
+        // TODO: test if is callable
+        if (is_array($event)) {
+            foreach ($event as $_event => $_callback) {
+                if (!is_callable($_callback)) {
+                    throw new SmartyException("registerCallback(): \"{$_event}\" not callable");
+                }
 
+                self::$_callbacks[$_event][] = $_callback;
+            }
+        } else {
+            if (!is_callable($callback)) {
+                throw new SmartyException("registerCallback(): \"{$event}\" not callable");
+            }
+            
+            self::$_callbacks[$event][] = $callback;
+        }
+    }
+    // TODO: document triggerCallback()
+    public static function triggerCallback($event, $data) {
+        if (isset(self::$_callbacks[$event])) {
+            foreach (self::$_callbacks[$event] as $callback) {
+                call_user_func_array($callback, $data);
+            }
+        }
+    }
 }
 
 // let PCRE (preg_*) treat strings as ISO-8859-1 if we're not dealing with UTF-8

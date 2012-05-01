@@ -55,6 +55,9 @@ class Smarty_Internal_Write_File {
             throw new SmartyException("unable to write file {$_filepath}");
             return false;
         }
+        
+        // notify listeners of written file
+        Smarty::triggerCallback('filesystem:write', array($smarty, $_filepath));
 
         if ($smarty->_file_perms !== null) {
             // set file permissions
