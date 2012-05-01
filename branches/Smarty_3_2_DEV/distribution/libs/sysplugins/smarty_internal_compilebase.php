@@ -246,7 +246,7 @@ abstract class Smarty_Internal_CompileBase {
             if ($result[0] == 'Smarty') {
                 $object = '$_smarty_tpl->smarty';
             }
-            if ($result[0] == 0) {
+            if ($result[1] == 0) {
                 $par_array = array();
                 $par_names = array();
                 $parameters = $this->buildReflection($callback)->getParameters();

@@ -1,4 +1,7 @@
 ﻿===== Smarty 3.2-DEV  =====
+01.05.2012
+- bugfix type-hint for Smarty or template object did not work while compiling plugins
+
 30.04.2012
 - bugfix output filter should not run before cache file written with nocache code
 - add assignCached() and getCachedVars() to access cached-template value storage
