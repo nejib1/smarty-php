@@ -272,6 +272,9 @@ abstract class Smarty_Internal_TemplateBase extends Smarty_Internal_Data {
         } elseif (!is_callable($callback)) {
             throw new SmartyException("registerPlugin(): Plugin \"{$tag}\" not callable");
         } else {
+            if (is_object($callback)) {
+                $callback = array($callback, '__invoke');
+            }
             $this->smarty->registered_plugins[$type][$tag] = array($callback, (bool) $cacheable, (array) $cache_attr);
         }
         return $this;
@@ -454,6 +457,9 @@ abstract class Smarty_Internal_TemplateBase extends Smarty_Internal_Data {
             if ($callback instanceof Closure) {
                 $this->smarty->registered_filters[$type][] = $callback;
             } else {
+                if (is_object($callback)) {
+                    $callback = array($callback, '__invoke');
+                }
                 $this->smarty->registered_filters[$type][$this->_get_filter_name($callback)] = $callback;
             }
         } else {
@@ -481,6 +487,9 @@ abstract class Smarty_Internal_TemplateBase extends Smarty_Internal_Data {
                 }
             }
         } else {
+            if (is_object($callback)) {
+                $callback = array($callback, '__invoke');
+            }
             $name = $this->_get_filter_name($callback);
             if (isset($this->smarty->registered_filters[$type][$name])) {
                 unset($this->smarty->registered_filters[$type][$name]);
