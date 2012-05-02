@@ -37,6 +37,14 @@ class AssignTests extends PHPUnit_Framework_TestCase {
     {
             $this->smarty->assign(array('foo'=>'bar','foo2'=>'bar2'));
 		$this->assertEquals('bar bar2', $this->smarty->fetch('eval:{$foo} {$foo2}'));
-    } 
+    }
+    
+    public function testParents() {
+        $this->smarty->registerPlugin('function', 'myplugin', function($params, $template){
+            $template->assignParents('foo', 'hello');
+        });
+        $tpl = $this->smarty->createTemplate('assign1.tpl');
+        $this->assertEquals('hello', $tpl->fetch());
+    }
 } 
 ?>

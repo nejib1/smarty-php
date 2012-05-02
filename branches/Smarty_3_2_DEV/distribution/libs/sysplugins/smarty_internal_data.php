@@ -75,6 +75,27 @@ class Smarty_Internal_Data {
         }
         return $this;
     }
+    
+    /**
+     * assigns a Smarty variable to the current object and all parent elements
+     *
+     * @param array|string $tpl_var the template variable name(s)
+     * @param mixed        $value   the value to assign
+     * @param boolean      $nocache if true any output of this variable will be not cached
+     * @param boolean $scope the scope the variable will have  (local,parent or root)
+     * @return Smarty_Internal_Data current Smarty_Internal_Data (or Smarty or Smarty_Internal_Template) instance for chaining
+     */
+    public function assignParents($tpl_var, $value = null, $nocache = false) {
+        $this->assign($tpl_var, $value, $nocache);
+        $node = $this->parent;
+        
+        while ($node) {
+            $node->assign($tpl_var, $value, $nocache);
+            $node = $node->parent;
+        }
+        
+        return $this;
+    }
 
     /**
      * assigns a global Smarty variable

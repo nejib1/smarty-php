@@ -22,6 +22,7 @@ these changes must reflect on the documentation at some point…
 * Smarty_Internal_Template::assignCached(), Smarty_Internal_Template::getCachedVars(), Smarty_Internal_Template::findRootTemplate()
 * $template->is_nocache and {$smarty.is_nocache}
 * Smarty::registerCallback()
+* Smarty_Internal_Data::assignParents()
 
 
 ## Properties ##

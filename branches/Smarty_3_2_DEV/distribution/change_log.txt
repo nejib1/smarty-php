@@ -1,4 +1,8 @@
 ﻿===== Smarty 3.2-DEV  =====
+02.05.2012
+- make registerFilter() and registerPlugin() accept __invoke()-able objects
+- add Smarty_Internal_Data::assignParents() for quickly assigning data to the whole template hierarchy
+
 01.05.2012
 - bugfix type-hint for Smarty or template object did not work while compiling plugins
 - new $template->is_nocache and {$smarty.is_nocache} flag true while executing nocache code
