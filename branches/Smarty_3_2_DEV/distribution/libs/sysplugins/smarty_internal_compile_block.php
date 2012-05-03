@@ -204,9 +204,14 @@ class Smarty_Internal_Compile_Block extends Smarty_Internal_CompileBase {
         if ($_tpl->has_nocache_code) {
             $compiler->template->has_nocache_code = true;
         }
-        foreach ($_tpl->required_plugins as $code => $tmp1) {
-            foreach ($tmp1 as $name => $tmp) {
-                foreach ($tmp as $type => $data) {
+        foreach($_tpl->required_plugins as $key => $tmp1) {
+            if ($compiler->nocache  && $compiler->template->caching) {
+                $code = 'nocache';
+            } else {
+                $code = $key;
+            }
+            foreach($tmp1 as $name => $tmp) {
+                foreach($tmp as $type => $data) {
                     $compiler->template->required_plugins[$code][$name][$type] = $data;
                 }
             }
