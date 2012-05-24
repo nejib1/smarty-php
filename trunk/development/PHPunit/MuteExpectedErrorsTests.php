@@ -57,11 +57,11 @@ class MuteExpectedErrorsTests extends PHPUnit_Framework_TestCase {
         $this->smarty->clearCompiledTemplate('default.tpl');
         $this->smarty->fetch('default.tpl');
 
-        $this->assertEquals(5, count($this->_errors));
+        $this->assertEquals(Smarty::$_IS_WINDOWS ? 5 : 4, count($this->_errors));
 
         @filemtime('ckxladanwijicajscaslyxck');
         $error = array( __FILE__ . ' line ' . (__LINE__ -1));
-        $this->assertEquals(6, count($this->_errors));
+        $this->assertEquals(Smarty::$_IS_WINDOWS ? 6 : 5, count($this->_errors));
 
         restore_error_handler();
     }
@@ -97,11 +97,11 @@ class MuteExpectedErrorsTests extends PHPUnit_Framework_TestCase {
         $this->smarty->clearCompiledTemplate('default.tpl');
         $this->smarty->fetch('default.tpl');
 
-        $this->assertEquals(7,count($this->_errors));
+        $this->assertEquals(Smarty::$_IS_WINDOWS ? 7 : 5, count($this->_errors));
 
         @filemtime('ckxladanwijicajscaslyxck');
         $error = array( __FILE__ . ' line ' . (__LINE__ -1));
-        $this->assertEquals(8,count($this->_errors));
+        $this->assertEquals(Smarty::$_IS_WINDOWS ? 8 : 6, count($this->_errors));
 
         restore_error_handler();
     }
