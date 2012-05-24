@@ -142,6 +142,7 @@ vert = /\|/
 andsym = /\s*\&\s*/
 qmark = /\s*\?\s*/
 constant = /([_]+[A-Z0-9][0-9A-Z_]*|[A-Z][0-9A-Z_]*)(?![0-9A-Z_]*[a-z])/
+attr = /\s+[0-9]*[a-zA-Z_][a-zA-Z0-9_\-:]*\s?=\s?/
 id = /[0-9]*[a-zA-Z_]\w*/
 literalstart = /SMARTYldel\s*literal\s*SMARTYrdel/
 literalend = /SMARTYldel\s*\/literal\s*SMARTYrdel/
@@ -553,6 +554,9 @@ qmark {
 }
 hex {
   $this->token = Smarty_Internal_Templateparser::TP_HEX;
+}
+attr {
+  $this->token = Smarty_Internal_Templateparser::TP_ATTR;
 }
 id {
   $this->token = Smarty_Internal_Templateparser::TP_ID;
