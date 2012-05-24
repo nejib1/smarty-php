@@ -500,12 +500,12 @@ attribute(res)   ::= SPACE ID(v) EQUAL ID(id). {
     }
 }
 
-attribute(res)   ::= SPACE ID(v) EQUAL expr(e). {
-    res = array(v=>e);
+attribute(res)   ::= ATTR(v) expr(e). {
+    res = array(trim(v,' =')=>e);
 }
 
-attribute(res)   ::= SPACE ID(v) EQUAL value(e). {
-    res = array(v=>e);
+attribute(res)   ::= ATTR(v) value(e). {
+    res = array(trim(v,' =')=>e);
 }
 
 attribute(res)   ::= SPACE ID(v). {
