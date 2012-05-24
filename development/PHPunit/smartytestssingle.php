@@ -61,6 +61,8 @@ class SmartyTests extends PHPUnit_Framework_TestSuite {
         $smarty->error_unassigned = true;
         $smarty->caching_type = 'file';
         $smarty->cache_locking = false;
+        $smarty->cache_id = null;
+        $smarty->compile_id = null;
         $smarty->default_resource_type = 'file';
     }
 
