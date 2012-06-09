@@ -501,11 +501,11 @@ attribute(res)   ::= SPACE ID(v) EQUAL ID(id). {
 }
 
 attribute(res)   ::= ATTR(v) expr(e). {
-    res = array(trim(v,' =')=>e);
+    res = array(trim(v," =\n\r")=>e);
 }
 
 attribute(res)   ::= ATTR(v) value(e). {
-    res = array(trim(v,' =')=>e);
+    res = array(trim(v," =\n\r")=>e);
 }
 
 attribute(res)   ::= SPACE ID(v). {

@@ -1,9 +1,9 @@
 <?php
 /**
 * Smarty PHPunit tests compilation of function plugins
-* 
+*
 * @package PHPunit
-* @author Uwe Tews 
+* @author Uwe Tews
 */
 
 /**
@@ -14,12 +14,12 @@ class CompileFunctionPluginTests extends PHPUnit_Framework_TestCase {
     {
         $this->smarty = SmartyTests::$smarty;
         SmartyTests::init();
-    } 
+    }
 
     public static function isRunnable()
     {
         return true;
-    } 
+    }
 
     /**
     * test function plugin tag in template file
@@ -28,7 +28,7 @@ class CompileFunctionPluginTests extends PHPUnit_Framework_TestCase {
     {
         $tpl = $this->smarty->createTemplate('functionplugintest.tpl', $this->smarty->tpl_vars);
         $this->assertEquals("10", $this->smarty->fetch($tpl));
-    } 
+    }
     /**
     * test function plugin tag in compiled template file
     */
@@ -37,7 +37,7 @@ class CompileFunctionPluginTests extends PHPUnit_Framework_TestCase {
         $this->smarty->force_compile = false;
         $tpl = $this->smarty->createTemplate('functionplugintest.tpl', $this->smarty->tpl_vars);
         $this->assertEquals("10", $this->smarty->fetch($tpl));
-    } 
+    }
     /**
     * test function plugin function definition in script
     */
@@ -46,10 +46,18 @@ class CompileFunctionPluginTests extends PHPUnit_Framework_TestCase {
         $this->smarty->registerPlugin(Smarty::PLUGIN_FUNCTION,'plugintest', 'myplugintest');
         $tpl = $this->smarty->createTemplate('eval:{plugintest foo=bar}', $this->smarty->tpl_vars);
         $this->assertEquals("plugin test called bar", $this->smarty->fetch($tpl));
-          } 
-} 
+    }
+
+    /**
+    * test muiltiline tags
+    */
+    public function testMultiLineTags()
+    {
+        $this->assertEquals("10", $this->smarty->fetch("eval:{counter\nstart=10}"));
+    }
+}
         function myplugintest($params, &$smarty)
         {
             return "plugin test called $params[foo]";
-        } 
+        }
 ?>
