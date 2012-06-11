@@ -53,7 +53,7 @@ class CompileFunctionPluginTests extends PHPUnit_Framework_TestCase {
     */
     public function testMultiLineTags()
     {
-        $this->assertEquals("10", $this->smarty->fetch("eval:{counter\nstart=10}"));
+        $this->assertEquals("10", $this->smarty->fetch("eval:{counter\n\tstart=10}"));
     }
 }
         function myplugintest($params, &$smarty)
