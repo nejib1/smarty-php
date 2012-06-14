@@ -29,7 +29,6 @@
         "php": ">=5.2"
     },
     "autoload": {
-        "classmap": ["distribution/libs/", "Smarty.class.php"]
-    },
-    "include-path": ["distribution/libs/"]
+        "classmap": ["distribution/libs/Smarty.class.php"]
+    }
 }
