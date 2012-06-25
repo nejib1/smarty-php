@@ -64,6 +64,11 @@ class DefaultPluginHandlerTests extends PHPUnit_Framework_TestCase {
         $this->smarty->assign('foo','bar');
         $this->assertEquals("localmodifier bar", $this->smarty->fetch('test_default_modifier.tpl'));
     }
+    public function testDefaultModifierStaticClassMethod()
+    {
+        $this->smarty->assign('foo','bar');
+        $this->assertEquals("staticmodifier bar", $this->smarty->fetch('test_default_static_modifier.tpl'));
+    }
 
 }
 
@@ -114,6 +119,9 @@ function my_plugin_handler ($tag, $type, $template, &$callback, &$script, &$cach
                 case 'mydefaultmodifier':
                     $callback = 'default_local_modifier';
                     return true;
+                case 'mydefaultstaticmodifier':
+                    $callback = array('DefModifier','default_static_modifier');
+                    return true;
                 default:
                 return false;
             }
@@ -126,5 +134,10 @@ function default_local_function_tag ($params, $template) {
 }
 function default_local_modifier ($input) {
     return 'localmodifier '.$input;
+}
+Class DefModifier {
+    static function default_static_modifier ($input) {
+        return 'staticmodifier '.$input;
+    }
 }
 ?>
