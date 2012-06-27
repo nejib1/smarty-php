@@ -49,7 +49,9 @@
      <entry>current <ulink url="&url.php-manual;function.time">timestamp</ulink></entry>
      <entry>
       What date/time to pre-select. If an array is given, the attributes field_array and prefix 
-      are used to identify the array elements to extract year, month and day from.
+      are used to identify the array elements to extract year, month and day from. Omitting this
+      parameter or supplying a falsy value will select the current date. To prevent date selection,
+      pass in &null;
      </entry>
     </row>
     <row>
