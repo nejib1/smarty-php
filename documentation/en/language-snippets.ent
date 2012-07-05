@@ -99,8 +99,8 @@ The template can access only variables assigned to any of the objects in the par
        </para></listitem>
 
        <listitem><para>
-       An array of the form <literal>array(&amp;$object, $method)</literal> with
-       <literal>&amp;$object</literal> being a reference to an
+       An array of the form <literal>array($object, $method)</literal> with
+       <literal>$object</literal> being a reference to an
        object and <literal>$method</literal> being a string
        containing the method-name
        </para></listitem>
