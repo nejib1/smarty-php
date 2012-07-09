@@ -28,7 +28,7 @@
 ]>
 
 
-<book id="manual">
+<book lang="&lang;" id="manual">
  <title>&SMARTYManual;</title>
 
  &bookinfo;

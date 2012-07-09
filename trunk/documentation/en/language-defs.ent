@@ -1,6 +1,7 @@
 <!-- $Revision$ -->
 
-<!ENTITY SMARTYManual      "Smarty3 Manual">
+<!ENTITY lang              "en">
+<!ENTITY SMARTYManual      "Smarty 3 Manual">
 <!ENTITY SMARTYDesigners   "Smarty For Template Designers">
 <!ENTITY SMARTYProgrammers "Smarty For Programmers">
 <!ENTITY Appendixes        "Appendixes">

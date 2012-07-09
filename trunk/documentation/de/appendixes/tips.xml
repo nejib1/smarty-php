@@ -375,7 +375,7 @@ Stock Name: {$ticker.name} Stock Price: {$ticker.price}
     nicht lesbar ist, jedoch von jedem Browser wieder zusammengesetzt
     werden kann. Den <link
     linkend="language.function.mailto">{mailto}</link>-Plugin gibt es
-    im Smarty-Repository auf http://smarty.php.net. Laden sie den
+    im Smarty-Repository auf http://www.smarty.net. Laden sie den
     Plugin herunter und speichern Sie ihn im 'plugins' Verzeichnis.
    </para>
    <example>
