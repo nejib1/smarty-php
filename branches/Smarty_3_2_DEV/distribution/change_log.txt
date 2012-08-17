@@ -141,6 +141,65 @@
 
 
 ===== trunk  =====
+17.08.2012
+- bugfix compiled code of nocache sections could contain wrong escaping (Forum Topic 22810)
+
+15.08.2012
+- bugfix template inheritance did produce wrong code if subtemplates with {block} was
+  included several times (from smarty-developers forum)
+
+14.08.2012
+- bugfix PHP5.2 compatibility compromised by SplFileInfo::getBasename() (Issue 110)
+
+01.08.2012
+- bugfix avoid PHP error on $smarty->configLoad(...) with invalid section specification (Forum Topic 22608)
+
+30.07.2012
+-bugfix {assign} in a nocache section should not overwrite existing variable values 
+   during compilation (issue 109)
+
+28.07.2012
+- bugfix array access of config variables did not work (Forum Topic 22527)
+
+19.07.2012
+- bugfix the default plugin handler did create wrong compiled code for static class methods
+  from external script files (issue 108)
+  
+===== Smarty-3.1.11 =====
+30.06.2012
+- bugfix {block.. hide} did not work as nested child (Forum Topic 22216)
+
+25.06.2012
+- bugfix the default plugin handler did not allow static class methods for modifier (issue 85)
+
+24.06.2012
+- bugfix escape modifier support for PHP < 5.2.3 (Forum Topic 21176)
+
+11.06.2012
+- bugfix the patch for Topic 21856 did break tabs between tag attributes (Forum Topic 22124)
+
+
+===== Smarty-3.1.10  =====
+09.06.2012
+- bugfix the compiler did ignore registered compiler plugins for closing tags (Forum Topic 22094)
+- bugfix the patch for Topic 21856 did break multiline tags (Forum Topic 22124)
+
+===== Smarty-3.1.9 =====
+07.06.2012
+- bugfix fetch() and display() with relative paths (Issue 104)
+- bugfix treat "0000-00-00" as 0 in modifier.date_format (Issue 103)
+
+24.05.2012
+- bugfix Smarty_Internal_Write_File::writeFile() could cause race-conditions on linux systems (Issue 101)
+- bugfix attribute parameter names of plugins may now contain also "-"  and ":"  (Forum Topic 21856)
+- bugfix add compile_id to cache key of of source (Issue 97)
+
+22.05.2012
+- bugfix recursive {include} within {section} did fail (Smarty developer group)
+
+12.05.2012
+- bugfix {html_options} did not properly escape values (Issue 98)
+
 03.05.2012
 - bugfix make HTTP protocall version variable (issue 96)
 

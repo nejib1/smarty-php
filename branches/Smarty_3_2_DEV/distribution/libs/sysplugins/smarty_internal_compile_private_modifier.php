@@ -127,7 +127,15 @@ class Smarty_Internal_Compile_Private_Modifier extends Smarty_Internal_CompileBa
                             if ($function instanceof Callable) {
                                 // TODO default_handler_plugins closure
                             } else if (!is_object($compiler->smarty->security_policy) || $compiler->smarty->security_policy->isTrustedModifier($modifier, $compiler)) {
-                                $output = "{$function}({$object}{$params})";
+                                if (!is_array($function)) {
+                                    $output = "{$function}({$params})";
+                                } else {
+                                    if (is_object($function[0])) {
+                                        $output = '$_smarty_tpl->smarty->registered_plugins[Smarty::PLUGIN_MODIFIER][\'' . $modifier . '\'][0][0]->' . $function[1] . '(' . $params . ')';
+                                    } else {
+                                        $output = $function[0] . '::' . $function[1] . '(' . $params . ')';
+                                    }
+                                }
                             }
                             if (isset($compiler->template->required_plugins['nocache'][$modifier][Smarty::PLUGIN_MODIFIER]['file']) || isset($compiler->template->required_plugins['compiled'][$modifier][Smarty::PLUGIN_MODIFIER]['file'])) {
                                 // was a plugin

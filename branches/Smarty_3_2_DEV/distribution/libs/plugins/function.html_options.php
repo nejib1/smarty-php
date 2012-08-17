@@ -25,7 +25,7 @@
  * - class      (optional) - string default not set
  * </pre>
  * 
- * @link http://www.smarty.net/docs/en/language.function.html.options.tpl {html_image}
+ * @link http://www.smarty.net/manual/en/language.function.html.options.php {html_image}
  *      (Smarty online manual)
  * @author Monte Ohrt <monte at ohrt dot com> 
  * @author Ralf Strehle (minor optimization) <ralf dot strehle at yahoo dot de>
@@ -34,7 +34,8 @@
  * @return string 
  * @uses smarty_function_escape_special_chars()
  */
-function smarty_function_html_options($params, $template) {
+function smarty_function_html_options($params, $template)
+{
     require_once(SMARTY_PLUGINS_DIR . 'shared.escape_special_chars.php');
 
     $name = null;
@@ -129,7 +130,8 @@ function smarty_function_html_options($params, $template) {
     return $_html_result;
 }
 
-function smarty_function_html_options_optoutput($key, $value, $selected, $id, $class, &$idx) {
+function smarty_function_html_options_optoutput($key, $value, $selected, $id, $class, &$idx)
+{
     if (!is_array($value)) {
         $_key = smarty_function_escape_special_chars($key);
         $_html_result = '<option value="' . $_key . '"';
@@ -149,6 +151,8 @@ function smarty_function_html_options_optoutput($key, $value, $selected, $id, $c
                 trigger_error("html_options: value is an object of class '" . get_class($value) . "' without __toString() method", E_USER_NOTICE);
                 return '';
             }
+        } else {
+            $value = smarty_function_escape_special_chars((string) $value);
         }
         $_html_result .= $_html_class . $_html_id . '>' . $value . '</option>' . "\n";
         $idx++;
@@ -160,7 +164,8 @@ function smarty_function_html_options_optoutput($key, $value, $selected, $id, $c
     return $_html_result;
 }
 
-function smarty_function_html_options_optgroup($key, $values, $selected, $id, $class, &$idx) {
+function smarty_function_html_options_optgroup($key, $values, $selected, $id, $class, &$idx)
+{
     $optgroup_html = '<optgroup label="' . smarty_function_escape_special_chars($key) . '">' . "\n";
     foreach ($values as $key => $value) {
         $optgroup_html .= smarty_function_html_options_optoutput($key, $value, $selected, $id, $class, $idx);

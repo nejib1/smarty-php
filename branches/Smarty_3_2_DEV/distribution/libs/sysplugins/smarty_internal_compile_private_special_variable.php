@@ -83,7 +83,12 @@ class Smarty_Internal_Compile_Private_Special_Variable extends Smarty_Internal_C
                 return '@' . trim($_index[1], "'");
 
             case 'config':
-                return "\$_smarty_tpl->getConfigVariable($_index[1])";
+                $name = trim($_index[1], "'");
+                if (isset($_index[2])) {
+                    return "\$_smarty_tpl->tpl_vars->___config_var_{$name}['value'][{$_index[2]}]";
+                } else {
+                		return "\$_smarty_tpl->tpl_vars->___config_var_{$name}['value']";
+                }
             case 'ldelim':
                 $_ldelim = $compiler->smarty->left_delimiter;
                 return "'$_ldelim'";

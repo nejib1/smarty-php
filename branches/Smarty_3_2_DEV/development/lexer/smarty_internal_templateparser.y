@@ -552,12 +552,12 @@ attribute(res)   ::= SPACE ID(v) EQUAL ID(id). {
     }
 }
 
-attribute(res)   ::= SPACE ID(v) EQUAL expr(e). {
-    res = array(v=>e);
+attribute(res)   ::= ATTR(v) expr(e). {
+    res = array(trim(v," =\n\r\t")=>e);
 }
 
-attribute(res)   ::= SPACE ID(v) EQUAL value(e). {
-    res = array(v=>e);
+attribute(res)   ::= ATTR(v) value(e). {
+    res = array(trim(v," =\n\r\t")=>e);
 }
 
 attribute(res)   ::= SPACE ID(v). {
@@ -883,8 +883,17 @@ variable(res)    ::= HATCH ID(i) HATCH. {
     res = "\$_smarty_tpl->tpl_vars->___config_var_{$var}['value']";
 }
 
+variable(res)    ::= HATCH ID(i) HATCH arrayindex(a). {
+    $var = trim(i,'\'');
+    res = "\$_smarty_tpl->tpl_vars->___config_var_{$var}['value']".a;
+}
+
 variable(res)    ::= HATCH variable(v) HATCH. {
     res = "\$_smarty_tpl->tpl_vars->___config_var_{{v}}['value']";
+}
+
+variable(res)    ::= HATCH variable(v) HATCH arrayindex(a). {
+    res = "\$_smarty_tpl->tpl_vars->___config_var_{{v}}['value']".a;
 }
 
 varindexed(res)  ::= DOLLAR varvar(v) arrayindex(a). {

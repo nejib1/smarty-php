@@ -291,6 +291,8 @@ abstract class Smarty_Internal_TemplateCompilerBase {
         } else {
             $code = $template_header . Smarty_Internal_Write_File::createTemplateCodeFrame($template, $_compiled_code) . $merged_code;
         }
+        // unset content because template inheritance could have replace source with parent code
+        unset ($template->source->content);
         return $code;
     }
 
@@ -484,6 +486,22 @@ abstract class Smarty_Internal_TemplateCompilerBase {
                 if ($function = $this->getPlugin($base_tag, Smarty::PLUGIN_BLOCK)) {
                     return $this->callTagCompiler('private_block_plugin', $args, $parameter, $tag, $function);
                 }
+                // registered compiler plugin ?
+                if (isset($this->smarty->registered_plugins[Smarty::PLUGIN_COMPILER][$tag])) {
+                    // if compiler function plugin call it now
+                    $args = array();
+                    if (!$this->smarty->registered_plugins[Smarty::PLUGIN_COMPILER][$tag][1]) {
+                        $this->tag_nocache = true;
+                    }
+                    $function = $this->smarty->registered_plugins[Smarty::PLUGIN_COMPILER][$tag][0];
+                    if (!is_array($function)) {
+                        return $function($args, $this);
+                    } else if (is_object($function[0])) {
+                        return $this->smarty->registered_plugins[Smarty::PLUGIN_COMPILER][$tag][0][0]->$function[1]($args, $this);
+                    } else {
+                        return call_user_func_array($function, array($args, $this));
+                    }
+                }
                 if ($this->smarty->loadPlugin('smarty_compiler_' . $tag)) {
                     $plugin = 'smarty_compiler_' . $tag;
                     if (is_callable($plugin)) {
@@ -655,7 +673,7 @@ abstract class Smarty_Internal_TemplateCompilerBase {
                 if ($make_nocache_code) {
                     $this->template->has_nocache_code = true;
                 }
-                $_output = str_replace(array("'", '\\\\', "^#^"), array("\'", '\\\\\\\\', "'"), $content);
+                $_output = str_replace("^#^", "'", addcslashes($content,'\'\\'));
                 $_output = preg_replace('/(\?><\?php)|(\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|"[^"\\\\]*(?:\\\\.[^"\\\\]*)*")/', '$2', $_output);
                 $_output = "<?php echo '/*%%SmartyNocache:{$this->nocache_hash}%%*/" . $_output . "/*/%%SmartyNocache:{$this->nocache_hash}%%*/';?>\n";
                 // make sure we include modifer plugins for nocache code

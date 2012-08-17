@@ -29,6 +29,10 @@
  */
 // NOTE: The parser does pass all parameter as strings which could be directly inserted into the compiled code string
 function smarty_modifiercompiler_escape(Smarty_Internal_TemplateCompilerBase $compiler, $input, $esc_type = 'html', $char_set = 'null', $double_encode = 'true') {
+    static $_double_encode = null;
+    if ($_double_encode === null) {
+        $_double_encode = version_compare(PHP_VERSION, '5.2.3', '>=');
+    }
     if (trim($char_set, "'\"") == 'null') {
         $char_set = '\'' . Smarty::$_CHARSET . '\'';
     }
@@ -37,15 +41,37 @@ function smarty_modifiercompiler_escape(Smarty_Internal_TemplateCompilerBase $co
         $esc = trim($esc_type, "'\"");
         switch ($esc) {
             case 'html':
-                return "htmlspecialchars({$input}, ENT_QUOTES, {$char_set}, {$double_encode})";
+               if ($_double_encode) {
+                    return "htmlspecialchars({$input}, ENT_QUOTES, {$char_set}, {$double_encode})";
+                } else if ($double_encode) {
+                    return "htmlspecialchars({$input}, ENT_QUOTES, {$char_set})";
+                } else {
+                    // fall back to modifier.escape.php
+                }
 
             case 'htmlall':
                 if (Smarty::$_MBSTRING) {
-                    return "mb_convert_encoding(htmlspecialchars({$input}, ENT_QUOTES, {$char_set}, {$double_encode}), 'HTML-ENTITIES', {$char_set})";
+                    if ($_double_encode) {
+                        // php >=5.2.3 - go native
+                        return "mb_convert_encoding(htmlspecialchars({$input}, ENT_QUOTES, {$char_set}, {$double_encode}), 'HTML-ENTITIES', {$char_set})";
+                    } else if ($double_encode) {
+                        // php <5.2.3 - only handle double encoding
+                        return "mb_convert_encoding(htmlspecialchars({$input}, ENT_QUOTES, {$char_set}), 'HTML-ENTITIES', {$char_set})";
+                    } else {
+                        // fall back to modifier.escape.php
+                    }
                 }
 
                 // no MBString fallback
-                return "htmlentities({$input}, ENT_QUOTES, {$char_set}, {$double_encode})";
+                if ($_double_encode) {
+                    // php >=5.2.3 - go native
+                    return "htmlentities({$input}, ENT_QUOTES, {$char_set}, {$double_encode})";
+                } else if ($double_encode) {
+                    // php <5.2.3 - only handle double encoding
+                    return "htmlentities({$input}, ENT_QUOTES, {$char_set})";
+                } else {
+                    // fall back to modifier.escape.php
+                }
 
             case 'url':
                 return "rawurlencode({$input})";

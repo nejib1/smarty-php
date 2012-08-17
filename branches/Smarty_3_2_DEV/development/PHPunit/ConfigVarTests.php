@@ -168,6 +168,21 @@ class ConfigVarTests extends PHPUnit_Framework_TestCase {
         $this->assertEquals("Overwrite1Overwrite2Overwrite3Welcome to Smarty! Global Section1 Global Section2", $this->smarty->fetch('eval:{config_load file=\'test.conf\'}{config_load file=\'test2.conf\'}{foreach #overwrite# as $over}{$over}{/foreach}{#title#} {#sec1#} {#sec2#}'));
     }
     /**
+    * test config varibales array
+    */
+    public function testConfigVariableArray1()
+    {
+        $this->smarty->config_overwrite = false;
+        $this->smarty->assign('foo',1);
+        $this->assertEquals("Overwrite2", $this->smarty->fetch('eval:{config_load file=\'test.conf\'}{config_load file=\'test2.conf\'}{$smarty.config.overwrite[$foo]}'));
+    }
+    public function testConfigVariableArray2()
+    {
+        $this->smarty->config_overwrite = false;
+        $this->smarty->assign('foo',2);
+        $this->assertEquals("Overwrite3", $this->smarty->fetch('eval:{config_load file=\'test.conf\'}{config_load file=\'test2.conf\'}{#overwrite#.$foo}'));
+    }
+    /**
     * test config varibales booleanize on
     */
     public function testConfigVariableBooleanizeOn()

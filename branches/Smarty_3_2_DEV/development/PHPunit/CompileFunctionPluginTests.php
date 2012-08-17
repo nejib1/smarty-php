@@ -55,7 +55,16 @@ class CompileFunctionPluginTests extends PHPUnit_Framework_TestCase {
         $this->smarty->registerPlugin(Smarty::PLUGIN_FUNCTION,'plugintest', 'mypluginparametertest');
         $tpl = $this->smarty->createTemplate('eval:{plugintest bar=buh}', $this->smarty);
         $this->assertEquals("plugin test called buh foo", $this->smarty->fetch($tpl));
-          }
+     }
+
+    /**
+    * test muiltiline tags
+    */
+    public function testMultiLineTags()
+    {
+        $this->assertEquals("10", $this->smarty->fetch("eval:{counter\n\tstart=10}"));
+    }
+
 }
         function myplugintest($params, &$smarty)
         {

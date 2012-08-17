@@ -92,19 +92,24 @@ class Smarty_Internal_Compile_Block extends Smarty_Internal_CompileBase {
             $_name = trim($_match[3], '\'"');
             if ($_match[8] != 'hide' || isset($template->block_data[$_name])) {        // replace {$smarty.block.child}
                 // do we have {$smart.block.child} in nested {block} tags?
-                if (0 != preg_match_all("!({$_ldl}{$al}block\s+)(name=)?(\w+|'.*'|\".*\")([\s\S]*?{$_rdl})([\s\S]*?)({$_ldl}{$al}\\\$smarty\.block\.child{$_rdl})([\s\S]*?{$_ldl}{$al}/block{$_rdl})!", $block_content, $_match2)) {
-                    foreach ($_match2[3] as $name) {
+                if (0 != preg_match_all("!({$_ldl}{$al}block\s+)(name=)?(\w+|'.*'|\".*\")([\s\S]*?)(hide)?(\s*{$_rdl})([\s\S]*?)({$_ldl}{$al}\\\$smarty\.block\.child{$_rdl})([\s\S]*?{$_ldl}{$al}/block{$_rdl})!", $block_content, $_match2)) {
+                    foreach ($_match2[3] as $key => $name) {
                         // get it's replacement
                         $_name2 = trim($name, '\'"');
-                        if (isset($template->block_data[$_name2])) {
-                            $replacement = $template->block_data[$_name2]['source'];
+                        if ($_match2[5][$key] != 'hide' || isset($template->block_data[$_name2])) {
+                            if (isset($template->block_data[$_name2])) {
+                                $replacement = $template->block_data[$_name2]['source'];
+                            } else {
+                                $replacement = '';
+                            }
+                            // replace {$smarty.block.child} tag
+                            $search = array("%({$_ldl}{$al}block[\s\S]*?{$name}[\s\S]*?{$_rdl})([\s\S]*?)({$_ldl}{$al}\\\$smarty\.block\.child{$_rdl})([\s\S]*?)({$_ldl}{$al}/block{$_rdl})%", "/§§§child§§§/");
+                            $replace = array('\2§§§child§§§\4', $replacement);
+                            $block_content = preg_replace($search, $replace, $block_content);
                         } else {
-                            $replacement = '';
+                            // remove hidden blocks
+                            $block_content = preg_replace("%({$_ldl}{$al}block[\s\S]*?{$name}[\s\S]*?{$_rdl}[\s\S]*?{$_ldl}{$al}/block{$_rdl})%", '', $block_content);
                         }
-                        // replace {$smarty.block.child} tag
-                        $search = array("%({$_ldl}{$al}block[\s\S]*?{$name}[\s\S]*?{$_rdl})([\s\S]*?)({$_ldl}{$al}\\\$smarty\.block\.child{$_rdl})([\s\S]*?)({$_ldl}{$al}/block{$_rdl})%", "/§§§child§§§/");
-                        $replace = array('\2§§§child§§§\4', $replacement);
-                        $block_content = preg_replace($search, $replace, $block_content);
                     }
                 }
                 // do we have not nested {$smart.block.child}
@@ -204,14 +209,14 @@ class Smarty_Internal_Compile_Block extends Smarty_Internal_CompileBase {
         if ($_tpl->has_nocache_code) {
             $compiler->template->has_nocache_code = true;
         }
-        foreach($_tpl->required_plugins as $key => $tmp1) {
-            if ($compiler->nocache  && $compiler->template->caching) {
+        foreach ($_tpl->required_plugins as $key => $tmp1) {
+            if ($compiler->nocache && $compiler->template->caching) {
                 $code = 'nocache';
             } else {
                 $code = $key;
             }
-            foreach($tmp1 as $name => $tmp) {
-                foreach($tmp as $type => $data) {
+            foreach ($tmp1 as $name => $tmp) {
+                foreach ($tmp as $type => $data) {
                     $compiler->template->required_plugins[$code][$name][$type] = $data;
                 }
             }

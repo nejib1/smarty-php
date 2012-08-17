@@ -45,6 +45,19 @@ class RegisteredResourceTests extends PHPUnit_Framework_TestCase {
         $this->assertTrue(is_integer($tpl->source->timestamp));
         $this->assertEquals(10, strlen($tpl->source->timestamp));
     }
+    /**
+     * test compile_id change
+     */
+    public function testResourceCompileIdChange()
+    {
+        $this->smarty->registerResource('myresource', array('getSource','getTimestamp','getSecure','getTrusted'));
+        $this->smarty->compile_id = 'a';
+        $this->assertEquals('this is template 1', $this->smarty->fetch('myresource:some'));
+        $this->assertEquals('this is template 1', $this->smarty->fetch('myresource:some'));
+        $this->smarty->compile_id = 'b';
+        $this->assertEquals('this is template 2', $this->smarty->fetch('myresource:some'));
+        $this->assertEquals('this is template 2', $this->smarty->fetch('myresource:some'));
+    }
 }
 
 /**
@@ -75,4 +88,27 @@ function rr_get_trusted($tpl_name, $smarty_obj)
     // not used for templates
 }
 
+// resource functions for compile_id change test
+function getSecure($name, $smarty)
+{
+    return true;
+}
+function getTrusted($name, $smarty)
+{
+}
+function getSource($name, &$source, $smarty)
+{
+    // we update a counter, so that we return a new source for every call
+    static $counter = 0;
+    $counter++;
+    // construct a new source
+    $source = "this is template $counter";
+    return true;
+}
+function getTimestamp($name, &$timestamp, $smarty)
+{
+    // always pretend the template is brand new
+    $timestamp = time();
+    return true;
+}
 ?>

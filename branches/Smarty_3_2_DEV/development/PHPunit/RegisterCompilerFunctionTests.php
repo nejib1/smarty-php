@@ -31,6 +31,16 @@ class RegisterCompilerFunctionTests extends PHPUnit_Framework_TestCase {
         $this->assertEquals('hello world 1', $this->smarty->fetch('eval:{testcompilerfunction var=1}'));
     }
     /**
+     * test register->compilerFunction method for blocks
+     */
+    public function testRegisterCompilerFunctionBlock()
+    {
+        $this->smarty->registerPlugin(Smarty::PLUGIN_COMPILER,'foo', 'mycompilerfunctionopen');
+        $this->smarty->registerPlugin(Smarty::PLUGIN_COMPILER,'fooclose', 'mycompilerfunctionclose');
+        $result = $this->smarty->fetch('eval:{foo} hallo {/foo}');
+        $this->assertEquals('open tag hallo close tag', $result);
+    }
+    /**
      * test register->compilerFunction method for static class
      */
     public function testRegisterCompilerFunctionClass()
@@ -77,6 +87,14 @@ class RegisterCompilerFunctionTests extends PHPUnit_Framework_TestCase {
 function mycompilerfunction($params, $smarty)
 {
     return "<?php echo 'hello world {$params['var']}';?>";
+}
+function mycompilerfunctionopen($params, $smarty)
+{
+    return "<?php echo 'open tag';?>";
+}
+function mycompilerfunctionclose($params, $smarty)
+{
+    return "<?php echo 'close tag';?>";
 }
 class mycompilerfunctionclass {
     static function execute($params, $smarty)

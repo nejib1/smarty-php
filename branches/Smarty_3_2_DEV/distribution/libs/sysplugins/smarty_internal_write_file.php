@@ -24,7 +24,8 @@ class Smarty_Internal_Write_File {
      * @param Smarty $smarty    smarty instance
      * @return boolean true
      */
-    public static function writeFile($_filepath, $_contents, Smarty $smarty) {
+    public static function writeFile($_filepath, $_contents, Smarty $smarty)
+    {
         $_error_reporting = error_reporting();
         error_reporting($_error_reporting & ~E_NOTICE & ~E_WARNING);
         if ($smarty->_file_perms !== null) {
@@ -45,17 +46,35 @@ class Smarty_Internal_Write_File {
             return false;
         }
 
-        // remove original file
-        @unlink($_filepath);
+        /*
+         * Windows' rename() fails if the destination exists,
+         * Linux' rename() properly handles the overwrite.
+         * Simply unlink()ing a file might cause other processes
+         * currently reading that file to fail, but linux' rename()
+         * seems to be smart enough to handle that for us.
+         */
+        if (Smarty::$_IS_WINDOWS) {
+        		// remove original file
+        		@unlink($_filepath);
+            // rename tmp file
+            $success = @rename($_tmp_file, $_filepath);
+        } else {
+            // rename tmp file
+            $success = @rename($_tmp_file, $_filepath);
+            if (!$success) {
+                // remove original file
+                @unlink($_filepath);
+                // rename tmp file
+                $success = @rename($_tmp_file, $_filepath);
+            }
+        }
 
-        // rename tmp file
-        $success = rename($_tmp_file, $_filepath);
         if (!$success) {
             error_reporting($_error_reporting);
             throw new SmartyException("unable to write file {$_filepath}");
             return false;
         }
-        
+
         // notify listeners of written file
         Smarty::triggerCallback('filesystem:write', array($smarty, $_filepath));
 
@@ -84,7 +103,12 @@ class Smarty_Internal_Write_File {
                 $plugins_string = '<?php ';
                 foreach ($_template->required_plugins['compiled'] as $tmp) {
                     foreach ($tmp as $data) {
-                        $plugins_string .= "if (!is_callable('{$data['function']}')) include '{$data['file']}';\n";
+                        $file = addslashes($data['file']);
+                        if (is_Array($data['function'])){
+                            $plugins_string .= "if (!is_callable(array('{$data['function'][0]}','{$data['function'][1]}'))) include '{$file}';\n";
+                        } else {
+                            $plugins_string .= "if (!is_callable('{$data['function']}')) include '{$file}';\n";
+                        }
                     }
                 }
                 $plugins_string .= '?>';
@@ -94,7 +118,12 @@ class Smarty_Internal_Write_File {
                 $plugins_string .= "<?php echo '/*%%SmartyNocache:{$_template->properties['nocache_hash']}%%*/<?php \$_smarty = \$_smarty_tpl->smarty; ";
                 foreach ($_template->required_plugins['nocache'] as $tmp) {
                     foreach ($tmp as $data) {
-                        $plugins_string .= addslashes("if (!is_callable('{$data['function']}')) include '{$data['file']}';\n");
+                        $file = addslashes($data['file']);
+                        if (is_Array($data['function'])){
+                            $plugins_string .= addslashes("if (!is_callable(array('{$data['function'][0]}','{$data['function'][1]}'))) include '{$file}';\n");
+                        } else {
+                            $plugins_string .= addslashes("if (!is_callable('{$data['function']}')) include '{$file}';\n");
+                        }
                     }
                 }
                 $plugins_string .= "?>/*/%%SmartyNocache:{$_template->properties['nocache_hash']}%%*/';?>\n";

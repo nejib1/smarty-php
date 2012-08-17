@@ -361,6 +361,29 @@ class FileResourceTests extends PHPUnit_Framework_TestCase {
         $this->fail('Exception for unknown relative filepath has not been raised.');
     }
 
+    public function testRelativeFetch()
+    {
+        $this->smarty->setTemplateDir(array(
+            dirname(__FILE__) . '/does-not-exist/',
+            dirname(__FILE__) . '/templates/sub/',
+        ));
+        $this->smarty->security_policy = null;
+        $this->assertEquals('hello world', $this->smarty->fetch('./relative.tpl'));
+        $this->assertEquals('hello world', $this->smarty->fetch('../helloworld.tpl'));
+    }
+
+    public function testRelativeFetchCwd()
+    {
+        $cwd = getcwd();
+        chdir(dirname(__FILE__) . '/templates/sub/');
+        $this->smarty->setTemplateDir(array(
+            dirname(__FILE__) . '/does-not-exist/',
+        ));
+        $this->smarty->security_policy = null;
+        $this->assertEquals('hello world', $this->smarty->fetch('./relative.tpl'));
+        $this->assertEquals('hello world', $this->smarty->fetch('../helloworld.tpl'));
+        chdir($cwd);
+    }
     /**
     * final cleanup
     */

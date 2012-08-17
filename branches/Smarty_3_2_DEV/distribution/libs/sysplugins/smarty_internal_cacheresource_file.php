@@ -181,12 +181,12 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource {
                 $_dir_array = array();
                 $_dir_it1 = new DirectoryIterator($_cache_dir);
                 foreach ($_dir_it1 as $_dir1) {
-                    if (!$_dir1->isDir() || $_dir1->isDot() || substr($_dir1->getBasename(), 0, 1) == '.') {
+                    if (!$_dir1->isDir() || $_dir1->isDot() || substr(basename($_dir1->getPathname()), 0, 1) == '.') {
                         continue;
                     }
                     $_dir_it2 = new DirectoryIterator($_dir1->getPathname());
                     foreach ($_dir_it2 as $_dir2) {
-                        if (!$_dir2->isDir() || $_dir2->isDot() || substr($_dir2->getBasename(), 0, 1) == '.') {
+                        if (!$_dir2->isDir() || $_dir2->isDot() || substr(basename($_dir2->getPathname()), 0, 1) == '.') {
                             continue;
                         }
                         $_dir_array[] = $_dir2->getPathname() . DS;
@@ -237,8 +237,8 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource {
                     if ($i == 0 || isset($_cache_id)) {
                         $regex = "/^{$_preg_cache_id}\^{$_preg_compile_id}\^{$_preg_file}\.php\$/i";
                         foreach ($_cacheDirs as $_file) {
-                            $filename = $_file->getBasename();
                             $path = $_file->getPathname();
+                            $filename = basename($path);
                             if (substr($filename, 0, 1) == '.' || strpos($_file, '.svn') !== false)
                                 continue;
                             // directory ?
@@ -282,8 +282,8 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource {
             $regex = "/^{$_preg_cache_id}\^{$_preg_compile_id}\^{$_preg_file}\.php\$/i";
             $_cacheDirs = new DirectoryIterator($_cache_dir);
             foreach ($_cacheDirs as $_file) {
-                $filename = $_file->getBasename();
                 $path = $_file->getPathname();
+                $filename = basename($path);
                 // directory ?
                 if ($_file->isDir()) {
                     continue;
