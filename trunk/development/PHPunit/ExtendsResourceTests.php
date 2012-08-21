@@ -158,6 +158,16 @@ class ExtendsResourceTests extends PHPUnit_Framework_TestCase {
         $result = $this->smarty->fetch($tpl2);
         $this->assertContains('Grandchild Page Title', $result);
      }
+    /**
+    * test  nested child block with hide and auto_literal = false
+    */
+    public function testCompileBlockChildNestedHideAutoLiteralFalseResource()
+    {
+        $this->smarty->auto_literal = false;
+        $result = $this->smarty->fetch('extends:test_block_parent_nested2_space.tpl|test_block_child_nested_hide_space.tpl');
+        $this->assertContains('nested block', $result);
+        $this->assertNotContains('should be hidden', $result);
+    }
 
     /* Test create cache file */
     public function testExtendResource1()
@@ -193,7 +203,7 @@ class ExtendsResourceTests extends PHPUnit_Framework_TestCase {
         $this->assertContains('--parent from --base-- block--', $result);
         $this->assertContains('--block include ok--', $result);
     }
-    
+
     public function testExtendExists()
     {
         $this->smarty->caching = false;
