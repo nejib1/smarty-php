@@ -188,7 +188,7 @@ class Smarty_Internal_Info
                 'mbstring' => array(
                     'name' => 'Multibyte String',
                     'href' => 'http://php.net/mbstring',
-                    'available' => function_exists('mb_substr'),
+                    'available' => function_exists('mb_split'),
                     'enabled' => SMARTY_MBSTRING,
                     'version' => phpversion('mbstring'),
                     'options' => array(
@@ -231,8 +231,8 @@ class Smarty_Internal_Info
             'SMARTY_DIR' => realpath(dirname(__FILE__) .'/..') . DS,
             'SMARTY_SYSPLUGINS_DIR' => dirname(__FILE__) . DS,
             'SMARTY_PLUGINS_DIR' => realpath(dirname(__FILE__) .'/../plugins') . DS,
-            'SMARTY_MBSTRING' => function_exists('mb_strlen'),
-            'SMARTY_RESOURCE_CHAR_SET' => function_exists('mb_strlen') ? 'UTF-8' : 'ISO-8859-1',
+            'SMARTY_MBSTRING' => function_exists('mb_split'),
+            'SMARTY_RESOURCE_CHAR_SET' => function_exists('mb_split') ? 'UTF-8' : 'ISO-8859-1',
             'SMARTY_RESOURCE_DATE_FORMAT' => '%b %e, %Y',
             'SMARTY_SPL_AUTOLOAD' => 0,
         );
@@ -259,8 +259,8 @@ class Smarty_Internal_Info
         }
 
         $statics = array(
-            '_MBSTRING' => function_exists('mb_strlen'),
-            '_CHARSET' => function_exists('mb_strlen') ? 'UTF-8' : 'ISO-8859-1',
+            '_MBSTRING' => function_exists('mb_split'),
+            '_CHARSET' => function_exists('mb_split') ? 'UTF-8' : 'ISO-8859-1',
             '_DATE_FORMAT' => '%b %e, %Y',
             '_UTF8_MODIFIER' => Smarty::$_CHARSET == 'UTF-8' ? 'u' : '',
         );
