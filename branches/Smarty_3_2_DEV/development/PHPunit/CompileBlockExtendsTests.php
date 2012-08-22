@@ -190,6 +190,16 @@ class CompileBlockExtendsTests extends PHPUnit_Framework_TestCase {
         $this->assertNotContains('should be hidden', $result);
     }
     /**
+    * test  nested child block with hide and auto_literal = false
+    */
+    public function testCompileBlockChildNestedHideAutoLiteralFalse()
+    {
+        $this->smarty->auto_literal = false;
+        $result = $this->smarty->fetch('test_block_child_nested_hide_space.tpl');
+        $this->assertContains('nested block', $result);
+        $this->assertNotContains('should be hidden', $result);
+    }
+    /**
     * test  child/parent template chain starting in subtempates
     */
     public function testCompileBlockStartSubTemplates()

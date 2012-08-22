@@ -314,6 +314,9 @@ phpstarttag {
 phpendtag {
   $this->token = Smarty_Internal_Templateparser::TP_PHPENDTAG;
 }
+rdel {
+  $this->token = Smarty_Internal_Templateparser::TP_TEXT;
+}
 aspstarttag {
   $this->token = Smarty_Internal_Templateparser::TP_ASPSTARTTAG;
 }
