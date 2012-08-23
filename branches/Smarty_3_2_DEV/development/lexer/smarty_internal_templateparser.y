@@ -188,7 +188,7 @@ template_element(res)::= smartytag(st). {
 } 
 
                       // comments
-template_element(res)::= COMMENT. {
+template_element(res)::= LDEL COMMENT RDEL. {
     res = new _smarty_text($this, '');
 }
 

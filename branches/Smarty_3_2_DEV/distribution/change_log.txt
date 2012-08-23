@@ -1,4 +1,7 @@
 ﻿===== Smarty 3.2-DEV  =====
+23.08.2012
+- add whitespace control by tag also for comments
+
 02.05.2012
 - make registerFilter() and registerPlugin() accept __invoke()-able objects
 - add Smarty_Internal_Data::assignParents() for quickly assigning data to the whole template hierarchy

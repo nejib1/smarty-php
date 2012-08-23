@@ -117,8 +117,8 @@ rdel = /(SMARTYrdel|--SMARTYrdel\s*|-SMARTYrdel[^\S\r\n]*)/
 smartyblockchild = /SMARTYldel[\$]smarty\.block\.childSMARTYrdel/
 integer = /\d+/
 hex =  /0[xX][0-9a-fA-F]+/
+comment = /\*([\S\s]*?)\*(?=(SMARTYrdel|--SMARTYrdel\s*|-SMARTYrdel[^\S\r\n]*))/
 math = /\s*(\*|\/|\%)\s*/
-comment = /SMARTYldel\*([\S\s]*?)\*SMARTYrdel/
 idincdec = /\$[0-9]*[a-zA-Z_]\w*(\+\+|\-\-)/
 unimath = /\s*(\+|\-)\s*/
 openP = /\s*\(\s*/
@@ -209,9 +209,6 @@ smartyblockchild {
 }
 emptyjava {
   $this->token = Smarty_Internal_Templateparser::TP_TEXT;
-}
-comment {
-  $this->token = Smarty_Internal_Templateparser::TP_COMMENT;
 }
 stripstart {
     $this->token = Smarty_Internal_Templateparser::TP_STRIPON;
@@ -410,6 +407,9 @@ ldel {
 rdel {
   $this->token = Smarty_Internal_Templateparser::TP_RDEL;
      $this->yypopstate();
+}
+comment {
+  $this->token = Smarty_Internal_Templateparser::TP_COMMENT;
 }
 isin {
   $this->token = Smarty_Internal_Templateparser::TP_ISIN;
