@@ -18,7 +18,7 @@
   $escape_html,
   registered variable filters,
   autoloaded variable filters,
-  template instance's variable filters. Everything after default_modifier can be disabled with the <literal>nofilter</literal> flag.
+  template instance's variable filters. Everything except the individual modifier can be disabled with the <literal>nofilter</literal> flag.
  </para>
  <note>
   <para>
