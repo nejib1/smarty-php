@@ -331,9 +331,12 @@ class FileResourceTests extends PHPUnit_Framework_TestCase {
         $this->assertEquals('hello world', $this->smarty->fetch('../helloworld.tpl'));
         chdir($cwd);
     }
-    
+
     protected function _relativeMap($map, $cwd=null) {
         foreach ($map as $file => $result) {
+            $this->smarty->clearCompiledTemplate();
+            $this->smarty->clearAllCache();
+            
             if ($result === null) {
                 try {
                     $this->smarty->fetch($file);
@@ -382,7 +385,7 @@ class FileResourceTests extends PHPUnit_Framework_TestCase {
             '././foo.tpl' => 'theory',
             '../foo.tpl' => 'relativity',
             '.././foo.tpl' => 'relativity',
-//            './../foo.tpl' => 'relativity', // ERROR
+            './../foo.tpl' => 'relativity',
             'einstein/foo.tpl' => 'einstein',
             './einstein/foo.tpl' => 'einstein',
             '../theory/einstein/foo.tpl' => 'einstein',
@@ -390,7 +393,26 @@ class FileResourceTests extends PHPUnit_Framework_TestCase {
             './templates/relativity/relativity.tpl' => 'relativity',
         );
         
-        Smarty_Resource::$sources = array();
+        $this->_relativeMap($map);
+        
+        $this->smarty->setTemplateDir(array(
+            'templates/relativity/theory/',
+        ));
+
+        $map = array(
+            'foo.tpl' => 'theory',
+            './foo.tpl' => 'theory',
+            '././foo.tpl' => 'theory',
+            '../foo.tpl' => 'relativity',
+            '.././foo.tpl' => 'relativity',
+            './../foo.tpl' => 'relativity',
+            'einstein/foo.tpl' => 'einstein',
+            './einstein/foo.tpl' => 'einstein',
+            '../theory/einstein/foo.tpl' => 'einstein',
+            'templates/relativity/relativity.tpl' => 'relativity',
+            './templates/relativity/relativity.tpl' => 'relativity',
+        );
+
         $this->_relativeMap($map);
     }
     public function testRelativityCwd()
@@ -412,13 +434,12 @@ class FileResourceTests extends PHPUnit_Framework_TestCase {
             '././foo.tpl' => 'theory',
             '../foo.tpl' => 'relativity',
             '.././foo.tpl' => 'relativity',
-//            './../foo.tpl' => 'relativity', // ERROR
+            './../foo.tpl' => 'relativity',
             'einstein/foo.tpl' => 'einstein',
             './einstein/foo.tpl' => 'einstein',
             '../theory/einstein/foo.tpl' => 'einstein',
         );
         
-        Smarty_Resource::$sources = array();
         $this->_relativeMap($map, $cwd);
     }
     public function testRelativityPrecedence()
@@ -439,11 +460,11 @@ class FileResourceTests extends PHPUnit_Framework_TestCase {
             '././foo.tpl' => 'einstein',
             '../foo.tpl' => 'theory',
             '.././foo.tpl' => 'theory',
-//            './../foo.tpl' => 'relativity', // ERROR
+            './../foo.tpl' => 'theory',
+            '../../foo.tpl' => 'relativity',
         );
         
         chdir($dn . '/templates/relativity/theory/');
-        Smarty_Resource::$sources = array();
         $this->_relativeMap($map, $cwd);
         
         $map = array(
@@ -451,19 +472,18 @@ class FileResourceTests extends PHPUnit_Framework_TestCase {
             './theory.tpl' => 'theory',
             '../../relativity.tpl' => 'relativity',
             '../relativity.tpl' => 'relativity',
-//            './einstein.tpl' => 'einstein', // ERROR
-            'einstein/einstein.tpl' => null,
-//            './einstein/einstein.tpl' => 'einstein', // ERROR
+            './einstein.tpl' => 'einstein',
+            'einstein/einstein.tpl' => 'einstein',
+            './einstein/einstein.tpl' => 'einstein',
         );
         
         chdir($dn . '/templates/relativity/theory/');
-        Smarty_Resource::$sources = array();
         $this->_relativeMap($map, $cwd);
     }
     public function testRelativityRelRel()
     {
         $this->smarty->security_policy = null;
-        
+
         $cwd = getcwd();
         $dn = dirname(__FILE__);
         
@@ -479,38 +499,35 @@ class FileResourceTests extends PHPUnit_Framework_TestCase {
         );
         
         chdir($dn . '/templates/relativity/theory/einstein');
-        Smarty_Resource::$sources = array();
         $this->_relativeMap($map, $cwd);
 
         $map = array(
             'relativity.tpl' => 'relativity',
             './relativity.tpl' => 'relativity',
-//            'theory/theory.tpl' => 'theory', // ERROR
-//            './theory/theory.tpl' => 'theory', // ERROR
+            'theory/theory.tpl' => 'theory',
+            './theory/theory.tpl' => 'theory',
         );
         
         chdir($dn . '/templates/relativity/theory/einstein/');
-        Smarty_Resource::$sources = array();
         $this->_relativeMap($map, $cwd);
         
         $map = array(
-//            'foo.tpl' => 'theory', // ERROR
-//            './foo.tpl' => 'theory', // ERROR
+            'foo.tpl' => 'theory',
+            './foo.tpl' => 'theory',
             'theory.tpl' => 'theory',
             './theory.tpl' => 'theory',
-//            'einstein/einstein.tpl' => 'einstein', // ERROR
-//            './einstein/einstein.tpl' => 'einstein', // ERROR
-//            '../theory/einstein/einstein.tpl' => 'einstein', // ERROR
+            'einstein/einstein.tpl' => 'einstein',
+            './einstein/einstein.tpl' => 'einstein',
+            '../theory/einstein/einstein.tpl' => 'einstein',
             '../relativity.tpl' => 'relativity',
-//            './../relativity.tpl' => 'relativity', // ERROR
-            '.././relativity.tpl' => 'relativity', // ERROR
+            './../relativity.tpl' => 'relativity',
+            '.././relativity.tpl' => 'relativity',
         );
 
         $this->smarty->setTemplateDir(array(
             '..',
         ));
         chdir($dn . '/templates/relativity/theory/einstein/');
-        Smarty_Resource::$sources = array();
         $this->_relativeMap($map, $cwd);
     }
     public function testRelativityRelRel1()
@@ -526,20 +543,19 @@ class FileResourceTests extends PHPUnit_Framework_TestCase {
         ));
         
         $map = array(
-//            'foo.tpl' => 'theory', // ERROR
-//            './foo.tpl' => 'theory', // ERROR
+            'foo.tpl' => 'theory',
+            './foo.tpl' => 'theory',
             'theory.tpl' => 'theory',
             './theory.tpl' => 'theory',
-//            'einstein/einstein.tpl' => 'einstein', // ERROR
-//            './einstein/einstein.tpl' => 'einstein', // ERROR
-//            '../theory/einstein/einstein.tpl' => 'einstein', // ERROR
+            'einstein/einstein.tpl' => 'einstein',
+            './einstein/einstein.tpl' => 'einstein',
+            '../theory/einstein/einstein.tpl' => 'einstein',
             '../relativity.tpl' => 'relativity',
-//            './../relativity.tpl' => 'relativity', // ERROR
-            '.././relativity.tpl' => 'relativity', // ERROR
+            './../relativity.tpl' => 'relativity',
+            '.././relativity.tpl' => 'relativity',
         );
 
         chdir($dn . '/templates/relativity/theory/einstein/');
-        Smarty_Resource::$sources = array();
         $this->_relativeMap($map, $cwd);
     }
 
