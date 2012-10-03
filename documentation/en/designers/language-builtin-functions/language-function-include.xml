@@ -40,7 +40,7 @@
   <varname>{include}</varname> statement or for individual variables by using the scope
    attribute at the <link linkend="language.function.assign"><varname>{assign}</varname></link>
    statement. The later is useful to return values from the included template to the 
-   includung template.
+   including template.
   </para></listitem>
 
   <listitem><para>
