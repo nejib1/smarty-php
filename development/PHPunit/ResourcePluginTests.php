@@ -1,9 +1,9 @@
 <?php
 /**
  * Smarty PHPunit tests resource plugins
- * 
+ *
  * @package PHPunit
- * @author Uwe Tews 
+ * @author Uwe Tews
  */
 
 /**
@@ -16,12 +16,12 @@ class ResourcePluginTests extends PHPUnit_Framework_TestCase {
         // reset cache for unit test
         Smarty_Resource::$resources = array();
         SmartyTests::init();
-    } 
+    }
 
     public static function isRunnable()
     {
         return true;
-    } 
+    }
     /**
      * test resource plugin rendering
      */
@@ -29,7 +29,7 @@ class ResourcePluginTests extends PHPUnit_Framework_TestCase {
     {
         $this->smarty->addPluginsDir(dirname(__FILE__)."/PHPunitplugins/");
         $this->assertEquals('hello world', $this->smarty->fetch('db:test'));
-    } 
+    }
     /**
      * test resource plugin rendering
      */
@@ -58,7 +58,7 @@ class ResourcePluginTests extends PHPUnit_Framework_TestCase {
         try {
             $this->assertEquals('hello world', $this->smarty->fetch('db3:test'));
         } catch (Exception $e) {
-            $this->assertContains('not return a destination', $e->getMessage());
+            $this->assertContains(htmlentities('not return a destination'), $e->getMessage());
             return;
         }
         $this->fail('Exception for empty filepath has not been thrown.');
@@ -133,9 +133,9 @@ class ResourcePluginTests extends PHPUnit_Framework_TestCase {
         $tpl = $this->smarty->createTemplate('db:test');
         $this->assertTrue(is_integer($tpl->source->timestamp));
         $this->assertEquals(10, strlen($tpl->source->timestamp));
-    } 
-    
-    
+    }
+
+
     public function testResourcePluginExtendsall()
     {
         $this->smarty->addPluginsDir( dirname(__FILE__)."/../../distribution/demo/plugins/");
@@ -145,11 +145,11 @@ class ResourcePluginTests extends PHPUnit_Framework_TestCase {
             './templates_3',
             './templates_4',
         ));
-        
+
         $expected = "templates\n\ntemplates_3\ntemplates\n\ntemplates_4";
         $this->assertEquals($expected, $this->smarty->fetch('extendsall:extendsall.tpl'));
     }
-    
+
     public function testResourcePluginExtendsallOne()
     {
         $this->smarty->addPluginsDir( dirname(__FILE__)."/../../distribution/demo/plugins/");
@@ -159,11 +159,11 @@ class ResourcePluginTests extends PHPUnit_Framework_TestCase {
             './templates_3',
             './templates_4',
         ));
-        
+
         $expected = "templates\ntemplates";
         $this->assertEquals($expected, $this->smarty->fetch('extendsall:extendsall2.tpl'));
     }
-    
+
     public function testSharing()
     {
         $smarty = new Smarty();
@@ -171,10 +171,10 @@ class ResourcePluginTests extends PHPUnit_Framework_TestCase {
         $_smarty = clone $smarty;
         $smarty->fetch('eval:foo');
         $_smarty->fetch('eval:foo');
-        
+
         $this->assertTrue($smarty->_resource_handlers['eval'] === $_smarty->_resource_handlers['eval']);
     }
-    
+
     public function testExplicit()
     {
         $smarty = new Smarty();
@@ -183,9 +183,9 @@ class ResourcePluginTests extends PHPUnit_Framework_TestCase {
         $smarty->fetch('eval:foo');
         $_smarty->registerResource('eval', new Smarty_Internal_Resource_Eval());
         $_smarty->fetch('eval:foo');
-        
+
         $this->assertFalse($smarty->_resource_handlers['eval'] === $_smarty->_resource_handlers['eval']);
     }
-} 
+}
 
 ?>

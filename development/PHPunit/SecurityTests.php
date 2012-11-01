@@ -54,7 +54,7 @@ class SecurityTests extends PHPUnit_Framework_TestCase {
             $this->smarty->fetch('eval:{assign var=foo value=[1,2,3,4,5]}{count($foo)}');
         }
         catch (Exception $e) {
-            $this->assertContains("PHP function 'count' not allowed by security setting", $e->getMessage());
+            $this->assertContains(htmlentities("PHP function 'count' not allowed by security setting"), $e->getMessage());
             return;
         }
         $this->fail('Exception for not trusted modifier has not been raised.');
@@ -88,7 +88,7 @@ class SecurityTests extends PHPUnit_Framework_TestCase {
             $this->smarty->fetch('eval:{assign var=foo value=[1,2,3,4,5]}{$foo|@count}');
         }
         catch (Exception $e) {
-            $this->assertContains("modifier 'count' not allowed by security setting", $e->getMessage());
+            $this->assertContains(htmlentities("modifier 'count' not allowed by security setting"), $e->getMessage());
             return;
         }
         $this->fail('Exception for not trusted modifier has not been raised.');
@@ -123,7 +123,7 @@ class SecurityTests extends PHPUnit_Framework_TestCase {
             $this->smarty->fetch('eval:{counter}{cycle values="1,2"}');
         }
         catch (Exception $e) {
-            $this->assertContains("tag 'cycle' not allowed by security setting", $e->getMessage());
+            $this->assertContains(htmlentities("tag 'cycle' not allowed by security setting"), $e->getMessage());
             return;
         }
         $this->fail('Exception for not allowed tag has not been raised.');
@@ -139,7 +139,7 @@ class SecurityTests extends PHPUnit_Framework_TestCase {
             $this->smarty->fetch('eval:{counter}{cycle values="1,2"}');
         }
         catch (Exception $e) {
-            $this->assertContains("tag 'cycle' disabled by security setting", $e->getMessage());
+            $this->assertContains(htmlentities("tag 'cycle' disabled by security setting"), $e->getMessage());
             return;
         }
         $this->fail('Exception for disabled tag has not been raised.');
@@ -169,7 +169,7 @@ class SecurityTests extends PHPUnit_Framework_TestCase {
             $this->smarty->fetch('eval:{"hello"|upper}{"world"|lower}');
         }
         catch (Exception $e) {
-            $this->assertContains("modifier 'lower' not allowed by security setting", $e->getMessage());
+            $this->assertContains(htmlentities("modifier 'lower' not allowed by security setting"), $e->getMessage());
             return;
         }
         $this->fail('Exception for not allowed tag has not been raised.');
@@ -185,7 +185,7 @@ class SecurityTests extends PHPUnit_Framework_TestCase {
             $this->smarty->fetch('eval:{"hello"|upper}{"world"|lower}');
         }
         catch (Exception $e) {
-            $this->assertContains("modifier 'lower' disabled by security setting", $e->getMessage());
+            $this->assertContains(htmlentities("modifier 'lower' disabled by security setting"), $e->getMessage());
             return;
         }
         $this->fail('Exception for disabled tag has not been raised.');
@@ -300,7 +300,7 @@ class SecurityTests extends PHPUnit_Framework_TestCase {
             $this->smarty->fetch('eval:{mysecuritystaticclass::square(5)}');
         }
         catch (Exception $e) {
-            $this->assertContains("access to static class 'mysecuritystaticclass' not allowed by security setting", $e->getMessage());
+            $this->assertContains(htmlentities("access to static class 'mysecuritystaticclass' not allowed by security setting"), $e->getMessage());
             return;
         }
         $this->fail('Exception for not trusted static class has not been raised.');
@@ -331,24 +331,24 @@ class SecurityTests extends PHPUnit_Framework_TestCase {
         try {
             $this->smarty->fetch('eval:{fetch file="http://www.smarty.net/foo.bar"}');
         } catch (SmartyException $e) {
-            $this->assertNotContains("not allowed by security setting", $e->getMessage());
+            $this->assertNotContains(htmlentities("not allowed by security setting"), $e->getMessage());
         }
 
         try {
             $this->smarty->fetch('eval:{fetch file="https://www.smarty.net/foo.bar"}');
             $this->fail("Exception for unknown resource not thrown (protocol)");
         } catch (SmartyException $e) {
-            $this->assertContains("not allowed by security setting", $e->getMessage());
+            $this->assertContains(htmlentities("not allowed by security setting"), $e->getMessage());
         }
-        
+
         try {
             $this->smarty->fetch('eval:{fetch file="http://www.smarty.com/foo.bar"}');
             $this->fail("Exception for unknown resource not thrown (domain)");
         } catch (SmartyException $e) {
-            $this->assertContains("not allowed by security setting", $e->getMessage());
+            $this->assertContains(htmlentities("not allowed by security setting"), $e->getMessage());
         }
     }
-    
+
 }
 
 class mysecuritystaticclass {

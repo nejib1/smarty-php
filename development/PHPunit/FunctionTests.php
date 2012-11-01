@@ -1,9 +1,9 @@
 <?php
 /**
 * Smarty PHPunit tests of function calls
-* 
+*
 * @package PHPunit
-* @author Uwe Tews 
+* @author Uwe Tews
 */
 
 
@@ -15,12 +15,12 @@ class FunctionTests extends PHPUnit_Framework_TestCase {
     {
         $this->smarty = SmartyTests::$smarty;
         SmartyTests::init();
-    } 
+    }
 
     public static function isRunnable()
     {
         return true;
-    } 
+    }
 
     /**
     * test unknown function error
@@ -30,13 +30,13 @@ class FunctionTests extends PHPUnit_Framework_TestCase {
         $this->smarty->enableSecurity();
         try {
             $this->smarty->fetch('eval:{unknown()}');
-        } 
+        }
         catch (Exception $e) {
-            $this->assertContains("PHP function 'unknown' not allowed by security setting", $e->getMessage());
+            $this->assertContains(htmlentities("PHP function 'unknown' not allowed by security setting"), $e->getMessage());
             return;
-        } 
+        }
         $this->fail('Exception for unknown function has not been raised.');
-    } 
-} 
+    }
+}
 
 ?>

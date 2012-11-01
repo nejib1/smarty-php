@@ -1,9 +1,9 @@
 <?php
 /**
 * Smarty PHPunit tests for tag attributes
-* 
+*
 * @package PHPunit
-* @author Uwe Tews 
+* @author Uwe Tews
 */
 
 
@@ -15,12 +15,12 @@ class AttributeTests extends PHPUnit_Framework_TestCase {
     {
         $this->smarty = SmartyTests::$smarty;
         SmartyTests::init();
-    } 
+    }
 
     public static function isRunnable()
     {
         return true;
-    } 
+    }
 
     /**
     * test required attribute
@@ -29,13 +29,13 @@ class AttributeTests extends PHPUnit_Framework_TestCase {
     {
         try {
             $this->smarty->fetch('string:{assign value=1}');
-        } 
+        }
         catch (Exception $e) {
-            $this->assertContains('missing "var" attribute', $e->getMessage());
+            $this->assertContains(htmlentities('missing "var" attribute'), $e->getMessage());
             return;
-        } 
+        }
         $this->fail('Exception for required attribute "var" has not been raised.');
-    } 
+    }
     /**
     * test unexspected attribute
     */
@@ -43,13 +43,13 @@ class AttributeTests extends PHPUnit_Framework_TestCase {
     {
         try {
             $this->smarty->fetch('string:{assign var=foo value=1 bar=2}');
-        } 
+        }
         catch (Exception $e) {
-            $this->assertContains('unexpected "bar" attribute', $e->getMessage());
+            $this->assertContains(htmlentities('unexpected "bar" attribute'), $e->getMessage());
             return;
-        } 
+        }
         $this->fail('Exception for unexpected attribute "bar" has not been raised.');
-    } 
+    }
     /**
     * test illegal option value
     */
@@ -57,13 +57,13 @@ class AttributeTests extends PHPUnit_Framework_TestCase {
     {
         try {
             $this->smarty->fetch('string:{assign var=foo value=1 nocache=buh}');
-        } 
+        }
         catch (Exception $e) {
-            $this->assertContains('illegal value of option flag', $e->getMessage());
+            $this->assertContains(htmlentities('illegal value of option flag'), $e->getMessage());
             return;
-        } 
+        }
         $this->fail('Exception for illegal value of option flag has not been raised.');
-    } 
+    }
     /**
     * test too many shorthands
     */
@@ -71,13 +71,13 @@ class AttributeTests extends PHPUnit_Framework_TestCase {
     {
         try {
             $this->smarty->fetch('string:{assign foo 1 2}');
-        } 
+        }
         catch (Exception $e) {
-            $this->assertContains('too many shorthand attributes', $e->getMessage());
+            $this->assertContains(htmlentities('too many shorthand attributes'), $e->getMessage());
             return;
-        } 
+        }
         $this->fail('Exception for too many shorthand attributes has not been raised.');
-    } 
-} 
+    }
+}
 
 ?>
