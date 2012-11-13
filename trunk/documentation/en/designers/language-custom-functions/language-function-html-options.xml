@@ -62,6 +62,13 @@
      <entry><emphasis>empty</emphasis></entry>
      <entry>Name of select group</entry>
     </row>
+    <row>
+     <entry>strict</entry>
+     <entry>boolean</entry>
+     <entry>No</entry>
+     <entry><emphasis>&false;</emphasis></entry>
+     <entry>Will make the "extra" attributes <emphasis>disabled</emphasis> and <emphasis>readonly</emphasis> only be set, if they were supplied with either boolean <emphasis>&true;</emphasis> or string <emphasis>"disabled"</emphasis> and <emphasis>"readonly"</emphasis> respectively</entry>
+    </row>
    </tbody>
   </tgroup>
  </informaltable>
