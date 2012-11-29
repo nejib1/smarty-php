@@ -73,9 +73,7 @@ abstract class Smarty_CacheResource {
      */
     public function getCachedContent(Smarty_Internal_Template $_template) {
         if ($_template->cached->handler->process($_template)) {
-            ob_start();
-            $_template->smarty_content->get_template_content($_template);
-            return ob_get_clean();
+            return $_template->cached->smarty_content->get_template_content($_template);
         }
         return null;
     }

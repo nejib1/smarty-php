@@ -72,8 +72,8 @@ class CompileErrorTests extends PHPUnit_Framework_TestCase {
             $this->smarty->fetch('eval:{assign var=}');
         }
         catch (Exception $e) {
-            $this->assertContains('<b>Syntax Error</b> in template <b>\'599a9cf0e3623a3206bd02a0f5c151d5f5f3f69e\'', $e->getMessage());
-            $this->assertContains('Unexpected \'<b>}</b>\'', $e->getMessage());
+            $this->assertContains(htmlspecialchars('<b>Syntax Error</b> in template <b>\'599a9cf0e3623a3206bd02a0f5c151d5f5f3f69e\''), $e->getMessage());
+            $this->assertContains(htmlspecialchars('Unexpected \'<b>}</b>\''), $e->getMessage());
             return;
         }
         $this->fail('Exception for syntax error has not been raised.');

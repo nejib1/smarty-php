@@ -6,7 +6,7 @@
  * @author Uwe Tews
  */
 
-define ('SMARTY_DIR', '../../distribution/libs/');
+define ('SMARTY_DIR', realpath('../../distribution/libs/') . '/');
 
 require_once SMARTY_DIR . 'SmartyBC.class.php';
 

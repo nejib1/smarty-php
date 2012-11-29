@@ -1241,6 +1241,10 @@
         * @return boolean cache status
         */
         public function isCached($template = null, $cache_id = null, $compile_id = null, $parent = null) {
+             if (is_object($template) && $template->is_template) {
+                return $template->cached->valid;
+             }
+
             if ($template === null && $this->is_template) {
                 return $this->cached->valid;
             }

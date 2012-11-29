@@ -2,6 +2,8 @@
 29.11.2012
 - first update after massive internal changes (not yet full functional)
 - lexer did fail because wrong properties
+- fixed a couple of PHPunit errors
+- some code fixes
 
 
 - add {block 'foo' overwrite} option to overwrite {$smarty.block.child} (Forum Topic 22905)

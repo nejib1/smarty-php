@@ -6,7 +6,7 @@
  * @author Uwe Tews
  */
 
-define ('SMARTY_DIR', '../../distribution/libs/');
+define ('SMARTY_DIR', realpath('../../distribution/libs/'). '/');
 
 require_once SMARTY_DIR . 'SmartyBC.class.php';
 
@@ -86,7 +86,7 @@ class SmartyTests extends PHPUnit_Framework_TestSuite {
     public static function suite()
     {
         $testorder = array(
-            'CompileFunctionTests'
+            'ConfigVarTests'
         );
         $smarty_libs_dir = dirname(__FILE__) . '/../../distribution/libs';
         if (method_exists('PHPUnit_Util_Filter', $smarty_libs_dir)) {

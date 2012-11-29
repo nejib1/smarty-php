@@ -1,9 +1,9 @@
 <?php
 /**
 * Smarty PHPunit tests closure plugins
-* 
+*
 * @package PHPunit
-* @author Rodney Rehm 
+* @author Rodney Rehm
 */
 
 class ClosureTests extends PHPUnit_Framework_TestCase {
@@ -12,12 +12,12 @@ class ClosureTests extends PHPUnit_Framework_TestCase {
     {
         $this->smarty = SmartyTests::$smarty;
         SmartyTests::init();
-    } 
+    }
 
     public static function isRunnable()
     {
-        return true;
-    } 
+        return false;
+    }
 
     public function testPluginFunction()
     {
@@ -26,7 +26,7 @@ class ClosureTests extends PHPUnit_Framework_TestCase {
         });
         $this->assertEquals("[closure-function]", $this->smarty->fetch('eval:{closure_function}'));
     }
-    
+
     public function testPluginBlock()
     {
         $this->smarty->registerPlugin('block', 'closure_block', function($params, $content, $template, &$repeat) {
@@ -36,7 +36,7 @@ class ClosureTests extends PHPUnit_Framework_TestCase {
         });
         $this->assertEquals("[closure-block]", $this->smarty->fetch('eval:{closure_block}{/closure_block}'));
     }
-    
+
     public function testPluginModifier()
     {
         $this->smarty->registerPlugin('modifier', 'closure_modifier', function($text) {
@@ -44,7 +44,7 @@ class ClosureTests extends PHPUnit_Framework_TestCase {
         });
         $this->assertEquals("[closure-modifier]", $this->smarty->fetch('eval:{""|closure_modifier}'));
     }
-    
+
     public function testPluginModifierCompiler()
     {
         $this->smarty->registerPlugin('modifiercompiler', 'closure_modifiercompiler', function($params) {
@@ -52,7 +52,7 @@ class ClosureTests extends PHPUnit_Framework_TestCase {
         });
         $this->assertEquals("[closure-modifiercompiler]", $this->smarty->fetch('eval:{""|closure_modifiercompiler}'));
     }
-    
+
     public function testFilterPre()
     {
         $this->smarty->registerFilter('pre', function($tpl_source, $template){
@@ -60,7 +60,7 @@ class ClosureTests extends PHPUnit_Framework_TestCase {
         });
         $this->assertEquals("foo[closure-filter-pre]", $this->smarty->fetch('eval:foo'));
     }
-    
+
     public function testFilterPost()
     {
         $this->smarty->registerFilter('pre', function($tpl_source, $template){
@@ -68,7 +68,7 @@ class ClosureTests extends PHPUnit_Framework_TestCase {
         });
         $this->assertEquals("foo[closure-filter-pre]", $this->smarty->fetch('eval:foo'));
     }
-    
+
     public function testFilterOutput()
     {
         $this->smarty->registerFilter('post', function($compiled, $template){
@@ -76,7 +76,7 @@ class ClosureTests extends PHPUnit_Framework_TestCase {
         });
         $this->assertEquals("foo[closure-filter-post]", $this->smarty->fetch('eval:foo'));
     }
-    
+
     public function testFilterVariable()
     {
         $this->smarty->registerFilter('variable', function($variable, $template){
