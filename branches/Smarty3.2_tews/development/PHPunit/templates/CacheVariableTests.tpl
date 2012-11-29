@@ -1,0 +1,1 @@
+{meta var="foo"}
