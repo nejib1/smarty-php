@@ -169,9 +169,7 @@ class Smarty_Internal_Compile_Private_Modifier extends Smarty_Internal_CompileBa
         //NOTE: For some PHP functions in PHP < 5.3 getParameters() did not return a result
         if ($parameters = $this->buildReflection($callback)->getParameters()) {
             if ($result = $this->injectObject($callback, array('Smarty', 'Smarty_Internal_Template', 'Smarty_Internal_TemplateCompilerBase'), 0)) {
-                if ($result[0] == 'Smarty') {
-                    $object = '$_smarty_tpl->smarty, ';
-                } elseif ($result[0] == 'Smarty_Internal_Template') {
+                if ($result[0] == 'Smarty' || $result[0] == 'Smarty_Internal_Template') {
                     $object = '$_smarty_tpl, ';
                 } else {
                     $object = $compiler;
