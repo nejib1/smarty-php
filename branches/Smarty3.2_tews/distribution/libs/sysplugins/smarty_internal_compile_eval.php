@@ -61,14 +61,14 @@ class Smarty_Internal_Compile_Eval extends Smarty_Internal_CompileBase {
         $this->iniTagCode($compiler);
 
         // create template object
-        $this->php("\$_template = new {$compiler->template->template_class}('eval:'." . $_attr['var'] . ", \$_smarty_tpl->smarty, \$_smarty_tpl);")->newline();
+        $this->php("\$_template = \$_smarty_tpl->createTemplate('eval:'." . $_attr['var'] . ", \$_smarty_tpl);")->newline();
         //was there an assign attribute?
         if (isset($_assign)) {
             $this->php("\$_smarty_tpl->assign($_assign,\$_template->fetch());")->newline();
         } else {
             $this->php("echo \$_template->fetch();")->newline();
         }
-        $this->php("unset(\$_template);")->newline();
+        $this->php("unset(\$_template->source, \$_template->compiled, \$_template->compiler, \$_template);")->newline();
 
         return $this->returnTagCode($compiler);
     }
