@@ -44,8 +44,8 @@ class Smarty_Internal_Compile_Private_Registered_Function extends Smarty_Interna
             $compiler->tag_nocache = true;
         }
         unset($_attr['nocache']);
-        if (isset($compiler->smarty->registered_plugins[Smarty::PLUGIN_FUNCTION][$tag])) {
-            $tag_info = $compiler->smarty->registered_plugins[Smarty::PLUGIN_FUNCTION][$tag];
+        if (isset($compiler->template->registered_plugins[Smarty::PLUGIN_FUNCTION][$tag])) {
+            $tag_info = $compiler->template->registered_plugins[Smarty::PLUGIN_FUNCTION][$tag];
         } else {
             $tag_info = $compiler->default_handler_plugins[Smarty::PLUGIN_FUNCTION][$tag];
         }
@@ -55,16 +55,19 @@ class Smarty_Internal_Compile_Private_Registered_Function extends Smarty_Interna
         // convert attributes into parameter string
         $result = $this->getPluginParameterString($function, $_attr, $compiler, false, $tag_info[2]);
         // compile code
+        $this->iniTagCode($compiler);
+
         if ($function instanceof Closure) {
-            $output = "<?php echo \$_smarty_tpl->smarty->registered_plugins[Smarty::PLUGIN_FUNCTION]['{$tag}'][0]({$result});?>\n";
+            $output = "echo \$_smarty_tpl->registered_plugins[Smarty::PLUGIN_FUNCTION]['{$tag}'][0]({$result});";
         } else if (!is_array($function)) {
-            $output = "<?php echo {$function}({$result});?>\n";
+            $this->php("echo {$function}({$result});")->newline();
         } else if (is_object($function[0])) {
-            $output = "<?php echo \$_smarty_tpl->smarty->registered_plugins[Smarty::PLUGIN_FUNCTION]['{$tag}'][0][0]->{$function[1]}({$result});?>\n";
+            $this->php("echo \$_smarty_tpl->registered_plugins[Smarty::PLUGIN_FUNCTION]['{$tag}'][0][0]->{$function[1]}({$result});")->newline();
         } else {
-            $output = "<?php echo {$function[0]}::{$function[1]}({$result});?>\n";
+            $this->php("echo {$function[0]}::{$function[1]}({$result});")->newline();
         }
-        return $output;
+
+        return $this->returnTagCode($compiler);
     }
 
 }

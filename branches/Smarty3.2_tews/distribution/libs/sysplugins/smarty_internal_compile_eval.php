@@ -58,16 +58,19 @@ class Smarty_Internal_Compile_Eval extends Smarty_Internal_CompileBase {
             // output will be stored in a smarty variable instead of beind displayed
             $_assign = $_attr['assign'];
         }
+        $this->iniTagCode($compiler);
 
         // create template object
-        $_output = "\$_template = new {$compiler->smarty->template_class}('eval:'." . $_attr['var'] . ", \$_smarty_tpl->smarty, \$_smarty_tpl);";
+        $this->php("\$_template = new {$compiler->template->template_class}('eval:'." . $_attr['var'] . ", \$_smarty_tpl->smarty, \$_smarty_tpl);")->newline();
         //was there an assign attribute?
         if (isset($_assign)) {
-            $_output .= "\$_smarty_tpl->assign($_assign,\$_template->fetch());";
+            $this->php("\$_smarty_tpl->assign($_assign,\$_template->fetch());")->newline();
         } else {
-            $_output .= "echo \$_template->fetch();";
+            $this->php("echo \$_template->fetch();")->newline();
         }
-        return "<?php $_output ?>";
+        $this->php("unset(\$_template);")->newline();
+
+        return $this->returnTagCode($compiler);
     }
 
 }

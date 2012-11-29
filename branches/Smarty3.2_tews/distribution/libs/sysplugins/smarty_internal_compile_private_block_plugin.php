@@ -63,13 +63,23 @@ class Smarty_Internal_Compile_Private_Block_Plugin extends Smarty_Internal_Compi
             // maybe nocache because of nocache variables or nocache plugin
             $compiler->nocache = $compiler->nocache | $compiler->tag_nocache;
             // compile code
+            $this->iniTagCode($compiler);
+
             if (is_array($par_string)) {
                 // old style with params array
-                $output = "<?php \$_smarty_tpl->smarty->_tag_stack[] = array('{$tag}', {$par_string['par']}); \$_block_repeat=true; echo {$function}({$par_string['par']}, null, {$par_string['obj']}, \$_block_repeat);while (\$_block_repeat) { ob_start();?>";
+                $this->php("\$_smarty_tpl->_tag_stack[] = array('{$tag}', {$par_string['par']});")->newline();
+                $this->php("\$_block_repeat=true;")->newline();
+                $this->php("echo {$function}({$par_string['par']}, null, {$par_string['obj']}, \$_block_repeat);")->newline();
+                $this->php("while (\$_block_repeat) {")->newline()->indent();
+                $this->php("ob_start();")->newline();
             } else {
                 // new style with real parameter
                 $par_string = str_replace('__content__', 'null', $par_string);
-                $output = "<?php \$_block_repeat=true; \$_smarty_tpl->smarty->_tag_stack[] = array('{$tag}', {$par_string}); echo {$function}({$par_string});while (\$_block_repeat) { ob_start();?>";
+                $this->php("\$_smarty_tpl->_tag_stack[] = array('{$tag}', {$par_string});")->newline();
+                $this->php("\$_block_repeat=true;")->newline();
+                $this->php("echo {$function}({$par_string};")->newline();
+                $this->php("while (\$_block_repeat) {")->newline()->indent();
+                $this->php("ob_start();")->newline();
             }
         } else {
             // must endblock be nocache?
@@ -81,22 +91,29 @@ class Smarty_Internal_Compile_Private_Block_Plugin extends Smarty_Internal_Compi
             // This tag does create output
             $compiler->has_output = true;
             // compile code
-            if (!isset($parameter['modifier_list'])) {
-                $mod_pre = $mod_post = '';
-            } else {
-                $mod_pre = ' ob_start(); ';
-                $mod_post = 'echo ' . $compiler->compileTag('private_modifier', array(), array('modifierlist' => $parameter['modifier_list'], 'value' => 'ob_get_clean()')) . ';';
+            $this->iniTagCode($compiler);
+
+            $this->php("\$_block_content = ob_get_clean();")->newline();
+            $this->php("\$_block_repeat=false;")->newline();
+            if (isset($parameter['modifier_list'])) {
+                $this->php("ob_start();")->newline();
             }
             if (is_array($par_string)) {
                 // old style with params array
-                $output = "<?php \$_block_content = ob_get_clean(); \$_block_repeat=false;" . $mod_pre . " echo {$function}({$par_string['par']}, \$_block_content, {$par_string['obj']}, \$_block_repeat); " . $mod_post . " } array_pop(\$_smarty_tpl->smarty->_tag_stack);?>";
+                $this->php("echo {$function}({$par_string['par']}, \$_block_content, {$par_string['obj']}, \$_block_repeat);")->newline();
             } else {
                 // new style with real parameter
                 $par_string = str_replace('__content__', '$_block_content', $par_string);
-                $output = "<?php \$_block_content = ob_get_clean(); \$_block_repeat=false;" . $mod_pre . " echo {$function}({$par_string}); " . $mod_post . " } array_pop(\$_smarty_tpl->smarty->_tag_stack);?>";
+                $this->php("echo {$function}({$par_string});")->newline();
             }
+            if (isset($parameter['modifier_list'])) {
+                $this->php('echo ' . $compiler->compileTag('private_modifier', array(), array('modifierlist' => $parameter['modifier_list'], 'value' => 'ob_get_clean()')) . ';')->newline();
+            }
+            $this->outdent()->php("}")->newline();
+            $this->php("array_pop(\$_smarty_tpl->_tag_stack);")->newline();
         }
-        return $output . "\n";
+
+        return $this->returnTagCode($compiler);
     }
 
 }

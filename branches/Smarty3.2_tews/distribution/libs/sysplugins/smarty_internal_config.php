@@ -191,7 +191,7 @@ class Smarty_Internal_Config {
      */
     public function fetch($sections = null, $scope = 'local') {
         if ($this->parent instanceof Smarty_Internal_Template) {
-            $this->parent->properties['file_dependency'][sha1($this->source->filepath)] = array($this->source->filepath, $this->source->timestamp, 'file');
+            $this->parent->compiled->smarty_content->file_dependency[sha1($this->source->filepath)] = array($this->source->filepath, $this->source->timestamp, 'file');
         }
         if ($this->mustCompile()) {
             $this->compileConfigSource();

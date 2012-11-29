@@ -55,10 +55,12 @@ class Smarty_Internal_Compile_Private_Print_Expression extends Smarty_Internal_C
         } else {
             $_filter = 'true';
         }
+        $this->iniTagCode($compiler);
         if (isset($_attr['assign'])) {
             // assign output to variable
-            $output = "<?php \$_smarty_tpl->assign({$_attr['assign']},{$parameter['value']});?>";
+            $this->php("\$_smarty_tpl->assign({$_attr['assign']},{$parameter['value']});")->newline();
         } else {
+            $this->php("echo ");
             // display value
             $output = $parameter['value'];
             // tag modifier
@@ -67,10 +69,10 @@ class Smarty_Internal_Compile_Private_Print_Expression extends Smarty_Internal_C
             }
             if (!$_attr['nofilter']) {
                 // default modifier
-                if (!empty($compiler->smarty->default_modifiers)) {
+                if (!empty($compiler->template->default_modifiers)) {
                     if (empty($compiler->default_modifier_list)) {
                         $modifierlist = array();
-                        foreach ($compiler->smarty->default_modifiers as $key => $single_default_modifier) {
+                        foreach ($compiler->template->default_modifiers as $key => $single_default_modifier) {
                             preg_match_all('/(\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|:|[^:]+)/', $single_default_modifier, $mod_array);
                             for ($i = 0, $count = count($mod_array[0]); $i < $count; $i++) {
                                 if ($mod_array[0][$i] != ':') {
@@ -83,26 +85,26 @@ class Smarty_Internal_Compile_Private_Print_Expression extends Smarty_Internal_C
                     $output = $compiler->compileTag('private_modifier', array(), array('modifierlist' => $compiler->default_modifier_list, 'value' => $output));
                 }
                 // autoescape html
-                if ($compiler->template->smarty->escape_html) {
+                if ($compiler->template->escape_html) {
                     $output = "htmlspecialchars({$output}, ENT_QUOTES, '" . addslashes(Smarty::$_CHARSET) . "')";
                 }
                 // loop over registerd filters
-                if (!empty($compiler->template->smarty->registered_filters[Smarty::FILTER_VARIABLE])) {
-                    foreach ($compiler->template->smarty->registered_filters[Smarty::FILTER_VARIABLE] as $key => $function) {
+                if (!empty($compiler->template->registered_filters[Smarty::FILTER_VARIABLE])) {
+                    foreach ($compiler->template->registered_filters[Smarty::FILTER_VARIABLE] as $key => $function) {
                         if ($function instanceof Closure) {
-                            $output = "\$_smarty_tpl->smarty->registered_filters[Smarty::FILTER_VARIABLE][{$key}]({$output},\$_smarty_tpl)";
+                            $output = "\$_smarty_tpl->registered_filters[Smarty::FILTER_VARIABLE][{$key}]({$output},\$_smarty_tpl)";
                         } else if (!is_array($function)) {
                             $output = "{$function}({$output},\$_smarty_tpl)";
                         } else if (is_object($function[0])) {
-                            $output = "\$_smarty_tpl->smarty->registered_filters[Smarty::FILTER_VARIABLE]['{$key}'][0]->{$function[1]}({$output},\$_smarty_tpl)";
+                            $output = "\$_smarty_tpl->registered_filters[Smarty::FILTER_VARIABLE]['{$key}'][0]->{$function[1]}({$output},\$_smarty_tpl)";
                         } else {
                             $output = "{$function[0]}::{$function[1]}({$output},\$_smarty_tpl)";
                         }
                     }
                 }
                 // auto loaded filters
-                if (isset($compiler->smarty->autoload_filters[Smarty::FILTER_VARIABLE])) {
-                    foreach ((array) $compiler->template->smarty->autoload_filters[Smarty::FILTER_VARIABLE] as $name) {
+                if (isset($compiler->template->autoload_filters[Smarty::FILTER_VARIABLE])) {
+                    foreach ((array) $compiler->template->autoload_filters[Smarty::FILTER_VARIABLE] as $name) {
                         $result = $this->compile_output_filter($compiler, $name, $output);
                         if ($result !== false) {
                             $output = $result;
@@ -124,9 +126,9 @@ class Smarty_Internal_Compile_Private_Print_Expression extends Smarty_Internal_C
             }
 
             $compiler->has_output = true;
-            $output = "<?php echo {$output};?>";
+            $this->raw(" {$output};")->newline();
         }
-        return $output;
+        return $this->returnTagCode($compiler);
     }
 
     /**
@@ -137,14 +139,14 @@ class Smarty_Internal_Compile_Private_Print_Expression extends Smarty_Internal_C
      */
     private function compile_output_filter($compiler, $name, $output) {
         $plugin_name = "smarty_variablefilter_{$name}";
-        $path = $compiler->smarty->loadPlugin($plugin_name, false);
+        $path = $compiler->template->loadPlugin($plugin_name, false);
         if ($path) {
             if ($compiler->template->caching) {
-                $compiler->template->required_plugins['nocache'][$name][Smarty::FILTER_VARIABLE]['file'] = $path;
-                $compiler->template->required_plugins['nocache'][$name][Smarty::FILTER_VARIABLE]['function'] = $plugin_name;
+                $compiler->required_plugins['nocache'][$name][Smarty::FILTER_VARIABLE]['file'] = $path;
+                $compiler->required_plugins['nocache'][$name][Smarty::FILTER_VARIABLE]['function'] = $plugin_name;
             } else {
-                $compiler->template->required_plugins['compiled'][$name][Smarty::FILTER_VARIABLE]['file'] = $path;
-                $compiler->template->required_plugins['compiled'][$name][Smarty::FILTER_VARIABLE]['function'] = $plugin_name;
+                $compiler->required_plugins['compiled'][$name][Smarty::FILTER_VARIABLE]['file'] = $path;
+                $compiler->required_plugins['compiled'][$name][Smarty::FILTER_VARIABLE]['function'] = $plugin_name;
             }
         } else {
             // not found

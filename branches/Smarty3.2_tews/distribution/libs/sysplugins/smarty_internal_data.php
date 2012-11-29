@@ -19,13 +19,6 @@
 class Smarty_Internal_Data {
 
     /**
-     * name of class used for templates
-     *
-     * @var string
-     */
-    public $template_class = 'Smarty_Internal_Template';
-
-    /**
      * template variables
      *
      * @var array
@@ -75,7 +68,7 @@ class Smarty_Internal_Data {
         }
         return $this;
     }
-    
+
     /**
      * assigns a Smarty variable to the current object and all parent elements
      *
@@ -88,12 +81,11 @@ class Smarty_Internal_Data {
     public function assignParents($tpl_var, $value = null, $nocache = false) {
         $this->assign($tpl_var, $value, $nocache);
         $node = $this->parent;
-        
+
         while ($node) {
             $node->assign($tpl_var, $value, $nocache);
             $node = $node->parent;
         }
-        
         return $this;
     }
 
@@ -113,6 +105,11 @@ class Smarty_Internal_Data {
         if ($varname != '') {
             $data['value'] = $value;
             Smarty::$global_tpl_vars->$varname = $data;
+        }
+        $ptr = $this;
+        while (isset($ptr->is_template) && $ptr->is_template) {
+            $ptr->assign($tpl_var, $value, $nocache);
+            $ptr = $ptr->parent;
         }
 
         return $this;

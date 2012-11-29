@@ -12,7 +12,6 @@
 /**
  * @ignore
  */
-include ("smarty_internal_parsetree.php");
 
 /**
  * Class SmartyTemplateCompiler
@@ -51,13 +50,6 @@ class Smarty_Internal_SmartyTemplateCompiler extends Smarty_Internal_TemplateCom
     public $parser;
 
     /**
-     * Smarty object
-     *
-     * @var object
-     */
-    public $smarty;
-
-    /**
      * array of vars which can be compiled in local scope
      *
      * @var array
@@ -76,11 +68,10 @@ class Smarty_Internal_SmartyTemplateCompiler extends Smarty_Internal_TemplateCom
      *
      * @param string $lexer_class  class name
      * @param string $parser_class class name
-     * @param Smarty $smarty       global instance
+     * @param Smarty_Internal_Template $template     template object
      */
-    public function __construct($lexer_class, $parser_class, $smarty) {
-        $this->smarty = $smarty;
-        parent::__construct();
+    public function __construct($lexer_class, $parser_class, $template) {
+        $this->template = $template;
         // get required plugins
         $this->lexer_class = $lexer_class;
         $this->parser_class = $parser_class;
@@ -101,11 +92,11 @@ class Smarty_Internal_SmartyTemplateCompiler extends Smarty_Internal_TemplateCom
         // init the lexer/parser to compile the template
         $this->lex = new $this->lexer_class($_content, $this);
         $this->parser = new $this->parser_class($this->lex, $this);
-        if ($this->smarty->_parserdebug)
+        if ($this->template->_parserdebug)
             $this->parser->PrintTrace();
         // get tokens from lexer and parse them
         while ($this->lex->yylex() && !$this->abort_and_recompile) {
-            if ($this->smarty->_parserdebug) {
+            if ($this->template->_parserdebug) {
                 echo "<pre>Line {$this->lex->line} Parsing  {$this->parser->yyTokenName[$this->lex->token]} Token " .
                 htmlentities($this->lex->value) . "</pre>";
             }

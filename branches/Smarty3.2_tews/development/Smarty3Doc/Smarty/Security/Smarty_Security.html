@@ -16,7 +16,8 @@
 	<div class="info-box-title">Description</div>
 	<div class="nav-bar">
 					<span class="disabled">Description</span> |
-													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+							<a href="#sec-descendents">Descendents</a>
+			|											<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
 						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
 						
 					</div>
@@ -33,6 +34,31 @@
 			</div>
 </div>
 
+	<a name="sec-descendents"></a>
+	<div class="info-box">
+		<div class="info-box-title">Direct descendents</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+			<span class="disabled">Descendents</span>
+			|												<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+								|															<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<table cellpadding="2" cellspacing="0" class="class-table">
+				<tr>
+					<th class="class-table-header">Class</th>
+					<th class="class-table-header">Description</th>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../../Example-application/Security/MySecurity.html">MySecurity</a></td>
+					<td>
+											This class does contain the security settings
+										</td>
+				</tr>
+							</table>
+		</div>
+	</div>
 
 
 	<a name="sec-var-summary"></a>
@@ -40,6 +66,7 @@
 		<div class="info-box-title">Variable Summary</span></div>
 		<div class="nav-bar">
 			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
 						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
 							| 
 									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
@@ -136,6 +163,7 @@
 		<div class="info-box-title">Method Summary</span></div>
 		<div class="nav-bar">
 			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
 																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
 				 
 				|
@@ -203,6 +231,7 @@
 		<div class="info-box-title">Variables</div>
 		<div class="nav-bar">
 			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
 										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
 						
 			
@@ -218,13 +247,13 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$allowed_modifiers</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">119</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">139</span>)
 		</span>
 	</div>
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">This is an array of allowed modifier plugins.</p>
-<p class="description"><p>If empty no restriction by allowed_modifiers.</p></p>
+<p class="short-description">Allowed modifier plugins</p>
+<p class="description"><p>This is an array of allowed modifier plugins.</p><p>If empty no restriction by allowed_modifiers.</p></p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
@@ -241,13 +270,13 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$allowed_tags</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">103</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">119</span>)
 		</span>
 	</div>
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">This is an array of allowed tags.</p>
-<p class="description"><p>If empty no restriction by allowed_tags.</p></p>
+<p class="short-description">Allowed function/block plugins</p>
+<p class="description"><p>This is an array of allowed tags.</p><p>If empty no restriction by allowed_tags.</p></p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
@@ -264,12 +293,13 @@
 		<span class="var-title">
 			<span class="var-type">boolean</span>
 			<span class="var-name">$allow_constants</span>
-			 = <span class="var-default"> true</span>			(line <span class="line-number">142</span>)
+			 = <span class="var-default"> true</span>			(line <span class="line-number">168</span>)
 		</span>
 	</div>
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">+ flag if constants can be accessed from template</p>
+<p class="short-description">Allow {$smarty.const.*}</p>
+<p class="description"><p><ul><li>flag if constants can be accessed from template</li></ul></p></p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
@@ -286,12 +316,13 @@
 		<span class="var-title">
 			<span class="var-type">boolean</span>
 			<span class="var-name">$allow_super_globals</span>
-			 = <span class="var-default"> true</span>			(line <span class="line-number">148</span>)
+			 = <span class="var-default"> true</span>			(line <span class="line-number">176</span>)
 		</span>
 	</div>
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">+ flag if super globals can be accessed from template</p>
+<p class="short-description">Allow {$smarty.get.*}</p>
+<p class="description"><p><ul><li>flag if super globals can be accessed from template</li></ul></p></p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
@@ -308,13 +339,13 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$disabled_modifiers</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">127</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">149</span>)
 		</span>
 	</div>
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">This is an array of disabled modifier plugins.</p>
-<p class="description"><p>If empty no restriction by disabled_modifiers.</p></p>
+<p class="short-description">Restricted modifier plugins</p>
+<p class="description"><p>This is an array of disabled modifier plugins.</p><p>If empty no restriction by disabled_modifiers.</p></p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
@@ -331,13 +362,13 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$disabled_tags</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">111</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">129</span>)
 		</span>
 	</div>
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">This is an array of disabled tags.</p>
-<p class="description"><p>If empty no restriction by disabled_tags.</p></p>
+<p class="short-description">Restricted function/block plugins</p>
+<p class="description"><p>This is an array of disabled tags.</p><p>If empty no restriction by disabled_tags.</p></p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
@@ -354,13 +385,13 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$php_functions</span>
-			 = <span class="var-default">array(<br />        'isset', 'empty',<br />        'count', 'sizeof',<br />        'in_array', 'is_array',<br />        'time',<br />        'nl2br',<br />    )</span>			(line <span class="line-number">77</span>)
+			 = <span class="var-default">array(<br />        'isset', 'empty',<br />        'count', 'sizeof',<br />        'in_array', 'is_array',<br />        'time',<br />        'nl2br',<br />    )</span>			(line <span class="line-number">89</span>)
 		</span>
 	</div>
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">This is an array of trusted PHP functions.</p>
-<p class="description"><p>If empty all functions are allowed.  To disable all PHP functions set $php_functions = null.</p></p>
+<p class="short-description">Allowed PHP functions (as function plugins)</p>
+<p class="description"><p>This is an array of trusted PHP functions.</p><p>If empty all functions are allowed.  To disable all PHP functions set $php_functions = null.</p></p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
@@ -377,13 +408,13 @@
 		<span class="var-title">
 			<span class="var-type">integer</span>
 			<span class="var-name">$php_handling</span>
-			 = <span class="var-default"> Smarty::PHP_PASSTHRU</span>			(line <span class="line-number">36</span>)
+			 = <span class="var-default"> Smarty::PHP_PASSTHRU</span>			(line <span class="line-number">38</span>)
 		</span>
 	</div>
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">This determines how Smarty handles &quot;&lt;?php ... ?&gt;&quot; tags in templates.</p>
-<p class="description"><p>possible values:  <ul><li>Smarty::PHP_PASSTHRU -&gt; echo PHP tags as they are</li><li>Smarty::PHP_QUOTE    -&gt; escape tags as entities</li><li>Smarty::PHP_REMOVE   -&gt; remove php tags</li><li>Smarty::PHP_ALLOW    -&gt; execute php tags</li></ul></p></p>
+<p class="short-description">Handling of {php}</p>
+<p class="description"><p>This determines how Smarty handles &quot;&lt;?php ... ?&gt;&quot; tags in templates.  possible values:  <ul><li>Smarty::PHP_PASSTHRU -&gt; echo PHP tags as they are</li><li>Smarty::PHP_QUOTE    -&gt; escape tags as entities</li><li>Smarty::PHP_REMOVE   -&gt; remove php tags</li><li>Smarty::PHP_ALLOW    -&gt; execute php tags</li></ul></p></p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
@@ -400,13 +431,13 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$php_modifiers</span>
-			 = <span class="var-default">array(<br />        'escape',<br />        'count'<br />    )</span>			(line <span class="line-number">92</span>)
+			 = <span class="var-default">array(<br />        'escape',<br />        'count'<br />    )</span>			(line <span class="line-number">106</span>)
 		</span>
 	</div>
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">This is an array of trusted PHP modifers.</p>
-<p class="description"><p>If empty all modifiers are allowed.  To disable all modifier set $modifiers = null.</p></p>
+<p class="short-description">Allowed PHP functions (as modifier plugins)</p>
+<p class="description"><p>This is an array of trusted PHP modifers.</p><p>If empty all modifiers are allowed.  To disable all modifier set $modifiers = null.</p></p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
@@ -423,13 +454,13 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$secure_dir</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">44</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">48</span>)
 		</span>
 	</div>
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">This is the list of template directories that are considered secure.</p>
-<p class="description"><p>$template_dir is in this list implicitly.</p></p>
+<p class="short-description">Allowed Directories of templates</p>
+<p class="description"><p>This is the list of template directories that are considered secure.  $template_dir is in this list implicitly.</p></p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
@@ -446,13 +477,13 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$static_classes</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">68</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">78</span>)
 		</span>
 	</div>
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">This is an array of trusted static classes.</p>
-<p class="description"><p>If empty access to all static classes is allowed.  If set to 'none' none is allowed.</p></p>
+<p class="short-description">Allowed static classes</p>
+<p class="description"><p>This is an array of trusted static classes.</p><p>If empty access to all static classes is allowed.  If set to 'none' none is allowed.</p></p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
@@ -469,13 +500,13 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$streams</span>
-			 = <span class="var-default">array('file')</span>			(line <span class="line-number">136</span>)
+			 = <span class="var-default">array('file')</span>			(line <span class="line-number">160</span>)
 		</span>
 	</div>
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">This is an array of trusted streams.</p>
-<p class="description"><p>If empty all streams are allowed.  To disable all streams set $streams = null.</p></p>
+<p class="short-description">Allowed PHP Streams</p>
+<p class="description"><p>This is an array of trusted streams.</p><p>If empty all streams are allowed.  To disable all streams set $streams = null.</p></p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
@@ -492,13 +523,13 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$trusted_dir</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">52</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">58</span>)
 		</span>
 	</div>
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">This is an array of directories where trusted php scripts reside.</p>
-<p class="description"><p>$security is disabled during their inclusion/execution.</p></p>
+<p class="short-description">Allowed Directories of PHP scripts</p>
+<p class="description"><p>This is an array of directories where trusted php scripts reside.  $security is disabled during their inclusion/execution.</p></p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
@@ -515,12 +546,13 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$trusted_uri</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">59</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">67</span>)
 		</span>
 	</div>
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">List of regular expressions (PCRE) that include trusted URIs</p>
+<p class="short-description">Allowed URLs</p>
+<p class="description"><p>List of regular expressions (PCRE) that include trusted URIs</p></p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 				<li><span class="field">usedby:</span> <a href="../../Smarty/Security/Smarty_Security.html#methodisTrustedUri">Smarty_Security::isTrustedUri()</a> - for list of patterns to match against $uri</li>
@@ -538,7 +570,7 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$_config_dir</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number">166</span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number">194</span>)
 		</span>
 	</div>
 
@@ -560,7 +592,7 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$_php_resource_dir</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number">178</span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number">206</span>)
 		</span>
 	</div>
 
@@ -582,7 +614,7 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$_resource_dir</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number">154</span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number">182</span>)
 		</span>
 	</div>
 
@@ -604,7 +636,7 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$_secure_dir</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number">172</span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number">200</span>)
 		</span>
 	</div>
 
@@ -626,7 +658,7 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$_template_dir</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number">160</span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number">188</span>)
 		</span>
 	</div>
 
@@ -648,7 +680,7 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$_trusted_dir</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number">184</span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number">212</span>)
 		</span>
 	</div>
 
@@ -672,6 +704,7 @@
 		<div class="info-box-title">Methods</div>
 		<div class="nav-bar">
 			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
 															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
 																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
 						
@@ -683,7 +716,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">Constructor __construct</span> (line <span class="line-number">189</span>)
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">217</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -711,7 +744,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">isTrustedModifier</span> (line <span class="line-number">281</span>)
+		<span class="method-title">isTrustedModifier</span> (line <span class="line-number">309</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -745,7 +778,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">isTrustedPHPDir</span> (line <span class="line-number">425</span>)
+		<span class="method-title">isTrustedPHPDir</span> (line <span class="line-number">453</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -776,7 +809,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">isTrustedPhpFunction</span> (line <span class="line-number">201</span>)
+		<span class="method-title">isTrustedPhpFunction</span> (line <span class="line-number">229</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -810,7 +843,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">isTrustedPhpModifier</span> (line <span class="line-number">235</span>)
+		<span class="method-title">isTrustedPhpModifier</span> (line <span class="line-number">263</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -844,7 +877,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">isTrustedResourceDir</span> (line <span class="line-number">323</span>)
+		<span class="method-title">isTrustedResourceDir</span> (line <span class="line-number">351</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -875,7 +908,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">isTrustedStaticClass</span> (line <span class="line-number">218</span>)
+		<span class="method-title">isTrustedStaticClass</span> (line <span class="line-number">246</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -909,7 +942,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">isTrustedStream</span> (line <span class="line-number">308</span>)
+		<span class="method-title">isTrustedStream</span> (line <span class="line-number">336</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -940,7 +973,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">isTrustedTag</span> (line <span class="line-number">252</span>)
+		<span class="method-title">isTrustedTag</span> (line <span class="line-number">280</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -974,7 +1007,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">isTrustedUri</span> (line <span class="line-number">404</span>)
+		<span class="method-title">isTrustedUri</span> (line <span class="line-number">432</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1009,7 +1042,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Sun, 04 Mar 2012 17:39:54 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.1</a>
+		Documentation generated on Thu, 01 Nov 2012 19:44:28 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

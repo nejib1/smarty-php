@@ -110,13 +110,13 @@ abstract class Smarty_Resource {
         $_compile_id = isset($_object->compile_id) ? preg_replace('![^\w\|]+!', '_', $_object->compile_id) : null;
         $_filepath = $compiled->source->uid . '_' . $_object->compiletime_options;
         // if use_sub_dirs, break file into directories
-        if ($_object->smarty->use_sub_dirs) {
+        if ($_object->use_sub_dirs) {
             $_filepath = substr($_filepath, 0, 2) . DS
                     . substr($_filepath, 2, 2) . DS
                     . substr($_filepath, 4, 2) . DS
                     . $_filepath;
         }
-        $_compile_dir_sep = $_object->smarty->use_sub_dirs ? DS : '^';
+        $_compile_dir_sep = $_object->use_sub_dirs ? DS : '^';
         if (isset($_compile_id)) {
             $_filepath = $_compile_id . $_compile_dir_sep . $_filepath;
         }
@@ -130,7 +130,7 @@ abstract class Smarty_Resource {
         } else {
             $_subtype = '.config';
         }
-        $_compile_dir = $_object->smarty->getCompileDir();
+        $_compile_dir = $_object->getCompileDir();
         // set basename if not specified
         $_basename = $this->getBasename($compiled->source);
         if ($_basename === null) {
@@ -157,16 +157,17 @@ abstract class Smarty_Resource {
             $_path = str_replace('\\', '/', $_path);
         }
 
+        $offset = 0;
         // resolve simples
         $_path = preg_replace('#(/\./(\./)*)|/{2,}#', '/', $_path);
         // resolve parents
         while (true) {
-            $_parent = strpos($_path, '/../');
-            if ($_parent === false) {
+            $_parent = strpos($_path, '/../', $offset);
+            if (!$_parent) {
                 break;
-            } else if ($_parent === 0) {
-                $_path = substr($_path, 3);
-                break;
+            } else if ($_path[$_parent - 1] === '.') {
+                $offset = $_parent + 3;
+                continue;
             }
 
             $_pos = strrpos($_path, '/', $_parent - strlen($_path) - 1);
@@ -197,16 +198,16 @@ abstract class Smarty_Resource {
     protected function buildFilepath(Smarty_Template_Source $source, Smarty_Internal_Template $_template=null) {
         $file = $source->name;
         if ($source instanceof Smarty_Config_Source) {
-            $_directories = $source->smarty->getConfigDir();
-            $_default_handler = $source->smarty->default_config_handler_func;
+            $_directories = $_template->getConfigDir();
+            $_default_handler = $_template->default_config_handler_func;
         } else {
-            $_directories = $source->smarty->getTemplateDir();
-            $_default_handler = $source->smarty->default_template_handler_func;
+            $_directories = $_template->getTemplateDir();
+            $_default_handler = $_template->default_template_handler_func;
         }
 
         // go relative to a given template?
         $_file_is_dotted = $file[0] == '.' && ($file[1] == '.' || $file[1] == '/' || $file[1] == "\\");
-        if ($_template && $_template->parent instanceof Smarty_Internal_Template && $_file_is_dotted) {
+        if ($_template && isset($_template->parent->is_template) && $_template->parent->is_template && $_file_is_dotted) {
             if ($_template->parent->source->type != 'file' && $_template->parent->source->type != 'extends' && !$_template->parent->allow_relative_path) {
                 throw new SmartyException("Template '{$file}' cannot be relative to template of resource type '{$_template->parent->source->type}'");
             }
@@ -223,7 +224,6 @@ abstract class Smarty_Resource {
         if (!preg_match('/^([\/\\\\]|[a-zA-Z]:[\/\\\\])/', $file)) {
             // don't we all just love windows?
             $_path = str_replace('\\', '/', $file);
-            $_was_relative_prefix = $file[0] == '.' ? substr($file, 0, strpos($_path, '/')) : null;
             $_path = DS . trim($file, '/');
             $_was_relative = true;
         } else {
@@ -238,12 +238,8 @@ abstract class Smarty_Resource {
         }
         // revert to relative
         if (isset($_was_relative)) {
-            if (isset($_was_relative_prefix)) {
-                $_path = $_was_relative_prefix . $_path;
-            } else {
                 $_path = substr($_path, 1);
             }
-        }
 
         // this is only required for directories
         $file = rtrim($_path, '/\\');
@@ -288,7 +284,7 @@ abstract class Smarty_Resource {
                 if ($this->fileExists($source, $_filepath)) {
                     return $this->normalizePath($_filepath);
                 }
-                if ($source->smarty->use_include_path && !preg_match('/^([\/\\\\]|[a-zA-Z]:[\/\\\\])/', $_directory)) {
+                if ($_template->use_include_path && !preg_match('/^([\/\\\\]|[a-zA-Z]:[\/\\\\])/', $_directory)) {
                     // try PHP include_path
                     if ($_stream_resolve_include_path) {
                         $_filepath = stream_resolve_include_path($_filepath);
@@ -318,7 +314,7 @@ abstract class Smarty_Resource {
                     throw new SmartyException("Default template handler not callable");
                 }
             }
-            $_return = call_user_func_array($_default_handler, array($source->type, $source->name, &$_content, &$_timestamp, $source->smarty));
+            $_return = call_user_func_array($_default_handler, array($source->type, $source->name, &$_content, &$_timestamp, $_template));
             if (is_string($_return)) {
                 $source->timestamp = @filemtime($_return);
                 $source->exists = !!$source->timestamp;
@@ -495,8 +491,10 @@ abstract class Smarty_Resource {
      */
     public static function source(Smarty_Internal_Template $_template=null, Smarty $smarty=null, $template_resource=null) {
         if ($_template) {
-            $smarty = $_template->smarty;
+            $smarty = $_template;
             $template_resource = $_template->template_resource;
+        } else {
+            $_template = $smarty;
         }
 
         // parse resource_name, load resource handler, identify unique resource name
@@ -657,12 +655,6 @@ class Smarty_Template_Source {
     public $handler = null;
 
     /**
-     * Smarty instance
-     * @var Smarty
-     */
-    public $smarty = null;
-
-    /**
      * create Source Object container
      *
      * @param Smarty_Resource $handler          Resource Handler this source object communicates with
@@ -681,7 +673,6 @@ class Smarty_Template_Source {
         $this->uncompiled = $this->handler instanceof Smarty_Resource_Uncompiled;
         $this->recompiled = $this->handler instanceof Smarty_Resource_Recompiled;
 
-        $this->smarty = $smarty;
         $this->resource = $resource;
         $this->type = $type;
         $this->name = $name;

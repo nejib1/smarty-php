@@ -91,11 +91,11 @@ function smarty_modifiercompiler_escape(Smarty_Internal_TemplateCompilerBase $co
 
     // could not optimize |escape call, so fallback to regular plugin
     if ($compiler->tag_nocache | $compiler->nocache) {
-        $compiler->template->required_plugins['nocache']['escape']['modifier']['file'] = SMARTY_PLUGINS_DIR . 'modifier.escape.php';
-        $compiler->template->required_plugins['nocache']['escape']['modifier']['function'] = 'smarty_modifier_escape';
+        $compiler->required_plugins['nocache']['escape']['modifier']['file'] = SMARTY_PLUGINS_DIR . 'modifier.escape.php';
+        $compiler->required_plugins['nocache']['escape']['modifier']['function'] = 'smarty_modifier_escape';
     } else {
-        $compiler->template->required_plugins['compiled']['escape']['modifier']['file'] = SMARTY_PLUGINS_DIR . 'modifier.escape.php';
-        $compiler->template->required_plugins['compiled']['escape']['modifier']['function'] = 'smarty_modifier_escape';
+        $compiler->required_plugins['compiled']['escape']['modifier']['file'] = SMARTY_PLUGINS_DIR . 'modifier.escape.php';
+        $compiler->required_plugins['compiled']['escape']['modifier']['function'] = 'smarty_modifier_escape';
     }
     return "smarty_modifier_escape(\$_smarty_tpl, {$input}, {$esc_type}, {$char_set}, {$double_encode})";
 }

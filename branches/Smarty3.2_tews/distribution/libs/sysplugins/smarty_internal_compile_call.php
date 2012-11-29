@@ -57,18 +57,21 @@ class Smarty_Internal_Compile_Call extends Smarty_Internal_CompileBase {
         if (isset($_attr['assign'])) {
             // output will be stored in a smarty variable instead of beind displayed
             $_assign = $_attr['assign'];
+        } else {
+            $_assign = "''";
         }
         $_name = $_attr['name'];
         if ($compiler->compiles_template_function) {
-            $compiler->called_functions[] = trim($_name, "'\"");
+            $compiler->called_template_functions[trim($_name, "'\"")] = true;
+        }
+        // nocache option
+        if ($_attr['nocache'] === true) {
+            $compiler->tag_nocache = true;
+        }
+        if ($compiler->template->caching && ($compiler->tag_nocache || $compiler->nocache)) {
+            $compiler->called_nocache_template_functions[trim($_name, "'\"")] = true;
         }
         unset($_attr['name'], $_attr['assign'], $_attr['nocache']);
-        // set flag (compiled code of {function} must be included in cache file
-        if ($compiler->nocache || $compiler->tag_nocache) {
-            $_nocache = 'true';
-        } else {
-            $_nocache = 'false';
-        }
         $_paramsArray = array();
         foreach ($_attr as $_key => $_value) {
             if (is_int($_key)) {
@@ -77,54 +80,15 @@ class Smarty_Internal_Compile_Call extends Smarty_Internal_CompileBase {
                 $_paramsArray[] = "'$_key'=>$_value";
             }
         }
-        if (isset($compiler->template->properties['function'][$_name]['parameter'])) {
-            foreach ($compiler->template->properties['function'][$_name]['parameter'] as $_key => $_value) {
-                if (!isset($_attr[$_key])) {
-                    if (is_int($_key)) {
-                        $_paramsArray[] = "$_key=>$_value";
-                    } else {
-                        $_paramsArray[] = "'$_key'=>$_value";
-                    }
-                }
-            }
-        } elseif (isset($compiler->smarty->template_functions[$_name]['parameter'])) {
-            foreach ($compiler->smarty->template_functions[$_name]['parameter'] as $_key => $_value) {
-                if (!isset($_attr[$_key])) {
-                    if (is_int($_key)) {
-                        $_paramsArray[] = "$_key=>$_value";
-                    } else {
-                        $_paramsArray[] = "'$_key'=>$_value";
-                    }
-                }
-            }
-        }
-        //varibale name?
-        if (!(strpos($_name, '$') === false)) {
-            $call_cache = $_name;
-            $call_function = '$tmp = "smarty_template_function_".' . $_name . '; $tmp';
-        } else {
-            $_name = trim($_name, "'\"");
-            $call_cache = "'{$_name}'";
-            $call_function = 'smarty_template_function_' . $_name;
-        }
+
+        $this->iniTagCode($compiler);
 
         $_params = 'array(' . implode(",", $_paramsArray) . ')';
-        $_hash = str_replace('-', '_', $compiler->template->properties['nocache_hash']);
-        // was there an assign attribute
-        if (isset($_assign)) {
-            if ($compiler->template->caching) {
-                $_output = "<?php ob_start(); Smarty_Internal_Function_Call_Handler::call ({$call_cache},\$_smarty_tpl,{$_params},'{$_hash}',{$_nocache}); \$_smarty_tpl->assign({$_assign}, ob_get_clean());?>\n";
-            } else {
-                $_output = "<?php ob_start(); {$call_function}(\$_smarty_tpl,{$_params}); \$_smarty_tpl->assign({$_assign}, ob_get_clean());?>\n";
-            }
-        } else {
-            if ($compiler->template->caching) {
-                $_output = "<?php Smarty_Internal_Function_Call_Handler::call ({$call_cache},\$_smarty_tpl,{$_params},'{$_hash}',{$_nocache});?>\n";
-            } else {
-                $_output = "<?php {$call_function}(\$_smarty_tpl,{$_params});?>\n";
-            }
-        }
-        return $_output;
+
+        $this->php("\$this->_callTemplateFunction ($_name,\$_smarty_tpl,{$_params},{$_assign});")->newline();
+
+        $compiler->has_code = true;
+        return $this->returnTagCode($compiler);
     }
 
 }

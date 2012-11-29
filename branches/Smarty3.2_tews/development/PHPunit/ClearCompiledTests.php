@@ -86,7 +86,7 @@ class ClearCompiledTests extends PHPUnit_Framework_TestCase {
         }
 
         Smarty_Resource::$sources = array();
-        $this->smarty->template_objects = array();
+        Smarty::$template_objects = array();
 
         return $this->_files;
     }

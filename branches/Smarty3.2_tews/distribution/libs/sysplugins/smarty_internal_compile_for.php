@@ -48,40 +48,40 @@ class Smarty_Internal_Compile_For extends Smarty_Internal_CompileBase {
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);
 
-        $output = "<?php ";
+        $this->iniTagCode($compiler);
+
         if ($parameter == 1) {
             $var2 = trim($_attr['var'], '\'"');
             foreach ($_attr['start'] as $_statement) {
                 $var = trim($_statement['var'], '\'"');
-                $output .= " \$_smarty_tpl->tpl_vars->{$var} = array('value' => {$_statement['value']});\n";
+                $this->php("\$_smarty_tpl->tpl_vars->{$var} = array('value' => {$_statement['value']});")->newline();
             }
-            $output .= "  if ({$_attr['ifexp']}){ for (\$_foo=true;{$_attr['ifexp']}; \$_smarty_tpl->tpl_vars->{$var2}['value']{$_attr['step']}){\n";
+            $this->php("if ({$_attr['ifexp']}){")->newline()->indent();
+            $this->php("for (\$_foo=true;{$_attr['ifexp']}; \$_smarty_tpl->tpl_vars->{$var2}['value']{$_attr['step']}){")->newline()->indent();
         } else {
             $_statement = $_attr['start'];
             $var = trim($_statement['var'], '\'"');
-            $output .= "\$_smarty_tpl->tpl_vars->{$var} = array();";
+            $this->php("\$_smarty_tpl->tpl_vars->{$var} = array();")->newline();
             if (isset($_attr['step'])) {
-                $output .= "\$_smarty_tpl->tpl_vars->{$var}['step'] = {$_attr['step']};";
+                $this->php("\$_smarty_tpl->tpl_vars->{$var}['step'] = {$_attr['step']};")->newline();
             } else {
-                $output .= "\$_smarty_tpl->tpl_vars->{$var}['step'] = 1;";
+                $this->php("\$_smarty_tpl->tpl_vars->{$var}['step'] = 1;")->newline();
             }
             if (isset($_attr['max'])) {
-                $output .= "\$_smarty_tpl->tpl_vars->{$var}['total'] = (int)min(ceil((\$_smarty_tpl->tpl_vars->{$var}['step'] > 0 ? {$_attr['to']}+1 - ({$_statement['value']}) : {$_statement['value']}-({$_attr['to']})+1)/abs(\$_smarty_tpl->tpl_vars->{$var}['step'])),{$_attr['max']});\n";
+                $this->php("\$_smarty_tpl->tpl_vars->{$var}['total'] = (int)min(ceil((\$_smarty_tpl->tpl_vars->{$var}['step'] > 0 ? {$_attr['to']}+1 - ({$_statement['value']}) : {$_statement['value']}-({$_attr['to']})+1)/abs(\$_smarty_tpl->tpl_vars->{$var}['step'])),{$_attr['max']});")->newline();
             } else {
-                $output .= "\$_smarty_tpl->tpl_vars->{$var}['total'] = (int)ceil((\$_smarty_tpl->tpl_vars->{$var}['step'] > 0 ? {$_attr['to']}+1 - ({$_statement['value']}) : {$_statement['value']}-({$_attr['to']})+1)/abs(\$_smarty_tpl->tpl_vars->{$var}['step']));\n";
+                $this->php("\$_smarty_tpl->tpl_vars->{$var}['total'] = (int)ceil((\$_smarty_tpl->tpl_vars->{$var}['step'] > 0 ? {$_attr['to']}+1 - ({$_statement['value']}) : {$_statement['value']}-({$_attr['to']})+1)/abs(\$_smarty_tpl->tpl_vars->{$var}['step']));")->newline();
             }
-            $output .= "if (\$_smarty_tpl->tpl_vars->{$var}['total'] > 0){\n";
-            $output .= "for (\$_smarty_tpl->tpl_vars->{$var}['value'] = {$_statement['value']}, \$_smarty_tpl->tpl_vars->{$var}['iteration'] = 1;\$_smarty_tpl->tpl_vars->{$var}['iteration'] <= \$_smarty_tpl->tpl_vars->{$var}['total'];\$_smarty_tpl->tpl_vars->{$var}['value'] += \$_smarty_tpl->tpl_vars->{$var}['step'], \$_smarty_tpl->tpl_vars->{$var}['iteration']++){\n";
-            $output .= "\$_smarty_tpl->tpl_vars->{$var}['first'] = \$_smarty_tpl->tpl_vars->{$var}['iteration'] == 1;";
-            $output .= "\$_smarty_tpl->tpl_vars->{$var}['last'] = \$_smarty_tpl->tpl_vars->{$var}['iteration'] == \$_smarty_tpl->tpl_vars->{$var}['total'];";
+            $this->php("if (\$_smarty_tpl->tpl_vars->{$var}['total'] > 0){")->newline()->indent();
+            $this->php("for (\$_smarty_tpl->tpl_vars->{$var}['value'] = {$_statement['value']}, \$_smarty_tpl->tpl_vars->{$var}['iteration'] = 1;\$_smarty_tpl->tpl_vars->{$var}['iteration'] <= \$_smarty_tpl->tpl_vars->{$var}['total'];\$_smarty_tpl->tpl_vars->{$var}['value'] += \$_smarty_tpl->tpl_vars->{$var}['step'], \$_smarty_tpl->tpl_vars->{$var}['iteration']++){")->newline()->indent();
+            $this->php("\$_smarty_tpl->tpl_vars->{$var}['first'] = \$_smarty_tpl->tpl_vars->{$var}['iteration'] == 1;")->newline();
+            $this->php("\$_smarty_tpl->tpl_vars->{$var}['last'] = \$_smarty_tpl->tpl_vars->{$var}['iteration'] == \$_smarty_tpl->tpl_vars->{$var}['total'];")->newline();
         }
-        $output .= "?>";
-
         $this->openTag($compiler, 'for', array('for', $compiler->nocache));
         // maybe nocache because of nocache variables
         $compiler->nocache = $compiler->nocache | $compiler->tag_nocache;
-        // return compiled code
-        return $output;
+
+        return $this->returnTagCode($compiler);
     }
 
 }
@@ -108,7 +108,13 @@ class Smarty_Internal_Compile_Forelse extends Smarty_Internal_CompileBase {
 
         list($openTag, $nocache) = $this->closeTag($compiler, array('for'));
         $this->openTag($compiler, 'forelse', array('forelse', $nocache));
-        return "<?php }} else { ?>";
+
+        $this->iniTagCode($compiler);
+
+        $this->outdent()->php("}")->newline();
+        $this->outdent()->php("} else {")->newline()->indent();
+
+        return $this->returnTagCode($compiler);
     }
 
 }
@@ -139,11 +145,14 @@ class Smarty_Internal_Compile_Forclose extends Smarty_Internal_CompileBase {
 
         list($openTag, $compiler->nocache) = $this->closeTag($compiler, array('for', 'forelse'));
 
-        if ($openTag == 'forelse') {
-            return "<?php }  ?>";
-        } else {
-            return "<?php }} ?>";
+        $this->iniTagCode($compiler);
+
+        $this->outdent()->php("}")->newline();
+        if ($openTag != 'forelse') {
+            $this->outdent()->php("}")->newline();
         }
+
+        return $this->returnTagCode($compiler);
     }
 
 }

@@ -39,7 +39,7 @@ class Smarty_Internal_Compile_Private_Special_Variable extends Smarty_Internal_C
             case 'now':
                 return 'time()';
             case 'cookies':
-                if (isset($compiler->smarty->security_policy) && !$compiler->smarty->security_policy->allow_super_globals) {
+                if (isset($compiler->template->security_policy) && !$compiler->template->security_policy->allow_super_globals) {
                     $compiler->trigger_template_error("(secure mode) super globals not permitted");
                     break;
                 }
@@ -52,7 +52,7 @@ class Smarty_Internal_Compile_Private_Special_Variable extends Smarty_Internal_C
             case 'server':
             case 'session':
             case 'request':
-                if (isset($compiler->smarty->security_policy) && !$compiler->smarty->security_policy->allow_super_globals) {
+                if (isset($compiler->template->security_policy) && !$compiler->template->security_policy->allow_super_globals) {
                     $compiler->trigger_template_error("(secure mode) super globals not permitted");
                     break;
                 }
@@ -76,7 +76,7 @@ class Smarty_Internal_Compile_Private_Special_Variable extends Smarty_Internal_C
                 return "'$_version'";
 
             case 'const':
-                if (isset($compiler->smarty->security_policy) && !$compiler->smarty->security_policy->allow_constants) {
+                if (isset($compiler->template->security_policy) && !$compiler->template->security_policy->allow_constants) {
                     $compiler->trigger_template_error("(secure mode) constants not permitted");
                     break;
                 }
@@ -87,15 +87,26 @@ class Smarty_Internal_Compile_Private_Special_Variable extends Smarty_Internal_C
                 if (isset($_index[2])) {
                     return "\$_smarty_tpl->tpl_vars->___config_var_{$name}['value'][{$_index[2]}]";
                 } else {
-                		return "\$_smarty_tpl->tpl_vars->___config_var_{$name}['value']";
+                    return "\$_smarty_tpl->tpl_vars->___config_var_{$name}['value']";
                 }
             case 'ldelim':
-                $_ldelim = $compiler->smarty->left_delimiter;
+                $_ldelim = $compiler->template->left_delimiter;
                 return "'$_ldelim'";
 
             case 'rdelim':
-                $_rdelim = $compiler->smarty->right_delimiter;
+                $_rdelim = $compiler->template->right_delimiter;
                 return "'$_rdelim'";
+
+            case 'block':
+                $output = '';
+                if (trim($_index[1], "'") == 'parent') {
+                    $output = $compiler->compileTag('private_block_parent', array(), array());
+                } elseif (trim($_index[1], "'") == 'child') {
+                    $output = $compiler->compileTag('private_block_child', array(), array());
+                } else {
+                    $compiler->trigger_template_error('$smarty.block.' . trim($_index[1], "'") . ' is invalid');
+                }
+                return $output;
 
             default:
                 $compiler->trigger_template_error('$smarty.' . trim($_index[0], "'") . ' is invalid');

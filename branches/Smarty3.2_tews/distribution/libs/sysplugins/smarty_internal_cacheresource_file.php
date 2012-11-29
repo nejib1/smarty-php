@@ -31,7 +31,7 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource {
         $_cache_id = isset($_template->cache_id) ? preg_replace('![^\w\|]+!', '_', $_template->cache_id) : null;
         $_compile_id = isset($_template->compile_id) ? preg_replace('![^\w\|]+!', '_', $_template->compile_id) : null;
         // if use_sub_dirs build subfolders
-        if ($_template->smarty->use_sub_dirs) {
+        if ($_template->use_sub_dirs) {
             $_filepath = substr($_template->source->uid, 0, 2) . DS . $_template->source->uid . DS;
             if (isset($_cache_id)) {
                 $_cache_id_parts = explode('|', $_cache_id);
@@ -51,8 +51,8 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource {
         } else {
             $_filepath = str_replace('|', '.', $_cache_id) . '^' . $_compile_id . '^' . $_template->source->uid . '.';
         }
-        $_cache_dir = $_template->smarty->getCacheDir();
-        if ($_template->smarty->cache_locking) {
+        $_cache_dir = $_template->getCacheDir();
+        if ($_template->cache_locking) {
             // create locking file name
             // relative file name?
             if (!preg_match('/^([\/\\\\]|[a-zA-Z]:[\/\\\\])/', $_cache_dir)) {
@@ -86,8 +86,8 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource {
      * @return booelan true or false if the cached content does not exist
      */
     public function process(Smarty_Internal_Template $_template, Smarty_Template_Cached $cached=null) {
-        $_smarty_tpl = $_template;
-        return @include $_template->cached->filepath;
+        include $_template->cached->filepath;
+        return true;
     }
 
     /**

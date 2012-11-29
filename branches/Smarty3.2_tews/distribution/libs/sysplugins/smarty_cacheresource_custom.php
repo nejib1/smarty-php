@@ -122,7 +122,6 @@ abstract class Smarty_CacheResource_Custom extends Smarty_CacheResource {
             );
         }
         if (isset($content)) {
-            $_smarty_tpl = $_template;
             eval("?>" . $content);
             return true;
         }
@@ -138,7 +137,7 @@ abstract class Smarty_CacheResource_Custom extends Smarty_CacheResource {
      */
     public function writeCachedContent(Smarty_Internal_Template $_template, $content) {
         return $this->save(
-                        $_template->cached->filepath, $_template->source->name, $_template->cache_id, $_template->compile_id, $_template->properties['cache_lifetime'], $content
+                        $_template->cached->filepath, $_template->source->name, $_template->cache_id, $_template->compile_id, $_template->cached->smarty_content->cache_lifetime, $content
         );
     }
 

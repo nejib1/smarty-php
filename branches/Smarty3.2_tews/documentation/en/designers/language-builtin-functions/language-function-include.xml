@@ -40,7 +40,7 @@
   <varname>{include}</varname> statement or for individual variables by using the scope
    attribute at the <link linkend="language.function.assign"><varname>{assign}</varname></link>
    statement. The later is useful to return values from the included template to the 
-   includung template.
+   including template.
   </para></listitem>
 
   <listitem><para>
@@ -151,13 +151,6 @@
   </tgroup>
  </informaltable>
  
- <note>
-  <para>
-   As of Smarty 3.2  <link linkend="variable.merge.compiled.includes"><parameter>$merge_compiled_includes</parameter></link> is set to &true; 
-   by default for maximum redering speed. This enables the inline option automatically for all included templates.
-  </para>
- </note>
- 
  <example>
   <title>Simple {include} example</title>
   <programlisting>
@@ -246,7 +239,7 @@
   <para>In this example included template will be cached with an individual cache lifetime of 500 seconds.</para>
   <programlisting>
 <![CDATA[
-{include 'sub_template.tpl' cache_lifteime=500}
+{include 'sub_template.tpl' cache_lifetime=500}
 ...
 ]]>
   </programlisting>
@@ -325,7 +318,9 @@
  </example>
  <para>
   See also
-  <link linkend="variable.merge.compiled.includes"><parameter>$merge_compiled_includes</parameter></link>,
+  <link linkend="language.function.include.php"><varname>{include_php}</varname></link>,
+  <link linkend="language.function.insert"><varname>{insert}</varname></link>,
+  <link linkend="language.function.php"><varname>{php}</varname></link>,
   <link linkend="resources">template resources</link> and
   <link linkend="tips.componentized.templates">componentized templates</link>.
  </para>

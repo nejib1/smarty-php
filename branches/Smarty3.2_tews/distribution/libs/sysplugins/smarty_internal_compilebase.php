@@ -14,7 +14,7 @@
  * @package Smarty
  * @subpackage Compiler
  */
-abstract class Smarty_Internal_CompileBase {
+class Smarty_Internal_CompileBase extends Smarty_Internal_Code {
 
     /**
      * Array of names of required attribute required by tag

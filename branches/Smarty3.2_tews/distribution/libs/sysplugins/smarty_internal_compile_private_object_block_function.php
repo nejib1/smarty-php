@@ -60,7 +60,11 @@ class Smarty_Internal_Compile_Private_Object_Block_Function extends Smarty_Inter
             // maybe nocache because of nocache variables or nocache plugin
             $compiler->nocache = $compiler->nocache | $compiler->tag_nocache;
             // compile code
-            $output = "<?php \$_smarty_tpl->smarty->_tag_stack[] = array('{$tag}->{$method}', {$_params}); \$_block_repeat=true; echo \$_smarty_tpl->smarty->registered_objects['{$tag}'][0]->{$method}({$_params}, null, \$_smarty_tpl, \$_block_repeat);while (\$_block_repeat) { ob_start();?>";
+            $this->php("\$_smarty_tpl->_tag_stack[] = array('{$tag}->{$method}', {$_params});")->newline();
+            $this->php("\$_block_repeat=true;")->newline();
+            $this->php("echo \$_smarty_tpl->registered_objects['{$tag}'][0]->{$method}({$_params}, null, \$_smarty_tpl, \$_block_repeat);")->newline();
+            $this->php("while (\$_block_repeat) {")->newline()->indent();
+            $this->php("ob_start();")->newline();
         } else {
             $base_tag = substr($tag, 0, -5);
             // must endblock be nocache?
@@ -72,15 +76,22 @@ class Smarty_Internal_Compile_Private_Object_Block_Function extends Smarty_Inter
             // This tag does create output
             $compiler->has_output = true;
             // compile code
-            if (!isset($parameter['modifier_list'])) {
-                $mod_pre = $mod_post = '';
-            } else {
-                $mod_pre = ' ob_start(); ';
-                $mod_post = 'echo ' . $compiler->compileTag('private_modifier', array(), array('modifierlist' => $parameter['modifier_list'], 'value' => 'ob_get_clean()')) . ';';
+            $this->iniTagCode($compiler);
+
+            $this->php("\$_block_content = ob_get_clean();")->newline();
+            $this->php("\$_block_repeat=false;")->newline();
+            if (isset($parameter['modifier_list'])) {
+                $this->php("ob_start();")->newline();
             }
-            $output = "<?php \$_block_content = ob_get_contents(); ob_end_clean(); \$_block_repeat=false;" . $mod_pre . " echo \$_smarty_tpl->smarty->registered_objects['{$base_tag}'][0]->{$method}({$_params}, \$_block_content, \$_smarty_tpl, \$_block_repeat); " . $mod_post . "  } array_pop(\$_smarty_tpl->smarty->_tag_stack);?>";
+            $this->php("echo \$_smarty_tpl->registered_objects['{$base_tag}'][0]->{$method}({$_params}, \$_block_content, \$_smarty_tpl, \$_block_repeat);")->newline();
+            if (isset($parameter['modifier_list'])) {
+                $this->php('echo ' . $compiler->compileTag('private_modifier', array(), array('modifierlist' => $parameter['modifier_list'], 'value' => 'ob_get_clean()')) . ';')->newline();
+            }
+            $this->outdent()->php("}")->newline();
+            $this->php("array_pop(\$_smarty_tpl->_tag_stack);")->newline();
         }
-        return $output . "\n";
+
+        return $this->returnTagCode($compiler);
     }
 
 }

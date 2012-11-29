@@ -59,7 +59,8 @@ class Smarty_Internal_Compile_Insert extends Smarty_Internal_CompileBase {
         $_name = null;
         $_script = null;
 
-        $_output = '<?php ';
+        $this->iniTagCode($compiler);
+
         // save posible attributes
         eval('$_name = ' . $_attr['name'] . ';');
         if (isset($_attr['assign'])) {
@@ -74,13 +75,13 @@ class Smarty_Internal_Compile_Insert extends Smarty_Internal_CompileBase {
             $_smarty_tpl = $compiler->template;
             $_filepath = false;
             eval('$_script = ' . $_attr['script'] . ';');
-            if (!isset($compiler->smarty->security_policy) && file_exists($_script)) {
+            if (!isset($compiler->template->security_policy) && file_exists($_script)) {
                 $_filepath = $_script;
             } else {
-                if (isset($compiler->smarty->security_policy)) {
-                    $_dir = $compiler->smarty->security_policy->trusted_dir;
+                if (isset($compiler->template->security_policy)) {
+                    $_dir = $compiler->template->security_policy->trusted_dir;
                 } else {
-                    $_dir = $compiler->smarty->trusted_dir;
+                    $_dir = $compiler->template->trusted_dir;
                 }
                 if (!empty($_dir)) {
                     foreach ((array) $_dir as $_script_dir) {
@@ -96,7 +97,7 @@ class Smarty_Internal_Compile_Insert extends Smarty_Internal_CompileBase {
                 $compiler->trigger_template_error("{insert} missing script file '{$_script}'", $compiler->lex->taglineno);
             }
             // code for script file loading
-            $_output .= "require_once '{$_filepath}' ;";
+            $this->php("require_once '{$_filepath}';")->newline();
             require_once $_filepath;
             if (!is_callable($_function)) {
                 $compiler->trigger_template_error(" {insert} function '{$_function}' is not callable in script file '{$_script}'", $compiler->lex->taglineno);
@@ -117,25 +118,30 @@ class Smarty_Internal_Compile_Insert extends Smarty_Internal_CompileBase {
         // convert attributes into parameter array string
         $_paramsArray = array();
         foreach ($_attr as $_key => $_value) {
-            $_paramsArray[] = "'$_key' => $_value";
+            $_paramsArray[] = "'$_key' => $_value ";
         }
         $_params = 'array(' . implode(", ", $_paramsArray) . ')';
         // call insert
         if (isset($_assign)) {
             if ($_smarty_tpl->caching) {
-                $_output .= "echo Smarty_Internal_Nocache_Insert::compile ('{$_function}',{$_params}, \$_smarty_tpl, '{$_filepath}',{$_assign});?>";
+                $this->buffer .= str_repeat(' ', $this->indentation * 4);
+
+                $this->raw(str_repeat(' ', $this->indentation * 4))->raw("\$tmp_p = var_export({$_params}, true);")->raw("\n");
+                $this->raw(str_repeat(' ', $this->indentation * 4))->raw("echo \"/*%%SmartyNocache%%*/\\\$_smarty_tpl->assign({$_assign} , {$_function}(\$tmp_p, \\\$_smarty_tpl), true);/*/%%SmartyNocache%%*/\";")->raw("\n");
             } else {
-                $_output .= "\$_smarty_tpl->assign({$_assign} , {$_function} ({$_params},\$_smarty_tpl), true);?>";
+                $this->php("\$_smarty_tpl->assign({$_assign} , {$_function} ({$_params},\$_smarty_tpl), true);")->newline();
             }
         } else {
             $compiler->has_output = true;
             if ($_smarty_tpl->caching) {
-                $_output .= "echo Smarty_Internal_Nocache_Insert::compile ('{$_function}',{$_params}, \$_smarty_tpl, '{$_filepath}');?>";
+                $this->raw(str_repeat(' ', $this->indentation * 4))->raw("\$tmp_p = var_export({$_params}, true);")->raw("\n");
+                $this->raw(str_repeat(' ', $this->indentation * 4))->raw("echo \"/*%%SmartyNocache%%*/echo {$_function}(\$tmp_p, \\\$_smarty_tpl);/*/%%SmartyNocache%%*/\";")->raw("\n");
             } else {
-                $_output .= "echo {$_function}({$_params},\$_smarty_tpl);?>";
+                $this->php("echo {$_function}({$_params},\$_smarty_tpl);")->newline();
             }
         }
-        return $_output;
+
+        return $this->returnTagCode($compiler);
     }
 
 }

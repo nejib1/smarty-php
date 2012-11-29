@@ -33,7 +33,12 @@ class Smarty_Internal_Compile_Ldelim extends Smarty_Internal_CompileBase {
         }
         // this tag does not return compiled code
         $compiler->has_code = true;
-        return $compiler->smarty->left_delimiter;
+
+        $this->iniTagCode($compiler);
+
+        $this->php("echo \$_smarty_tpl->left_delimiter;")->newline();
+
+        return $this->returnTagCode($compiler);
     }
 
 }

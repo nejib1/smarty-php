@@ -12,8 +12,8 @@
  *      - getter and setter instead of public properties would allow cultivating an internal cache properly
  *      - current implementation of isTrustedResourceDir() assumes that Smarty::$template_dir and Smarty::$config_dir are immutable
  *        the cache is killed every time either of the variables change. That means that two distinct Smarty objects with differing
- *        $template_dir or $config_dir should NOT share the same Smarty_Security instance, 
- *        as this would lead to (severe) performance penalty! how should this be handled? 
+ *        $template_dir or $config_dir should NOT share the same Smarty_Security instance,
+ *        as this would lead to (severe) performance penalty! how should this be handled?
  */
 
 /**
@@ -23,7 +23,7 @@ class Smarty_Security {
 
     /**
      * Handling of {php}
-     * 
+     *
      * This determines how Smarty handles "<?php ... ?>" tags in templates.
      * possible values:
      * <ul>
@@ -39,7 +39,7 @@ class Smarty_Security {
 
     /**
      * Allowed Directories of templates
-     * 
+     *
      * This is the list of template directories that are considered secure.
      * $template_dir is in this list implicitly.
      *
@@ -49,7 +49,7 @@ class Smarty_Security {
 
     /**
      * Allowed Directories of PHP scripts
-     * 
+     *
      * This is an array of directories where trusted php scripts reside.
      * {@link $security} is disabled during their inclusion/execution.
      *
@@ -59,7 +59,7 @@ class Smarty_Security {
 
     /**
      * Allowed URLs
-     * 
+     *
      * List of regular expressions (PCRE) that include trusted URIs
      *
      * @var array
@@ -68,7 +68,7 @@ class Smarty_Security {
 
     /**
      * Allowed static classes
-     * 
+     *
      * This is an array of trusted static classes.
      *
      * If empty access to all static classes is allowed.
@@ -79,7 +79,7 @@ class Smarty_Security {
 
     /**
      * Allowed PHP functions (as function plugins)
-     * 
+     *
      * This is an array of trusted PHP functions.
      *
      * If empty all functions are allowed.
@@ -95,8 +95,8 @@ class Smarty_Security {
     );
 
     /**
-    * Allowed PHP functions (as modifier plugins)
-    *
+     * Allowed PHP functions (as modifier plugins)
+     *
      * This is an array of trusted PHP modifers.
      *
      * If empty all modifiers are allowed.
@@ -110,7 +110,7 @@ class Smarty_Security {
 
     /**
      * Allowed function/block plugins
-     * 
+     *
      * This is an array of allowed tags.
      *
      * If empty no restriction by allowed_tags.
@@ -140,7 +140,7 @@ class Smarty_Security {
 
     /**
      * Restricted modifier plugins
-     * 
+     *
      * This is an array of disabled modifier plugins.
      *
      * If empty no restriction by disabled_modifiers.
@@ -150,7 +150,7 @@ class Smarty_Security {
 
     /**
      * Allowed PHP Streams
-     * 
+     *
      * This is an array of trusted streams.
      *
      * If empty all streams are allowed.
@@ -161,7 +161,7 @@ class Smarty_Security {
 
     /**
      * Allow {$smarty.const.*}
-     * 
+     *
      * + flag if constants can be accessed from template
      * @var boolean
      */
@@ -280,7 +280,8 @@ class Smarty_Security {
     public function isTrustedTag($tag_name, $compiler) {
         // check for internal always required tags
         if (in_array($tag_name, array('assign', 'call', 'private_filter', 'private_block_plugin', 'private_function_plugin', 'private_object_block_function',
-                    'private_object_function', 'private_registered_function', 'private_registered_block', 'private_special_variable', 'private_print_expression', 'private_modifier'))) {
+                    'private_object_function', 'private_registered_function', 'private_registered_block', 'private_special_variable', 'private_print_expression',
+                    'private_modifier', 'private_compiler_plugin', 'private_inheritance_template'))) {
             return true;
         }
         // check security settings
@@ -424,7 +425,7 @@ class Smarty_Security {
      * To simplify things, isTrustedUri() resolves all input to "{$PROTOCOL}://{$HOSTNAME}".
      * So "http://username:password@hello.world.example.org:8080/some-path?some=query-string"
      * is reduced to "http://hello.world.example.org" prior to applying the patters from {@link $trusted_uri}.
-     * @param string $uri 
+     * @param string $uri
      * @return boolean true if URI is trusted
      * @throws SmartyException if URI is not trusted
      * @uses $trusted_uri for list of patterns to match against $uri

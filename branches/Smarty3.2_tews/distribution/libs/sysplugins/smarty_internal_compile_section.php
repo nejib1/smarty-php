@@ -56,18 +56,20 @@ class Smarty_Internal_Compile_Section extends Smarty_Internal_CompileBase {
         $this->openTag($compiler, 'section', array('section', $compiler->nocache));
         // maybe nocache because of nocache variables
         $compiler->nocache = $compiler->nocache | $compiler->tag_nocache;
-
-        $output = "<?php ";
+        $this->iniTagCode($compiler);
 
         $section_name = $_attr['name'];
 
-        $output .= "if (isset(\$_smarty_tpl->tpl_vars->smarty['section'][$section_name])) unset(\$_smarty_tpl->tpl_vars->smarty['section'][$section_name]);\n";
+        $this->php("if (isset(\$_smarty_tpl->tpl_vars->smarty['section'][$section_name])) {")->newline()->indent();
+        $this->php("unset(\$_smarty_tpl->tpl_vars->smarty['section'][$section_name]);")->newline();
+        $this->outdent()->php("}")->newline();
+
         $section_props = "\$_smarty_tpl->tpl_vars->smarty['section'][$section_name]";
 
         foreach ($_attr as $attr_name => $attr_value) {
             switch ($attr_name) {
                 case 'loop':
-                    $output .= "{$section_props}['loop'] = is_array(\$_loop=$attr_value) ? count(\$_loop) : max(0, (int)\$_loop); unset(\$_loop);\n";
+                    $this->php("{$section_props}['loop'] = is_array(\$_loop=$attr_value) ? count(\$_loop) : max(0, (int)\$_loop);unset(\$_loop);")->newline();
                     break;
 
                 case 'show':
@@ -75,65 +77,76 @@ class Smarty_Internal_Compile_Section extends Smarty_Internal_CompileBase {
                         $show_attr_value = $attr_value ? 'true' : 'false';
                     else
                         $show_attr_value = "(bool)$attr_value";
-                    $output .= "{$section_props}['show'] = $show_attr_value;\n";
+                    $this->php("{$section_props}['show'] = $show_attr_value;")->newline();
                     break;
 
                 case 'name':
-                    $output .= "{$section_props}['$attr_name'] = $attr_value;\n";
+                    $this->php("{$section_props}['$attr_name'] = $attr_value;")->newline();
                     break;
 
                 case 'max':
                 case 'start':
-                    $output .= "{$section_props}['$attr_name'] = (int)$attr_value;\n";
+                    $this->php("{$section_props}['$attr_name'] = (int)$attr_value;")->newline();
                     break;
 
                 case 'step':
-                    $output .= "{$section_props}['$attr_name'] = ((int)$attr_value) == 0 ? 1 : (int)$attr_value;\n";
+                    $this->php("{$section_props}['$attr_name'] = ((int)$attr_value) == 0 ? 1 : (int)$attr_value;")->newline();
                     break;
             }
         }
 
-        if (!isset($_attr['show']))
-            $output .= "{$section_props}['show'] = true;\n";
-
-        if (!isset($_attr['loop']))
-            $output .= "{$section_props}['loop'] = 1;\n";
-
-        if (!isset($_attr['max']))
-            $output .= "{$section_props}['max'] = {$section_props}['loop'];\n";
-        else
-            $output .= "if ({$section_props}['max'] < 0)\n" . "    {$section_props}['max'] = {$section_props}['loop'];\n";
-
-        if (!isset($_attr['step']))
-            $output .= "{$section_props}['step'] = 1;\n";
-
-        if (!isset($_attr['start']))
-            $output .= "{$section_props}['start'] = {$section_props}['step'] > 0 ? 0 : {$section_props}['loop']-1;\n";
-        else {
-            $output .= "if ({$section_props}['start'] < 0)\n" . "    {$section_props}['start'] = max({$section_props}['step'] > 0 ? 0 : -1, {$section_props}['loop'] + {$section_props}['start']);\n" . "else\n" . "    {$section_props}['start'] = min({$section_props}['start'], {$section_props}['step'] > 0 ? {$section_props}['loop'] : {$section_props}['loop']-1);\n";
+        if (!isset($_attr['show'])) {
+            $this->php("{$section_props}['show'] = true;")->newline();
         }
 
-        $output .= "if ({$section_props}['show']) {\n";
-        if (!isset($_attr['start']) && !isset($_attr['step']) && !isset($_attr['max'])) {
-            $output .= "    {$section_props}['total'] = {$section_props}['loop'];\n";
+        if (!isset($_attr['loop'])) {
+            $this->php("{$section_props}['loop'] = 1;")->newline();
+        }
+
+        if (!isset($_attr['max'])) {
+            $this->php("{$section_props}['max'] = {$section_props}['loop'];")->newline();
         } else {
-            $output .= "    {$section_props}['total'] = min(ceil(({$section_props}['step'] > 0 ? {$section_props}['loop'] - {$section_props}['start'] : {$section_props}['start']+1)/abs({$section_props}['step'])), {$section_props}['max']);\n";
+            $this->php("if ({$section_props}['max'] < 0) {")->newline()->indent();
+            $this->php("{$section_props}['max'] = {$section_props}['loop'];")->newline();
+            $this->outdent()->php("}")->newline();
         }
-        $output .= "    if ({$section_props}['total'] == 0)\n" . "        {$section_props}['show'] = false;\n" . "} else\n" . "    {$section_props}['total'] = 0;\n";
 
-        $output .= "if ({$section_props}['show']):\n";
-        $output .= "
-            for ({$section_props}['index'] = {$section_props}['start'], {$section_props}['iteration'] = 1;
-                 {$section_props}['iteration'] <= {$section_props}['total'];
-                 {$section_props}['index'] += {$section_props}['step'], {$section_props}['iteration']++):\n";
-        $output .= "{$section_props}['rownum'] = {$section_props}['iteration'];\n";
-        $output .= "{$section_props}['index_prev'] = {$section_props}['index'] - {$section_props}['step'];\n";
-        $output .= "{$section_props}['index_next'] = {$section_props}['index'] + {$section_props}['step'];\n";
-        $output .= "{$section_props}['first']      = ({$section_props}['iteration'] == 1);\n";
-        $output .= "{$section_props}['last']       = ({$section_props}['iteration'] == {$section_props}['total']);\n";
+        if (!isset($_attr['step'])) {
+            $this->php("{$section_props}['step'] = 1;")->newline();
+        }
 
-        $output .= "?>";
-        return $output;
+        if (!isset($_attr['start'])) {
+            $this->php("{$section_props}['start'] = {$section_props}['step'] > 0 ? 0 : {$section_props}['loop']-1;")->newline();
+        } else {
+            $this->php("if ({$section_props}['start'] < 0) {")->newline()->indent();
+            $this->php("{$section_props}['start'] = max({$section_props}['step'] > 0 ? 0 : -1, {$section_props}['loop'] + {$section_props}['start']);")->newline();
+            $this->outdent()->php("} else {")->newline()->indent();
+            $this->php("{$section_props}['start'] = min({$section_props}['start'], {$section_props}['step'] > 0 ? {$section_props}['loop'] : {$section_props}['loop']-1);")->newline();
+            $this->outdent()->php("}")->newline();
+        }
+
+        $this->php("if ({$section_props}['show']) {")->newline()->indent();
+        if (!isset($_attr['start']) && !isset($_attr['step']) && !isset($_attr['max'])) {
+            $this->php("{$section_props}['total'] = {$section_props}['loop'];")->newline();
+        } else {
+            $this->php("{$section_props}['total'] = min(ceil(({$section_props}['step'] > 0 ? {$section_props}['loop'] - {$section_props}['start'] : {$section_props}['start']+1)/abs({$section_props}['step'])), {$section_props}['max']);")->newline();
+        }
+        $this->php("if ({$section_props}['total'] == 0) {")->newline()->indent();
+        $this->php("{$section_props}['show'] = false;")->newline();
+        $this->outdent()->php("}")->newline();
+        $this->outdent()->php("} else {")->newline()->indent();
+        $this->php("{$section_props}['total'] = 0;")->newline();
+        $this->outdent()->php("}")->newline();
+
+        $this->php("if ({$section_props}['show']) {")->newline()->indent();
+        $this->php("for ({$section_props}['index'] = {$section_props}['start'], {$section_props}['iteration'] = 1; {$section_props}['iteration'] <= {$section_props}['total']; {$section_props}['index'] += {$section_props}['step'], {$section_props}['iteration']++) {")->newline()->indent();
+        $this->php("{$section_props}['rownum'] = {$section_props}['iteration'];")->newline();
+        $this->php("{$section_props}['index_prev'] = {$section_props}['index'] - {$section_props}['step'];")->newline();
+        $this->php("{$section_props}['index_next'] = {$section_props}['index'] + {$section_props}['step'];")->newline();
+        $this->php("{$section_props}['first'] = ({$section_props}['iteration'] == 1);")->newline();
+        $this->php("{$section_props}['last']  = ({$section_props}['iteration'] == {$section_props}['total']);")->newline();
+
+        return $this->returnTagCode($compiler);
     }
 
 }
@@ -160,7 +173,12 @@ class Smarty_Internal_Compile_Sectionelse extends Smarty_Internal_CompileBase {
         list($openTag, $nocache) = $this->closeTag($compiler, array('section'));
         $this->openTag($compiler, 'sectionelse', array('sectionelse', $nocache));
 
-        return "<?php endfor; else: ?>";
+        $this->iniTagCode($compiler);
+
+        $this->outdent()->php("}")->newline();
+        $this->outdent()->php("} else {")->newline()->indent();
+
+        return $this->returnTagCode($compiler);
     }
 
 }
@@ -191,11 +209,14 @@ class Smarty_Internal_Compile_Sectionclose extends Smarty_Internal_CompileBase {
 
         list($openTag, $compiler->nocache) = $this->closeTag($compiler, array('section', 'sectionelse'));
 
-        if ($openTag == 'sectionelse') {
-            return "<?php endif; ?>";
-        } else {
-            return "<?php endfor; endif; ?>";
+        $this->iniTagCode($compiler);
+
+        $this->outdent()->php("}")->newline();
+        if ($openTag != 'sectionelse') {
+            $this->outdent()->php("}")->newline();
         }
+
+        return $this->returnTagCode($compiler);
     }
 
 }

@@ -29,12 +29,12 @@ class Smarty_Internal_Resource_File extends Smarty_Resource {
         $source->filepath = $this->buildFilepath($source, $_template);
 
         if ($source->filepath !== false) {
-            if (is_object($source->smarty->security_policy)) {
-                $source->smarty->security_policy->isTrustedResourceDir($source->filepath);
+            if (is_object($_template->security_policy)) {
+                $_template->security_policy->isTrustedResourceDir($source->filepath);
             }
 
             $source->uid = sha1($source->filepath);
-            if ($source->smarty->compile_check && !isset($source->timestamp)) {
+            if ($_template->compile_check && !isset($source->timestamp)) {
                 $source->timestamp = @filemtime($source->filepath);
                 $source->exists = !!$source->timestamp;
             }

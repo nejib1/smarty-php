@@ -13,6 +13,19 @@ In previous versions of Smarty the $use_sub_dirs did not really help when you cr
 number of different $cache_id's. The subfolder structure for cache files has now been changed that a cache_id hash
 is included to limit the number of files in single folders.
     
+    template inheritance
+Template inheritance is now dynamic and the resolving of {block} replacements is no longer done at compile time
+but when rendering. Template code outside {block} tags in child templates is now executed at rendering but no 
+output is printed.
+Eaxample for child.tpl
+ {if $foo} 
+  {block name='bar'}   .... {/block}  // this block is only active when $foo is true at rendering
+ {/if}
+ {$buu = 'blq'}      // does assign variable $buu
+ {$buu}              // this out is not printed because it's outside {block} in a chisld template
+
+The {extends} tag can now have a variable file attribute as {extends file=$foo}
+
 Default settings
 ----------------
 

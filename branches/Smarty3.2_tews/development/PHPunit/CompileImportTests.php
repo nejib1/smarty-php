@@ -10,7 +10,7 @@
 /**
 * class for {import} tests
 */
-class CompileIMportTests extends PHPUnit_Framework_TestCase {
+class CompileImportTests extends PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;

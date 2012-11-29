@@ -24,15 +24,14 @@
 	<div class="info-box-body">
         		<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">This class does extend all internal compile plugins</p>
-	<ul class="tags">
-				<li><span class="field">abstract:</span> </li>
-			</ul>
 		<p class="notes">
 			Located in <a class="field" href="_libs---sysplugins---smarty_internal_compilebase.php.html">/libs/sysplugins/smarty_internal_compilebase.php</a> (line <span class="field">17</span>)
 		</p>
 		
 				
-		<pre></pre>
+		<pre><a href="../../Smarty/Compiler/Smarty_Internal_Code.html">Smarty_Internal_Code</a>
+   |
+   --Smarty_Internal_CompileBase</pre>
 	
 			</div>
 </div>
@@ -69,6 +68,18 @@
 					<td style="padding-right: 2em"><a href="../../Smarty/Compiler/Smarty_Internal_Compile_Blockclose.html">Smarty_Internal_Compile_Blockclose</a></td>
 					<td>
 											Smarty Internal Plugin Compile BlockClose Class
+										</td>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../../Smarty/Compiler/Smarty_Internal_Compile_Private_Block_Parent.html">Smarty_Internal_Compile_Private_Block_Parent</a></td>
+					<td>
+											Smarty Internal Plugin Compile Block Parent Class
+										</td>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../../Smarty/Compiler/Smarty_Internal_Compile_Private_Block_Child.html">Smarty_Internal_Compile_Private_Block_Child</a></td>
+					<td>
+											Smarty Internal Plugin Compile Block Parent Class
 										</td>
 				</tr>
 								<tr>
@@ -249,6 +260,12 @@
 					<td style="padding-right: 2em"><a href="../../Smarty/Compiler/Smarty_Internal_Compile_Private_Function_Plugin.html">Smarty_Internal_Compile_Private_Function_Plugin</a></td>
 					<td>
 											Smarty Internal Plugin Compile Function Plugin Class
+										</td>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../../Smarty/Compiler/Smarty_Internal_Compile_Private_Inheritance_template.html">Smarty_Internal_Compile_Private_Inheritance_template</a></td>
+					<td>
+											Smarty Internal Compile Call Of Inheritance Templates Class
 										</td>
 				</tr>
 								<tr>
@@ -452,7 +469,7 @@
 					</div>
 		<div class="info-box-body">
 			<a name="var$optional_attributes" id="$optional_attributes"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
@@ -473,10 +490,6 @@
 			<hr class="separator" />
 		<div class="notes">Redefined in descendants as:</div>
 		<ul class="redefinitions">
-					<li>
-				<a href="../../Smarty/Compiler/Smarty_Internal_Compile_Block.html#var$optional_attributes">Smarty_Internal_Compile_Block::$optional_attributes</a>
-								: Attribute definition: Overwrites base class.
-							</li>
 					<li>
 				<a href="../../Smarty/Compiler/Smarty_Internal_Compile_Break.html#var$optional_attributes">Smarty_Internal_Compile_Break::$optional_attributes</a>
 								: Attribute definition: Overwrites base class.
@@ -562,7 +575,7 @@
 
 </div>
 <a name="var$option_flags" id="$option_flags"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
@@ -584,12 +597,19 @@
 		<div class="notes">Redefined in descendants as:</div>
 		<ul class="redefinitions">
 					<li>
+				<a href="../../Smarty/Compiler/Smarty_Internal_Compile_Block.html#var$option_flags">Smarty_Internal_Compile_Block::$option_flags</a>
+								: Attribute definition: Overwrites base class.
+							</li>
+					<li>
 				<a href="../../Smarty/Compiler/Smarty_Internal_Compile_Import.html#var$option_flags">Smarty_Internal_Compile_Import::$option_flags</a>
 								: Attribute definition: Overwrites base class.
 							</li>
 					<li>
 				<a href="../../Smarty/Compiler/Smarty_Internal_Compile_Include.html#var$option_flags">Smarty_Internal_Compile_Include::$option_flags</a>
 								: Attribute definition: Overwrites base class.
+							</li>
+					<li>
+				<a href="../../Smarty/Compiler/Smarty_Internal_Compile_Private_Inheritance_template.html#var$option_flags">Smarty_Internal_Compile_Private_Inheritance_template::$option_flags</a>
 							</li>
 					<li>
 				<a href="../../Smarty/Compiler/Smarty_Internal_Compile_Private_Print_Expression.html#var$option_flags">Smarty_Internal_Compile_Private_Print_Expression::$option_flags</a>
@@ -600,7 +620,7 @@
 
 </div>
 <a name="var$required_attributes" id="$required_attributes"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
@@ -670,6 +690,10 @@
 								: Attribute definition: Overwrites base class.
 							</li>
 					<li>
+				<a href="../../Smarty/Compiler/Smarty_Internal_Compile_Private_Inheritance_template.html#var$required_attributes">Smarty_Internal_Compile_Private_Inheritance_template::$required_attributes</a>
+								: Attribute definition: Overwrites base class.
+							</li>
+					<li>
 				<a href="../../Smarty/Compiler/Smarty_Internal_Compile_Section.html#var$required_attributes">Smarty_Internal_Compile_Section::$required_attributes</a>
 								: Attribute definition: Overwrites base class.
 							</li>
@@ -678,7 +702,7 @@
 
 </div>
 <a name="var$shorttag_order" id="$shorttag_order"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
@@ -763,7 +787,27 @@
 		
 
 </div>
-						
+							<h4>Inherited Variables</h4>
+				<A NAME='inherited_vars'><!-- --></A>
+									<p>Inherited from <span class="classname"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html">Smarty_Internal_Code</a></span></p>
+					<blockquote>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#var$buffer">Smarty_Internal_Code::$buffer</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#var$indentation">Smarty_Internal_Code::$indentation</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#var$indent_on">Smarty_Internal_Code::$indent_on</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#var$no_indent">Smarty_Internal_Code::$no_indent</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#var$saved_indentation">Smarty_Internal_Code::$saved_indentation</a></span><br>
+							</span>
+											</blockquote> 
+										
 		</div>
 	</div>
 	
@@ -781,7 +825,7 @@
 			<A NAME='method_detail'></A>
 
 <a name="methodbuildReflection" id="buildReflection"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<span class="method-title">buildReflection</span> (line <span class="line-number">335</span>)
@@ -812,7 +856,7 @@
 			
 	</div>
 <a name="methodcloseTag" id="closeTag"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<span class="method-title">closeTag</span> (line <span class="line-number">152</span>)
@@ -846,7 +890,7 @@
 			
 	</div>
 <a name="methodgetAnnotation" id="getAnnotation"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<span class="method-title">getAnnotation</span> (line <span class="line-number">182</span>)
@@ -879,7 +923,7 @@
 			
 	</div>
 <a name="methodgetAttributes" id="getAttributes"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<span class="method-title">getAttributes</span> (line <span class="line-number">60</span>)
@@ -913,7 +957,7 @@
 			
 	</div>
 <a name="methodgetNoOfRequiredParameter" id="getNoOfRequiredParameter"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<span class="method-title">getNoOfRequiredParameter</span> (line <span class="line-number">324</span>)
@@ -944,7 +988,7 @@
 			
 	</div>
 <a name="methodgetPluginParameterString" id="getPluginParameterString"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<span class="method-title">getPluginParameterString</span> (line <span class="line-number">243</span>)
@@ -987,7 +1031,7 @@
 			
 	</div>
 <a name="methodinjectObject" id="injectObject"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<span class="method-title">injectObject</span> (line <span class="line-number">205</span>)
@@ -1023,7 +1067,7 @@
 			
 	</div>
 <a name="methodopenTag" id="openTag"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<span class="method-title">openTag</span> (line <span class="line-number">139</span>)
@@ -1058,13 +1102,36 @@
 		
 			
 	</div>
-						
+							<h4>Inherited Methods</h4>
+				<a name='inherited_methods'><!-- --></a>	
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html">Smarty_Internal_Code</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#method__construct">Smarty_Internal_Code::__construct()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodaddIndentation">Smarty_Internal_Code::addIndentation()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodcreateTemplateCodeFrame">Smarty_Internal_Code::createTemplateCodeFrame()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodformatPHP">Smarty_Internal_Code::formatPHP()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodindent">Smarty_Internal_Code::indent()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodindent_off">Smarty_Internal_Code::indent_off()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodindent_on">Smarty_Internal_Code::indent_on()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodiniTagCode">Smarty_Internal_Code::iniTagCode()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodnewline">Smarty_Internal_Code::newline()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodoutdent">Smarty_Internal_Code::outdent()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodphp">Smarty_Internal_Code::php()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodraw">Smarty_Internal_Code::raw()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodrepr">Smarty_Internal_Code::repr()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodreturnTagCode">Smarty_Internal_Code::returnTagCode()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodstring">Smarty_Internal_Code::string()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodwrite">Smarty_Internal_Code::write()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#method_processPHPoutput">Smarty_Internal_Code::_processPHPoutput()</a></span><br>
+											</blockquote>
+										
 		</div>
 	</div>
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Sun, 04 Mar 2012 17:38:56 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.1</a>
+		Documentation generated on Thu, 01 Nov 2012 19:44:10 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

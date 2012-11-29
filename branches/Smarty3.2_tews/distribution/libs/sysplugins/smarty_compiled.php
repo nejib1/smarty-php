@@ -35,12 +35,6 @@ class Smarty_Compiled {
     public $exists = false;
 
     /**
-     * Compiled Content Loaded
-     * @var boolean
-     */
-    public $loaded = false;
-
-    /**
      * Template was compiled
      * @var boolean
      */
@@ -53,18 +47,17 @@ class Smarty_Compiled {
     public $source = null;
 
     /**
+     * instance of smarty content from compiled file
+     * @var smarty_content
+     * @internal
+     */
+    public $smarty_content = null;
+
+    /**
      * cache for Smarty_Compiled instances
      * @var array
      */
     public static $compileds = array();
-
-    /**
-     * Metadata properties
-     *
-     * populated by Smarty_Internal_Template::_decodeProperties()
-     * @var array
-     */
-    public $_properties = null;
 
     /**
      * create Compiled Object container
@@ -87,108 +80,147 @@ class Smarty_Compiled {
     public function getRenderedTemplate($obj, $_template) {
         $_template->cached_subtemplates = array();
         if (!$this->source->uncompiled) {
-            $_smarty_tpl = $_template;
             if ($this->source->recompiled) {
-                if ($obj->smarty->debugging) {
+                if ($obj->debugging) {
                     Smarty_Internal_Debug::start_compile($_template);
                 }
-                $code = $_template->compiler->compileTemplate($_template);
-                if ($obj->smarty->debugging) {
+                $code = $_template->compiler->compileTemplate();
+                unset($_template->compiler);
+                if ($obj->debugging) {
                     Smarty_Internal_Debug::end_compile($_template);
                 }
-                if ($obj->smarty->debugging) {
+                if ($obj->debugging) {
                     Smarty_Internal_Debug::start_render($_template);
                 }
-                try {
-                    ob_start();
-                    eval("?>" . $code);
-                    unset($code);
-                } catch (Exception $e) {
-                    ob_get_clean();
-                    throw $e;
-                }
+                eval('?>' . $code);
+                unset($code);
             } else {
-                if (!$this->exists || ($_template->smarty->force_compile && !$this->isCompiled)) {
-                    $_template->compiler->compileTemplateSource($_template);
+                if (!$this->exists || ($_template->force_compile && !$this->isCompiled)) {
+                    $_template->compiler->compileTemplateSource();
                     unset($_template->compiler);
                 }
-                if ($obj->smarty->debugging) {
+                if ($obj->debugging) {
                     Smarty_Internal_Debug::start_render($_template);
                 }
-                if (!$this->loaded) {
+                if (empty($this->smarty_content)) {
                     include($this->filepath);
                     if ($_template->mustCompile) {
                         // recompile and load again
-                        $_template->compiler->compileTemplateSource($_template);
+                        $_template->compiler->compileTemplateSource();
                         unset($_template->compiler);
                         include($this->filepath);
                     }
-                    $this->loaded = true;
-                } else {
-                    $_template->_decodeProperties($this->_properties, false);
                 }
-                try {
-                    ob_start();
-                    if (empty($_template->properties['unifunc']) || !is_callable($_template->properties['unifunc'])) {
-                        throw new SmartyException("Invalid compiled template for '{$_template->template_resource}'");
-                    }
-                    array_unshift($_template->_capture_stack, array());
-                    //
-                    // render compiled template
-                    //
-                    $_template->properties['unifunc']($_template);
-                    // any unclosed {capture} tags ?
-                    if (isset($_template->_capture_stack[0][0])) {
-                        $_template->_capture_error();
-                    }
-                    array_shift($_template->_capture_stack);
-                } catch (Exception $e) {
-                    ob_get_clean();
-                    throw $e;
+            }
+            try {
+                $level = ob_get_level();
+                if (empty($this->smarty_content)) {
+                    throw new SmartyException("Invalid compiled template for '{$_template->template_resource}'");
                 }
+                array_unshift($_template->_capture_stack, array());
+                //
+                // render compiled template
+                //
+                    $output = $this->smarty_content->get_template_content($_template);
+                // any unclosed {capture} tags ?
+                if (isset($_template->_capture_stack[0][0])) {
+                    $_template->_capture_error();
+                }
+                array_shift($_template->_capture_stack);
+            } catch (Exception $e) {
+                while (ob_get_level() > $level) {
+                    ob_end_clean();
+                }
+                throw $e;
             }
         } else {
             if ($this->source->uncompiled) {
-                if ($obj->smarty->debugging) {
+                if ($obj->debugging) {
                     Smarty_Internal_Debug::start_render($_template);
                 }
                 try {
+                    $level = ob_get_level();
                     ob_start();
                     $this->source->renderUncompiled($_template);
+                    $output = ob_get_clean();
                 } catch (Exception $e) {
-                    ob_get_clean();
+                    while (ob_get_level() > $level) {
+                        ob_end_clean();
+                    }
                     throw $e;
                 }
             } else {
                 throw new SmartyException("Resource '$this->source->type' must have 'renderUncompiled' method");
             }
         }
-        $output = ob_get_clean();
-        if (!$this->source->recompiled && empty($_template->properties['file_dependency'][$this->source->uid])) {
-            $_template->properties['file_dependency'][$this->source->uid] = array($this->source->filepath, $this->source->timestamp, $this->source->type);
+        if (!$this->source->recompiled && empty($_template->compiled->file_dependency[$this->source->uid])) {
+            $_template->compiled->file_dependency[$this->source->uid] = array($this->source->filepath, $this->source->timestamp, $this->source->type);
         }
-        if ($_template->parent instanceof Smarty_Internal_Template) {
-            $_template->parent->properties['file_dependency'] = array_merge($_template->parent->properties['file_dependency'], $_template->properties['file_dependency']);
-            foreach ($_template->required_plugins as $code => $tmp1) {
-                foreach ($tmp1 as $name => $tmp) {
-                    foreach ($tmp as $type => $data) {
-                        $_template->parent->required_plugins[$code][$name][$type] = $data;
-                    }
+        if ($_template->caching) {
+            $_tpl = $_template;
+            while (isset($_tpl->is_template)) {
+                if (isset($_tpl->cached)) {
+                    break;
+                }
+                $_tpl = $_tpl->parent;
+            }
+            $_tpl->cached->required_plugins = array_merge($_tpl->cached->required_plugins, $this->smarty_content->required_plugins_nocache);
+            $_tpl->cached->file_dependency = array_merge($_tpl->cached->file_dependency, $this->smarty_content->file_dependency);
+            if (!empty($this->smarty_content->called_nocache_template_functions)) {
+                foreach ($this->smarty_content->called_nocache_template_functions as $name => $dummy) {
+                    $this->merge_called_nocache_template_functions($_tpl->cached, $_template, $name);
                 }
             }
         }
-        if ($_template->caching != Smarty::CACHING_LIFETIME_SAVED && $_template->caching != Smarty::CACHING_LIFETIME_CURRENT) {
-            // var_dump('renderTemplate', $_template->has_nocache_code, $_template->template_resource, $_template->properties['nocache_hash'], $_template->parent->properties['nocache_hash'], $_output);
-            if (!empty($_template->properties['nocache_hash']) && !empty($_template->parent->properties['nocache_hash'])) {
-                // replace nocache_hash
-                $output = str_replace("{$_template->properties['nocache_hash']}", $_template->parent->properties['nocache_hash'], $output);
-                $_template->parent->has_nocache_code = $_template->parent->has_nocache_code || $_template->has_nocache_code;
-            }
+        if ($_template->caching == Smarty::CACHING_NOCACHE_CODE && isset($_template->parent)) {
+            $_template->parent->has_nocache_code = $_template->parent->has_nocache_code || $_template->has_nocache_code;
         }
-        if ($obj->smarty->debugging) {
+        if ($obj->debugging) {
             Smarty_Internal_Debug::end_render($_template);
         }
         return $output;
+    }
+
+    public function merge_called_nocache_template_functions($cache, $template, $name) {
+        if (isset($cache->template_functions[$name])) {
+            return;
+        }
+        $ptr = $tpl = $template;
+        while ($ptr != null && !isset($ptr->compiled->smarty_content->template_functions[$name])) {
+            $ptr = $ptr->template_function_chain;
+            if ($ptr == null && $tpl->parent->is_template) {
+                $ptr = $tpl = $tpl->parent;
+            }
+        }
+        if (isset($ptr->compiled->smarty_content->template_functions[$name])) {
+        if (isset($ptr->compiled->smarty_content->template_functions[$name]['used_plugins'])) {
+            foreach ($ptr->compiled->smarty_content->template_functions[$name]['used_plugins'] as $key => $function) {
+                $cache->required_plugins[$key] = $function;
+            }
+        }
+            $cache->code = new Smarty_Internal_Code(3);
+            $cache->template_functions[$name] = $ptr->compiled->smarty_content->template_functions[$name];
+            $obj = new ReflectionObject($ptr->compiled->smarty_content);
+            $refFunc = $obj->getMethod("smarty_template_function_{$name}");
+            $file = $refFunc->getFileName();
+            $start = $refFunc->getStartLine() - 1;
+            $end = $refFunc->getEndLine();
+            $source = file($file);
+            for ($i = $start; $i < $end; $i++) {
+            if (preg_match("!echo \"/\*%%SmartyNocache%%\*/!", $source[$i])) {
+                $cache->code->formatPHP(stripcslashes(preg_replace("!echo \"/\*%%SmartyNocache%%\*/|/\*/%%SmartyNocache%%\*/\";!",'', $source[$i])));
+            } else {
+                $cache->code->buffer .= $source[$i];
+            }
+            }
+            $cache->template_functions_code[$name] = $cache->code->buffer;
+            $cache->code = null;
+            if (isset($ptr->compiled->smarty_content->template_functions[$name]['called_functions'])) {
+            foreach ($ptr->compiled->smarty_content->template_functions[$name]['called_functions'] as $name => $dummy) {
+                $this->merge_called_nocache_template_functions($cache, $template, $name);
+            }
+        }
+        }
     }
 
     /**

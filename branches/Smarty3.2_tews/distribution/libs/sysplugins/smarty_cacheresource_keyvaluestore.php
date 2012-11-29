@@ -96,7 +96,6 @@ abstract class Smarty_CacheResource_KeyValueStore extends Smarty_CacheResource {
             }
         }
         if (isset($content)) {
-            $_smarty_tpl = $_template;
             eval("?>" . $content);
             return true;
         }
@@ -112,7 +111,7 @@ abstract class Smarty_CacheResource_KeyValueStore extends Smarty_CacheResource {
      */
     public function writeCachedContent(Smarty_Internal_Template $_template, $content) {
         $this->addMetaTimestamp($content);
-        return $this->write(array($_template->cached->filepath => $content), $_template->properties['cache_lifetime']);
+        return $this->write(array($_template->cached->filepath => $content), $_template->cached->smarty_content->cache_lifetime);
     }
 
     /**
@@ -149,7 +148,7 @@ abstract class Smarty_CacheResource_KeyValueStore extends Smarty_CacheResource {
      * @uses delete() to remove CacheID from cache
      */
     public function clear(Smarty $smarty, $resource_name, $cache_id, $compile_id, $exp_time) {
-        $uid = $this->getTemplateUid($smarty, $resource_name, $cache_id, $compile_id);
+        $uid = $this->getTemplateUid($smarty, $resource_name);
         $cid = $uid . '#' . $this->sanitize($resource_name) . '#' . $this->sanitize($cache_id) . '#' . $this->sanitize($compile_id);
         $this->delete(array($cid));
         $this->invalidate($cid, $resource_name, $cache_id, $compile_id, $uid);
@@ -165,24 +164,13 @@ abstract class Smarty_CacheResource_KeyValueStore extends Smarty_CacheResource {
      * @param string $compile_id    compile id
      * @return string filepath of cache file
      */
-    protected function getTemplateUid(Smarty $smarty, $resource_name, $cache_id, $compile_id) {
+    protected function getTemplateUid(Smarty $smarty, $resource_name) {
         $uid = '';
         if (isset($resource_name)) {
-            $tpl = new $smarty->template_class($resource_name, $smarty, null, null, null, null, null, true);
-            if ($tpl->source->exists) {
-                $uid = $tpl->source->uid;
+            $source = Smarty_Resource::source(null, $smarty, $resource_name);
+            if ($source->exists) {
+                $uid = $source->uid;
             }
-
-            // remove from template cache
-            if ($smarty->allow_ambiguous_resources) {
-                $_templateId = $tpl->source->unique_resource . $tpl->cache_id . $tpl->compile_id;
-            } else {
-                $_templateId = $smarty->joined_template_dir . '#' . $resource_name . $tpl->cache_id . $tpl->compile_id;
-            }
-            if (isset($_templateId[150])) {
-                $_templateId = sha1($_templateId);
-            }
-            unset($smarty->template_objects[$_templateId]);
         }
         return $uid;
     }

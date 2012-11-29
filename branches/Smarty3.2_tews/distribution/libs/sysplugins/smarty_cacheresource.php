@@ -74,7 +74,7 @@ abstract class Smarty_CacheResource {
     public function getCachedContent(Smarty_Internal_Template $_template) {
         if ($_template->cached->handler->process($_template)) {
             ob_start();
-            $_template->properties['unifunc']($_template);
+            $_template->smarty_content->get_template_content($_template);
             return ob_get_clean();
         }
         return null;
@@ -179,7 +179,7 @@ abstract class Smarty_CacheResource {
      * @param Smarty $smarty Smarty object
      */
     public static function invalidLoadedCache(Smarty $smarty) {
-        foreach ($smarty->template_objects as $tpl) {
+        foreach (Smarty::$template_objects as $tpl) {
             if (isset($tpl->cached)) {
                 $tpl->cached->valid = false;
                 $tpl->cached->processed = false;
@@ -211,6 +211,13 @@ class Smarty_Template_Cached {
      * @var string
      */
     public $content = null;
+
+    /**
+     * instance of smarty content from cached file
+     * @var smarty_content
+     * @internal
+     */
+    public $smarty_content = null;
 
     /**
      * Source Timestamp
@@ -273,6 +280,40 @@ class Smarty_Template_Cached {
     public $source = null;
 
     /**
+     * Code Object
+     * @var Smarty_Internal_Output
+     */
+    public $code = null;
+
+    /**
+     * required plugins
+     * @var array
+     * @internal
+     */
+    public $required_plugins = array();
+
+    /**
+     * template function properties
+     *
+     * @var array
+     */
+    public $template_functions = array();
+
+    /**
+     * template function properties
+     *
+     * @var array
+     */
+    public $template_functions_code = array();
+
+    /**
+     * file dependencies
+     *
+     * @var array
+     */
+    public $file_dependency = array();
+
+    /**
      * create Cached Object container
      *
      * @param Smarty_Internal_Template $_template template object
@@ -282,12 +323,11 @@ class Smarty_Template_Cached {
         $this->cache_id = $_template->cache_id;
         $this->source = $_template->source;
         $_template->cached = $this;
-        $smarty = $_template->smarty;
 
         //
         // load resource handler
         //
-        $this->handler = $handler = Smarty_CacheResource::load($smarty); // Note: prone to circular references
+        $this->handler = $handler = Smarty_CacheResource::load($_template); // Note: prone to circular references
         //
         //    check if cache is valid
         //
@@ -298,7 +338,7 @@ class Smarty_Template_Cached {
         while (true) {
             while (true) {
                 $handler->populate($this, $_template);
-                if ($this->timestamp === false || $smarty->force_compile || $smarty->force_cache) {
+                if ($this->timestamp === false || $_template->force_compile || $_template->force_cache) {
                     $this->valid = false;
                 } else {
                     $this->valid = true;
@@ -307,18 +347,18 @@ class Smarty_Template_Cached {
                     // lifetime expired
                     $this->valid = false;
                 }
-                if ($this->valid || !$_template->smarty->cache_locking) {
+                if ($this->valid || !$_template->cache_locking) {
                     break;
                 }
-                if (!$this->handler->locked($_template->smarty, $this)) {
-                    $this->handler->acquireLock($_template->smarty, $this);
+                if (!$this->handler->locked($_template, $this)) {
+                    $this->handler->acquireLock($_template, $this);
                     break 2;
                 }
             }
             if ($this->valid) {
-                if (!$_template->smarty->cache_locking || $this->handler->locked($_template->smarty, $this) === null) {
+                if (!$_template->cache_locking || $this->handler->locked($_template, $this) === null) {
                     // load cache file for the following checks
-                    if ($smarty->debugging) {
+                    if ($_template->debugging) {
                         Smarty_Internal_Debug::start_cache($_template);
                     }
                     if ($handler->process($_template, $this) === false) {
@@ -326,7 +366,7 @@ class Smarty_Template_Cached {
                     } else {
                         $this->processed = true;
                     }
-                    if ($smarty->debugging) {
+                    if ($_template->debugging) {
                         Smarty_Internal_Debug::end_cache($_template);
                     }
                 } else {
@@ -335,11 +375,11 @@ class Smarty_Template_Cached {
             } else {
                 return;
             }
-            if ($this->valid && $_template->caching === Smarty::CACHING_LIFETIME_SAVED && $_template->properties['cache_lifetime'] >= 0 && (time() > ($_template->cached->timestamp + $_template->properties['cache_lifetime']))) {
+            if ($this->valid && $_template->caching === Smarty::CACHING_LIFETIME_SAVED && $_template->cached->smarty_content->cache_lifetime >= 0 && (time() > ($_template->cached->timestamp + $_template->cached->smarty_content->cache_lifetime))) {
                 $this->valid = false;
             }
-            if (!$this->valid && $_template->smarty->cache_locking) {
-                $this->handler->acquireLock($_template->smarty, $this);
+            if (!$this->valid && $_template->cache_locking) {
+                $this->handler->acquireLock($_template, $this);
                 return;
             } else {
                 return;
@@ -359,83 +399,81 @@ class Smarty_Template_Cached {
             $_output = $_template->compiled->getRenderedTemplate($obj, $_template);
             // write to cache when nessecary
             if (!$_template->source->recompiled) {
-                if ($obj->smarty->debugging) {
+                if ($obj->debugging) {
                     Smarty_Internal_Debug::start_cache($_template);
                 }
-                $_template->properties['has_nocache_code'] = false;
+                $this->code = new Smarty_Internal_Code(3);
+                $_template->has_nocache_code = false;
                 // get text between non-cached items
-                $cache_split = preg_split("!/\*%%SmartyNocache:{$_template->properties['nocache_hash']}%%\*\/(.+?)/\*/%%SmartyNocache:{$_template->properties['nocache_hash']}%%\*/!s", $_output);
+                $cache_split = preg_split("!/\*%%SmartyNocache%%\*\/(.+?)/\*/%%SmartyNocache%%\*/!s", $_output);
                 // get non-cached items
-                preg_match_all("!/\*%%SmartyNocache:{$_template->properties['nocache_hash']}%%\*\/(.+?)/\*/%%SmartyNocache:{$_template->properties['nocache_hash']}%%\*/!s", $_output, $cache_parts);
+                preg_match_all("!/\*%%SmartyNocache%%\*\/(.+?)/\*/%%SmartyNocache%%\*/!s", $_output, $cache_parts);
                 unset($_output);
-                $output = '';
                 // loop over items, stitch back together
                 foreach ($cache_split as $curr_idx => $curr_split) {
-                    // escape PHP tags in template content
-                    $output .= preg_replace('/(<%|%>|<\?php|<\?|\?>)/', '<?php echo \'$1\'; ?>', $curr_split);
+                    if (!empty($curr_split)) {
+                        $this->code->php("echo ")->string($curr_split)->raw(";\n");
+                    }
                     if (isset($cache_parts[0][$curr_idx])) {
-                        $_template->properties['has_nocache_code'] = true;
-                        // remove nocache tags from cache output
-                        $output .= preg_replace("!/\*/?%%SmartyNocache:{$_template->properties['nocache_hash']}%%\*/!", '', $cache_parts[0][$curr_idx]);
+                        $_template->has_nocache_code = true;
+                        // format and add nocache PHP code
+                        $this->code->formatPHP(preg_replace("!/\*/?%%SmartyNocache%%\*/!", '', $cache_parts[0][$curr_idx]));
                     }
                 }
-                if (!$no_output_filter && !$_template->has_nocache_code && (isset($obj->smarty->autoload_filters['output']) || isset($obj->smarty->registered_filters['output']))) {
-                    $output = Smarty_Internal_Filter_Handler::runFilter('output', $output, $_template);
+                if (!$no_output_filter && !$_template->has_nocache_code && (isset($obj->autoload_filters['output']) || isset($obj->registered_filters['output']))) {
+                    $this->code->buffer = Smarty_Internal_Filter_Handler::runFilter('output', $this->code->buffer, $_template);
                 }
-                // rendering (must be done before writing cache file because of {function} nocache handling)
-                $_smarty_tpl = $_template;
-                $_template->is_nocache = true;
-                try {
-                    ob_start();
-                    eval("?>" . $output);
-                    $_output = ob_get_clean();
-                } catch (Exception $e) {
-                    ob_get_clean();
-                    throw $e;
-                }
-                $_template->is_nocache = false;
                 // write cache file content
                 if (!$_template->source->recompiled && ($_template->caching == Smarty::CACHING_LIFETIME_CURRENT || $_template->caching == Smarty::CACHING_LIFETIME_SAVED)) {
-                    $_template->properties['cache_lifetime'] = $_template->cache_lifetime;
-                    $_template->properties['unifunc'] = 'content_' . str_replace('.', '_', uniqid('', true));
-                    $content = Smarty_Internal_Write_File::createTemplateCodeFrame($_template, $output, true);
-                    eval("?>" . $content);
-                    $this->valid = true;
-                    $this->processed = true;
-                    $this->write($_template, $content);
+                    $this->code->buffer = $this->code->createTemplateCodeFrame($_template, null, true);
+                    try {
+                        $level = ob_get_level();
+                        eval('?>' . $this->code->buffer);
+                        $this->write($_template, $this->code->buffer);
+                        $this->code = null;
+                        $this->valid = true;
+                        $this->processed = true;
+                        $output = $this->smarty_content->get_template_content($_template);
+                    } catch (Exception $e) {
+                        while (ob_get_level() > $level) {
+                            ob_end_clean();
+                        }
+                        throw $e;
+                    }
                 }
-                if ($obj->smarty->debugging) {
+                if ($obj->debugging) {
                     Smarty_Internal_Debug::end_cache($_template);
                 }
             }
         } else {
-            if ($obj->smarty->debugging) {
+            if ($obj->debugging) {
                 Smarty_Internal_Debug::start_cache($_template);
             }
             $_template->is_nocache = true;
             try {
-                ob_start();
+                $level = ob_get_level();
                 array_unshift($_template->_capture_stack, array());
                 //
                 // render cached template
                 //
-                $_template->properties['unifunc']($_template);
+                $output = $this->smarty_content->get_template_content($_template);
                 // any unclosed {capture} tags ?
                 if (isset($_template->_capture_stack[0][0])) {
                     $_template->_capture_error();
                 }
                 array_shift($_template->_capture_stack);
-                $_output = ob_get_clean();
             } catch (Exception $e) {
-                ob_get_clean();
+                while (ob_get_level() > $level) {
+                    ob_end_clean();
+                }
                 throw $e;
             }
             $_template->is_nocache = false;
-            if ($obj->smarty->debugging) {
+            if ($obj->debugging) {
                 Smarty_Internal_Debug::end_cache($_template);
             }
         }
-        return $_output;
+        return $output;
     }
 
     /**
@@ -451,8 +489,8 @@ class Smarty_Template_Cached {
                 $this->timestamp = time();
                 $this->exists = true;
                 $this->valid = true;
-                if ($_template->smarty->cache_locking) {
-                    $this->handler->releaseLock($_template->smarty, $this);
+                if ($_template->cache_locking) {
+                    $this->handler->releaseLock($_template, $this);
                 }
                 return true;
             }

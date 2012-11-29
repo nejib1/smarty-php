@@ -70,11 +70,9 @@ class Smarty_Internal_Utility {
             $_compileDirs = new RecursiveDirectoryIterator($_dir);
             $_compile = new RecursiveIteratorIterator($_compileDirs);
             foreach ($_compile as $_fileinfo) {
-                if (substr($_fileinfo->getBasename(), 0, 1) == '.' || strpos($_fileinfo, '.svn') !== false)
-                    continue;
                 $_file = $_fileinfo->getFilename();
-                if (!substr_compare($_file, $extention, - strlen($extention)) == 0)
-                    continue;
+                if (substr(basename($_fileinfo->getPathname()),0,1) == '.' || strpos($_file, '.svn') !== false) continue;
+                if (!substr_compare($_file, $extention, - strlen($extention)) == 0) continue;
                 if ($_fileinfo->getPath() == substr($_dir, 0, -1)) {
                     $_template_file = $_file;
                 } else {
@@ -86,7 +84,7 @@ class Smarty_Internal_Utility {
                 try {
                     $_tpl = $smarty->createTemplate($_template_file, null, null, null, false);
                     if ($_tpl->mustCompile()) {
-                        $_tpl->compiler->compileTemplateSource($_tpl);
+                        $_tpl->compiler->compileTemplateSource();
                         unset($_tpl->compiler);
                         $_count++;
                         echo ' compiled in  ', microtime(true) - $_start_time, ' seconds';
@@ -100,8 +98,7 @@ class Smarty_Internal_Utility {
                     $_error_count++;
                 }
                 // free memory
-                $smarty->template_objects = array();
-                $_tpl->smarty->template_objects = array();
+                Smarty::$template_objects = array();
                 $_tpl = null;
                 if ($max_errors !== null && $_error_count == $max_errors) {
                     echo '<br><br>too many errors';
@@ -135,11 +132,9 @@ class Smarty_Internal_Utility {
             $_compileDirs = new RecursiveDirectoryIterator($_dir);
             $_compile = new RecursiveIteratorIterator($_compileDirs);
             foreach ($_compile as $_fileinfo) {
-                if (substr($_fileinfo->getBasename(), 0, 1) == '.' || strpos($_fileinfo, '.svn') !== false)
-                    continue;
                 $_file = $_fileinfo->getFilename();
-                if (!substr_compare($_file, $extention, - strlen($extention)) == 0)
-                    continue;
+                if (substr(basename($_fileinfo->getPathname()),0,1) == '.' || strpos($_file, '.svn') !== false) continue;
+                if (!substr_compare($_file, $extention, - strlen($extention)) == 0) continue;
                 if ($_fileinfo->getPath() == substr($_dir, 0, -1)) {
                     $_config_file = $_file;
                 } else {
@@ -179,8 +174,8 @@ class Smarty_Internal_Utility {
      * @return array of tag/attributes
      */
     public static function getTags(Smarty_Internal_Template $template) {
-        $template->smarty->get_used_tags = true;
-        $template->compiler->compileTemplateSource($template);
+        $template->get_used_tags = true;
+        $template->compiler->compileTemplateSource();
         unset($template->compiler);
         return $template->used_tags;
     }
@@ -533,6 +528,8 @@ class Smarty_Internal_Utility {
                 "smarty_cacheresource_custom.php" => true,
                 "smarty_cacheresource_keyvaluestore.php" => true,
                 "smarty_config_source.php" => true,
+                "smarty_internal_code.php" => true,
+                "smarty_internal_content.php" => true,
                 "smarty_internal_cacheresource_file.php" => true,
                 "smarty_internal_compile_append.php" => true,
                 "smarty_internal_compile_assign.php" => true,
@@ -578,7 +575,6 @@ class Smarty_Internal_Utility {
                 "smarty_internal_function_call_handler.php" => true,
                 "smarty_internal_get_include_path.php" => true,
                 "smarty_internal_nocache_insert.php" => true,
-                "smarty_internal_parsetree.php" => true,
                 "smarty_internal_resource_eval.php" => true,
                 "smarty_internal_resource_extends.php" => true,
                 "smarty_internal_resource_file.php" => true,

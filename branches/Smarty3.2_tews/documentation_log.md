@@ -39,6 +39,7 @@ these changes must reflect on the documentation at some point…
 * {\some\namespaced\ClassName::CONST} (Needs UnitTests?!)
 * {import file= ....} tag
 * {-tag} whitespace control
+* {block 'foo' overwrite} to overwrite {$smarty.block.child}
 
 
 ## Plugins ##

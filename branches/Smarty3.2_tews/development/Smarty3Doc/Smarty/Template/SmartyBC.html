@@ -505,6 +505,9 @@
 								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$_cacheresource_handlers">Smarty::$_cacheresource_handlers</a></span><br>
 							</span>
 													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$_callbacks">Smarty::$_callbacks</a></span><br>
+							</span>
+													<span class="var-title">
 								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$_CHARSET">Smarty::$_CHARSET</a></span><br>
 							</span>
 													<span class="var-title">
@@ -518,6 +521,9 @@
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$_file_perms">Smarty::$_file_perms</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$_IS_WINDOWS">Smarty::$_IS_WINDOWS</a></span><br>
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$_MBSTRING">Smarty::$_MBSTRING</a></span><br>
@@ -1818,6 +1824,7 @@
 													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodloadPlugin">Smarty::loadPlugin()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodmuteExpectedErrors">Smarty::muteExpectedErrors()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodmutingErrorHandler">Smarty::mutingErrorHandler()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodregisterCallback">Smarty::registerCallback()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodsetAutoloadFilters">Smarty::setAutoloadFilters()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodsetCacheDir">Smarty::setCacheDir()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodsetCompileDir">Smarty::setCompileDir()</a></span><br>
@@ -1828,6 +1835,7 @@
 													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodsetTemplateDir">Smarty::setTemplateDir()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodtemplateExists">Smarty::templateExists()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodtestInstall">Smarty::testInstall()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodtriggerCallback">Smarty::triggerCallback()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodunmuteExpectedErrors">Smarty::unmuteExpectedErrors()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#method__clone">Smarty::__clone()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#method__destruct">Smarty::__destruct()</a></span><br>
@@ -1869,6 +1877,7 @@
 													<span class="method-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#methodassign">Smarty_Internal_Data::assign()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#methodassignByRef">Smarty_Internal_Data::assignByRef()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#methodassignGlobal">Smarty_Internal_Data::assignGlobal()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#methodassignParents">Smarty_Internal_Data::assignParents()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#methodclearAllAssign">Smarty_Internal_Data::clearAllAssign()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#methodclearAssign">Smarty_Internal_Data::clearAssign()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#methodclearConfig">Smarty_Internal_Data::clearConfig()</a></span><br>
@@ -1907,6 +1916,10 @@
 													<img src="../../media/images/Variable.png" />
 							<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constCACHING_LIFETIME_SAVED">Smarty::CACHING_LIFETIME_SAVED</a></span><br>
+							</span>
+													<img src="../../media/images/Variable.png" />
+							<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constCACHING_NOCACHE_CODE">Smarty::CACHING_NOCACHE_CODE</a></span><br>
 							</span>
 													<img src="../../media/images/Variable.png" />
 							<span class="const-title">
@@ -2014,7 +2027,7 @@
 	</div>
 
 	<p class="notes" id="credit">
-		Documentation generated on Sun, 04 Mar 2012 17:38:38 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.1</a>
+		Documentation generated on Thu, 01 Nov 2012 19:44:06 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

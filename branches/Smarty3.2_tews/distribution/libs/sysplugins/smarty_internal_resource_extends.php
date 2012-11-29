@@ -38,22 +38,23 @@ class Smarty_Internal_Resource_Extends extends Smarty_Resource {
         $components = explode('|', $source->name);
         $exists = true;
         foreach ($components as $component) {
-            $s = Smarty_Resource::source(null, $source->smarty, $component);
+            $s = Smarty_Resource::source(null, $_template, $component);
             if ($s->type == 'php') {
                 throw new SmartyException("Resource type {$s->type} cannot be used with the extends resource type");
             }
             $sources[$s->uid] = $s;
             $uid .= $s->filepath;
-            if ($_template && $_template->smarty->compile_check) {
+            if ($_template && $_template->compile_check) {
                 $exists = $exists && $s->exists;
             }
         }
         $source->components = $sources;
         $source->filepath = $s->filepath;
         $source->uid = sha1($uid);
-        if ($_template && $_template->smarty->compile_check) {
-            $source->timestamp = $s->timestamp;
-            $source->exists = $exists;
+        $source->filepath = 'extends_resource_' . $source->uid . '.tpl';
+        if ($_template && $_template->compile_check) {
+            $source->timestamp = 1;
+            $source->exists = true;
         }
         // need the template at getContent()
         $source->template = $_template;
@@ -66,10 +67,7 @@ class Smarty_Internal_Resource_Extends extends Smarty_Resource {
      */
     public function populateTimestamp(Smarty_Template_Source $source) {
         $source->exists = true;
-        foreach ($source->components as $s) {
-            $source->exists = $source->exists && $s->exists;
-        }
-        $source->timestamp = $s->timestamp;
+        $source->timestamp = 1;
     }
 
     /**
@@ -80,67 +78,18 @@ class Smarty_Internal_Resource_Extends extends Smarty_Resource {
      * @throws SmartyException if source cannot be loaded
      */
     public function getContent(Smarty_Template_Source $source) {
-        if (!$source->exists) {
-            throw new SmartyException("Unable to read template {$source->type} '{$source->name}'");
-        }
-
-        $this->mbstring_overload = ini_get('mbstring.func_overload') & 2;
-        $_rdl = preg_quote($source->smarty->right_delimiter);
-        $_ldl = preg_quote($source->smarty->left_delimiter);
-        if (!$source->smarty->auto_literal) {
-            $al = '\s*';
-        } else {
-            $al = '';
-        }
+        $source_code = '';
         $_components = array_reverse($source->components);
-        $_first = reset($_components);
         $_last = end($_components);
 
         foreach ($_components as $_component) {
-            // register dependency
-            if ($_component != $_first) {
-                $source->template->properties['file_dependency'][$_component->uid] = array($_component->filepath, $_component->timestamp, $_component->type);
-            }
-
-            // set up filepath
-            $source->filepath = $_component->filepath;
-
-            // extend sources
             if ($_component != $_last) {
-                if (preg_match_all("!({$_ldl}{$al}block\s(.+?)\s*{$_rdl})!", $_component->content, $_open) !=
-                        preg_match_all("!({$_ldl}{$al}/block\s*{$_rdl})!", $_component->content, $_close)) {
-                    throw new SmartyException("unmatched {block} {/block} pairs in template {$_component->type} '{$_component->name}'");
-                }
-                preg_match_all("!{$_ldl}{$al}block\s(.+?)\s*{$_rdl}|{$_ldl}{$al}/block\s*{$_rdl}|{$_ldl}\*([\S\s]*?)\*{$_rdl}!", $_component->content, $_result, PREG_OFFSET_CAPTURE);
-                $_result_count = count($_result[0]);
-                $_start = 0;
-                while ($_start + 1 < $_result_count) {
-                    $_end = 0;
-                    $_level = 1;
-                    if (($this->mbstring_overload ? mb_substr($_result[0][$_start][0], 0, mb_strlen($source->smarty->left_delimiter, 'latin1') + 1, 'latin1') : substr($_result[0][$_start][0], 0, strlen($source->smarty->left_delimiter) + 1)) == $source->smarty->left_delimiter . '*') {
-                        $_start++;
-                        continue;
-                    }
-                    while ($_level != 0) {
-                        $_end++;
-                        if (($this->mbstring_overload ? mb_substr($_result[0][$_start + $_end][0], 0, mb_strlen($source->smarty->left_delimiter, 'latin1') + 1, 'latin1') : substr($_result[0][$_start + $_end][0], 0, strlen($source->smarty->left_delimiter) + 1)) == $source->smarty->left_delimiter . '*') {
-                            continue;
-                        }
-                        if (!strpos($_result[0][$_start + $_end][0], '/')) {
-                            $_level++;
-                        } else {
-                            $_level--;
-                        }
-                    }
-                    $_block_content = str_replace($source->smarty->left_delimiter . '$smarty.block.parent' . $source->smarty->right_delimiter, '%%%%SMARTY_PARENT%%%%', ($this->mbstring_overload ? mb_substr($_component->content, $_result[0][$_start][1] + mb_strlen($_result[0][$_start][0], 'latin1'), $_result[0][$_start + $_end][1] - $_result[0][$_start][1] - + mb_strlen($_result[0][$_start][0], 'latin1'), 'latin1') : substr($_component->content, $_result[0][$_start][1] + strlen($_result[0][$_start][0]), $_result[0][$_start + $_end][1] - $_result[0][$_start][1] - + strlen($_result[0][$_start][0]))));
-                    $line_offset = substr_count($_component->content, "\n", 0, $_result[0][$_start][1] + strlen($_result[0][$_start][0]));
-                    Smarty_Internal_Compile_Block::saveBlockData($_block_content, $_result[0][$_start][0], $source->template, $_component->filepath, $_component->resource, $line_offset);
-                    $_start = $_start + $_end + 1;
-                }
+                $source_code .= "{$source->template->smarty->left_delimiter}private_inheritance_template file='$_component->filepath' child--{$source->template->smarty->right_delimiter}\n";
             } else {
-                return $_component->content;
+                $source_code .= "{$source->template->smarty->left_delimiter}private_inheritance_template file='$_component->filepath'--{$source->template->smarty->right_delimiter}\n";
             }
         }
+        return $source_code;
     }
 
     /**

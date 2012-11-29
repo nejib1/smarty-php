@@ -28,9 +28,11 @@
 		</p>
 		
 				
-		<pre><a href="../../Smarty/Compiler/Smarty_Internal_CompileBase.html">Smarty_Internal_CompileBase</a>
+		<pre><a href="../../Smarty/Compiler/Smarty_Internal_Code.html">Smarty_Internal_Code</a>
    |
-   --Smarty_Internal_Compile_Block</pre>
+   --<a href="../../Smarty/Compiler/Smarty_Internal_CompileBase.html">Smarty_Internal_CompileBase</a>
+      |
+      --Smarty_Internal_Compile_Block</pre>
 	
 			</div>
 </div>
@@ -49,9 +51,21 @@
 								</div>
 		<div class="info-box-body">
 			<div class="var-summary">
-																																								<div class="var-title">
+												<div class="var-title">
+					static <span class="var-type">int</span>
+					<a href="#$block_nesting_level" title="details" class="var-name">$block_nesting_level</a>
+				</div>
+																<div class="var-title">
+					static <span class="var-type">bool</span>
+					<a href="#$called_child" title="details" class="var-name">$called_child</a>
+				</div>
+																<div class="var-title">
+					static <span class="var-type">int</span>
+					<a href="#$current_block_name" title="details" class="var-name">$current_block_name</a>
+				</div>
+																																																																				<div class="var-title">
 					<span class="var-type">array</span>
-					<a href="#$optional_attributes" title="details" class="var-name">$optional_attributes</a>
+					<a href="#$option_flags" title="details" class="var-name">$option_flags</a>
 				</div>
 																<div class="var-title">
 					<span class="var-type">array</span>
@@ -77,23 +91,13 @@
 		</div>
 		<div class="info-box-body">			
 			<div class="method-summary">
-																				<div class="method-definition">
-					static 						<span class="method-result">string</span>
-										<a href="#compileChildBlock" title="details" class="method-name">compileChildBlock</a>
-											(<span class="var-type">object</span>&nbsp;<span class="var-name">$compiler</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$_name</span> = <span class="var-default">null</span>])
-									</div>
-																<div class="method-definition">
-					static 						<span class="method-result">void</span>
-										<a href="#saveBlockData" title="details" class="method-name">saveBlockData</a>
-											(<span class="var-type">string</span>&nbsp;<span class="var-name">$block_content</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$block_tag</span>, <span class="var-type">object</span>&nbsp;<span class="var-name">$template</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$filepath</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$resource</span>, <span class="var-type">int</span>&nbsp;<span class="var-name">$line_offset</span>)
-									</div>
-								
+												
 												<div class="method-definition">
 											<span class="method-result">boolean</span>
 										<a href="#compile" title="details" class="method-name">compile</a>
 											(<span class="var-type">array</span>&nbsp;<span class="var-name">$args</span>, <span class="var-type">object</span>&nbsp;<span class="var-name">$compiler</span>)
 									</div>
-																								</div>
+								</div>
 		</div>
 	</div>		
 
@@ -110,14 +114,80 @@
 							
 					</div>
 		<div class="info-box-body">
-			<a name="var$optional_attributes" id="$optional_attributes"><!-- --></A>
+			<a name="var$block_nesting_level" id="$block_nesting_level"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			static <span class="var-type">int</span>
+			<span class="var-name">$block_nesting_level</span>
+			 = <span class="var-default"> 0</span>			(line <span class="line-number">26</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">block tag nesting level</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$called_child" id="$called_child"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			static <span class="var-type">bool</span>
+			<span class="var-name">$called_child</span>
+			 = <span class="var-default"> false</span>			(line <span class="line-number">40</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">called {$smarty.block.child}</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$current_block_name" id="$current_block_name"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			static <span class="var-type">int</span>
+			<span class="var-name">$current_block_name</span>
+			 = <span class="var-default"> ''</span>			(line <span class="line-number">33</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">current block name</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$option_flags" id="$option_flags"><!-- --></A>
 <div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">array</span>
-			<span class="var-name">$optional_attributes</span>
-			 = <span class="var-default">array('hide')</span>			(line <span class="line-number">43</span>)
+			<span class="var-name">$option_flags</span>
+			 = <span class="var-default">array('nocache', 'hide', 'append', 'prepend', 'overwrite')</span>			(line <span class="line-number">64</span>)
 		</span>
 	</div>
 
@@ -132,8 +202,8 @@
 			<hr class="separator" />
 		<div class="notes">Redefinition of:</div>
 		<dl>
-			<dt><a href="../../Smarty/Compiler/Smarty_Internal_CompileBase.html#var$optional_attributes">Smarty_Internal_CompileBase::$optional_attributes</a></dt>
-						<dd>Array of names of optional attribute required by tag  use array('_any') if there is no restriction of attributes names</dd>
+			<dt><a href="../../Smarty/Compiler/Smarty_Internal_CompileBase.html#var$option_flags">Smarty_Internal_CompileBase::$option_flags</a></dt>
+						<dd>Array of names of valid option flags</dd>
 					</dl>
 		
 		
@@ -146,7 +216,7 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$required_attributes</span>
-			 = <span class="var-default">array('name')</span>			(line <span class="line-number">27</span>)
+			 = <span class="var-default">array('name')</span>			(line <span class="line-number">48</span>)
 		</span>
 	</div>
 
@@ -175,7 +245,7 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$shorttag_order</span>
-			 = <span class="var-default">array('name', 'hide')</span>			(line <span class="line-number">35</span>)
+			 = <span class="var-default">array('name')</span>			(line <span class="line-number">56</span>)
 		</span>
 	</div>
 
@@ -202,7 +272,25 @@
 									<p>Inherited from <span class="classname"><a href="../../Smarty/Compiler/Smarty_Internal_CompileBase.html">Smarty_Internal_CompileBase</a></span></p>
 					<blockquote>
 													<span class="var-title">
-								<span class="var-name"><a href="../../Smarty/Compiler/Smarty_Internal_CompileBase.html#var$option_flags">Smarty_Internal_CompileBase::$option_flags</a></span><br>
+								<span class="var-name"><a href="../../Smarty/Compiler/Smarty_Internal_CompileBase.html#var$optional_attributes">Smarty_Internal_CompileBase::$optional_attributes</a></span><br>
+							</span>
+											</blockquote> 
+									<p>Inherited from <span class="classname"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html">Smarty_Internal_Code</a></span></p>
+					<blockquote>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#var$buffer">Smarty_Internal_Code::$buffer</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#var$indentation">Smarty_Internal_Code::$indentation</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#var$indent_on">Smarty_Internal_Code::$indent_on</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#var$no_indent">Smarty_Internal_Code::$no_indent</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#var$saved_indentation">Smarty_Internal_Code::$saved_indentation</a></span><br>
 							</span>
 											</blockquote> 
 										
@@ -220,91 +308,12 @@
 		</div>
 		<div class="info-box-body">
 			<A NAME='method_detail'></A>
-<a name="methodcompileChildBlock" id="compileChildBlock"><!-- --></a>
-<div class="oddrow">
-	
-	<div class="method-header">
-		<span class="method-title">static method compileChildBlock</span> (line <span class="line-number">154</span>)
-	</div> 
-	
-	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Compile saved child block source</p>
-	<ul class="tags">
-				<li><span class="field">return:</span> compiled code of schild block</li>
-				<li><span class="field">access:</span> public</li>
-			</ul>
-	
-	<div class="method-signature">
-	    static
-		<span class="method-result">string</span>
-		<span class="method-name">
-			compileChildBlock
-		</span>
-					(<span class="var-type">object</span>&nbsp;<span class="var-name">$compiler</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$_name</span> = <span class="var-default">null</span>])
-			</div>
-	
-			<ul class="parameters">
-					<li>
-				<span class="var-type">object</span>
-				<span class="var-name">$compiler</span><span class="var-description">: compiler object</span>			</li>
-					<li>
-				<span class="var-type">string</span>
-				<span class="var-name">$_name</span><span class="var-description">: optional name of child block</span>			</li>
-				</ul>
-		
-			
-	</div>
-<a name="methodsaveBlockData" id="saveBlockData"><!-- --></a>
-<div class="evenrow">
-	
-	<div class="method-header">
-		<span class="method-title">static method saveBlockData</span> (line <span class="line-number">80</span>)
-	</div> 
-	
-	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Save or replace child block source by block name during parsing</p>
-	<ul class="tags">
-				<li><span class="field">access:</span> public</li>
-			</ul>
-	
-	<div class="method-signature">
-	    static
-		<span class="method-result">void</span>
-		<span class="method-name">
-			saveBlockData
-		</span>
-					(<span class="var-type">string</span>&nbsp;<span class="var-name">$block_content</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$block_tag</span>, <span class="var-type">object</span>&nbsp;<span class="var-name">$template</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$filepath</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$resource</span>, <span class="var-type">int</span>&nbsp;<span class="var-name">$line_offset</span>)
-			</div>
-	
-			<ul class="parameters">
-					<li>
-				<span class="var-type">string</span>
-				<span class="var-name">$block_content</span><span class="var-description">: block source content</span>			</li>
-					<li>
-				<span class="var-type">string</span>
-				<span class="var-name">$block_tag</span><span class="var-description">: opening block tag</span>			</li>
-					<li>
-				<span class="var-type">object</span>
-				<span class="var-name">$template</span><span class="var-description">: template object</span>			</li>
-					<li>
-				<span class="var-type">string</span>
-				<span class="var-name">$filepath</span><span class="var-description">: filepath of template source</span>			</li>
-					<li>
-				<span class="var-type">string</span>
-				<span class="var-name">$resource</span><span class="var-description">: template resource</span>			</li>
-					<li>
-				<span class="var-type">int</span>
-				<span class="var-name">$line_offset</span><span class="var-description">: offset of this block from source start</span>			</li>
-				</ul>
-		
-			
-	</div>
 
 <a name="methodcompile" id="compile"><!-- --></a>
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">compile</span> (line <span class="line-number">52</span>)
+		<span class="method-title">compile</span> (line <span class="line-number">73</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -347,13 +356,34 @@
 													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_CompileBase.html#methodinjectObject">Smarty_Internal_CompileBase::injectObject()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_CompileBase.html#methodopenTag">Smarty_Internal_CompileBase::openTag()</a></span><br>
 											</blockquote>
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html">Smarty_Internal_Code</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#method__construct">Smarty_Internal_Code::__construct()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodaddIndentation">Smarty_Internal_Code::addIndentation()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodcreateTemplateCodeFrame">Smarty_Internal_Code::createTemplateCodeFrame()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodformatPHP">Smarty_Internal_Code::formatPHP()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodindent">Smarty_Internal_Code::indent()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodindent_off">Smarty_Internal_Code::indent_off()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodindent_on">Smarty_Internal_Code::indent_on()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodiniTagCode">Smarty_Internal_Code::iniTagCode()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodnewline">Smarty_Internal_Code::newline()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodoutdent">Smarty_Internal_Code::outdent()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodphp">Smarty_Internal_Code::php()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodraw">Smarty_Internal_Code::raw()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodrepr">Smarty_Internal_Code::repr()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodreturnTagCode">Smarty_Internal_Code::returnTagCode()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodstring">Smarty_Internal_Code::string()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodwrite">Smarty_Internal_Code::write()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#method_processPHPoutput">Smarty_Internal_Code::_processPHPoutput()</a></span><br>
+											</blockquote>
 										
 		</div>
 	</div>
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Sun, 04 Mar 2012 17:38:59 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.1</a>
+		Documentation generated on Thu, 01 Nov 2012 19:44:11 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

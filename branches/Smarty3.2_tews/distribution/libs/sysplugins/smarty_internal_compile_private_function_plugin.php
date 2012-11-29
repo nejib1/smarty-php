@@ -68,8 +68,11 @@ class Smarty_Internal_Compile_Private_Function_Plugin extends Smarty_Internal_Co
         // convert attributes into parameter string
         $result = $this->getPluginParameterString($function, $_attr, $compiler, false, $cache_attr);
         // compile code
-        $output = "<?php echo {$function}({$result});?>\n";
-        return $output;
+        $this->iniTagCode($compiler);
+
+        $this->php("echo {$function}({$result});")->newline();
+
+        return $this->returnTagCode($compiler);
     }
 
 }
