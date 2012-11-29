@@ -193,11 +193,11 @@ class Smarty_Compiled {
             }
         }
         if (isset($ptr->compiled->smarty_content->template_functions[$name])) {
-        if (isset($ptr->compiled->smarty_content->template_functions[$name]['used_plugins'])) {
-            foreach ($ptr->compiled->smarty_content->template_functions[$name]['used_plugins'] as $key => $function) {
-                $cache->required_plugins[$key] = $function;
+            if (isset($ptr->compiled->smarty_content->template_functions[$name]['used_plugins'])) {
+                foreach ($ptr->compiled->smarty_content->template_functions[$name]['used_plugins'] as $key => $function) {
+                    $cache->required_plugins[$key] = $function;
+                }
             }
-        }
             $cache->code = new Smarty_Internal_Code(3);
             $cache->template_functions[$name] = $ptr->compiled->smarty_content->template_functions[$name];
             $obj = new ReflectionObject($ptr->compiled->smarty_content);
@@ -207,19 +207,19 @@ class Smarty_Compiled {
             $end = $refFunc->getEndLine();
             $source = file($file);
             for ($i = $start; $i < $end; $i++) {
-            if (preg_match("!echo \"/\*%%SmartyNocache%%\*/!", $source[$i])) {
-                $cache->code->formatPHP(stripcslashes(preg_replace("!echo \"/\*%%SmartyNocache%%\*/|/\*/%%SmartyNocache%%\*/\";!",'', $source[$i])));
-            } else {
-                $cache->code->buffer .= $source[$i];
-            }
+                if (preg_match("!echo \"/\*%%SmartyNocache%%\*/!", $source[$i])) {
+                    $cache->code->formatPHP(stripcslashes(preg_replace("!echo \"/\*%%SmartyNocache%%\*/|/\*/%%SmartyNocache%%\*/\";!", '', $source[$i])));
+                } else {
+                    $cache->code->buffer .= $source[$i];
+                }
             }
             $cache->template_functions_code[$name] = $cache->code->buffer;
             $cache->code = null;
             if (isset($ptr->compiled->smarty_content->template_functions[$name]['called_functions'])) {
-            foreach ($ptr->compiled->smarty_content->template_functions[$name]['called_functions'] as $name => $dummy) {
-                $this->merge_called_nocache_template_functions($cache, $template, $name);
+                foreach ($ptr->compiled->smarty_content->template_functions[$name]['called_functions'] as $name => $dummy) {
+                    $this->merge_called_nocache_template_functions($cache, $template, $name);
+                }
             }
-        }
         }
     }
 

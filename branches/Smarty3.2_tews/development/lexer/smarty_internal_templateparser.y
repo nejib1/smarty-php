@@ -102,7 +102,7 @@
 //
 // complete template
 //
-start(res)       ::= template. {
+start ::= template. {
    // execute end of template
    $this->compiler->newline()->php("array_shift(\$_smarty_tpl->trace_call_stack);\n");
    if ($this->compiler->template->caching) {
@@ -130,7 +130,7 @@ template       ::= .
 // template elements
 //
                       // Template init
-template_element(res)::= TEMPLATEINIT(i). {
+template_element ::= TEMPLATEINIT(i). {
     if ($this->compiler->template->source->type == 'eval' || $this->compiler->template->source->type == 'string') {
         $resource = $this->compiler->template->source->type;
     } else {
@@ -178,7 +178,7 @@ template_element ::= literal(l). {
 }
 
                       // '<?php' tag
-template_element(res)::= PHPSTARTTAG(st). {
+template_element ::= PHPSTARTTAG(st). {
     if ($this->php_handling == Smarty::PHP_PASSTHRU) {
         $this->compiler->php("echo '<?php';\n");
     } elseif ($this->php_handling == Smarty::PHP_QUOTE) {
@@ -192,7 +192,7 @@ template_element(res)::= PHPSTARTTAG(st). {
 }
 
                       // '?>' tag
-template_element(res)::= PHPENDTAG. {
+template_element ::= PHPENDTAG. {
     if ($this->is_xml) {
         $this->is_xml = false;
         $this->compiler->php("echo '?>';\n");
@@ -206,7 +206,7 @@ template_element(res)::= PHPENDTAG. {
 }
 
                       // '<%' tag
-template_element(res)::= ASPSTARTTAG(st). {
+template_element ::= ASPSTARTTAG(st). {
     if ($this->php_handling == Smarty::PHP_PASSTHRU) {
         $this->compiler->php("echo '<%';\n");
     } elseif ($this->php_handling == Smarty::PHP_QUOTE) {
@@ -228,7 +228,7 @@ template_element(res)::= ASPSTARTTAG(st). {
 }
   
                       // '%>' tag
-template_element(res)::= ASPENDTAG(et). {
+template_element ::= ASPENDTAG(et). {
     if ($this->php_handling == Smarty::PHP_PASSTHRU) {
         $this->compiler->php("echo '%>';\n");
     } elseif ($this->php_handling == Smarty::PHP_QUOTE) {
@@ -246,7 +246,7 @@ template_element(res)::= ASPENDTAG(et). {
     }
 }
 
-template_element(res)::= FAKEPHPSTARTTAG(o). {
+template_element ::= FAKEPHPSTARTTAG(o). {
     if ($this->strip) {
         $this->compiler->php('echo ')->string(preg_replace('![\t ]*[\r\n]+[\t ]*!', '', o))->raw(";\n");
     } else {

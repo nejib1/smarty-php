@@ -238,8 +238,8 @@ abstract class Smarty_Resource {
         }
         // revert to relative
         if (isset($_was_relative)) {
-                $_path = substr($_path, 1);
-            }
+            $_path = substr($_path, 1);
+        }
 
         // this is only required for directories
         $file = rtrim($_path, '/\\');

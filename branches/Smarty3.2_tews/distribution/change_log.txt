@@ -1,6 +1,7 @@
 ﻿===== Smarty 3.2-DEV  =====
 29.11.2012
 - first update after massive internal changes (not yet full functional)
+- lexer did fail because wrong properties
 
 
 - add {block 'foo' overwrite} option to overwrite {$smarty.block.child} (Forum Topic 22905)

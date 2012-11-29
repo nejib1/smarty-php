@@ -85,7 +85,7 @@ class Smarty_Internal_Templatelexer
         $this->ldel = preg_quote($this->compiler->template->left_delimiter,'/'); 
         $this->ldel_length = strlen($this->compiler->template->left_delimiter); 
         $this->rdel = preg_quote($this->compiler->template->right_delimiter,'/');
-        $this->rdel_length = strlen($this->smarty->right_delimiter); 
+        $this->rdel_length = strlen($this->compiler->template->right_delimiter); 
         $this->smarty_token_names['LDEL'] =	$this->compiler->template->left_delimiter;
         $this->smarty_token_names['RDEL'] =	$this->compiler->template->right_delimiter;
         $this->mbstring_overload = ini_get('mbstring.func_overload') & 2;
@@ -572,7 +572,7 @@ hex {
 }
 attr {
   // resolve conflicts with shorttag and right_delimiter starting with '='
-  if (substr($this->data, $this->counter + strlen($this->value) - 1, $this->rdel_length) == $this->smarty->right_delimiter) {
+  if (substr($this->data, $this->counter + strlen($this->value) - 1, $this->rdel_length) == $this->compiler->template->right_delimiter) {
      preg_match("/\s+/",$this->value,$match);
      $this->value = $match[0];
      $this->token = Smarty_Internal_Templateparser::TP_SPACE;

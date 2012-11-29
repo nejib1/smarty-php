@@ -85,6 +85,7 @@ class Smarty_Internal_Templatelexer
         $this->ldel = preg_quote($this->compiler->template->left_delimiter,'/');
         $this->ldel_length = strlen($this->compiler->template->left_delimiter);
         $this->rdel = preg_quote($this->compiler->template->right_delimiter,'/');
+        $this->rdel_length = strlen($this->compiler->template->right_delimiter);
         $this->smarty_token_names['LDEL'] =	$this->compiler->template->left_delimiter;
         $this->smarty_token_names['RDEL'] =	$this->compiler->template->right_delimiter;
         $this->mbstring_overload = ini_get('mbstring.func_overload') & 2;
@@ -517,7 +518,7 @@ class Smarty_Internal_Templatelexer
         if ($this->counter >= ($this->mbstring_overload ? mb_strlen($this->data,'latin1'): strlen($this->data))) {
             return false; // end of input
         }
-        $yy_global_pattern = "/\G('[^'\\\\]*(?:\\\\.[^'\\\\]*)*')|\G((\\s*".$this->ldel."--|[^\S\r\n]*".$this->ldel."-|".$this->ldel.")\\s{1,}\/)|\G((\\s*".$this->ldel."--|[^\S\r\n]*".$this->ldel."-|".$this->ldel.")\\s*(if|elseif|else if|while)\\s+)|\G((\\s*".$this->ldel."--|[^\S\r\n]*".$this->ldel."-|".$this->ldel.")\\s*for\\s+)|\G((\\s*".$this->ldel."--|[^\S\r\n]*".$this->ldel."-|".$this->ldel.")\\s*foreach(?![^\s]))|\G((\\s*".$this->ldel."--|[^\S\r\n]*".$this->ldel."-|".$this->ldel.")\\s{1,})|\G(\\s{1,}(".$this->rdel."|--".$this->rdel."\\s*|-".$this->rdel."[^\S\r\n]*))|\G((\\s*".$this->ldel."--|[^\S\r\n]*".$this->ldel."-|".$this->ldel.")\/)|\G((\\s*".$this->ldel."--|[^\S\r\n]*".$this->ldel."-|".$this->ldel."))|\G((".$this->rdel."|--".$this->rdel."\\s*|-".$this->rdel."[^\S\r\n]*))|\G(\\*([\S\s]*?)\\*(?=(".$this->rdel."|--".$this->rdel."\\s*|-".$this->rdel."[^\S\r\n]*)))|\G(\\s+is\\s+in\\s+)|\G(\\s+as\\s+)|\G(\\s+to\\s+)|\G(\\s+step\\s+)|\G(\\s+instanceof\\s+)|\G(\\s*===\\s*)|\G(\\s*!==\\s*)|\G(\\s*==\\s*|\\s+eq\\s+)|\G(\\s*!=\\s*|\\s*<>\\s*|\\s+(ne|neq)\\s+)|\G(\\s*>=\\s*|\\s+(ge|gte)\\s+)|\G(\\s*<=\\s*|\\s+(le|lte)\\s+)|\G(\\s*>\\s*|\\s+gt\\s+)|\G(\\s*<\\s*|\\s+lt\\s+)|\G(\\s+mod\\s+)|\G(!\\s*|not\\s+)|\G(\\s*&&\\s*|\\s*and\\s+)|\G(\\s*\\|\\|\\s*|\\s*or\\s+)|\G(\\s*xor\\s+)|\G(\\s+is\\s+odd\\s+by\\s+)|\G(\\s+is\\s+not\\s+odd\\s+by\\s+)|\G(\\s+is\\s+odd)|\G(\\s+is\\s+not\\s+odd)|\G(\\s+is\\s+even\\s+by\\s+)|\G(\\s+is\\s+not\\s+even\\s+by\\s+)|\G(\\s+is\\s+even)|\G(\\s+is\\s+not\\s+even)|\G(\\s+is\\s+div\\s+by\\s+)|\G(\\s+is\\s+not\\s+div\\s+by\\s+)|\G(\\((int(eger)?|bool(ean)?|float|double|real|string|binary|array|object)\\)\\s*)|\G(\\s*\\(\\s*)|\G(\\s*\\))|\G(\\[\\s*)|\G(\\s*\\])|\G(\\s*->\\s*)|\G(\\s*=>\\s*)|\G(\\s*=\\s*)|\G(\\s*(\\+|-)\\s*)|\G(\\s*(\\*|\/|%)\\s*)|\G(\\$[0-9]*[a-zA-Z_]\\w*(\\+\\+|--))|\G(\\$)|\G(\\s*;)|\G(::)|\G(\\s*:\\s*)|\G(@)|\G(#)|\G(\")|\G(`)|\G(\\|)|\G(\\.)|\G(\\s*,\\s*)|\G(\\s*&\\s*)|\G(\\s*\\?\\s*)|\G(0[xX][0-9a-fA-F]+)|\G(\\s+[0-9]*[a-zA-Z_][a-zA-Z0-9_\-:]*\\s?=\\s?)|\G([0-9]*[a-zA-Z_]\\w*)|\G(\\d+)|\G(\\s+)|\G((\\\\[0-9]*[a-zA-Z_]\\w*)+)|\G([\S\s])/iS";
+        $yy_global_pattern = "/\G('[^'\\\\]*(?:\\\\.[^'\\\\]*)*')|\G((\\s*".$this->ldel."--|[^\S\r\n]*".$this->ldel."-|".$this->ldel.")\\s{1,}\/)|\G((\\s*".$this->ldel."--|[^\S\r\n]*".$this->ldel."-|".$this->ldel.")\\s*(if|elseif|else if|while)\\s+)|\G((\\s*".$this->ldel."--|[^\S\r\n]*".$this->ldel."-|".$this->ldel.")\\s*for\\s+)|\G((\\s*".$this->ldel."--|[^\S\r\n]*".$this->ldel."-|".$this->ldel.")\\s*foreach(?![^\s]))|\G((\\s*".$this->ldel."--|[^\S\r\n]*".$this->ldel."-|".$this->ldel.")\\s{1,})|\G(\\s{1,}(".$this->rdel."|--".$this->rdel."\\s*|-".$this->rdel."[^\S\r\n]*))|\G((\\s*".$this->ldel."--|[^\S\r\n]*".$this->ldel."-|".$this->ldel.")\/)|\G((\\s*".$this->ldel."--|[^\S\r\n]*".$this->ldel."-|".$this->ldel."))|\G((".$this->rdel."|--".$this->rdel."\\s*|-".$this->rdel."[^\S\r\n]*))|\G(\\*([\S\s]*?)\\*(?=(".$this->rdel."|--".$this->rdel."\\s*|-".$this->rdel."[^\S\r\n]*)))|\G(\\s+is\\s+in\\s+)|\G(\\s+as\\s+)|\G(\\s+to\\s+)|\G(\\s+step\\s+)|\G(\\s+instanceof\\s+)|\G(\\s*===\\s*)|\G(\\s*!==\\s*)|\G(\\s*==\\s*|\\s+eq\\s+)|\G(\\s*!=\\s*|\\s*<>\\s*|\\s+(ne|neq)\\s+)|\G(\\s*>=\\s*|\\s+(ge|gte)\\s+)|\G(\\s*<=\\s*|\\s+(le|lte)\\s+)|\G(\\s*>\\s*|\\s+gt\\s+)|\G(\\s*<\\s*|\\s+lt\\s+)|\G(\\s+mod\\s+)|\G(!\\s*|not\\s+)|\G(\\s*&&\\s*|\\s*and\\s+)|\G(\\s*\\|\\|\\s*|\\s*or\\s+)|\G(\\s*xor\\s+)|\G(\\s+is\\s+odd\\s+by\\s+)|\G(\\s+is\\s+not\\s+odd\\s+by\\s+)|\G(\\s+is\\s+odd)|\G(\\s+is\\s+not\\s+odd)|\G(\\s+is\\s+even\\s+by\\s+)|\G(\\s+is\\s+not\\s+even\\s+by\\s+)|\G(\\s+is\\s+even)|\G(\\s+is\\s+not\\s+even)|\G(\\s+is\\s+div\\s+by\\s+)|\G(\\s+is\\s+not\\s+div\\s+by\\s+)|\G(\\((int(eger)?|bool(ean)?|float|double|real|string|binary|array|object)\\)\\s*)|\G(\\s*\\(\\s*)|\G(\\s*\\))|\G(\\[\\s*)|\G(\\s*\\])|\G(\\s*->\\s*)|\G(\\s*=>\\s*)|\G(\\s*=\\s*)|\G(\\s*(\\+|-)\\s*)|\G(\\s*(\\*|\/|%)\\s*)|\G(\\$[0-9]*[a-zA-Z_]\\w*(\\+\\+|--))|\G(\\$)|\G(\\s*;)|\G(::)|\G(\\s*:\\s*)|\G(@)|\G(#)|\G(\")|\G(`)|\G(\\|)|\G(\\.)|\G(\\s*,\\s*)|\G(\\s*&\\s*)|\G(\\s*\\?\\s*)|\G(0[xX][0-9a-fA-F]+)|\G(\\s+[0-9]*[a-zA-Z_][a-zA-Z0-9_\-:]*\\s*=\\s*)|\G([0-9]*[a-zA-Z_]\\w*)|\G(\\d+)|\G(\\s+)|\G((\\\\[0-9]*[a-zA-Z_]\\w*)+)|\G([\S\s])/iS";
 
         do {
             if ($this->mbstring_overload ? preg_match($yy_global_pattern, mb_substr($this->data, $this->counter,2000000000,'latin1'), $yymatches) : preg_match($yy_global_pattern,$this->data, $yymatches, null, $this->counter)) {
@@ -928,7 +929,14 @@ class Smarty_Internal_Templatelexer
     function yy_r3_86($yy_subpatterns)
     {
 
-  $this->token = Smarty_Internal_Templateparser::TP_ATTR;
+  // resolve conflicts with shorttag and right_delimiter starting with '='
+  if (substr($this->data, $this->counter + strlen($this->value) - 1, $this->rdel_length) == $this->compiler->template->right_delimiter) {
+     preg_match("/\s+/",$this->value,$match);
+     $this->value = $match[0];
+     $this->token = Smarty_Internal_Templateparser::TP_SPACE;
+  } else {
+     $this->token = Smarty_Internal_Templateparser::TP_ATTR;
+  }
     }
     function yy_r3_87($yy_subpatterns)
     {
