@@ -238,7 +238,7 @@ class Smarty_Internal_Content {
         $result_ptr = null;
         $parent_ptr = null;
         $ptr = $template;
-        while ($ptr->is_template) {
+        while (isset($ptr->is_template) && $ptr->is_template) {
             if (isset($ptr->compiled->smarty_content->block_functions[$name]['valid'])) {
                 if (isset($ptr->compiled->smarty_content->block_functions[$name])) {
                     if (isset($ptr->compiled->smarty_content->block_functions[$name]['hide'])) {
@@ -259,12 +259,12 @@ class Smarty_Internal_Content {
             $result_ptr = $parent_ptr;
         }
         if ($result_ptr !== null) {
-            $function = "smarty_block_{$name}";
+            $function = $result_ptr->compiled->smarty_content->block_functions[$name]['function'];
             $output = $result_ptr->compiled->smarty_content->$function($result_ptr);
             if (isset($result_ptr->compiled->smarty_content->block_functions[$name]['prepend'])) {
-                $output .= $result_ptr->_fetch_block_parent_template($result_ptr, $name);
+                $output .= $result_ptr->compiled->smarty_content->_fetch_block_parent_template($result_ptr, $name);
             } elseif (isset($result_ptr->compiled->smarty_content->block_functions[$name]['append'])) {
-                $output = $result_ptr->_fetch_block_parent_template($result_ptr, $name) . $output;
+                $output = $result_ptr->compiled->smarty_content->_fetch_block_parent_template($result_ptr, $name) . $output;
             }
         }
         return $output;
@@ -281,8 +281,8 @@ class Smarty_Internal_Content {
         while (isset($ptr->is_template) && $ptr->is_template && !isset($ptr->compiled->smarty_content->block_functions[$name]['valid'])) {
             $ptr = $ptr->inheritanceParentTemplate;
         }
-        if ($ptr) {
-            $function = "smarty_block_{$name}";
+        if (isset($ptr->compiled->smarty_content->block_functions[$name])) {
+            $function = $ptr->compiled->smarty_content->block_functions[$name]['function'];
             $output = $ptr->compiled->smarty_content->$function($ptr);
         } else {
             $output = '';

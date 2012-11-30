@@ -140,11 +140,12 @@ class Smarty_Internal_Compile_Blockclose extends Smarty_Internal_CompileBase {
                 $resource = substr($resource, $start + 1, $end - $start - 1);
             }
         }
+        $function_name = "block_{$name}_" . str_replace('.', '_', uniqid('', true));
         $this->buffer = '';
         $this->indentation = 2;
 
         $this->php("/* Line {$saved_data[7]} */")->newline();
-        $this->php("function smarty_block_{$name}(\$_smarty_tpl) {")->newline()->indent();
+        $this->php("function {$function_name}(\$_smarty_tpl) {")->newline()->indent();
         $this->php("ob_start();")->newline();
         $this->php("array_unshift(\$_smarty_tpl->trace_call_stack, array('{$resource}', {$saved_data[7]}, '{$compiler->template->source->type}'));")->newline();
         if ($compiler->template->has_nocache_code) {
@@ -167,6 +168,7 @@ class Smarty_Internal_Compile_Blockclose extends Smarty_Internal_CompileBase {
         $this->iniTagCode($compiler);
 
         $compiler->block_functions[$name] = array();
+        $compiler->block_functions[$name]['function'] = $function_name;
         if (Smarty_Internal_Compile_Block::$called_child) {
             $compiler->block_functions[$name]['child'] = true;
         }
@@ -182,15 +184,17 @@ class Smarty_Internal_Compile_Blockclose extends Smarty_Internal_CompileBase {
         if ($saved_data[0]['overwrite'] === true) {
             $compiler->block_functions[$name]['overwrite'] = true;
         }
+        if ($compiler->template->caching && $compiler->tag_nocache) {
+            $compiler->block_functions[$name]['nocache'] = true;
+        }
+        $this->php("\$this->block_functions['$name']['valid'] = true;")->newline();
         if (Smarty_Internal_Compile_Block::$block_nesting_level == 0) {
-            $this->php("\$this->block_functions['$name']['valid'] = true;")->newline();
             $this->php("if (!\$_smarty_tpl->is_child) {")->newline()->indent();
         }
         $this->php("echo \$this->_fetch_block_child_template (\$_smarty_tpl, '{$name}');")->newline();
         if (Smarty_Internal_Compile_Block::$block_nesting_level == 0) {
             $this->outdent()->php("}")->newline();
         }
-
         // restore current block name
         Smarty_Internal_Compile_Block::$current_block_name = $saved_data[4];
         Smarty_Internal_Compile_Block::$called_child = $saved_data[5];
