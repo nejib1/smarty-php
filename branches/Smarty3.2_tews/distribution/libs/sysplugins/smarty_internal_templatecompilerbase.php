@@ -652,7 +652,7 @@ abstract class Smarty_Internal_TemplateCompilerBase extends Smarty_Internal_Code
                     $content = "/* Line {$this->lex->taglineno} */\$_smarty_tpl->trace_call_stack[0][1] = {$lineno};" . $content;
                 }
                 $content = $prefix_code . $content;
-                $this->php("echo \"/*%%SmartyNocache%%*/" . str_replace("^#^", "'", addcslashes($content, "\0\t\"\$\\")) . "/*/%%SmartyNocache%%*/\";\n");
+                $this->php("echo \"/*%%SmartyNocache%%*/" . str_replace(array("^#^", "^##^"), array('"','$'), addcslashes($content, "\0\t\"\$\\")) . "/*/%%SmartyNocache%%*/\";\n");
                 // make sure we include modifer plugins for nocache code
                 foreach ($this->modifier_plugins as $plugin_name => $dummy) {
                     if (isset($this->required_plugins['compiled'][$plugin_name]['modifier'])) {

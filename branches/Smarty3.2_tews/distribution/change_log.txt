@@ -2,6 +2,7 @@
 30.11.2012
 - fixed code for template inheritance
 - fixed PHPunit extends resource templates
+- fixed cached variables at nocache plugins
 
 29.11.2012
 - first update after massive internal changes (not yet full functional)

@@ -269,7 +269,7 @@ class Smarty_Internal_CompileBase extends Smarty_Internal_Code {
                     $optional = $par->isOptional();
                     if (isset($params[$name])) {
                         if ($compiler->template->caching && is_array($cache_attr) && in_array($name, $cache_attr)) {
-                            $value = str_replace("'", "^#^", $params[$name]);
+                            $value = str_replace(array('$', '"'), array('^##^','^#^'), $params[$name]);
                             $par_array[] = "'$name'=>^#^.var_export($value,true).^#^";
                         } else {
                             $par_array[] = $params[$name];
@@ -300,7 +300,7 @@ class Smarty_Internal_CompileBase extends Smarty_Internal_Code {
             if (is_int($key)) {
                 $par_array[] = "$key=>$value";
             } elseif ($compiler->template->caching && is_array($cache_attr) && in_array($key, $cache_attr)) {
-                $value = str_replace("'", "^#^", $value);
+                $value = str_replace(array('$', '"'), array('^##^','^#^'), $value);
                 $par_array[] = "'$key'=>^#^.var_export($value,true).^#^";
             } else {
                 $par_array[] = "'$key'=>$value";
