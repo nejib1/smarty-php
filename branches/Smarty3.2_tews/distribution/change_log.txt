@@ -1,10 +1,15 @@
 ﻿===== Smarty 3.2-DEV  =====
+30.11.2012
+- fixed code for template inheritance
+- fixed PHPunit extends resource templates
+
 29.11.2012
 - first update after massive internal changes (not yet full functional)
 - lexer did fail because wrong properties
 - fixed a couple of PHPunit errors
 - some code fixes
 - fixed code for compiling {eval}
+- fixed code on modifier
 
 
 - add {block 'foo' overwrite} option to overwrite {$smarty.block.child} (Forum Topic 22905)
