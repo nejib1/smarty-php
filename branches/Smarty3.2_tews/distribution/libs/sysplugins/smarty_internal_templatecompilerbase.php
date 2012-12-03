@@ -318,7 +318,7 @@ abstract class Smarty_Internal_TemplateCompilerBase extends Smarty_Internal_Code
             $this->buffer = Smarty_Internal_Filter_Handler::runFilter('post', $this->buffer, $this->template);
         }
         if (!$this->suppressTemplatePropertyHeader) {
-            $this->buffer = $template_header . $this->createTemplateCodeFrame($this->template);
+            $this->buffer = $template_header . $this->createSmartyContentClass($this->template);
         }
         return $this->buffer;
     }
@@ -652,7 +652,7 @@ abstract class Smarty_Internal_TemplateCompilerBase extends Smarty_Internal_Code
                     $content = "/* Line {$this->lex->taglineno} */\$_smarty_tpl->trace_call_stack[0][1] = {$lineno};" . $content;
                 }
                 $content = $prefix_code . $content;
-                $this->php("echo \"/*%%SmartyNocache%%*/" . str_replace(array("^#^", "^##^"), array('"','$'), addcslashes($content, "\0\t\"\$\\")) . "/*/%%SmartyNocache%%*/\";\n");
+                $this->php("echo \"/*%%SmartyNocache%%*/" . str_replace(array("^#^", "^##^"), array('"', '$'), addcslashes($content, "\0\t\"\$\\")) . "/*/%%SmartyNocache%%*/\";\n");
                 // make sure we include modifer plugins for nocache code
                 foreach ($this->modifier_plugins as $plugin_name => $dummy) {
                     if (isset($this->required_plugins['compiled'][$plugin_name]['modifier'])) {
@@ -733,6 +733,84 @@ abstract class Smarty_Internal_TemplateCompilerBase extends Smarty_Internal_Code
             }
         }
         throw new SmartyCompilerException($error_text);
+    }
+
+    /**
+     * Create Smarty content class for compiled template files
+     *
+     * @param Smarty_Internal_Template $_template   template object
+     * @param string $content   optional template content
+     * @param bool   $noinstance     flag if code for creating instance shall be suppressed
+     * @return string
+     */
+    public function createSmartyContentClass(Smarty_Internal_Template $_template, $content = null, $noinstance = false) {
+        if ($content == null) {
+            $content = $this->buffer;
+            $this->buffer = '';
+        }
+        $this->indentation = 0;
+        $this->php("if (!class_exists('{$this->content_class}',false)) {")->newline()->indent()->php("class {$this->content_class} extends Smarty_Internal_Content {")->newline()->indent();
+        $this->php("public \$version = '" . Smarty::SMARTY_VERSION . "';")->newline();
+        $this->php("public \$has_nocache_code = " . ($_template->has_nocache_code ? 'true' : 'false') . ";")->newline();
+        if (!empty($_template->cached_subtemplates)) {
+            $this->php("public \$cached_subtemplates = ")->repr($_template->cached_subtemplates)->raw(';')->newline();
+        }
+        if (!$noinstance) {
+            $this->php("public \$file_dependency = ")->repr($this->file_dependency)->raw(';')->newline();
+        }
+        if (!empty($this->required_plugins['compiled'])) {
+            $plugins = array();
+            foreach ($this->required_plugins['compiled'] as $tmp) {
+                foreach ($tmp as $data) {
+                    $plugins[$data['file']] = $data['function'];
+                }
+            }
+            $this->php("public \$required_plugins = ")->repr($plugins)->raw(';')->newline();
+        }
+
+        if (!empty($this->required_plugins['nocache'])) {
+            $plugins = array();
+            foreach ($this->required_plugins['nocache'] as $tmp) {
+                foreach ($tmp as $data) {
+                    $plugins[$data['file']] = $data['function'];
+                }
+            }
+            $this->php("public \$required_plugins_nocache = ")->repr($plugins)->raw(';')->newline();
+        }
+
+        if (!empty($this->template_functions)) {
+            $this->php("public \$template_functions = ")->repr($this->template_functions)->raw(';')->newline();
+        }
+        if (!empty($this->called_nocache_template_functions)) {
+            $this->php("public \$called_nocache_template_functions = ")->repr($this->called_nocache_template_functions)->raw(';')->newline();
+        }
+        if (!empty($this->block_functions)) {
+            $this->php("public \$block_functions = ")->repr($this->block_functions)->raw(';')->newline();
+        }
+        $this->php("function get_template_content (\$_smarty_tpl) {")->newline()->indent();
+        $this->php("ob_start();")->newline();
+        $this->raw($content);
+        $content = '';
+        if (isset($this->extends_resource_name)) {
+            $this->buffer .= $this->extends_resource_name;
+        }
+        $this->php("return ob_get_clean();")->newline();
+        $this->outdent()->php('}')->newline();
+        foreach ($this->template_functions_code as $code) {
+            $this->newline()->raw($code);
+        }
+        foreach ($this->block_functions_code as $code) {
+            $this->newline()->raw($code);
+        }
+        $this->outdent()->php('}')->newline()->outdent()->php('}')->newline();
+        if (!$noinstance) {
+            $this->php("\$_template->compiled->smarty_content = new {$this->content_class}(\$_template);")->newline()->newline();
+            foreach (Smarty_Internal_TemplateCompilerBase::$merged_inline_templates as $key => $inline_template) {
+                $this->newline()->raw($inline_template['code']);
+                unset(Smarty_Internal_TemplateCompilerBase::$merged_inline_templates[$key], $inline_template);
+            }
+        }
+        return $this->buffer;
     }
 
 }

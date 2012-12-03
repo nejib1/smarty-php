@@ -167,7 +167,7 @@ class Smarty_Internal_Compile_Include extends Smarty_Internal_CompileBase {
                         $tpl->compiler->buffer = '';
                         $tpl->compiler->indentation = 0;
                         $tpl->compiler->newline()->php("/* Inline subtemplate compiled from \"{$tpl->source->filepath}\" */")->newline();
-                        Smarty_Internal_TemplateCompilerBase::$merged_inline_templates[$tpl_name]['code'] = $tpl->compiler->createTemplateCodeFrame($tpl, $code, false, true);
+                        Smarty_Internal_TemplateCompilerBase::$merged_inline_templates[$tpl_name]['code'] = $tpl->compiler->createSmartyContentClass($tpl, $code, true);
                         unset($code);
                         $tpl->compiler->buffer = '';
                         // merge file dependency

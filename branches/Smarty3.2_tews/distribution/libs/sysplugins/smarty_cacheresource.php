@@ -281,7 +281,7 @@ class Smarty_Template_Cached {
      * Code Object
      * @var Smarty_Internal_Output
      */
-    public $code = null;
+    public $code_obj = null;
 
     /**
      * required plugins
@@ -400,7 +400,7 @@ class Smarty_Template_Cached {
                 if ($obj->debugging) {
                     Smarty_Internal_Debug::start_cache($_template);
                 }
-                $this->code = new Smarty_Internal_Code(3);
+                $this->code_obj = new Smarty_Internal_Code(3);
                 $_template->has_nocache_code = false;
                 // get text between non-cached items
                 $cache_split = preg_split("!/\*%%SmartyNocache%%\*\/(.+?)/\*/%%SmartyNocache%%\*/!s", $_output);
@@ -410,25 +410,25 @@ class Smarty_Template_Cached {
                 // loop over items, stitch back together
                 foreach ($cache_split as $curr_idx => $curr_split) {
                     if (!empty($curr_split)) {
-                        $this->code->php("echo ")->string($curr_split)->raw(";\n");
+                        $this->code_obj->php("echo ")->string($curr_split)->raw(";\n");
                     }
                     if (isset($cache_parts[0][$curr_idx])) {
                         $_template->has_nocache_code = true;
                         // format and add nocache PHP code
-                        $this->code->formatPHP(preg_replace("!/\*/?%%SmartyNocache%%\*/!", '', $cache_parts[0][$curr_idx]));
+                        $this->code_obj->formatPHP(preg_replace("!/\*/?%%SmartyNocache%%\*/!", '', $cache_parts[0][$curr_idx]));
                     }
                 }
                 if (!$no_output_filter && !$_template->has_nocache_code && (isset($obj->autoload_filters['output']) || isset($obj->registered_filters['output']))) {
-                    $this->code->buffer = Smarty_Internal_Filter_Handler::runFilter('output', $this->code->buffer, $_template);
+                    $this->code_obj->buffer = Smarty_Internal_Filter_Handler::runFilter('output', $this->code_obj->buffer, $_template);
                 }
                 // write cache file content
                 if (!$_template->source->recompiled && ($_template->caching == Smarty::CACHING_LIFETIME_CURRENT || $_template->caching == Smarty::CACHING_LIFETIME_SAVED)) {
-                    $this->code->buffer = $this->code->createTemplateCodeFrame($_template, null, true);
+                    $this->code_obj->buffer = $this->createSmartyContentClass($_template);
                     try {
                         $level = ob_get_level();
-                        eval('?>' . $this->code->buffer);
-                        $this->write($_template, $this->code->buffer);
-                        $this->code = null;
+                        eval('?>' . $this->code_obj->buffer);
+                        $this->write($_template, $this->code_obj->buffer);
+                        $this->code_obj = null;
                         $this->valid = true;
                         $this->processed = true;
                         $output = $this->smarty_content->get_template_content($_template);
@@ -494,6 +494,50 @@ class Smarty_Template_Cached {
             }
         }
         return false;
+    }
+
+    /**
+     * Create Smarty content class for cache files
+     *
+     * @param Smarty_Internal_Template $_template   template object
+     * @return string
+     */
+    public function createSmartyContentClass(Smarty_Internal_Template $_template) {
+        $content = $this->code_obj->buffer;
+        $this->code_obj->buffer = '';
+        $this->code_obj->indentation = 0;
+        // content class name
+        $class = '__Smarty_Content_' . str_replace('.', '_', uniqid('', true));
+        $this->code_obj->raw("<?php")->newline();
+        $this->code_obj->php("if (!class_exists('{$class}',false)) {")->newline()->indent()->php("class {$class} extends Smarty_Internal_Content {")->newline()->indent();
+        $this->code_obj->php("public \$version = '" . Smarty::SMARTY_VERSION . "';")->newline();
+        $this->code_obj->php("public \$has_nocache_code = " . ($_template->has_nocache_code ? 'true' : 'false') . ";")->newline();
+        if (!empty($_template->cached_subtemplates)) {
+            $this->code_obj->php("public \$cached_subtemplates = ")->repr($_template->cached_subtemplates)->raw(";")->newline();
+        }
+        $this->code_obj->php("public \$is_cache = true;")->newline();
+        $this->code_obj->php("public \$cache_lifetime = {$_template->cache_lifetime};")->newline();
+        $this->code_obj->php("public \$file_dependency = ")->repr($_template->cached->file_dependency)->raw(";")->newline();
+        if (!empty($_template->cached->required_plugins)) {
+            $this->code_obj->php("public \$required_plugins = ")->repr($_template->cached->required_plugins)->raw(";")->newline();
+        }
+        if (!empty($_template->cached->template_functions)) {
+            $this->code_obj->php("public \$template_functions = ")->repr($_template->cached->template_functions)->raw(";")->newline();
+        }
+        $_template->cached->template_functions = array();
+        $this->code_obj->php("function get_template_content (\$_smarty_tpl) {")->newline()->indent();
+        $this->code_obj->php("ob_start();")->newline();
+        $this->code_obj->raw($content);
+        $content = '';
+        $this->code_obj->php('return ob_get_clean();')->newline();
+        $this->code_obj->outdent()->php('}')->newline();
+        foreach ($_template->cached->template_functions_code as $code) {
+            $this->code_obj->newline()->raw($code);
+        }
+        $_template->cached->template_functions_code = array();
+        $this->code_obj->outdent()->php('}')->newline()->outdent()->php('}')->newline();
+        $this->code_obj->php("\$_template->cached->smarty_content = new {$class}(\$_template);\n\n");
+        return $this->code_obj->buffer;
     }
 
 }

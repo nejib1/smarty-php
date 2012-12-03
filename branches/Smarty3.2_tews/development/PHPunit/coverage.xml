@@ -1,5 +1,9 @@
-<filter>
-  <whitelist addUncoveredFilesFromWhitelist="true">
-    <directory suffix=".php">c:\wamp\www\smarty3.2.DEV\distribution</directory>
-  </whitelist>
-</filter>
+<phpunit stopOnFailure="false">
+  
+  <filter>
+    <whitelist>
+      <directory suffix=".php">../../distribution/libs</directory>
+    </whitelist>
+  </filter>
+    
+</phpunit>
