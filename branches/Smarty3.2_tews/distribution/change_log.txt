@@ -1,6 +1,7 @@
 ﻿===== Smarty 3.2-DEV  =====
 03.12.2012
 - complete rewrite of config file processing
+- moved shared code for config variable loading out of compiled config files
 
 30.11.2012
 - fixed code for template inheritance

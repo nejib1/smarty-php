@@ -102,48 +102,9 @@ class Smarty_Internal_ConfigCompiler extends Smarty_Internal_Code {
         $this->php("public \$config_data = ")->repr($this->config_data)->raw(";")->newline()->newline();
 
         $this->php("function get_template_content (\$_smarty_tpl) {")->newline()->indent();
-        $this->php("\$ptr = \$_smarty_tpl->parent;")->newline();
-        $this->php("\$this->load_config_values (\$_smarty_tpl, \$ptr->tpl_vars);")->newline();
-        $this->php("\$ptr = \$ptr->parent;")->newline();
-        $this->php("if (\$_smarty_tpl->tpl_vars->___config_scope['value'] == 'parent' && \$ptr != null) {")->newline()->indent();
-        $this->php("\$this->load_config_values (\$_smarty_tpl, \$ptr->tpl_vars);")->newline();
-        $this->outdent()->php('}')->newline();
-        $this->php("if (\$_smarty_tpl->tpl_vars->___config_scope['value'] == 'root' || \$_smarty_tpl->tpl_vars->___config_scope['value'] == 'global') {")->newline()->indent();
-        $this->php("while (\$ptr != null && isset(\$ptr->is_template) && \$ptr->is_template) {")->newline()->indent();
-        $this->php("\$this->load_config_values (\$_smarty_tpl, \$ptr->tpl_vars);")->newline();
-        $this->php("\$ptr = \$ptr->parent;")->newline();
-        $this->outdent()->php('}')->newline();
-        $this->outdent()->php('}')->newline();
-        $this->php("if (\$_smarty_tpl->tpl_vars->___config_scope['value'] == 'root') {")->newline()->indent();
-        $this->php("while (\$ptr != null) {")->newline()->indent();
-        $this->php("\$this->load_config_values (\$_smarty_tpl, \$ptr->tpl_vars);")->newline();
-        $this->php("\$ptr = \$ptr->parent;")->newline();
-        $this->outdent()->php('}')->newline();
-        $this->outdent()->php('}')->newline();
-        $this->php("if (\$_smarty_tpl->tpl_vars->___config_scope['value'] == 'global') {")->newline()->indent();
-        $this->php("\$this->load_config_values (\$_smarty_tpl, Smarty::\$global_tpl_vars);")->newline();
-        $this->outdent()->php('}')->newline();
-        $this->outdent()->php('}')->newline()->newline();
-
-        $this->php("function load_config_values (\$_smarty_tpl, \$tpl_vars) {")->newline()->indent();
-        $this->php("foreach (\$this->config_data['vars'] as \$var => \$value) {")->newline()->indent();
-        $this->php("if (\$_smarty_tpl->config_overwrite || !isset(\$tpl_vars->\$var)) {")->newline()->indent();
-        $this->php("\$tpl_vars->\$var = array('value' => \$value);")->newline();
-        $this->outdent()->php("} else {")->newline()->indent();
-        $this->php("\$tpl_vars->\$var = array('value' => array_merge((array) \$tpl_vars->{\$var}['value'], (array) \$value));")->newline();
-        $this->outdent()->php('}')->newline();
-        $this->outdent()->php('}')->newline();
-        $this->php("if (isset(\$this->config_data['sections'][\$_smarty_tpl->tpl_vars->___config_sections['value']])) {")->newline()->indent();
-        $this->php("foreach (\$this->config_data['sections'][\$_smarty_tpl->tpl_vars->___config_sections['value']]['vars'] as \$var => \$value) {")->newline()->indent();
-        $this->php("if (\$_smarty_tpl->config_overwrite || !isset(\$tpl_vars->\$var)) {")->newline()->indent();
-        $this->php("\$tpl_vars->\$var = array('value' => \$value);")->newline();
-        $this->outdent()->php("} else {")->newline()->indent();
-        $this->php("\$tpl_vars->\$var = array('value' => array_merge((array) \$tpl_vars->{\$var}['value'], (array) \$value));")->newline();
-        $this->outdent()->php('}')->newline();
-        $this->outdent()->php('}')->newline();
-        $this->outdent()->php('}')->newline();
-
+        $this->php("\$this->_load_config_vars(\$_smarty_tpl);")->newline();
         $this->outdent()->php("}")->newline();
+
         $this->outdent()->php("}")->newline()->outdent()->php("}")->newline();
         $this->php("\$this->smarty_content = new $class(\$_template);")->newline()->newline();
 

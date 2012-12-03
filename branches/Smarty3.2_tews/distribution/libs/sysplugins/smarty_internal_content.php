@@ -146,15 +146,15 @@ class Smarty_Internal_Content {
      * Template runtime function to call a template function
      *
      * @param string  $name           name of template function
-     * @param object  $_smarty_tpl    calling template object
+     * @param object  $template    calling template object
      * @param array   $params         array with calling parameter
      * @param string  $assign         optional template variable for result
      */
-    public function _callTemplateFunction($name, $_smarty_tpl, $params, $assign) {
-        if ($this->is_cache && isset($_smarty_tpl->cached->smarty_content->template_functions[$name])) {
-            $content_ptr = $_smarty_tpl->cached->smarty_content;
+    public function _callTemplateFunction($name, $template, $params, $assign) {
+        if ($this->is_cache && isset($template->cached->smarty_content->template_functions[$name])) {
+            $content_ptr = $template->cached->smarty_content;
         } else {
-            $ptr = $tpl = $_smarty_tpl;
+            $ptr = $tpl = $template;
             while ($ptr != null && !isset($ptr->compiled->smarty_content->template_functions[$name])) {
                 $ptr = $ptr->template_function_chain;
                 if ($ptr == null && $tpl->parent->is_template) {
@@ -170,13 +170,13 @@ class Smarty_Internal_Content {
                 ob_start();
             }
             $func_name = "smarty_template_function_{$name}";
-            $content_ptr->$func_name($_smarty_tpl, $params);
+            $content_ptr->$func_name($template, $params);
             if (!empty($assign)) {
-                $_smarty_tpl->assign($assign, ob_get_clean());
+                $template->assign($assign, ob_get_clean());
             }
             return true;
         }
-        throw new SmartyRuntimeException("Call to undefined template function '{$name}'", $_smarty_tpl);
+        throw new SmartyRuntimeException("Call to undefined template function '{$name}'", $template);
     }
 
     /**
@@ -420,4 +420,57 @@ class Smarty_Internal_Content {
         return $result;
     }
 
+    /**
+     * Template code runtime function to load config varibales
+     *
+     * @param object  $template       calling template object
+     */
+    public function _load_config_vars($template) {
+        $ptr = $template->parent;
+        $this->_load_config_values_in_scope($template, $ptr->tpl_vars);
+        $ptr = $ptr->parent;
+        if ($template->tpl_vars->___config_scope['value'] == 'parent' && $ptr != null) {
+            $this->_load_config_values_in_scope($template, $ptr->tpl_vars);
+        }
+        if ($template->tpl_vars->___config_scope['value'] == 'root' || $template->tpl_vars->___config_scope['value'] == 'global') {
+            while ($ptr != null && isset($ptr->is_template) && $ptr->is_template) {
+                $this->_load_config_values_in_scope($template, $ptr->tpl_vars);
+                $ptr = $ptr->parent;
+            }
+        }
+        if ($template->tpl_vars->___config_scope['value'] == 'root') {
+            while ($ptr != null) {
+                $this->_load_config_values_in_scope($template, $ptr->tpl_vars);
+                $ptr = $ptr->parent;
+            }
+        }
+        if ($template->tpl_vars->___config_scope['value'] == 'global') {
+            $this->_load_config_values_in_scope($template, Smarty::$global_tpl_vars);
+        }
+    }
+
+    /**
+     * Template code runtime function to load config varibales into a single scope
+     *
+     * @param object  $template       calling template object
+     * @param object  $tpl_vars       variable container of scope
+     */
+    public function _load_config_values_in_scope($template, $tpl_vars) {
+        foreach ($this->config_data['vars'] as $var => $value) {
+            if ($template->config_overwrite || !isset($tpl_vars->$var)) {
+                $tpl_vars->$var = array('value' => $value);
+            } else {
+                $tpl_vars->$var = array('value' => array_merge((array) $tpl_vars->{$var}['value'], (array) $value));
+            }
+        }
+        if (isset($this->config_data['sections'][$template->tpl_vars->___config_sections['value']])) {
+            foreach ($this->config_data['sections'][$template->tpl_vars->___config_sections['value']]['vars'] as $var => $value) {
+                if ($template->config_overwrite || !isset($tpl_vars->$var)) {
+                    $tpl_vars->$var = array('value' => $value);
+                } else {
+                    $tpl_vars->$var = array('value' => array_merge((array) $tpl_vars->{$var}['value'], (array) $value));
+                }
+            }
+        }
+    }
 }
