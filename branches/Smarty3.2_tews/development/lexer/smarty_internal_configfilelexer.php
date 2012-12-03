@@ -24,22 +24,13 @@ class Smarty_Internal_Configfilelexer
    				);
 
 
-    function __construct($data, $smarty)
+    function __construct($data, $compiler)
     {
-        // set instance object
-        self::instance($this);
         $this->data = $data . "\n"; //now all lines are \n-terminated
         $this->counter = 0;
         $this->line = 1;
-        $this->smarty = $smarty;
+        $this->compiler = $compiler;
         $this->mbstring_overload = ini_get('mbstring.func_overload') & 2;
-    }
-    public static function &instance($new_instance = null)
-    {
-        static $instance = null;
-        if (isset($new_instance) && is_object($new_instance))
-            $instance = $new_instance;
-        return $instance;
     }
 
 
@@ -358,7 +349,7 @@ class Smarty_Internal_Configfilelexer
     function yy_r3_7($yy_subpatterns)
     {
 
-    if (!$this->smarty->config_booleanize || !in_array(strtolower($this->value), Array("true", "false", "on", "off", "yes", "no")) ) {
+    if (!$this->compiler->template->config_booleanize || !in_array(strtolower($this->value), Array("true", "false", "on", "off", "yes", "no")) ) {
         $this->yypopstate();
         $this->yypushstate(self::NAKED_STRING_VALUE);
         return true; //reprocess in new state
@@ -688,4 +679,6 @@ class Smarty_Internal_Configfilelexer
   }
   $this->token = Smarty_Internal_Configfileparser::TPC_TRIPPLE_TEXT;
     }
+
+
 }

@@ -325,8 +325,8 @@ class Smarty_Internal_Code {
         }
         $this->indentation = 0;
         // content class name
-        $class = ($cache) ? '__Smarty_Content_' . str_replace('.', '_', uniqid('', true)) : $_template->compiler->content_class;
-        if ($cache) {
+        $class = ($cache || $_template->is_config) ? '__Smarty_Content_' . str_replace('.', '_', uniqid('', true)) : $_template->compiler->content_class;
+        if ($cache || $_template->is_config) {
             $this->raw("<?php\n");
         }
         $this->php("if (!class_exists('{$class}',false)) {\n")->indent()->php("class {$class} extends Smarty_Internal_Content {\n")->indent();
@@ -350,6 +350,7 @@ class Smarty_Internal_Code {
             if (!$noinstance) {
                 $this->php("public \$file_dependency = ")->repr($_template->compiler->file_dependency)->raw(";\n");
             }
+            if (!$_template->is_config) {
             if (!empty($_template->compiler->required_plugins['compiled'])) {
                 $plugins = array();
                 foreach ($_template->compiler->required_plugins['compiled'] as $tmp) {
@@ -379,22 +380,27 @@ class Smarty_Internal_Code {
             if (!empty($_template->compiler->block_functions)) {
                 $this->php("public \$block_functions = ")->repr($_template->compiler->block_functions)->raw(";\n");
             }
+            }
         }
         $this->php("function get_template_content (\$_smarty_tpl) {\n")->indent();
+        if (!$_template->is_config) {
         $this->php("ob_start();\n");
+        }
         $this->buffer .= $content;
         $content = '';
+        if (!$_template->is_config) {
         if (isset($_template->compiler->extends_resource_name)) {
             $this->buffer .= $_template->compiler->extends_resource_name;
         }
         $this->php("return ob_get_clean();\n");
+        }
         $this->outdent()->php("}\n");
         if ($cache) {
             foreach ($_template->cached->template_functions_code as $code) {
                 $this->buffer .= "\n" . $code;
             }
             $_template->cached->template_functions_code = array();
-        } else {
+        } elseif (!$_template->is_config) {
             foreach ($_template->compiler->template_functions_code as $code) {
                 $this->buffer .= "\n" . $code;
             }
@@ -406,6 +412,8 @@ class Smarty_Internal_Code {
         if (!$noinstance) {
             if ($cache) {
                 $this->php("\$_template->cached->smarty_content = new $class(\$_template);\n\n");
+            } elseif ($_template->is_config) {
+                 $this->php("\$this->smarty_content = new $class(\$_template);\n\n");
             } else {
                 $this->php("\$_template->compiled->smarty_content = new $class(\$_template);\n\n");
                 foreach (Smarty_Internal_TemplateCompilerBase::$merged_inline_templates as $key => $inline_template) {

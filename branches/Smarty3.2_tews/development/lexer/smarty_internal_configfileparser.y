@@ -20,17 +20,8 @@
 
     function __construct($lex, $compiler) {
         // set instance object
-        self::instance($this); 
         $this->lex = $lex;
-        $this->smarty = $compiler->smarty; 
         $this->compiler = $compiler;
-    }
-    public static function &instance($new_instance = null)
-    {
-        static $instance = null;
-        if (isset($new_instance) && is_object($new_instance))
-            $instance = $new_instance;
-        return $instance;
     }
 
     private function parse_bool($str) {
@@ -76,7 +67,7 @@
         $key = $var["key"];
         $value = $var["value"];
 
-        if ($this->smarty->config_overwrite || !isset($target_array['vars'][$key])) {
+        if ($this->compiler->template->config_overwrite || !isset($target_array['vars'][$key])) {
             $target_array['vars'][$key] = $value;
         } else {
             settype($target_array['vars'][$key], 'array');
@@ -152,7 +143,7 @@ section(res) ::= OPENB SECTION(i) CLOSEB newline var_list(vars). {
 }
 
 section(res) ::= OPENB DOT SECTION(i) CLOSEB newline var_list(vars). {
-    if ($this->smarty->config_read_hidden) {
+    if ($this->compiler->template->config_read_hidden) {
         $this->add_section_vars(i, vars);
     }
     res = null;

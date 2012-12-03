@@ -431,10 +431,11 @@ class Smarty_Internal_Data {
      * @param mixed  $sections    array of section names, single section or null
      * @return Smarty_Internal_Data current Smarty_Internal_Data (or Smarty or Smarty_Internal_Template) instance for chaining
      */
-    public function configLoad($config_file, $sections = null) {
-        // load Config class
-        $config = new Smarty_Internal_Config($config_file, $this->smarty, $this);
-        $config->fetch($sections);
+    public function configLoad($config_file, $sections = null, $scope = 'local') {
+        $tpl = $this->smarty->createTemplate($config_file, $this, null, null, true);
+        $tpl->assign('___config_sections', $sections);
+        $tpl->assign('___config_scope', $scope);
+        $tpl->compiled->getRenderedTemplate($tpl, $tpl);
         return $this;
     }
 

@@ -257,7 +257,7 @@ abstract class Smarty_Internal_TemplateCompilerBase extends Smarty_Internal_Code
             $_filepath = $this->template->compiled->filepath;
             if ($_filepath === false)
                 throw new SmartyException('Invalid filepath for compiled template');
-            Smarty_Internal_Write_File::writeFile($_filepath, $code, $this->template->smarty);
+            Smarty_Internal_Write_File::writeFile($_filepath, $code, $this->template);
             $this->template->compiled->exists = true;
             $this->template->compiled->isCompiled = true;
         }
@@ -307,7 +307,9 @@ abstract class Smarty_Internal_TemplateCompilerBase extends Smarty_Internal_Code
         } while ($this->abort_and_recompile);
         $this->template->source->filepath = $saved_filepath;
         // free memory
+        $this->parser->compiler = null;
         $this->parser = null;
+        $this->lex->compiler = null;
         $this->lex = null;
         self::$_tag_objects = array();
         // return compiled code to template object
@@ -318,8 +320,6 @@ abstract class Smarty_Internal_TemplateCompilerBase extends Smarty_Internal_Code
         if (!$this->suppressTemplatePropertyHeader) {
             $this->buffer = $template_header . $this->createTemplateCodeFrame($this->template);
         }
-        // unset content because template inheritance could have replace source with parent code
-        unset($this->template->source->content);
         return $this->buffer;
     }
 

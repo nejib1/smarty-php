@@ -79,8 +79,7 @@ class Smarty_Internal_Compile_Config_Load extends Smarty_Internal_CompileBase {
         // create config object
         $this->iniTagCode($compiler);
 
-        $this->php("\$_config = new Smarty_Internal_Config($conf_file, \$_smarty_tpl->smarty, \$_smarty_tpl);")->newline();
-        $this->php("\$_config->fetch($section, '$scope');")->newline();
+        $this->php("\$_smarty_tpl->configLoad($conf_file, $section, '{$scope}');")->newline();
 
         return $this->returnTagCode($compiler);
     }

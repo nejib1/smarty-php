@@ -97,7 +97,7 @@ abstract class Smarty_Resource {
      * @return string unique resource name
      */
     protected function buildUniqueResourceName(Smarty $smarty, $resource_name) {
-        return get_class($this) . '#' . $smarty->joined_template_dir . '#' . $resource_name;
+        return get_class($this) . '#' . ($smarty->is_config ? $smarty->joined_config_dir : $smarty->joined_template_dir) . '#' . $resource_name;
     }
 
     /**
@@ -121,16 +121,14 @@ abstract class Smarty_Resource {
             $_filepath = $_compile_id . $_compile_dir_sep . $_filepath;
         }
         // subtype
-        if (isset($_object->caching)) {
-            if ($_object->caching) {
+        if ($_object->is_config) {
+                $_subtype = '.config';
+        } elseif ($_object->caching) {
                 $_subtype = '.cache';
-            } else {
-                $_subtype = '';
-            }
         } else {
-            $_subtype = '.config';
+                $_subtype = '';
         }
-        $_compile_dir = $_object->getCompileDir();
+       $_compile_dir = $_object->getCompileDir();
         // set basename if not specified
         $_basename = $this->getBasename($compiled->source);
         if ($_basename === null) {
@@ -197,7 +195,7 @@ abstract class Smarty_Resource {
      */
     protected function buildFilepath(Smarty_Template_Source $source, Smarty_Internal_Template $_template=null) {
         $file = $source->name;
-        if ($source instanceof Smarty_Config_Source) {
+        if ($_template->is_config) {
             $_directories = $_template->getConfigDir();
             $_default_handler = $_template->default_config_handler_func;
         } else {
@@ -308,7 +306,7 @@ abstract class Smarty_Resource {
         // no tpl file found
         if ($_default_handler) {
             if (!is_callable($_default_handler)) {
-                if ($source instanceof Smarty_Config_Source) {
+                if (isset($_template->is_config) && $_template->is_config) {
                     throw new SmartyException("Default config handler not callable");
                 } else {
                     throw new SmartyException("Default template handler not callable");
@@ -520,44 +518,6 @@ abstract class Smarty_Resource {
         return $source;
     }
 
-    /**
-     * initialize Config Source Object for given resource
-     *
-     * @param Smarty_Internal_Config $_config config object
-     * @return Smarty_Config_Source Source Object
-     */
-    public static function config(Smarty_Internal_Config $_config) {
-        static $_incompatible_resources = array('eval' => true, 'string' => true, 'extends' => true, 'php' => true);
-        $config_resource = $_config->config_resource;
-        $smarty = $_config->smarty;
-
-        // parse resource_name
-        self::parseResourceName($config_resource, $smarty->default_config_type, $name, $type);
-
-        // make sure configs are not loaded via anything smarty can't handle
-        if (isset($_incompatible_resources[$type])) {
-            throw new SmartyException("Unable to use resource '{$type}' for config");
-        }
-
-        // load resource handler, identify unique resource name
-        $resource = Smarty_Resource::load($smarty, $type);
-        $unique_resource_name = $resource->buildUniqueResourceName($smarty, $name);
-
-        // check runtime cache
-        $_cache_key = 'config|' . $unique_resource_name;
-        if (isset(self::$sources[$_cache_key])) {
-            return self::$sources[$_cache_key];
-        }
-
-        // create source
-        $source = new Smarty_Config_Source($resource, $smarty, $config_resource, $type, $name, $unique_resource_name);
-        $resource->populate($source, null);
-
-        // runtime cache
-        self::$sources[$_cache_key] = $source;
-        return $source;
-    }
-
 }
 
 /**
@@ -666,10 +626,15 @@ class Smarty_Template_Source {
      */
     public function __construct(Smarty_Resource $handler, Smarty $smarty, $resource, $type, $name, $unique_resource) {
         $this->handler = $handler; // Note: prone to circular references
-
-        $this->compiler_class = $handler->compiler_class;
-        $this->template_lexer_class = $handler->template_lexer_class;
-        $this->template_parser_class = $handler->template_parser_class;
+        if ($smarty->is_config) {
+            $this->template_lexer_class = 'Smarty_Internal_Configfilelexer';
+            $this->template_parser_class = 'Smarty_Internal_Configfileparser';
+            $this->compiler_class = 'Smarty_Internal_Configcompiler';
+        } else {
+            $this->template_lexer_class = $handler->template_lexer_class;
+            $this->template_parser_class = $handler->template_parser_class;
+            $this->compiler_class = $handler->compiler_class;
+        }
         $this->uncompiled = $this->handler instanceof Smarty_Resource_Uncompiled;
         $this->recompiled = $this->handler instanceof Smarty_Resource_Recompiled;
 

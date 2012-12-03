@@ -782,11 +782,18 @@
         */
 
         /**
-        * flag if thgis instance is a template object
+        * flag if this instance is a template object
         * @var boolean
         * @internal
         */
         public $is_template = false;
+
+        /**
+        * flag if this instance is a template object is for config files
+        * @var boolean
+        * @internal
+        */
+        public $is_config = false;
 
         /**
         * individually cached subtemplates
@@ -936,11 +943,13 @@
         }
 
         /**
-        * <<magic>> clone method
+        * <<magic>> method
         */
         public function __clone() {
-            // cloned object is template
-            $this->is_template = true;
+            // check if Snarty object was cloned
+            if (!$this->is_template) {
+                $this->tpl_vars = clone $this->tpl_vars;
+            }
         }
 
         /**
@@ -970,8 +979,8 @@
                             if ($this->allow_ambiguous_resources) {
                                 $_templateId = $this->source->unique_resource . $this->cache_id . $this->compile_id;
                             } else {
-                                $_templateId = $this->joined_template_dir . '#' . $this->template_resource . $this->cache_id . $this->compile_id;
-                            }
+                                $_templateId = ( $this->is_config ? $this->joined_config_dir : $this->joined_template_dir) . '#' . $this->template_resource . ( $this->is_config ? '' : $this->cache_id) .  $this->compile_id;
+                           }
 
                             if (isset($_templateId[150])) {
                                 $_templateId = sha1($_templateId);
@@ -1079,7 +1088,7 @@
                 $parent = $this;
             }
             // create template object if necessary
-            $_template = (is_object($template)) ? $template : $this->createTemplate($template, $cache_id, $compile_id, $parent, false);
+            $_template = (is_object($template)) ? $template : $this->createTemplate($template, $cache_id, $compile_id, $parent);
             // merge all variable from scopes into template
             if ($merge_tpl_vars && $_template->parent != null) {
                 // save local variables
@@ -1252,7 +1261,7 @@
                 if ($parent === null) {
                     $parent = $this;
                 }
-                $template = $this->createTemplate($template, $cache_id, $compile_id, $parent, false);
+                $template = $this->createTemplate($template, $cache_id, $compile_id, $parent);
             }
             // return cache status of template
             return $template->cached->valid;
@@ -2058,10 +2067,10 @@
         * @param mixed $cache_id cache id to be used with this template
         * @param mixed $compile_id compile id to be used with this template
         * @param object $parent next higher level of Smarty variables
-        * @param boolean $do_clone flag is Smarty object shall be cloned
+        * @param boolean $is_config flag that template will be for config files
         * @return object template object
         */
-        public function createTemplate($template, $cache_id = null, $compile_id = null, $parent = null, $do_clone = true) {
+        public function createTemplate($template, $cache_id = null, $compile_id = null, $parent = null, $is_config = false) {
             if (!empty($cache_id) && (is_object($cache_id) || is_array($cache_id))) {
                 $parent = $cache_id;
                 $cache_id = null;
@@ -2079,34 +2088,37 @@
             if ($this->allow_ambiguous_resources) {
                 $_templateId = Smarty_Resource::getUniqueTemplateName($this, $template) . $cache_id . $compile_id;
             } else {
-                $_templateId = $this->joined_template_dir . '#' . $template . $cache_id . $compile_id;
+                $_templateId = ($is_config ? $this->joined_config_dir : $this->joined_template_dir) . '#' . $template . ($is_config ? '' : $cache_id) . $compile_id;
             }
             if (isset($_templateId[150])) {
                 $_templateId = sha1($_templateId);
             }
             if (isset(self::$template_objects[$_templateId])) {
-                // return cached template object
-                if ($do_clone) {
-                    $tpl = clone self::$template_objects[$_templateId];
-                } else {
-                    $tpl = self::$template_objects[$_templateId];
-                }
+                // return clone of cached template object
+                $tpl = clone self::$template_objects[$_templateId];
             } else {
                 // create new template object
                 $tpl = clone $this;
                 unset ($tpl->source, $tpl->compiled, $tpl->cached, $tpl->compiler ,$tpl->mustCompile);
+                $tpl->is_template = true;
                 $tpl->template_resource = $template;
                 $tpl->cache_id = $cache_id;
                 $tpl->compile_id = $compile_id;
                 $tpl->tpl_vars = new Smarty_Variable_Container($tpl);
             }
             $tpl->parent = $parent;
+
+            if ($is_config) {
+                $tpl->is_config = true;
+                $tpl->caching = false;
+            } else {
             // fill data if present
             if (!empty($data) && is_array($data)) {
                 // set up variable values
                 foreach ($data as $varname => $value) {
                     $tpl->tpl_vars->$varname = array('value' => $value);
                 }
+            }
             }
             return $tpl;
         }
@@ -2686,8 +2698,6 @@
     function smartyAutoload($class) {
         $_class = strtolower($class);
         static $_classes = array(
-            'smarty_config_source' => true,
-            'smarty_config_compiled' => true,
             'smarty_security' => true,
             'smarty_cacheresource' => true,
             'smarty_cacheresource_custom' => true,

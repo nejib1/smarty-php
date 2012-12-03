@@ -184,7 +184,7 @@ template_element ::= PHPSTARTTAG(st). {
     } elseif ($this->php_handling == Smarty::PHP_QUOTE) {
         $this->compiler->php("echo '&lt;?php';\n");
     } elseif ($this->php_handling == Smarty::PHP_ALLOW) {
-        if (!($this->smarty instanceof SmartyBC)) {
+        if (!($this->compiler->template instanceof SmartyBC)) {
             $this->compiler->trigger_template_error (self::Err3);
         }
         $this->text_is_php = true;
@@ -213,7 +213,7 @@ template_element ::= ASPSTARTTAG(st). {
         $this->compiler->php("echo '&lt;%';\n");
     } elseif ($this->php_handling == Smarty::PHP_ALLOW) {
         if ($this->asp_tags) {
-            if (!($this->smarty instanceof SmartyBC)) {
+            if (!($this->compiler->template instanceof SmartyBC)) {
                 $this->compiler->trigger_template_error (self::Err3);
             }
             $this->text_is_php = true;

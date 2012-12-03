@@ -84,13 +84,14 @@ class Smarty_Internal_Utility {
                 flush();
                 $_start_time = microtime(true);
                 try {
-                    $_tpl = $smarty->createTemplate($_template_file, null, null, null, false);
-                    if ($_tpl->mustCompile()) {
+                    $_tpl = $smarty->createTemplate($_template_file);
+                    if ($_tpl->mustCompile) {
                         $_tpl->compiler->compileTemplateSource();
-                        unset($_tpl->compiler);
+                        $_tpl->cleanPointer();
                         $_count++;
                         echo ' compiled in  ', microtime(true) - $_start_time, ' seconds';
                         flush();
+                        echo '<br>'.memory_get_usage(true);
                     } else {
                         echo ' is up to date';
                         flush();
@@ -148,11 +149,14 @@ class Smarty_Internal_Utility {
                 flush();
                 $_start_time = microtime(true);
                 try {
-                    $_config = new Smarty_Internal_Config($_config_file, $smarty);
-                    if ($_config->mustCompile()) {
-                        $_config->compileConfigSource();
+                    $_tpl = $smarty->createTemplate($_config_file);
+                    $_tpl->is_config = true;
+                    if ($_tpl->mustCompile) {
+                        $_tpl->compiler->compileTemplateSource();
+                        $_tpl->cleanPointer();
                         $_count++;
                         echo ' compiled in  ', microtime(true) - $_start_time, ' seconds';
+                        echo '<br>'.memory_get_usage(true);
                         flush();
                     } else {
                         echo ' is up to date';
@@ -162,6 +166,9 @@ class Smarty_Internal_Utility {
                     echo 'Error: ', $e->getMessage(), "<br><br>";
                     $_error_count++;
                 }
+                // free memory
+                Smarty::$template_objects = array();
+                $_tpl = null;
                 if ($max_errors !== null && $_error_count == $max_errors) {
                     echo '<br><br>too many errors';
                     exit();
@@ -531,7 +538,6 @@ class Smarty_Internal_Utility {
                 "smarty_cacheresource.php" => true,
                 "smarty_cacheresource_custom.php" => true,
                 "smarty_cacheresource_keyvaluestore.php" => true,
-                "smarty_config_source.php" => true,
                 "smarty_internal_code.php" => true,
                 "smarty_internal_content.php" => true,
                 "smarty_internal_cacheresource_file.php" => true,
@@ -569,14 +575,12 @@ class Smarty_Internal_Utility {
                 "smarty_internal_compile_setfilter.php" => true,
                 "smarty_internal_compile_while.php" => true,
                 "smarty_internal_compilebase.php" => true,
-                "smarty_internal_config.php" => true,
-                "smarty_internal_config_file_compiler.php" => true,
+                "smarty_internal_configcompiler.php" => true,
                 "smarty_internal_configfilelexer.php" => true,
                 "smarty_internal_configfileparser.php" => true,
                 "smarty_internal_data.php" => true,
                 "smarty_internal_debug.php" => true,
                 "smarty_internal_filter_handler.php" => true,
-                "smarty_internal_function_call_handler.php" => true,
                 "smarty_internal_get_include_path.php" => true,
                 "smarty_internal_nocache_insert.php" => true,
                 "smarty_internal_resource_eval.php" => true,

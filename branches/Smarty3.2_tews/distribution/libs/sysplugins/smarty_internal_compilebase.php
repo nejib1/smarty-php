@@ -347,5 +347,4 @@ class Smarty_Internal_CompileBase extends Smarty_Internal_Code {
         }
         return $reflection;
     }
-
 }

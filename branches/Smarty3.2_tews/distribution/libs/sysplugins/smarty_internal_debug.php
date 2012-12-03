@@ -94,6 +94,7 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data {
         // prepare information of assigned variables
         $ptr = self::get_debug_vars($obj);
         $_template = clone $obj;
+        $_template->is_template = true;
         unset($_template->source, $_template->compiled, $_template->cached, $_template->compiler, $_template->mustCompile);
         $_template->tpl_vars = new Smarty_Variable_Container($_template);
         $_template->template_resource = $_template->debug_tpl;
@@ -175,7 +176,7 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data {
                             $tpl_vars[$key] = $var;
                             $tpl_vars[$key]['source'] = 'Global';
                         } else {
-                            
+
                         }
                     }
                 }
