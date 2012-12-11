@@ -1,4 +1,8 @@
 ﻿===== Smarty 3.2-DEV  =====
+12.12.2012
+- couple of code fixes
+- update internal documentation
+
 03.12.2012
 - complete rewrite of config file processing
 - moved shared code for config variable loading out of compiled config files

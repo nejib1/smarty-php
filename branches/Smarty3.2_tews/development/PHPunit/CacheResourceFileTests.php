@@ -414,29 +414,6 @@ class CacheResourceFileTests extends PHPUnit_Framework_TestCase {
         $this->assertTrue(file_exists($tpl4->cached->filepath));
     }
 
-    public function testSharing()
-    {
-        $smarty = new Smarty();
-        $smarty->caching = true;
-        $_smarty = clone $smarty;
-        $smarty->fetch('string:foo');
-        $_smarty->fetch('string:foo');
-
-        $this->assertTrue($smarty->_cacheresource_handlers['file'] === $_smarty->_cacheresource_handlers['file']);
-    }
-
-    public function testExplicit()
-    {
-        $smarty = new Smarty();
-        $smarty->caching = true;
-        $_smarty = clone $smarty;
-        $smarty->fetch('string:foo');
-        $_smarty->registerCacheResource('file', new Smarty_Internal_CacheResource_File());
-        $_smarty->fetch('string:foo');
-
-        $this->assertFalse($smarty->_cacheresource_handlers['file'] === $_smarty->_cacheresource_handlers['file']);
-    }
-
     /**
     * final cleanup
     */

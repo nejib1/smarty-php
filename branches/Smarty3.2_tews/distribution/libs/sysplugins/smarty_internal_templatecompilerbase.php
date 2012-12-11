@@ -232,11 +232,11 @@ abstract class Smarty_Internal_TemplateCompilerBase extends Smarty_Internal_Code
             }
             $this->file_dependency[$this->template->source->uid] = array($this->template->source->filepath, $this->template->source->timestamp, $source->type);
         }
-        if ($this->template->smarty->debugging) {
+        if ($this->template->debugging) {
             Smarty_Internal_Debug::start_compile($this->template);
         }
         // compile locking
-        if ($this->template->smarty->compile_locking && !$this->template->source->recompiled) {
+        if ($this->template->compile_locking && !$this->template->source->recompiled) {
             if ($saved_timestamp = $this->template->compiled->timestamp) {
                 touch($this->template->compiled->filepath);
             }
@@ -246,7 +246,7 @@ abstract class Smarty_Internal_TemplateCompilerBase extends Smarty_Internal_Code
             $code = $this->compileTemplate();
         } catch (Exception $e) {
             // restore old timestamp in case of error
-            if ($this->template->smarty->compile_locking && !$this->template->source->recompiled && $saved_timestamp) {
+            if ($this->template->compile_locking && !$this->template->source->recompiled && $saved_timestamp) {
                 touch($this->template->compiled->filepath, $saved_timestamp);
             }
             throw $e;
@@ -261,7 +261,7 @@ abstract class Smarty_Internal_TemplateCompilerBase extends Smarty_Internal_Code
             $this->template->compiled->exists = true;
             $this->template->compiled->isCompiled = true;
         }
-        if ($this->template->smarty->debugging) {
+        if ($this->template->debugging) {
             Smarty_Internal_Debug::end_compile($this->template);
         }
     }
@@ -463,7 +463,7 @@ abstract class Smarty_Internal_TemplateCompilerBase extends Smarty_Internal_Code
                 }
                 // registered compiler plugin ?
                 if (isset($this->template->registered_plugins[Smarty::PLUGIN_COMPILER][$tag])) {
-                    return $this->callTagCompiler('private_compiler_plugin', $args, $parameter, $tag);
+                    return $this->callTagCompiler('private_compiler_pluginclose', $args, $parameter, $tag);
                 }
                 // registered block tag ?
                 if (isset($this->template->registered_plugins[Smarty::PLUGIN_BLOCK][$base_tag]) || isset($this->default_handler_plugins[Smarty::PLUGIN_BLOCK][$base_tag])) {
@@ -474,7 +474,7 @@ abstract class Smarty_Internal_TemplateCompilerBase extends Smarty_Internal_Code
                     return $this->callTagCompiler('private_block_plugin', $args, $parameter, $tag, $function);
                 }
                 if ($this->template->loadPlugin('smarty_compiler_' . $tag)) {
-                    return $this->callTagCompiler('private_compiler_plugin', $args, $parameter, $tag);
+                    return $this->callTagCompiler('private_compiler_pluginclose', $args, $parameter, $tag);
                 }
                 $this->trigger_template_error("Plugin '{{$tag}...}' not callable", $this->lex->taglineno);
             }

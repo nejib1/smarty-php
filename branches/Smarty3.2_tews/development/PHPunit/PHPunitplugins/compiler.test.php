@@ -23,7 +23,7 @@ class smarty_compiler_testclose extends Smarty_Internal_CompileBase
 
         $this->closeTag($compiler, 'test');
 
-        return '';
+        return "echo 'end';";
     }
 
 }

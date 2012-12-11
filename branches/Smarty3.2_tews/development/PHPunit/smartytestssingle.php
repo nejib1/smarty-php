@@ -5,7 +5,6 @@
  * @package PHPunit
  * @author Uwe Tews
  */
-
 define ('SMARTY_DIR', realpath('../../distribution/libs/'). '/');
 
 require_once SMARTY_DIR . 'SmartyBC.class.php';
@@ -65,7 +64,7 @@ class SmartyTests extends PHPUnit_Framework_TestSuite {
         $smarty->cache_id = null;
         $smarty->compile_id = null;
         $smarty->default_resource_type = 'file';
-        $smarty->_cacheresource_handlers = array();
+        Smarty_CacheResource::$resources = array();
     }
 
     public static function init()
@@ -86,7 +85,7 @@ class SmartyTests extends PHPUnit_Framework_TestSuite {
     public static function suite()
     {
         $testorder = array(
-            'CompileBlockExtendsTests'
+            'ConfigVarTests'
         );
         $smarty_libs_dir = dirname(__FILE__) . '/../../distribution/libs';
         if (method_exists('PHPUnit_Util_Filter', $smarty_libs_dir)) {

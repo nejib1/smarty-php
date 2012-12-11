@@ -116,7 +116,7 @@ class Smarty_Internal_Content {
                 } elseif ($_file_to_check[2] == 'string') {
                     continue;
                 } else {
-                    $source = Smarty_Resource::source(null, $this->smarty, $_file_to_check[0]);
+                    $source = Smarty_Resource::source($template, null, $_file_to_check[0]);
                     $mtime = $source->timestamp;
                 }
                 if (!$mtime || $mtime > $_file_to_check[1]) {
@@ -390,7 +390,7 @@ class Smarty_Internal_Content {
         $tpl->cache_lifetime = $cache_lifetime;
         if ($parent_scope == Smarty::SCOPE_LOCAL) {
             $tpl->tpl_vars = clone $template->tpl_vars;
-            $tpl->tpl_vars->___smarty__data = $tpl;
+            $tpl->tpl_vars->___scope = $tpl;
         } elseif ($parent_scope == Smarty::SCOPE_PARENT) {
             $tpl->tpl_vars = $template->tpl_vars;
         } elseif ($parent_scope == Smarty::SCOPE_GLOBAL) {

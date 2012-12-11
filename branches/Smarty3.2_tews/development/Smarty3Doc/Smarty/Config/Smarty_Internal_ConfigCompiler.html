@@ -3,13 +3,13 @@
   <html xmlns="http://www.w3.org/1999/xhtml">
 		<head>
 			<!-- template designed by Marco Von Ballmoos -->
-			<title>Docs For Class Smarty_Internal_Config_File_Compiler</title>
+			<title>Docs For Class Smarty_Internal_ConfigCompiler</title>
 			<link rel="stylesheet" href="../../media/stylesheet.css" />
 			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
 		</head>
 		<body>
 			<div class="page-body">			
-<h2 class="class-name">Class Smarty_Internal_Config_File_Compiler</h2>
+<h2 class="class-name">Class Smarty_Internal_ConfigCompiler</h2>
 
 <a name="sec-description"></a>
 <div class="info-box">
@@ -24,11 +24,13 @@
         		<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Main config file compiler class</p>
 		<p class="notes">
-			Located in <a class="field" href="_libs---sysplugins---smarty_internal_config_file_compiler.php.html">/libs/sysplugins/smarty_internal_config_file_compiler.php</a> (line <span class="field">20</span>)
+			Located in <a class="field" href="_libs---sysplugins---smarty_internal_configcompiler.php.html">/libs/sysplugins/smarty_internal_configcompiler.php</a> (line <span class="field">20</span>)
 		</p>
 		
 				
-		<pre></pre>
+		<pre><a href="../../Smarty/Compiler/Smarty_Internal_Code.html">Smarty_Internal_Code</a>
+   |
+   --Smarty_Internal_ConfigCompiler</pre>
 	
 			</div>
 </div>
@@ -47,13 +49,13 @@
 								</div>
 		<div class="info-box-body">
 			<div class="var-summary">
-																																																								<div class="var-title">
-					<span class="var-type">Smarty_Internal_Config</span>
-					<a href="#$config" title="details" class="var-name">$config</a>
+																																																<div class="var-title">
+					<span class="var-type">array</span>
+					<a href="#$config_data" title="details" class="var-name">$config_data</a>
 				</div>
 																<div class="var-title">
 					<span class="var-type">array</span>
-					<a href="#$config_data" title="details" class="var-name">$config_data</a>
+					<a href="#$file_dependency" title="details" class="var-name">$file_dependency</a>
 				</div>
 																<div class="var-title">
 					<span class="var-type">object</span>
@@ -62,10 +64,6 @@
 																<div class="var-title">
 					<span class="var-type">object</span>
 					<a href="#$parser" title="details" class="var-name">$parser</a>
-				</div>
-																<div class="var-title">
-					<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>
-					<a href="#$smarty" title="details" class="var-name">$smarty</a>
 				</div>
 											</div>
 		</div>
@@ -85,14 +83,14 @@
 			<div class="method-summary">
 																												
 												<div class="method-definition">
-											<span class="method-result">Smarty_Internal_Config_File_Compiler</span>
+											<span class="method-result">Smarty_Internal_ConfigCompiler</span>
 										<a href="#__construct" title="details" class="method-name">__construct</a>
-											(<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$smarty</span>)
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$lexerclass</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$parserclass</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$template</span>, <span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$smarty</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result">bool</span>
-										<a href="#compileSource" title="details" class="method-name">compileSource</a>
-											(<span class="var-type"></span>&nbsp;<span class="var-name">$config</span>)
+										<a href="#compileTemplateSource" title="details" class="method-name">compileTemplateSource</a>
+										()
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
@@ -116,21 +114,20 @@
 							
 					</div>
 		<div class="info-box-body">
-			<a name="var$config" id="$config"><!-- --></A>
+			<a name="var$config_data" id="$config_data"><!-- --></A>
 <div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
-			<span class="var-type">Smarty_Internal_Config</span>
-			<span class="var-name">$config</span>
-						(line <span class="line-number">48</span>)
+			<span class="var-type">array</span>
+			<span class="var-name">$config_data</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">48</span>)
 		</span>
 	</div>
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Smarty object</p>
+<p class="short-description">Compiled config data sections and variables</p>
 	<ul class="tags">
-				<li><span class="field">var:</span> object</li>
 				<li><span class="field">access:</span> public</li>
 			</ul>
 	
@@ -139,19 +136,19 @@
 		
 
 </div>
-<a name="var$config_data" id="$config_data"><!-- --></A>
+<a name="var$file_dependency" id="$file_dependency"><!-- --></A>
 <div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">array</span>
-			<span class="var-name">$config_data</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">55</span>)
+			<span class="var-name">$file_dependency</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">41</span>)
 		</span>
 	</div>
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Compiled config data sections and variables</p>
+<p class="short-description">file dependencies</p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
@@ -205,30 +202,27 @@
 		
 
 </div>
-<a name="var$smarty" id="$smarty"><!-- --></A>
-<div class="oddrow">
-
-	<div class="var-header">
-		<span class="var-title">
-			<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>
-			<span class="var-name">$smarty</span>
-						(line <span class="line-number">41</span>)
-		</span>
-	</div>
-
-	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Smarty object</p>
-	<ul class="tags">
-				<li><span class="field">var:</span> object</li>
-				<li><span class="field">access:</span> public</li>
-			</ul>
-	
-	
-		
-		
-
-</div>
-						
+							<h4>Inherited Variables</h4>
+				<A NAME='inherited_vars'><!-- --></A>
+									<p>Inherited from <span class="classname"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html">Smarty_Internal_Code</a></span></p>
+					<blockquote>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#var$buffer">Smarty_Internal_Code::$buffer</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#var$indentation">Smarty_Internal_Code::$indentation</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#var$indent_on">Smarty_Internal_Code::$indent_on</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#var$no_indent">Smarty_Internal_Code::$no_indent</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#var$saved_indentation">Smarty_Internal_Code::$saved_indentation</a></span><br>
+							</span>
+											</blockquote> 
+										
 		</div>
 	</div>
 	
@@ -245,10 +239,10 @@
 			<A NAME='method_detail'></A>
 
 <a name="method__construct" id="__construct"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">Constructor __construct</span> (line <span class="line-number">62</span>)
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">55</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -258,30 +252,45 @@
 			</ul>
 	
 	<div class="method-signature">
-		<span class="method-result">Smarty_Internal_Config_File_Compiler</span>
+		<span class="method-result">Smarty_Internal_ConfigCompiler</span>
 		<span class="method-name">
 			__construct
 		</span>
-					(<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$smarty</span>)
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$lexerclass</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$parserclass</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$template</span>, <span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$smarty</span>)
 			</div>
 	
 			<ul class="parameters">
 					<li>
 				<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>
 				<span class="var-name">$smarty</span><span class="var-description">: base instance</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$lexerclass</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$parserclass</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$template</span>			</li>
 				</ul>
 		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#method__construct">Smarty_Internal_Code::__construct()</a></dt>
+						<dd>Constructor</dd>
+					</dl>
 			
 	</div>
-<a name="methodcompileSource" id="compileSource"><!-- --></a>
-<div class="oddrow">
+<a name="methodcompileTemplateSource" id="compileTemplateSource"><!-- --></a>
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">compileSource</span> (line <span class="line-number">74</span>)
+		<span class="method-title">compileTemplateSource</span> (line <span class="line-number">68</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Method to compile a Smarty template.</p>
+<p class="short-description">Method to compile a Smarty config template.</p>
 	<ul class="tags">
 				<li><span class="field">return:</span> true if compiling succeeded, false if it failed</li>
 				<li><span class="field">access:</span> public</li>
@@ -290,24 +299,19 @@
 	<div class="method-signature">
 		<span class="method-result">bool</span>
 		<span class="method-name">
-			compileSource
+			compileTemplateSource
 		</span>
-					(<span class="var-type"></span>&nbsp;<span class="var-name">$config</span>)
+				()
 			</div>
 	
-			<ul class="parameters">
-					<li>
-				<span class="var-type">Smarty_Internal_Config</span>
-				<span class="var-name">$config</span><span class="var-description">: config object</span>			</li>
-				</ul>
 		
 			
 	</div>
 <a name="methodtrigger_config_file_error" id="trigger_config_file_error"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">trigger_config_file_error</span> (line <span class="line-number">111</span>)
+		<span class="method-title">trigger_config_file_error</span> (line <span class="line-number">133</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -333,13 +337,34 @@
 		
 			
 	</div>
-						
+							<h4>Inherited Methods</h4>
+				<a name='inherited_methods'><!-- --></a>	
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html">Smarty_Internal_Code</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#method__construct">Smarty_Internal_Code::__construct()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodaddIndentation">Smarty_Internal_Code::addIndentation()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodformatPHP">Smarty_Internal_Code::formatPHP()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodindent">Smarty_Internal_Code::indent()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodindent_off">Smarty_Internal_Code::indent_off()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodindent_on">Smarty_Internal_Code::indent_on()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodiniTagCode">Smarty_Internal_Code::iniTagCode()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodnewline">Smarty_Internal_Code::newline()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodoutdent">Smarty_Internal_Code::outdent()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodphp">Smarty_Internal_Code::php()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodraw">Smarty_Internal_Code::raw()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodrepr">Smarty_Internal_Code::repr()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodreturnTagCode">Smarty_Internal_Code::returnTagCode()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#methodstring">Smarty_Internal_Code::string()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Compiler/Smarty_Internal_Code.html#method_processPHPoutput">Smarty_Internal_Code::_processPHPoutput()</a></span><br>
+											</blockquote>
+										
 		</div>
 	</div>
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Thu, 01 Nov 2012 19:44:21 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Tue, 11 Dec 2012 21:28:55 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

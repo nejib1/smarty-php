@@ -88,7 +88,95 @@ class Smarty_Internal_Compile_Private_Compiler_Plugin extends Smarty_Internal_Co
         } elseif (class_exists($plugin, false)) {
             $plugin_object = new $plugin;
             if (method_exists($plugin_object, 'compile')) {
-                $raw_code = $plugin_object->compile($args, $this);
+                $raw_code = $plugin_object->compile($args, $compiler);
+            }
+        } else {
+            // todo  error message
+        }
+
+        // check if it is a compiler plugin fpr blocks
+        $closetag = $tag . 'close';
+        if (isset($compiler->template->registered_plugins[Smarty::PLUGIN_COMPILER][$closetag]) || isset($compiler->default_handler_plugins[Smarty::PLUGIN_COMPILER][$closetag])
+            || $compiler->template->loadPlugin('smarty_compiler_' . $closetag)) {
+            $this->openTag($compiler, $tag, $compiler->nocache);
+            // maybe nocache because of nocache variables
+            $compiler->nocache = $compiler->nocache | $compiler->tag_nocache;
+        }
+        // compile code
+        $this->iniTagCode($compiler);
+
+        $raw_code = preg_replace('%(<\?php)[\r\n\t ]*|[\r\n\t ]*(\?>)%', '', $raw_code);
+
+        $this->formatPHP($raw_code);
+
+        return $this->returnTagCode($compiler);
+    }
+}
+
+/**
+ * Smarty Internal Plugin Compile Compiler Plugin Close Class
+ *
+ * @package Smarty
+ * @subpackage Compiler
+ */
+class Smarty_Internal_Compile_Private_Compiler_PluginClose extends Smarty_Internal_CompileBase {
+
+    /**
+     * Attribute definition: Overwrites base class.
+     *
+     * @var array
+     * @see Smarty_Internal_CompileBase
+     */
+    public $required_attributes = array();
+
+    /**
+     * Attribute definition: Overwrites base class.
+     *
+     * @var array
+     * @see Smarty_Internal_CompileBase
+     */
+    public $optional_attributes = array('_any');
+
+    /**
+     * Compiles code for the execution of function plugin
+     *
+     * @param array $args array with attributes from parser
+     * @param object $compiler compiler object
+     * @param array $parameter array with compilation parameter
+     * @param string $tag name of function plugin
+     * @param string $function PHP function name
+     * @return string compiled code
+     */
+    public function compile($args, $compiler, $parameter, $tag, $function) {
+        // This tag does create output
+        $compiler->has_output = true;
+
+        // check and get attributes
+        $_attr = $this->getAttributes($compiler, $args);
+
+        $this->tag_nocache = $compiler->nocache;
+        $compiler->nocache = $this->closeTag($compiler, array(substr($tag, 0, -5)));
+
+        $plugin = 'smarty_compiler_' . $tag;
+        if (isset($compiler->template->registered_plugins[Smarty::PLUGIN_COMPILER][$tag]) || isset($compiler->default_handler_plugins[Smarty::PLUGIN_COMPILER][$tag])) {
+            if (isset($compiler->template->registered_plugins[Smarty::PLUGIN_COMPILER][$tag])) {
+                $function = $compiler->template->registered_plugins[Smarty::PLUGIN_COMPILER][$tag][0];
+            } else {
+                $function = $compiler->default_handler_plugins[Smarty::PLUGIN_COMPILER][$tag][0];
+            }
+            if (!is_array($function)) {
+                $raw_code = $function($new_args, $this);
+            } else if (is_object($function[0])) {
+                $raw_code = $compiler->template->registered_plugins[Smarty::PLUGIN_COMPILER][$tag][0][0]->$function[1]($new_args, $this);
+            } else {
+                $raw_code = call_user_func_array($function, array($new_args, $this));
+            }
+        } elseif (is_callable($plugin)) {
+            $raw_code = $plugin($new_args, $this->smarty);
+        } elseif (class_exists($plugin, false)) {
+            $plugin_object = new $plugin;
+            if (method_exists($plugin_object, 'compile')) {
+                $raw_code = $plugin_object->compile($args, $compiler);
             }
         } else {
             // todo  error message
@@ -103,5 +191,4 @@ class Smarty_Internal_Compile_Private_Compiler_Plugin extends Smarty_Internal_Co
 
         return $this->returnTagCode($compiler);
     }
-
 }

@@ -104,7 +104,7 @@ class Smarty_Internal_CompileBase extends Smarty_Internal_Code {
         }
         // check if all required attributes present
         foreach ($this->required_attributes as $attr) {
-            if (!array_key_exists($attr, $_indexed_attr)) {
+            if (!isset($_indexed_attr[$attr])) {
                 $compiler->trigger_template_error("missing \"" . $attr . "\" attribute", $compiler->lex->taglineno);
             }
         }

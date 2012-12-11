@@ -50,7 +50,7 @@ class Smarty_Internal_Compile_Include_Php extends Smarty_Internal_CompileBase {
      * @return string compiled code
      */
     public function compile($args, $compiler) {
-        if (!($compiler->smarty instanceof SmartyBC)) {
+        if (!($compiler->template instanceof SmartyBC)) {
             throw new SmartyException("{include_php} is deprecated, use SmartyBC class to enable");
         }
         // check and get attributes
@@ -98,7 +98,7 @@ class Smarty_Internal_Compile_Include_Php extends Smarty_Internal_CompileBase {
         $this->iniTagCode($compiler);
 
         if (isset($_assign)) {
-            $this->php("ob_start();")->newline();
+            $this->php('ob_start();')->newline();
             $this->php("include{$_once} ('{$_filepath}');")->newline();
             $this->php("\$_smarty_tpl->assign({$_assign},ob_get_clean());")->newline();
         } else {

@@ -273,7 +273,7 @@ class Smarty_Internal_Data {
                 $_ptr = $this;
             } while ($_ptr !== null) {
                 foreach ($_ptr->tpl_vars AS $varname => $data) {
-                    if (strpos($varname, '___') !== 0 && !array_key_exists($varname, $_result)) {
+                    if (strpos($varname, '___') !== 0 && !isset($_result[$varname])) {
                         $_result[$varname] = $data['value'];
                     }
                 }
@@ -286,7 +286,7 @@ class Smarty_Internal_Data {
             }
             if ($search_parents && isset(Smarty::$global_tpl_vars)) {
                 foreach (Smarty::$global_tpl_vars AS $varname => $data) {
-                    if (strpos($varname, '___') !== 0 && !array_key_exists($varname, $_result)) {
+                    if (strpos($varname, '___') !== 0 && !isset($_result[$varname])) {
                         $_result[$varname] = $data['value'];
                     }
                 }
@@ -390,7 +390,8 @@ class Smarty_Internal_Data {
             $_result = array();
             while ($_ptr !== null) {
                 foreach ($_ptr->tpl_vars AS $varname => $data) {
-                    if (strpos($varname, '___config_var_') === 0 && !array_key_exists($real_varname = substr($varname, 14), $_result)) {
+                    $real_varname = substr($varname, 14);
+                    if (strpos($varname, '___config_var_') === 0 && !isset($_result[$real_varname])) {
                         $_result[$real_varname] = $data['value'];
                     }
                 }
@@ -519,7 +520,7 @@ class Smarty_Variable_Container {
      * @param  Smarty|Smarty_Internal_Template|Smarty_Data $object  object this instance belongs to
      */
     public function __construct($object = null) {
-        $this->___smarty__data = $object;
+        $this->___scope = $object;
     }
 
     /**
@@ -529,7 +530,7 @@ class Smarty_Variable_Container {
      * @returns array  wariable properties
      */
     public function __get($varname) {
-        return $this->$varname = $this->___smarty__data->getVariable($varname, $this->___smarty__data->parent);
+        return $this->$varname = $this->___scope->getVariable($varname, $this->___scope->parent);
     }
 
 }

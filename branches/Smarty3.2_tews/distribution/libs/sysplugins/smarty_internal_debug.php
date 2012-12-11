@@ -140,7 +140,7 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data {
         $config_vars = array();
         $tpl_vars = array();
         foreach ($obj->tpl_vars as $key => $value) {
-            if ($key != '___smarty__data') {
+            if ($key != '___scope') {
                 if (strpos($key, '___config_var_') !== 0) {
                     $tpl_vars[$key] = $value;
                     if ($obj->is_template) {
@@ -170,7 +170,7 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data {
             $config_vars = array_merge($parent->config_vars, $config_vars);
         } else {
             foreach (Smarty::$global_tpl_vars as $key => $var) {
-                if (strpos($key, '___smarty__data') !== 0) {
+                if (strpos($key, '___scope') !== 0) {
                     if (!isset($tpl_vars[$key])) {
                         if (strpos($key, '___smarty_conf_') !== 0) {
                             $tpl_vars[$key] = $var;

@@ -84,9 +84,9 @@ class Smarty_Internal_Resource_Extends extends Smarty_Resource {
 
         foreach ($_components as $_component) {
             if ($_component != $_last) {
-                $source_code .= "{$source->template->smarty->left_delimiter}private_inheritance_template file='$_component->filepath' child--{$source->template->smarty->right_delimiter}\n";
+                $source_code .= "{$source->template->left_delimiter}private_inheritance_template file='$_component->filepath' child--{$source->template->right_delimiter}\n";
             } else {
-                $source_code .= "{$source->template->smarty->left_delimiter}private_inheritance_template file='$_component->filepath'--{$source->template->smarty->right_delimiter}\n";
+                $source_code .= "{$source->template->left_delimiter}private_inheritance_template file='$_component->filepath'--{$source->template->right_delimiter}\n";
             }
         }
         return $source_code;

@@ -1,0 +1,804 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class Smarty_Internal_Content</title>
+			<link rel="stylesheet" href="../../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class Smarty_Internal_Content</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Class with shared content processing methodes</p>
+		<p class="notes">
+			Located in <a class="field" href="_libs---sysplugins---smarty_internal_content.php.html">/libs/sysplugins/smarty_internal_content.php</a> (line <span class="field">19</span>)
+		</p>
+		
+				
+		<pre></pre>
+	
+			</div>
+</div>
+
+
+
+	<a name="sec-var-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variable Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
+							| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<div class="var-summary">
+																																																																																																								<div class="var-title">
+					<span class="var-type">array</span>
+					<a href="#$cached_subtemplates" title="details" class="var-name">$cached_subtemplates</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">int</span>
+					<a href="#$cache_lifetime" title="details" class="var-name">$cache_lifetime</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">array</span>
+					<a href="#$called_nocache_template_functions" title="details" class="var-name">$called_nocache_template_functions</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">array</span>
+					<a href="#$file_dependency" title="details" class="var-name">$file_dependency</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">boolean</span>
+					<a href="#$has_nocache_code" title="details" class="var-name">$has_nocache_code</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">boolean</span>
+					<a href="#$is_cache" title="details" class="var-name">$is_cache</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">boolean</span>
+					<a href="#$is_valid" title="details" class="var-name">$is_valid</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">array</span>
+					<a href="#$required_plugins" title="details" class="var-name">$required_plugins</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">array</span>
+					<a href="#$required_plugins_nocache" title="details" class="var-name">$required_plugins_nocache</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">array</span>
+					<a href="#$template_functions" title="details" class="var-name">$template_functions</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$version" title="details" class="var-name">$version</a>
+				</div>
+											</div>
+		</div>
+	</div>
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																																				
+												<div class="method-definition">
+											<span class="method-result">Smarty_Internal_Content</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+											(<span class="var-type"><a href="../../Smarty/Template/Smarty_Internal_Template.html">Smarty_Internal_Template</a></span>&nbsp;<span class="var-name">$template</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#_callTemplateFunction" title="details" class="method-name">_callTemplateFunction</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span>, <span class="var-type">object</span>&nbsp;<span class="var-name">$template</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">$params</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$assign</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">int</span>
+										<a href="#_count" title="details" class="method-name">_count</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$value</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#_createInheritanceTemplate" title="details" class="method-name">_createInheritanceTemplate</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$resource</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$cache_id</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$compile_id</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$caching</span>, <span class="var-type">object</span>&nbsp;<span class="var-name">$parent</span>, [<span class="var-type">bool</span>&nbsp;<span class="var-name">$is_child</span> = <span class="var-default">false</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#_createLocalArrayVariable" title="details" class="method-name">_createLocalArrayVariable</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$tpl_var</span>, <span class="var-type">object</span>&nbsp;<span class="var-name">$template</span>, [<span class="var-type">bool</span>&nbsp;<span class="var-name">$nocache</span> = <span class="var-default">false</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#_fetch_block_child_template" title="details" class="method-name">_fetch_block_child_template</a>
+											(<span class="var-type">object</span>&nbsp;<span class="var-name">$template</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$name</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#_fetch_block_parent_template" title="details" class="method-name">_fetch_block_parent_template</a>
+											(<span class="var-type">object</span>&nbsp;<span class="var-name">$template</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$name</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#_getSubTemplate" title="details" class="method-name">_getSubTemplate</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$resource</span>, <span class="var-type">object</span>&nbsp;<span class="var-name">$template</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$cache_id</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$compile_id</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$caching</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$cache_lifetime</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$data</span>, <span class="var-type">int</span>&nbsp;<span class="var-name">$parent_scope</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$content_class</span> = <span class="var-default">null</span>], <span class="var-type">array</span>&nbsp;<span class="var-name">$vars</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#_load_config_values_in_scope" title="details" class="method-name">_load_config_values_in_scope</a>
+											(<span class="var-type">object</span>&nbsp;<span class="var-name">$template</span>, <span class="var-type">object</span>&nbsp;<span class="var-name">$tpl_vars</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#_load_config_vars" title="details" class="method-name">_load_config_vars</a>
+											(<span class="var-type">object</span>&nbsp;<span class="var-name">$template</span>)
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="var$cached_subtemplates" id="$cached_subtemplates"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">array</span>
+			<span class="var-name">$cached_subtemplates</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">54</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">names of cached subtemplates</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$cache_lifetime" id="$cache_lifetime"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">int</span>
+			<span class="var-name">$cache_lifetime</span>
+			 = <span class="var-default"> false</span>			(line <span class="line-number">47</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">saved cache lifetime</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$called_nocache_template_functions" id="$called_nocache_template_functions"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">array</span>
+			<span class="var-name">$called_nocache_template_functions</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">81</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">template functions called nocache</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$file_dependency" id="$file_dependency"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">array</span>
+			<span class="var-name">$file_dependency</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">88</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">file dependencies</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$has_nocache_code" id="$has_nocache_code"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">boolean</span>
+			<span class="var-name">$has_nocache_code</span>
+			 = <span class="var-default"> false</span>			(line <span class="line-number">40</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">flag if content does contain nocache code</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$is_cache" id="$is_cache"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">boolean</span>
+			<span class="var-name">$is_cache</span>
+			 = <span class="var-default"> false</span>			(line <span class="line-number">33</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">flag if class is from cache file</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$is_valid" id="$is_valid"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">boolean</span>
+			<span class="var-name">$is_valid</span>
+			 = <span class="var-default"> false</span>			(line <span class="line-number">26</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">flag if class is valid</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$required_plugins" id="$required_plugins"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">array</span>
+			<span class="var-name">$required_plugins</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">61</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">required plugins</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$required_plugins_nocache" id="$required_plugins_nocache"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">array</span>
+			<span class="var-name">$required_plugins_nocache</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">68</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">required plugins of nocache code</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$template_functions" id="$template_functions"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">array</span>
+			<span class="var-name">$template_functions</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">75</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">template function properties</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$version" id="$version"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$version</span>
+			 = <span class="var-default"> ''</span>			(line <span class="line-number">95</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Smarty version class was compiled with</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+						
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">101</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">constructor</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Smarty_Internal_Content</span>
+		<span class="method-name">
+			__construct
+		</span>
+					(<span class="var-type"><a href="../../Smarty/Template/Smarty_Internal_Template.html">Smarty_Internal_Template</a></span>&nbsp;<span class="var-name">$template</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../../Smarty/Template/Smarty_Internal_Template.html">Smarty_Internal_Template</a></span>
+				<span class="var-name">$template</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_callTemplateFunction" id="_callTemplateFunction"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_callTemplateFunction</span> (line <span class="line-number">153</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Template runtime function to call a template function</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			_callTemplateFunction
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span>, <span class="var-type">object</span>&nbsp;<span class="var-name">$template</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">$params</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$assign</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$name</span><span class="var-description">: name of template function</span>			</li>
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$template</span><span class="var-description">: calling template object</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$params</span><span class="var-description">: array with calling parameter</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$assign</span><span class="var-description">: optional template variable for result</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_count" id="_count"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_count</span> (line <span class="line-number">299</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">[util function] counts an array, arrayaccess/traversable or PDOStatement object</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> the count for arrays and objects that implement countable, 1 for other objects that don't, and 0 for empty elements</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">int</span>
+		<span class="method-name">
+			_count
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$value</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$value</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_createInheritanceTemplate" id="_createInheritanceTemplate"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_createInheritanceTemplate</span> (line <span class="line-number">193</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Template runtime function to setup inheritance template chain</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> template content</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			_createInheritanceTemplate
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$resource</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$cache_id</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$compile_id</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$caching</span>, <span class="var-type">object</span>&nbsp;<span class="var-name">$parent</span>, [<span class="var-type">bool</span>&nbsp;<span class="var-name">$is_child</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$resource</span><span class="var-description">: the resource handle of the template file</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$cache_id</span><span class="var-description">: cache id to be used with this template</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$compile_id</span><span class="var-description">: compile id to be used with this template</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$caching</span><span class="var-description">: cache mode</span>			</li>
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$parent</span><span class="var-description">: parent template object</span>			</li>
+					<li>
+				<span class="var-type">bool</span>
+				<span class="var-name">$is_child</span><span class="var-description">: is inheritance child template</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_createLocalArrayVariable" id="_createLocalArrayVariable"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_createLocalArrayVariable</span> (line <span class="line-number">329</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Template code runtime function to create a local Smarty variable for array assignments</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			_createLocalArrayVariable
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$tpl_var</span>, <span class="var-type">object</span>&nbsp;<span class="var-name">$template</span>, [<span class="var-type">bool</span>&nbsp;<span class="var-name">$nocache</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$tpl_var</span><span class="var-description">: tempate variable name</span>			</li>
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$template</span><span class="var-description">: tempate object</span>			</li>
+					<li>
+				<span class="var-type">bool</span>
+				<span class="var-name">$nocache</span><span class="var-description">: cache mode of variable</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_fetch_block_child_template" id="_fetch_block_child_template"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_fetch_block_child_template</span> (line <span class="line-number">236</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Fetch output of extended child {block} or {$smarty.block.child}</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			_fetch_block_child_template
+		</span>
+					(<span class="var-type">object</span>&nbsp;<span class="var-name">$template</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$name</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$template</span><span class="var-description">: tempate object</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$name</span><span class="var-description">: name of block</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_fetch_block_parent_template" id="_fetch_block_parent_template"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_fetch_block_parent_template</span> (line <span class="line-number">279</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Fetch output of {$smarty.block.parent}</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			_fetch_block_parent_template
+		</span>
+					(<span class="var-type">object</span>&nbsp;<span class="var-name">$template</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$name</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$template</span><span class="var-description">: tempate object</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$name</span><span class="var-description">: name of block</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_getSubTemplate" id="_getSubTemplate"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_getSubTemplate</span> (line <span class="line-number">356</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Template code runtime function to get subtemplate content</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> template content</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			_getSubTemplate
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$resource</span>, <span class="var-type">object</span>&nbsp;<span class="var-name">$template</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$cache_id</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$compile_id</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$caching</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$cache_lifetime</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$data</span>, <span class="var-type">int</span>&nbsp;<span class="var-name">$parent_scope</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$content_class</span> = <span class="var-default">null</span>], <span class="var-type">array</span>&nbsp;<span class="var-name">$vars</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$resource</span><span class="var-description">: the resource handle of the template file</span>			</li>
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$template</span><span class="var-description">: calling template object</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$cache_id</span><span class="var-description">: cache id to be used with this template</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$compile_id</span><span class="var-description">: compile id to be used with this template</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$caching</span><span class="var-description">: cache mode</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$cache_lifetime</span><span class="var-description">: life time of cache data</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$vars</span><span class="var-description">: optional  variables to assign</span>			</li>
+					<li>
+				<span class="var-type">int</span>
+				<span class="var-name">$parent_scope</span><span class="var-description">: scope in which {include} should execute</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$content_class</span><span class="var-description">: optional name of inline content class</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$data</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_load_config_values_in_scope" id="_load_config_values_in_scope"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_load_config_values_in_scope</span> (line <span class="line-number">458</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Template code runtime function to load config varibales into a single scope</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			_load_config_values_in_scope
+		</span>
+					(<span class="var-type">object</span>&nbsp;<span class="var-name">$template</span>, <span class="var-type">object</span>&nbsp;<span class="var-name">$tpl_vars</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$template</span><span class="var-description">: calling template object</span>			</li>
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$tpl_vars</span><span class="var-description">: variable container of scope</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_load_config_vars" id="_load_config_vars"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_load_config_vars</span> (line <span class="line-number">428</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Template code runtime function to load config varibales</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			_load_config_vars
+		</span>
+					(<span class="var-type">object</span>&nbsp;<span class="var-name">$template</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$template</span><span class="var-description">: calling template object</span>			</li>
+				</ul>
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Tue, 11 Dec 2012 21:28:56 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+	</p>
+	</div></body>
+</html>

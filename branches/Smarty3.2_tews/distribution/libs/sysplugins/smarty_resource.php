@@ -615,6 +615,12 @@ class Smarty_Template_Source {
     public $handler = null;
 
     /**
+     * Smarty object
+     * @var Smarty
+     */
+    public $smarty = null;
+
+    /**
      * create Source Object container
      *
      * @param Smarty_Resource $handler          Resource Handler this source object communicates with
@@ -626,6 +632,7 @@ class Smarty_Template_Source {
      */
     public function __construct(Smarty_Resource $handler, Smarty $smarty, $resource, $type, $name, $unique_resource) {
         $this->handler = $handler; // Note: prone to circular references
+        $this->smarty = $smarty;
         if ($smarty->is_config) {
             $this->template_lexer_class = 'Smarty_Internal_Configfilelexer';
             $this->template_parser_class = 'Smarty_Internal_Configfileparser';

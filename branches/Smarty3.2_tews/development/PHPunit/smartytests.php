@@ -65,7 +65,7 @@ class SmartyTests extends PHPUnit_Framework_TestSuite {
         $smarty->cache_id = null;
         $smarty->compile_id = null;
         $smarty->default_resource_type = 'file';
-        $smarty->_cacheresource_handlers = array();
+        Smarty_CacheResource::$resources = array();
     }
 
     public static function init()
