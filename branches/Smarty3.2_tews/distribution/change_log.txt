@@ -2,6 +2,8 @@
 12.12.2012
 - couple of code fixes
 - update internal documentation
+- fixed code for php resource
+- fixed PHPunit teste
 
 03.12.2012
 - complete rewrite of config file processing

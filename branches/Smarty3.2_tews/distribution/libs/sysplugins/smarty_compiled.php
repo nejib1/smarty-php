@@ -153,8 +153,8 @@ class Smarty_Compiled {
                 throw new SmartyException("Resource '$this->source->type' must have 'renderUncompiled' method");
             }
         }
-        if (!$this->source->recompiled && empty($_template->compiled->file_dependency[$this->source->uid])) {
-            $_template->compiled->file_dependency[$this->source->uid] = array($this->source->filepath, $this->source->timestamp, $this->source->type);
+        if (!$this->source->recompiled && !$this->source->uncompiled && empty($_template->compiled->file_dependency[$this->source->uid])) {
+            
         }
         if ($_template->caching) {
             $_tpl = $_template;
@@ -164,11 +164,15 @@ class Smarty_Compiled {
                 }
                 $_tpl = $_tpl->parent;
             }
-            $_tpl->cached->required_plugins = array_merge($_tpl->cached->required_plugins, $this->smarty_content->required_plugins_nocache);
-            $_tpl->cached->file_dependency = array_merge($_tpl->cached->file_dependency, $this->smarty_content->file_dependency);
-            if (!empty($this->smarty_content->called_nocache_template_functions)) {
-                foreach ($this->smarty_content->called_nocache_template_functions as $name => $dummy) {
-                    $this->merge_called_nocache_template_functions($_tpl->cached, $_template, $name);
+            if ($this->source->uncompiled) {
+                $_tpl->cached->file_dependency[$this->source->uid] = array($this->source->filepath, $this->source->timestamp, $this->source->type);
+            } else {
+                $_tpl->cached->required_plugins = array_merge($_tpl->cached->required_plugins, $this->smarty_content->required_plugins_nocache);
+                $_tpl->cached->file_dependency = array_merge($_tpl->cached->file_dependency, $this->smarty_content->file_dependency);
+                if (!empty($this->smarty_content->called_nocache_template_functions)) {
+                    foreach ($this->smarty_content->called_nocache_template_functions as $name => $dummy) {
+                        $this->merge_called_nocache_template_functions($_tpl->cached, $_template, $name);
+                    }
                 }
             }
         }

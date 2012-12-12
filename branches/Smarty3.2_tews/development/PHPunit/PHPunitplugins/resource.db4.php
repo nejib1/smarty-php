@@ -16,10 +16,10 @@ class Smarty_Resource_Db4 extends Smarty_Resource {
     	$source->timestamp = 0;
     	$source->exists = true;
     }
-    
+
     public function getContent(Smarty_Template_Source $source)
     {
-        if ($source instanceof Smarty_Config_Source) {
+        if ($source->smarty->is_config) {
             return "foo = 'bar'\n";
         }
         return '{$x="hello world"}{$x}';
