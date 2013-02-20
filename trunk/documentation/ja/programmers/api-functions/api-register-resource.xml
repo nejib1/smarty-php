@@ -15,11 +15,11 @@
    <methodparam><type>array</type><parameter>resource_callbacks</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <link linkend="template.resources">リソースプラグイン</link>
+   <link linkend="resources">リソースプラグイン</link>
    を動的に登録します。パラメータとして、
    リソース名および実行する PHP ユーザ定義関数の名前を格納した配列を渡します。
    テンプレートを取得するための関数の定義の仕方は、
-   <link linkend="template.resources">テンプレートリソース</link>
+   <link linkend="resources">テンプレートリソース</link>
    の項を参照してください。
      <note>
    <title>テクニカルノート</title>
@@ -94,7 +94,7 @@ $smarty->registerResource('db', array(
 <para>
   <link linkend="api.unregister.resource"><varname>unregisterResource()</varname></link>
   および
-  <link linkend="template.resources">テンプレートリソース</link>
+  <link linkend="resources">テンプレートリソース</link>
   も参照してください。
 </para>
 

@@ -21,7 +21,7 @@
    </para></listitem>
    
   <listitem><para>
-  <link linkend="template.resources">テンプレートリソース</link> 構文を使うと、
+  <link linkend="resources">テンプレートリソース</link> 構文を使うと、
   <link linkend="variable.template.dir"><parameter>$template_dir</parameter></link>
   ディレクトリの外部にあるファイルを継承することができます。
   </para></listitem>

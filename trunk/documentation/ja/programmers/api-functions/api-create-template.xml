@@ -41,7 +41,7 @@
      <listitem>
       <para>
        <parameter>template</parameter> は、有効な
-       <link linkend="template.resources">テンプレートリソース</link> 型およびパスでなければなりません。
+       <link linkend="resources">テンプレートリソース</link> 型およびパスでなければなりません。
       </para>
      </listitem>
      &parameter.cacheid;

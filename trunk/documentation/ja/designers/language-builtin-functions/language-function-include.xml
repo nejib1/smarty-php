@@ -48,7 +48,7 @@
   <listitem><para>
   <link linkend="variable.template.dir"><parameter>$template_dir</parameter></link>
   ディレクトリ外にあるファイルを <varname>{include}</varname> するには、
-  <link linkend="template.resources">テンプレートリソース</link> を指定します。
+  <link linkend="resources">テンプレートリソース</link> を指定します。
   </para></listitem>
  </itemizedlist>
 
@@ -307,7 +307,7 @@
   <link linkend="language.function.include.php"><varname>{include_php}</varname></link>、
   <link linkend="language.function.insert"><varname>{insert}</varname></link>、
   <link linkend="language.function.php"><varname>{php}</varname></link>、
-  <link linkend="template.resources">テンプレートリソース</link> および
+  <link linkend="resources">テンプレートリソース</link> および
   <link linkend="tips.componentized.templates">コンポーネント化したテンプレート</link>
   も参照してください。
  </para>

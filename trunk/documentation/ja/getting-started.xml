@@ -145,13 +145,13 @@
    </listitem>
    <listitem>
     <para>
-     任意の <link linkend="template.resources">テンプレート</link> ソース
+     任意の <link linkend="resources">テンプレート</link> ソース
     </para>
    </listitem>
    <listitem>
     <para>
-     カスタム <link
-     linkend="section.template.cache.handler.func">キャッシュハンドラ</link>
+     カスタム <!--<link
+     linkend="section.template.cache.handler.func">-->キャッシュハンドラ<!--</link>-->
      関数
     </para>
    </listitem>

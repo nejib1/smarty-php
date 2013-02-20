@@ -20,7 +20,7 @@
    これは、テンプレートを
    <link linkend="api.display">表示する</link>
    のではなくその出力を返します。第１パラメータには、有効な
-   <link linkend="template.resources">テンプレートリソース</link>
+   <link linkend="resources">テンプレートリソース</link>
    の種類を含んだパスを指定する事ができます。任意の第２パラメータには
    <parameter>キャッシュID</parameter> を渡す事ができます。
    詳細は、<link linkend="caching">キャッシュの項目</link> を参照してください。
