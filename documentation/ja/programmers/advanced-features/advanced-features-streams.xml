@@ -45,7 +45,7 @@ $smarty->display('foo:bar.tpl');
   </programlisting>
 </example>
  <para>
-  <link linkend="template.resources"><varname>テンプレートリソース</varname></link>
+  <link linkend="resources"><varname>テンプレートリソース</varname></link>
   も参照ください。
  </para> 
 </sect1>

@@ -2,7 +2,7 @@
 <!-- $Revision$ -->
 <!-- EN-Revision: 3827 Maintainer: takagi Status: ready -->
 <!-- CREDITS: mat-sh,daichi,joe -->
-<chapter id="resources">
+<chapter id="inforesources">
  <title>リソース</title>
  <para>Smarty のホームページは
  <ulink url="&url.smarty;">&url.smarty;</ulink>

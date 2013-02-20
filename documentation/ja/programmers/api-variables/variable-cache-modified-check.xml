@@ -16,7 +16,9 @@
   <para>
   <link linkend="variable.caching"><parameter>$caching</parameter></link>、
    <link linkend="variable.cache.lifetime"><parameter>$cache_lifetime</parameter></link>、
+<!-- TODO: deleted section
   <link linkend="variable.cache.handler.func"><parameter>$cache_handler_func</parameter></link>
+-->
   および
   <link linkend="caching">キャッシュの節</link> も参照ください。
   </para>

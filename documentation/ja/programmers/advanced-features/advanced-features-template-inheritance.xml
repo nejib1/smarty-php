@@ -144,7 +144,7 @@ $smarty->display('extends:layout.tpl|myproject.tpl|mypage.tpl');
   <link linkend="language.function.block"><varname>{block}</varname></link>、
    <link linkend="language.function.extends"><varname>{extends}</varname></link>
    および
-   <link linkend="extends.resource"><literal>extends:</literal> リソース</link>
+   <link linkend="resources.extends"><literal>extends:</literal> リソース</link>
    も参照ください。
  </para> 
 </sect1>

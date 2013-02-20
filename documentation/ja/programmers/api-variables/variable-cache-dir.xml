@@ -15,8 +15,9 @@
      </para>
      <para>
        この設定を使わずに、キャッシュファイルを操作するための
-       <link linkend="section.template.cache.handler.func">
-       自作のキャッシュハンドラ</link>
+       <!--  TODO deleted file -->
+       <!-- link linkend="section.template.cache.handler.func"  -->
+       自作のキャッシュハンドラ <!-- </link> -->
        関数を使う事もできます。詳細は
        <link linkend="variable.use.sub.dirs"><parameter>$use_sub_dirs</parameter></link>
        も参照してください。
@@ -39,7 +40,9 @@
   <link linkend="variable.caching"><parameter>$caching</parameter></link>、
   <link linkend="variable.use.sub.dirs"><parameter>$use_sub_dirs</parameter></link>、
   <link linkend="variable.cache.lifetime"><parameter>$cache_lifetime</parameter></link>、
+  <!-- TODO: deleted section 
   <link linkend="variable.cache.handler.func"><parameter>$cache_handler_func</parameter></link>、
+  -->
   <link linkend="variable.cache.modified.check"><parameter>$cache_modified_check</parameter></link>
   および
   <link linkend="caching">キャッシュの節</link>

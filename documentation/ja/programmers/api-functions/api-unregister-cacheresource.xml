@@ -1,28 +1,26 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- $Revision$ -->
-<!-- EN-Revision: 3827 Maintainer: takagi Status: ready -->
-<!-- CREDITS: mat-sh,daichi,joe -->
-<refentry id="api.unregister.resource">
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Revision: 3827 $ -->
+<refentry id="api.unregister.cacheresource">
  <refnamediv>
-  <refname>unregisterResource()</refname>
-  <refpurpose>動的に登録されたリソースプラグインを未登録にします。</refpurpose>
+  <refname>unregisterCacheResource()</refname>
+  <refpurpose>dynamically unregister a CacheResource plugin</refpurpose>
  </refnamediv>
  <refsect1>
-  <title>説明</title>
+  <title>Description</title>
   <methodsynopsis>
-   <type>void</type><methodname>unregisterResource</methodname>
+   <type>void</type><methodname>unregisterCacheResource</methodname>
    <methodparam><type>string</type><parameter>name</parameter></methodparam>
   </methodsynopsis>
   <para>
-   パラメータにはリソース名を渡します。
+   Pass in the <parameter>name</parameter> of the CacheResource.
   </para>
   <example>
-   <title>unregisterResource()</title>
+   <title>unregisterCacheResource()</title>
 <programlisting role="php">
 <![CDATA[
 <?php
 
-$smarty->unregisterResource('db');
+$smarty->unregisterCacheResource('mysql');
 
 ?>
 ]]>
@@ -30,11 +28,11 @@ $smarty->unregisterResource('db');
   </example>
 
  <para>
- <link linkend="api.register.resource">
- <varname>registerResource()</varname></link>
- および
- <link linkend="resources">テンプレートリソース</link>
- も参照してください。
+  See also
+  <link linkend="api.register.cacheresource">
+  <varname>registerCacheResource()</varname></link>
+  and the
+  <link linkend="caching.custom">Custom CacheResource Implementation</link> section.
 </para>
 
  </refsect1>

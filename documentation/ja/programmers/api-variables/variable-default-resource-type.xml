@@ -10,7 +10,7 @@
        これは <literal>$smarty->display('index.tpl')</literal> と
        <literal>$smarty->display('file:index.tpl')</literal>
        とが意味的に同じになる、ということです。
-       詳細は、<link linkend="template.resources">リソース</link>
+       詳細は、<link linkend="resources">リソース</link>
        の項を参照してください。
       </para>
 </sect1>
