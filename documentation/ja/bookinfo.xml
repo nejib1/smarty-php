@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- $Revision$ -->
-<!-- EN-Revision: 3827 Maintainer: takagi Status: ready -->
+<!-- EN-Revision: 4289 Maintainer: takagi Status: ready -->
 <!-- CREDITS: mat-sh,daichi,joe -->
  <bookinfo id="bookinfo">
   <title>Smarty - コンパイリング PHP テンプレートエンジン</title>
@@ -30,7 +30,7 @@
   </authorgroup>
   <pubdate>&build-date;</pubdate>
   <copyright>
-   <year>2001-2010</year>
+   <year>2001-2011</year>
    <holder>New Digital Group, Inc.</holder>
   </copyright>
  </bookinfo>
