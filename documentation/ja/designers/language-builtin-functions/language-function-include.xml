@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- $Revision$ -->
-<!-- EN-Revision: 3827 Maintainer: takagi Status: ready -->
+<!-- EN-Revision: 4665 Maintainer: takagi Status: ready -->
 <!-- CREDITS: mat-sh,daichi,joe -->
 <sect1 id="language.function.include">
  <title>{include}</title>
@@ -238,7 +238,7 @@
   <para>この例では、インクルードされたテンプレートのキャッシュ有効期限を独自に 500 秒に設定します。</para>
   <programlisting>
 <![CDATA[
-{include 'sub_template.tpl' cache_lifteime=500}
+{include 'sub_template.tpl' cache_lifetime=500}
 ...
 ]]>
   </programlisting>

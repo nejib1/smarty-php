@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- $Revision$ -->
-<!-- EN-Revision: 3827 Maintainer: takagi Status: ready -->
+<!-- EN-Revision: 4278 Maintainer: takagi Status: ready -->
 <!-- CREDITS: mat-sh,daichi,joe -->
 <sect1 id="language.function.include.php">
  <title>{include_php}</title>
@@ -9,6 +9,7 @@
    <para>
     <varname>{include_php}</varname> は Smarty では非推奨になりました。
     プラグインを登録して使い、プレゼンテーションとアプリケーションのコードを適切に分離するようにしましょう。
+    Smarty 3.1 以降、<varname>{include_php}</varname> タグは <link linkend="bc">SmartyBC</link> からしか使えなくなりました。
    </para>
  </note>
 
