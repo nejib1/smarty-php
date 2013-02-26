@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- $Revision$ -->
-<!-- EN-Revision: 4631 Maintainer: takagi Status: working -->
+<!-- EN-Revision: 4631 Maintainer: takagi Status: ready -->
 <!-- CREDITS: mat-sh,daichi,joe -->
 <sect1 id="language.function.html.select.date">
  <title>{html_select_date}</title>
@@ -40,19 +40,19 @@
     <row>
      <entry>time</entry>
      <entry>
-      <ulink url="&url.php-manual;function.time">timestamp</ulink>, 
-      <ulink url="&url.php-manual;class.DateTime">DateTime</ulink>, 
-      mysql timestamp or any string parsable by 
-      <ulink url="&url.php-manual;strtotime"><varname>strtotime()</varname></ulink>, 
-      arrays as produced by this function if field_array is set.
+      <ulink url="&url.php-manual;function.time">timestamp</ulink>、
+      <ulink url="&url.php-manual;class.DateTime">DateTime</ulink>、
+      mysql timestamp あるいは
+      <ulink url="&url.php-manual;strtotime"><varname>strtotime()</varname></ulink>
+      が解釈できる任意の文字列。field_array が設定されている場合は、この関数が作る配列。
      </entry>
      <entry>No</entry>
-     <entry>current <ulink url="&url.php-manual;function.time">timestamp</ulink></entry>
+     <entry>現在の <ulink url="&url.php-manual;function.time">timestamp</ulink></entry>
      <entry>
-      What date/time to pre-select. If an array is given, the attributes field_array and prefix 
-      are used to identify the array elements to extract year, month and day from. Omitting this
-      parameter or supplying a falsy value will select the current date. To prevent date selection,
-      pass in &null;
+      どの日付/時刻を初期選択状態にするか。配列を指定した場合は、属性 field_array と prefix
+      を使って配列の要素を特定し、年・月・日を取り出します。
+      このパラメータを省略したり false を渡したりすると、現在の日付を選択した状態にします。
+      何も選択していない状態にしたければ、 &null; を渡しましょう。
      </entry>
     </row>
     <row>
@@ -97,7 +97,7 @@
      <entry>array</entry>
      <entry>No</entry>
      <entry>null</entry>
-     <entry>List of strings to display for months. array(1 => 'Jan', …, 12 => 'Dec')</entry>
+     <entry>月名を表す文字列の配列。たとえば array(1 => 'Jan', …, 12 => 'Dec')</entry>
     </row>
     <row>
      <entry>month_format</entry>
@@ -198,28 +198,28 @@
      <entry>string</entry>
      <entry>No</entry>
      <entry>null</entry>
-     <entry>Adds id-attribute to all select/input tags if given</entry>
+     <entry>すべての select タグと input タグに id 属性を追加する</entry>
     </row>
     <row>
      <entry>day_id</entry>
      <entry>string</entry>
      <entry>No</entry>
      <entry>null</entry>
-     <entry>Adds id-attribute to select/input tags if given</entry>
+     <entry>select タグと input タグに id 属性を追加する</entry>
     </row>
     <row>
      <entry>month_id</entry>
      <entry>string</entry>
      <entry>No</entry>
      <entry>null</entry>
-     <entry>Adds id-attribute to select/input tags if given</entry>
+     <entry>select タグと input タグに id 属性を追加する</entry>
     </row>
     <row>
      <entry>year_id</entry>
      <entry>string</entry>
      <entry>No</entry>
      <entry>null</entry>
-     <entry>Adds id-attribute to select/input tags if given</entry>
+     <entry>select タグと input タグに id 属性を追加する</entry>
     </row>
     <row>
      <entry>field_order</entry>
@@ -247,9 +247,9 @@
      <entry>string</entry>
      <entry>No</entry>
      <entry>null</entry>
-     <entry>If supplied then the first element of any select-box has this
-     value as it's label and <quote></quote> as it's value. This is useful to make the
-     select-boxes read <quote>Please select</quote> for example.</entry>
+     <entry>すべてのセレクトボックスの最初の要素に、指定した文字列をlabelとして、
+     空文字 <quote></quote> のvalueを持たせます。
+     例えば、セレクトボックスに <quote>選択して下さい</quote> と表示させる時に便利です。</entry>
     </row>
     <row>
      <entry>year_empty</entry>
