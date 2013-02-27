@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Revision$ -->
-<!-- EN-Revision: 3827 Maintainer: takagi Status: ready -->
+<!-- EN-Revision: 4278 Maintainer: takagi Status: ready -->
 <refentry id="api.register.plugin">
  <refnamediv>
   <refname>registerPlugin()</refname>

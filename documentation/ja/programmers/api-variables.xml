@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- $Revision$ -->
-<!-- EN-Revision: 3911 Maintainer: takagi Status: ready -->
+<!-- EN-Revision: 4278 Maintainer: takagi Status: ready -->
 <!-- CREDITS: mat-sh,daichi,joe -->
   <chapter id="api.variables">
    <title>Smarty クラス変数</title>
@@ -34,6 +34,7 @@
 &programmers.api-variables.variable-compile-check;
 &programmers.api-variables.variable-compile-dir;
 &programmers.api-variables.variable-compile-id;
+&programmers.api-variables.variable-compile-locking;
 &programmers.api-variables.variable-compiler-class;
 &programmers.api-variables.variable-config-booleanize;
 &programmers.api-variables.variable-config-dir;
