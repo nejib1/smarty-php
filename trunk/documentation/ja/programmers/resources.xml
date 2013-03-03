@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Revision$ -->
+<!-- EN-Revision: 4197 Maintainer: takagi Status: ready -->
 <chapter id="resources">
- <title>Resources</title>
+ <title>リソース</title>
   <para>
-   The templates may come from a variety of sources. When you
-   <link linkend="api.display"><varname>display()</varname></link> or
-   <link linkend="api.fetch"><varname>fetch()</varname></link>
-   a template, or when you include a template from within another template,
-   you supply a resource type, followed by the appropriate path and template
-   name. If a resource is not explicitly given, the value of 
-   <link linkend="variable.default.resource.type"><parameter>$default_resource_type</parameter></link> 
-   (default: "file") is assumed.
+   テンプレートは、いろいろなソースから成り立っています。
+   テンプレートを
+   <link linkend="api.display"><varname>display()</varname></link> したり
+   <link linkend="api.fetch"><varname>fetch()</varname></link> したりするとき、
+   あるいは別のテンプレートをインクルードしたりするときには、
+   まずリソースの型を指定してからパスやテンプレート名を続けます。
+   リソースの型を明示しない場合は、
+   <link linkend="variable.default.resource.type"><parameter>$default_resource_type</parameter></link> の値
+   (default: "file") であるとみなします。
   </para>
 &programmers.resources.resources-file;
 &programmers.resources.resources-string;

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Revision$ -->
+<!-- EN-Revision: 3827 Maintainer: takagi Status: ready -->
  <sect1 id="language.modifier.to_charset">
   <title>to_charset</title>
   <para>
-   <varname>to_charset</varname> is used to transcode a string from the internal charset to a given charset.
-   This is the exact opposite of the <link linkend="language.modifier.from_charset">from_charset modifier</link>.
+   <varname>to_charset</varname> を使って、内部文字セットから指定した文字セットへの変換を行います。
+   <link linkend="language.modifier.from_charset">from_charset 修飾子</link> の正反対の動きです。
   </para>
 
   <informaltable frame="all">
@@ -17,12 +18,12 @@
     <colspec colname="desc" />
     <thead>
      <row>
-      <entry>Parameter Position</entry>
-      <entry>Type</entry>
-      <entry>Required</entry>
-      <entry>Possible Values</entry>
-      <entry>Default</entry>
-      <entry>Description</entry>
+      <entry>パラメータの位置</entry>
+      <entry>型</entry>
+      <entry>必須</entry>
+      <entry>有効な値</entry>
+      <entry>デフォルト</entry>
+      <entry>概要</entry>
      </row>
     </thead>
     <tbody>
@@ -30,13 +31,13 @@
       <entry>1</entry>
       <entry>string</entry>
       <entry>No</entry>
-      <entry><literal>ISO-8859-1</literal>, <literal>UTF-8</literal>,
-      and any character set supported by
+      <entry><literal>ISO-8859-1</literal>、<literal>UTF-8</literal>
+      および
       <ulink url="&url.php-manual;mb_convert_encoding">
-      <varname>mb_convert_encoding()</varname></ulink>
+      <varname>mb_convert_encoding()</varname></ulink> がサポートする任意の文字セット
       </entry>
       <entry><literal>ISO-8859-1</literal></entry>
-      <entry>The charset encoding the value is supposed to be encoded to</entry>
+      <entry>この値を使ってエンコードします</entry>
      </row>
     </tbody>
    </tgroup>
@@ -44,15 +45,14 @@
 
   <note>
    <para>
-    Charset encoding should be handled by the application itself. 
-    This modifier should only be used in cases where the application cannot anticipate that a certain string is required in another encoding.
+    文字セットの符号化方式はアプリケーション自身が処理しなければいけません。
+    この修飾子を使うのは、アプリケーション側で文字列がどのエンコーディングで来るかが予測できない場合に限るようにしましょう。
    </para>
   </note>
 
   <para>
-   See also
-   <link linkend="charset">Charset Enconding</link>,
-   <link linkend="language.modifier.from_charset">from_charset modifier</link>.
+   <link linkend="charset">文字セットの符号化</link> および
+   <link linkend="language.modifier.from_charset">from_charset 修飾子</link> も参照ください。
   </para>
  </sect1>
 

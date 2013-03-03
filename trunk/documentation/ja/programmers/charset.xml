@@ -1,35 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Revision$ -->
+<!-- EN-Revision: 3827 Maintainer: takagi Status: ready -->
 <chapter id="charset">
-<title>Charset Encoding</title>
+<title>文字セットの符号化</title>
 
 <sect1 id="charset.encoding">
- <title>Charset Encoding</title>
+ <title>文字セットの符号化</title>
  <para>
-  There are a variety of encodings for textual data, ISO-8859-1 (Latin1) and UTF-8 being the most popular.
-  Unless specified otherwise with the <varname>SMARTY_RESOURCE_CHAR_SET</varname> constant, Smarty recognizes
-  <literal>UTF-8</literal> as the internal charset if <ulink url="&url.php-manual;mbstring">Multibyte String</ulink> 
-  is available, <literal>ISO-8859-1</literal> if not.
+  テキスト形式のデータの符号化方式にはいろいろあります。中でもよく使われているのが ISO-8859-1 (Latin1) と UTF-8 です。
+  定数 <varname>SMARTY_RESOURCE_CHAR_SET</varname> で何か他の符号化方式を指定しない限り、
+  Smarty は、
+  <ulink url="&url.php-manual;mbstring">mbstring</ulink> が有効な場合は
+  <literal>UTF-8</literal>、そして有効でない場合は <literal>ISO-8859-1</literal> を内部文字セットとみなします。
  </para>
 
  <note><para>
-  <literal>ISO-8859-1</literal> has been PHP's default internal charset since the beginning. 
-  Unicode has been evolving since 1991. Since then it has become the one charset to conquer them all, as it is capable of
-  encoding most of the known characters even accross different character systems (latin, cyrillic, japanese, …). 
-  <literal>UTF-8</literal> is unicode's most used encoding, as it allows referencing the thousands of character with the smallest
-  size overhead possible.
- </para><para>Since unicode and UTF-8 are very wide spread nowadays, their use is strongly encouraged.</para></note>
+  <literal>ISO-8859-1</literal> は、PHP が産まれたときからずっと、デフォルトの内部文字セットでした。
+  Unicode が出だしたのは 1991 年からです。その後、Unicode がどんどん幅をきかせるようになりました。
+  というのも Unicode は、既知の文字のほとんどを、文字体系 (ラテン文字、キリル文字、日本語、……) をまたがって符号化できたからです。
+  <literal>UTF-8</literal> は unicode で最もよく使われている符号化方式です。
+  何千もの文字を、最小限のオーバーヘッドで表せます。
+ </para><para>unicode と UTF-8 は今やあちこちに広まっているので、これを使うことを強くおすすめします。</para></note>
 
- <note><para>Smarty's internals and core plugins are truly UTF-8 compatible since Smarty 3.1. To achieve unicode compatibility, 
-  the <ulink url="&url.php-manual;mbstring">Multibyte String</ulink> PECL is required. Unless your PHP environment offers this
-  package, Smarty will not be able to offer full-scale UTF-8 compatibility.
+ <note><para>Smarty の内部コードやコアプラグインは、Smarty 3.1 で完全に UTF-8 対応になりました。unicode 互換の機能を使うには、
+  <ulink url="&url.php-manual;mbstring">mbstring</ulink> が必要です。お遣いの環境でこれが有効になっていない場合は、
+  Smarty で UTF-8 の全機能を使うことはできません。
  </para></note>
 
  <example>
-  <title>Setting a different Charset Encoding</title>
+  <title>さまざまな文字符号化方式の設定</title>
   <programlisting>
 <![CDATA[
-// use japanese character encoding
+// 日本語の文字符号化方式
 if (function_exists('mb_internal_charset')) {
   mb_internal_charset('EUC-JP');
 }
