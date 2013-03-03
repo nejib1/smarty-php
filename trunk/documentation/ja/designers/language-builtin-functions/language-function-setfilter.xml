@@ -1,57 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Revision$ -->
+<!-- EN-Revision: 3827 Maintainer: takagi Status: ready -->
 <sect1 id="language.function.setfilter">
  <title>{setfilter}</title>
  <para>
-  The <varname>{setfilter}...{/setfilter}</varname> block tag allows the definition of template instance's variable filters.
+  <varname>{setfilter}...{/setfilter}</varname> ブロックタグは、
+  テンプレートインスタンスの変数フィルタを定義します。
  </para>
  <para>
-  SYNTAX: {setfilter filter1|filter2|filter3....}...{/setfilter}
+  構文: {setfilter filter1|filter2|filter3....}...{/setfilter}
  </para>
  <para>
-  The filter can be:
+  フィルタには、次の内容を指定できます。
  </para>
  <itemizedlist>
   <listitem>
    <para>
-    A variable filter plugin specified by it's name.
+    変数フィルタプラグインの名前。
    </para>
   </listitem>
   <listitem>
    <para>
-    A modidier specified by it's name and optional additional parameter.
+    修飾子の名前、そしてオプションで追加のパラメータ。
    </para>
   </listitem>
  </itemizedlist>
 
 <para>
- <varname>{setfilter}...{/setfilter}</varname> blocks can be nested. The filter definition of inner blocks does replace the definition of the outer block.
+ <varname>{setfilter}...{/setfilter}</varname> ブロックはネストできます。
+ 内側のブロックでフィルタを定義すると、外側のブロックでの定義を上書きします。
 </para>
  
  <para>
-  Template instance filters run in addition to other modifiers and filters.
-  They run in the following order:
-  modifier,
-  default_modifier,
-  $escape_html,
-  registered variable filters,
-  autoloaded variable filters,
-  template instance's variable filters. Everything after default_modifier can be disabled with the <literal>nofilter</literal> flag.
+  テンプレートインスタンスのフィルタは、他の修飾子やフィルタに追加して適用されます。実行順は次の通りです。
+  修飾子、
+  default_modifier、
+  $escape_html、
+  登録済みの変数フィルタ、
+  オートロードした変数フィルタ、
+  テンプレートインスタンスの変数フィルタ。
+  default_modifier の後をすべて無効にするには <literal>nofilter</literal> フラグを使います。
  </para>
 
  <example>
-  <title>{setfilter} tags</title>
+  <title>{setfilter} タグ</title>
   <programlisting>
 <![CDATA[
 <script>
 {setfilter filter1}
-  {$foo} {* filter1 runs on output of $foo *}
+  {$foo} {* filter1 が $foo の出力に適用されます *}
   {setfilter filter2|mod:true}
-    {$bar} {* filter2 and modifier mod runs on output of $bar *}
+    {$bar} {* filter2 と mod 修飾子が $bar の出力に適用されます *}
   {/setfilter}
-  {$buh} {* filter1 runs on output of $buh *}
+  {$buh} {* filter1 が $buh の出力に適用されます *}
 {/setfilter}
-{$blar} {* no template instance filter runs on output of $blar}
+{$blar} {* $blar の出力には、テンプレートインスタンスのフィルタが適用されません }
 </script>
 ]]>
   </programlisting>
@@ -59,7 +62,7 @@
  
  <note>
   <para>
-   The setting of template instance filters does not effect the output of included subtemplates.
+   テンプレートインスタンスフィルタの設定は、インクルードしたサブテンプレートの出力には影響しません。
   </para>
  </note>
 
