@@ -3,8 +3,8 @@
      <sect1 id="variable.allow.php.templates">
       <title>$allow_php_templates</title>
       <para>
-       By default the PHP template file resource is disabled.
-       Setting <varname>$allow_php_templates</varname> to &true; will enable PHP template files.
+       PHPテンプレートファイルリソースはデフォルトで利用できなくなっています。
+       <varname>$allow_php_templates</varname> を &true; に設定することで PHPのテンプレートファイルが使えるようになります。
       </para>
       <para>
        
@@ -20,7 +20,7 @@ $smarty->allow_php_templates = true;
       </para>
       <note>
        <para>
-        The PHP template file resource is an undocumented deprecated feature.
+        PHP テンプレートファイルリソースは、ドキュメント化されていない推奨されない機能です。
        </para>
       </note>
      </sect1>
