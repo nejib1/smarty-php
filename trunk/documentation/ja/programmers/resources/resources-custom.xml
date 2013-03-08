@@ -1,41 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Revision$ -->
 <sect1 id="resources.custom">
- <title>Custom Template Resources</title>
+ <title>カスタムテンプレートリソース</title>
  <para>
-  You can retrieve templates using whatever possible source you can
-  access with PHP: databases, sockets, files, etc. You do this
-  by writing resource plugin functions and registering them with
-  Smarty.
+  PHPからアクセスできるあらゆるところからテンプレートを取得出来ます。
+  データベースやソケット、ファイルなどからです。
+  ユーザーはリソースプラグイン関数を書き、それを Smarty に登録することで、
+  PHPからアクセスできるあらゆるところからテンプレートを取得します。
  </para>
 
  <para>
-  See <link linkend="plugins.resources">resource plugins</link>
-  section for more information on the functions you are supposed
-  to provide.
+  提供しようと考えている関数について詳しい情報が必要なら
+  <link linkend="plugins.resources">リソースプラグイン</link> のセクションを参照して下さい。
  </para>
 
  <note>
   <para>
-   Note that you cannot override the built-in
-   <literal>file:</literal> resource, but you can provide a resource
-   that fetches templates from the file system in some other way by
-   registering under another resource name.
+   組み込みの <literal>file:</literal> リソースは上書きできないので注意して下さい。
+   しかし、別のリソース名で登録すれば、ファイルシステムにあるテンプレートを他のやり方で取得するリソースプラグインを提供出来ます。
   </para>
  </note>
  <example>
-  <title>Using custom resources</title>
+  <title>カスタムのテンプレートリソースを使う</title>
   <programlisting role="php">
 <![CDATA[
 <?php
 
 /**
-* MySQL Resource
+* MySQL リソースプラグイン
 *
-* Resource Implementation based on the Custom API to use
-* MySQL as the storage resource for Smarty's templates and configs.
+* Smarty のテンプレートと設定を格納するために、MySQL をストレージとして使う
+* カスタムAPI ベースの実装
 *
-* Table definition:
+* テーブル定義:
 * <pre>CREATE TABLE IF NOT EXISTS `templates` (
 *   `name` varchar(100) NOT NULL,
 *   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -43,7 +40,7 @@
 *   PRIMARY KEY (`name`)
 * ) ENGINE=InnoDB DEFAULT CHARSET=utf8;</pre>
 *
-* Demo data:
+* デモデータ:
 * <pre>INSERT INTO `templates` (`name`, `modified`, `source`) VALUES ('test.tpl', "2010-12-25 22:00:00", '{$x="hello world"}{$x}');</pre>
 *
 * @package Resource-examples
@@ -68,7 +65,7 @@ class Smarty_Resource_Mysql extends Smarty_Resource_Custom {
  }
  
  /**
-  * Fetch a template and its modification time from database
+  * テンプレートおよびその変更時刻をデータベースから取得する
   *
   * @param string $name template name
   * @param string $source template source
@@ -90,9 +87,10 @@ class Smarty_Resource_Mysql extends Smarty_Resource_Custom {
  }
  
  /**
-  * Fetch a template's modification time from database
+  * データベースから、テンプレートの変更時刻を取得する
   *
-  * @note implementing this method is optional. Only implement it if modification times can be accessed faster than loading the comple template source.
+  * @note このメソッドの実装は任意です。
+  * コンパイル済みのテンプレートを読み込むよりも変更時刻の取得が速い場合のみ実装するようにして下さい。
   * @param string $name template name
   * @return integer timestamp (epoch) the template was modified
   */
@@ -115,7 +113,7 @@ $smarty->display("mysql:index.tpl");
 ]]>
   </programlisting>
   <para>
-   And from within Smarty template:
+   Smarty のテンプレート内でこのカスタムリソースを使うには、次のようにします。
   </para>
   <programlisting>
 <![CDATA[
