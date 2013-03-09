@@ -1,30 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Revision$ -->
 <sect1 id="resources.extends">
- <title>Extends Template Resources</title>
+ <title>テンプレートリソースの継承</title>
  <para>
-  The <literal>extends:</literal> resource is used to define child/parent relationships for template inheritance from the PHP script.
-  For details see section of <link linkend="advanced.features.template.inheritance">Template Interitance</link>.
+  PHP スクリプトからテンプレートを継承する親子関係を定義するために <literal>extends:</literal> リソースを使います。詳細は <link linkend="advanced.features.template.inheritance">テンプレートの継承</link> を参照してください。
  </para>
  <para>
-   As of Smarty 3.1 the <literal>extends:</literal> resource may use any available 
-   <link linkend="resources">template resource</link>, 
-   including <literal>string:</literal> and <literal>eval:</literal>.
-   When <link linkend="resources.string">templates from strings</link> are used,
-   make sure they are properly (url or base64) encoded. Is an <literal>eval:</literal> resource
-   found within an inheritance chain, its "don't save a compile file" property is superseeded by
-   the <literal>extends:</literal> resource. The templates within an inheritance chain are not
-   compiled separately, though. Only a single compiled template will be generated.
+   Smarty 3.1 では、<literal>extends:</literal> リソースは利用できるすべての <link linkend="resources">テンプレートリソース</link> を使うことができます。利用できるリソースには <literal>string:</literal> や <literal>eval:</literal> も含みます。
+   <link linkend="resources.string">文字列テンプレートリソース</link> を使う場合は、(URLエンコード や base64 で)適切にエンコードするようにしてください。<literal>eval:</literal> リソースが継承チェインで見つかった場合、「コンパイル済みのファイルを保存しないで!」という要求よりも <literal>extends:</literal> リソースの要求が優先されます。しかし、継承チェインの中に存在するテンプレートは別々にコンパイルされません。単一のコンパイル済みテンプレートが生成されます。
  </para>
  <note>
   <para>
-    Use this when inheritance is required programatically. When inheriting within PHP, 
-    it is not obvious from the child template what inheritance took place. If you have a choice, 
-    it is normally more flexible and intuitive to handle inheritance chains from within the templates.
+    テンプレートの継承がプログラムで必要な場合は <literal>extends:</literal> リソースを使うようにしましょう。 PHPスクリプトの中で ng を継承する場合、継承先の子テンプレートで何が起こるのかがわかりづらいからです。継承チェインを扱う場合は、テンプレートを使う方が通常は直感的ですし、柔軟性が増します。
   </para>
  </note>
  <example>
-  <title>Using template inheritance from the PHP script</title>
+  <title>PHPスクリプトからテンプレートの継承を使う</title>
   <programlisting role="php">
 <![CDATA[
 <?php
@@ -37,10 +28,9 @@ $smarty->display('extends:db:parent.tpl|file:child.tpl|grandchild.tpl|eval:{bloc
   </programlisting>
  </example>
  <para>
-  See also
-  <link linkend="advanced.features.template.inheritance">Template Inheritance</link>
-  <link linkend="language.function.block"><varname>{block}</varname></link> and
-  <link linkend="language.function.extends"><varname>{extends}</varname></link>.
+  <link linkend="advanced.features.template.inheritance">テンプレートの継承</link>
+  <link linkend="language.function.block"><varname>{block}</varname></link> や
+  <link linkend="language.function.extends"><varname>{extends}</varname></link> も参照してください。
   </para>
 </sect1>
 
