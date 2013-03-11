@@ -1,73 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Revision$ -->
 <sect1 id="resources.file">
- <title>File Template Resources</title>
+ <title>ファイルテンプレートリソース</title>
  <para>
-  Smarty ships with a built-in template resource for the filesystem. The <literal>file:</literal> is the default resource. 
-  The resource key <literal>file:</literal> must only be specified, if the 
-  <link linkend="variable.default.resource.type"><parameter>$default_resource_type</parameter></link> has been changed.
+  Smarty はファイルシステム用のテンプレートリソースを組み込みで備えています。
+  <literal>file:</literal> リソースがSmartyのデフォルトのリソースです。
+  <link linkend="variable.default.resource.type"><parameter>$default_resource_type</parameter></link> が変更された場合、<literal>file:</literal> リソースキーを明示的につけなければなりません。
  </para>
  <para>
-  If the file resource cannot find the requested template, the 
-  <link linkend="variable.default.template.handler.func"><parameter>$default_template_handler_func</parameter></link>
-  is invoked.	
+  要求したテンプレートをファイルリソースが見つけられない場合、<link linkend="variable.default.template.handler.func"><parameter>$default_template_handler_func</parameter></link> が呼び出されます。
  </para>
  <note>
-  <title>Note</title>
+  <title>注意</title>
   <para>
-   As of Smarty 3.1 the file resource no longer walks through the 
-   <ulink url="&url.php-manual;ini.core.php#ini.include-path">include_path</ulink> unless
-   <link linkend="variable.use.include.path"><parameter>$use_include_path</parameter> is activated</link>
+   Smarty 3.1 では、
+   <link linkend="variable.use.include.path"><parameter>$use_include_path</parameter></link> を有効にしない限り、<ulink url="&url.php-manual;ini.core.php#ini.include-path">include_path</ulink> を走査しなくなりました。
   </para>
  </note>
  
  <sect2 id="templates.from.template.dir">
-  <title>Templates from $template_dir</title>
+  <title>$template_dir からテンプレートを取得する</title>
   <para>
-   The file resource pulls templates source files from the directories specified in 
-   <link linkend="variable.template.dir"><parameter>$template_dir</parameter></link>. 
-   The list of directories is traversed in the order they appear in the array. 
-   The first template found is the one to process.
+   ファイルリソースは <link linkend="variable.template.dir"><parameter>$template_dir</parameter></link> で設定したディレクトリからテンプレートのソースファイルを取得します。 ディレクトリのリストは配列に現れた順に走査され、見つかった最初のテンプレートが処理されます。
   </para>
   <example>
-   <title>Using templates from the $template_dir</title>
+   <title>$template_dir からテンプレートを取得する例</title>
    <programlisting role="php">
 <![CDATA[
 <?php
 $smarty->display('index.tpl');
-$smarty->display('file:index.tpl'); // same as above
+$smarty->display('file:index.tpl'); // 上に同じ
 ?>
 ]]>
    </programlisting>
-   <para>From within a Smarty template</para>
+   <para>テンプレートの中でテンプレートファイルを取得する例</para>
    <programlisting>
 <![CDATA[
 {include file='index.tpl'}
-{include file='file:index.tpl'} {* same as above *}
+{include file='file:index.tpl'} {* 上に同じ *}
 ]]>
    </programlisting>
   </example>
  </sect2>
  
  <sect2 id="templates.from.specified.template.dir">
-  <title>Templates from a specific $template_dir</title>
+  <title>特定の $template_dir からテンプレートを取得する</title>
   <para>
-   Smarty 3.1 introduced the bracket-syntax for specifying an element from 
-   <link linkend="variable.template.dir"><parameter>$template_dir</parameter></link>.
-   This allows websites employing multiple sets of templates better control over
-   which template to acces.
+   Smarty 3.1 から、
+   <link linkend="variable.template.dir"><parameter>$template_dir</parameter></link>
+   で指定した要素をブラケットで指定できる機能が追加されました。
+   これによって、複数のテンプレートセットを持つWebサイトが、どのテンプレートにアクセスするかをよりうまく制御できるようになります。
   </para>
   <para>
-   The bracket-syntax can be used from anywhere you can specify the 
-   <literal>file:</literal> resource type.
+   <literal>file:</literal> リソースタイプを指定する場所ではどこでも、このブラケット指定は使えます。
   </para>
   <example>
-   <title>Specifying the $template_dir to use</title>
+   <title>$template_dir の特定の要素を指定する例</title>
    <programlisting role="php">
 <![CDATA[
 <?php
 
-// setup template directories
+// テンプレートディレクトリをセットアップ
 $smarty->setTemplateDir(array(
     './templates',            // element: 0, index: 0
     './templates_2',          // element: 1, index: 1
@@ -76,7 +69,7 @@ $smarty->setTemplateDir(array(
 ));
 
 /*
-  assume the template structure
+  テンプレートの構造は以下とする
   ./templates/foo.tpl
   ./templates_2/foo.tpl
   ./templates_2/bar.tpl
@@ -85,63 +78,60 @@ $smarty->setTemplateDir(array(
   ./templates_foo/foo.tpl
 */
 
-// regular access
+// 通常のアクセス方法
 $smarty->display('file:foo.tpl'); 
-// will load ./templates/foo.tpl
+// ./templates/foo.tpl が読み込まれます。
 
-// using numeric index
+// 数値インデックスを使う方法
 $smarty->display('file:[1]foo.tpl'); 
-// will load ./templates_2/foo.tpl
+// ./templates_2/foo.tpl が読み込まれます。
 
-// using numeric string index
+// 数値のインデックスを指定する方法
 $smarty->display('file:[10]foo.tpl'); 
-// will load ./templates_10/foo.tpl
+// ./templates_10/foo.tpl が読み込まれます。
 
-// using string index
+// 文字列でインデックスを指定する方法
 $smarty->display('file:[foo]foo.tpl'); 
-// will load ./templates_foo/foo.tpl
+// ./templates_foo/foo.tpl が読み込まれます。
 
-// using "unknown" numeric index (using element number)
+// "未定義の" 数値でインデックスを指定した場合(要素の場所を指定)
 $smarty->display('file:[2]foo.tpl'); 
-// will load ./templates_10/foo.tpl
+// ./templates_10/foo.tpl が読み込まれます。
 
 ?>
 ]]>
    </programlisting>
-   <para>From within a Smarty template</para>
+   <para>テンプレートの中でブラケット指定を使う</para>
    <programlisting>
 <![CDATA[
 {include file="file:foo.tpl"}
-{* will load ./templates/foo.tpl *}
+{* ./templates/foo.tpl が読み込まれます *}
 
 {include file="file:[1]foo.tpl"}
-{* will load ./templates_2/foo.tpl *}
+{* ./templates_2/foo.tpl が読み込まれます *}
 
 {include file="file:[foo]foo.tpl"}
-{* will load ./templates_foo/foo.tpl *}
+{* ./templates_foo/foo.tpl が読み込まれます *}
 ]]>
    </programlisting>
   </example>
  </sect2>
    
  <sect2 id="templates.from.any.dir">
-  <title>Templates from any directory</title>
+  <title>任意の場所からテンプレートを取得する</title>
   <para>
-   Templates outside of the 
    <link linkend="variable.template.dir"><parameter>$template_dir</parameter></link>
-   require the <literal>file:</literal> template resource type, followed by
-   the absolute path to the template (with leading slash.)
+   で指定されたディレクトリ以外からテンプレートを取得する場合、<literal>file:</literal> リソースタイプが必須です。
+   <literal>file:</literal> の後で、テンプレートへの絶対パス(最初にスラッシュを付ける) を指定します。 
   </para>
   <note>
    <para>
-    With <link linkend="advanced.features.security"><varname>Security</varname></link> enabled, 
-    access to templates outside of the 
-    <link linkend="variable.template.dir"><parameter>$template_dir</parameter></link> 
-    is not allowed unless you list those directories in <parameter>$secure_dir</parameter>.
+    <link linkend="advanced.features.security"><varname>セキュリティ</varname></link> 機能を有効にした場合、
+    <link linkend="variable.template.dir"><parameter>$template_dir</parameter></link> で指定したディレクトリ以外のファイルは、<parameter>$secure_dir</parameter> で指定したディレクトリでない限りアクセスできなくなります。
    </para>
   </note>
   <example>
-   <title>Using templates from any directory</title>
+   <title>任意の場所からテンプレートを取得する例</title>
    <programlisting role="php">
 <![CDATA[
 <?php
@@ -151,7 +141,7 @@ $smarty->display('file:/path/to/my/templates/menu.tpl');
 ]]>
    </programlisting>
    <para>
-    And from within a Smarty template:
+    テンプレート内で任意の場所からテンプレートを取得する例
    </para>
    <programlisting>
 <![CDATA[
@@ -162,15 +152,13 @@ $smarty->display('file:/path/to/my/templates/menu.tpl');
  </sect2>
  
  <sect2 id="templates.windows.filepath">
-  <title>Windows Filepaths</title>
+  <title>Windows のファイルパスについて</title>
   <para>
-   If you are using a Windows machine, filepaths usually include a
-   drive letter (C:) at the beginning of the pathname. Be sure to use
-   <literal>file:</literal> in the path to avoid namespace conflicts and
-   get the desired results.
+   Windows マシンで Smarty を動作させている場合、ファイルパスの先頭に通常はドライブレター(C:) がつきます。
+   この場合、名前空間の衝突を避けながら望む結果を得るために、必ず <literal>file:</literal> リソースを使うようにして下さい。
   </para>
   <example>
-   <title>Using templates from windows file paths</title>
+   <title>Windows のファイルパスを指定してテンプレートを使う例</title>
    <programlisting role="php">
 <![CDATA[
 <?php
@@ -180,7 +168,7 @@ $smarty->display('file:F:/path/to/my/templates/menu.tpl');
 ]]>
   </programlisting>
   <para>
-   And from within Smarty template:
+   テンプレート内で Windows のファイルパスを指定する例:
   </para>
   <programlisting>
 <![CDATA[
