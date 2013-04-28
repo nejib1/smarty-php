@@ -1,15 +1,16 @@
 <?php
 /**
-* Smarty PHPunit tests SmartyBC code
-*
-* @package PHPunit
-* @author Uwe Tews
-*/
+ * Smarty PHPunit tests SmartyBC code
+ *
+ * @package PHPunit
+ * @author Uwe Tews
+ */
 
 /**
-* class SmartyBC class tests
-*/
-class SmartyBcTests extends PHPUnit_Framework_TestCase {
+ * class SmartyBC class tests
+ */
+class SmartyBcTests extends PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
         SmartyTests::init();
@@ -22,8 +23,8 @@ class SmartyBcTests extends PHPUnit_Framework_TestCase {
     }
 
     /**
-    * test {php} tag
-    */
+     * test {php} tag
+     */
     public function testSmartyPhpTag()
     {
         $this->assertEquals('hello world', $this->smartyBC->fetch('eval:{php} echo "hello world"; {/php}'));

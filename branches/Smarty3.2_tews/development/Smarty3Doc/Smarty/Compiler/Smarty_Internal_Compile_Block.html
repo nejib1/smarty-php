@@ -60,10 +60,14 @@
 					<a href="#$called_child" title="details" class="var-name">$called_child</a>
 				</div>
 																<div class="var-title">
-					static <span class="var-type">int</span>
+					static <span class="var-type">string</span>
 					<a href="#$current_block_name" title="details" class="var-name">$current_block_name</a>
 				</div>
-																																																																				<div class="var-title">
+																																<div class="var-title">
+					static <span class="var-type">int</span>
+					<a href="#$root_block_name" title="details" class="var-name">$root_block_name</a>
+				</div>
+																																																				<div class="var-title">
 					<span class="var-type">array</span>
 					<a href="#$option_flags" title="details" class="var-name">$option_flags</a>
 				</div>
@@ -71,7 +75,7 @@
 					<span class="var-type">array</span>
 					<a href="#$required_attributes" title="details" class="var-name">$required_attributes</a>
 				</div>
-																<div class="var-title">
+																								<div class="var-title">
 					<span class="var-type">array</span>
 					<a href="#$shorttag_order" title="details" class="var-name">$shorttag_order</a>
 				</div>
@@ -115,13 +119,13 @@
 					</div>
 		<div class="info-box-body">
 			<a name="var$block_nesting_level" id="$block_nesting_level"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			static <span class="var-type">int</span>
 			<span class="var-name">$block_nesting_level</span>
-			 = <span class="var-default"> 0</span>			(line <span class="line-number">26</span>)
+			 = <span class="var-default"> 0</span>			(line <span class="line-number">27</span>)
 		</span>
 	</div>
 
@@ -137,13 +141,13 @@
 
 </div>
 <a name="var$called_child" id="$called_child"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			static <span class="var-type">bool</span>
 			<span class="var-name">$called_child</span>
-			 = <span class="var-default"> false</span>			(line <span class="line-number">40</span>)
+			 = <span class="var-default"> false</span>			(line <span class="line-number">48</span>)
 		</span>
 	</div>
 
@@ -159,18 +163,40 @@
 
 </div>
 <a name="var$current_block_name" id="$current_block_name"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
-			static <span class="var-type">int</span>
+			static <span class="var-type">string</span>
 			<span class="var-name">$current_block_name</span>
-			 = <span class="var-default"> ''</span>			(line <span class="line-number">33</span>)
+			 = <span class="var-default"> ''</span>			(line <span class="line-number">34</span>)
 		</span>
 	</div>
 
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">current block name</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$root_block_name" id="$root_block_name"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			static <span class="var-type">int</span>
+			<span class="var-name">$root_block_name</span>
+			 = <span class="var-default"> ''</span>			(line <span class="line-number">41</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">route block name</p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
@@ -187,7 +213,7 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$option_flags</span>
-			 = <span class="var-default">array('nocache', 'hide', 'append', 'prepend', 'overwrite')</span>			(line <span class="line-number">64</span>)
+			 = <span class="var-default">array('nocache', 'hide', 'append', 'prepend', 'overwrite')</span>			(line <span class="line-number">72</span>)
 		</span>
 	</div>
 
@@ -216,7 +242,7 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$required_attributes</span>
-			 = <span class="var-default">array('name')</span>			(line <span class="line-number">48</span>)
+			 = <span class="var-default">array('name')</span>			(line <span class="line-number">56</span>)
 		</span>
 	</div>
 
@@ -245,7 +271,7 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$shorttag_order</span>
-			 = <span class="var-default">array('name')</span>			(line <span class="line-number">56</span>)
+			 = <span class="var-default">array('name')</span>			(line <span class="line-number">64</span>)
 		</span>
 	</div>
 
@@ -313,7 +339,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">compile</span> (line <span class="line-number">73</span>)
+		<span class="method-title">compile</span> (line <span class="line-number">81</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -381,7 +407,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Tue, 11 Dec 2012 21:28:46 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Sun, 28 Apr 2013 12:40:31 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

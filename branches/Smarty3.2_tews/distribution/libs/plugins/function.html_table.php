@@ -44,11 +44,12 @@
  * @version 1.1
  * @link http://www.smarty.net/docs/en/language.function.html.table.tpl {html_table}
  *          (Smarty online manual)
- * @param array                    $params   parameters
- * @param Smarty_Internal_Template $template template object
+ * @param array $params   parameters
+ * @param Smarty $template template object
  * @return string
  */
-function smarty_function_html_table($params, $template) {
+function smarty_function_html_table($params, $template)
+{
     $table_attr = 'border="1"';
     $tr_attr = '';
     $th_attr = '';
@@ -70,7 +71,7 @@ function smarty_function_html_table($params, $template) {
     foreach ($params as $_key => $_value) {
         switch ($_key) {
             case 'loop':
-                $$_key = (array) $_value;
+                $$_key = (array)$_value;
                 break;
 
             case 'cols':
@@ -81,14 +82,14 @@ function smarty_function_html_table($params, $template) {
                     $cols = explode(',', $_value);
                     $cols_count = count($cols);
                 } elseif (!empty($_value)) {
-                    $cols_count = (int) $_value;
+                    $cols_count = (int)$_value;
                 } else {
                     $cols_count = $cols;
                 }
                 break;
 
             case 'rows':
-                $$_key = (int) $_value;
+                $$_key = (int)$_value;
                 break;
 
             case 'table_attr':
@@ -97,7 +98,7 @@ function smarty_function_html_table($params, $template) {
             case 'vdir':
             case 'inner':
             case 'caption':
-                $$_key = (string) $_value;
+                $$_key = (string)$_value;
                 break;
 
             case 'tr_attr':
@@ -163,7 +164,8 @@ function smarty_function_html_table($params, $template) {
     return $output;
 }
 
-function smarty_function_html_table_cycle($name, $var, $no) {
+function smarty_function_html_table_cycle($name, $var, $no)
+{
     if (!is_array($var)) {
         $ret = $var;
     } else {

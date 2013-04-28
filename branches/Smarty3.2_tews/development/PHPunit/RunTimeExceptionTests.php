@@ -1,16 +1,17 @@
 <?php
 /**
-* Smarty PHPunit tests for runtime exceptions
-*
-* @package PHPunit
-* @author Rodney Rehm
-*/
+ * Smarty PHPunit tests for runtime exceptions
+ *
+ * @package PHPunit
+ * @author Rodney Rehm
+ */
 
 
 /**
-* class for runtime exceptions tests
-*/
-class RunTimeExceptionTests extends PHPUnit_Framework_TestCase {
+ * class for runtime exceptions tests
+ */
+class RunTimeExceptionTests extends PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
@@ -30,7 +31,7 @@ class RunTimeExceptionTests extends PHPUnit_Framework_TestCase {
         $this->smarty->assign('foo', true);
         try {
             $this->smarty->fetch('test_runtime_exception.tpl');
-        } catch(SmartyRunTimeException $e) {
+        } catch (SmartyRunTimeException $e) {
             $this->assertContains('My Exception', $e->getMessage());
             return;
         }
@@ -55,7 +56,7 @@ class RunTimeExceptionTests extends PHPUnit_Framework_TestCase {
         $this->smarty->caching = 1;
         try {
             $this->smarty->fetch('test_runtime_exception.tpl');
-        } catch(SmartyRunTimeException $e) {
+        } catch (SmartyRunTimeException $e) {
             $this->assertContains('My Exception', $e->getMessage());
             return;
         }

@@ -62,12 +62,6 @@
 						<span class="method-title">__construct</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#method__construct">Smarty_Internal_Info::__construct()</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">__construct</span>
-					</dt>
-		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/SmartyException.html#method__construct">SmartyException::__construct()</a> in Smarty.class.php</div>
 					</dd>
 			<dt class="field">
@@ -87,6 +81,41 @@
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/SmartyCompilerException.html#method__toString">SmartyCompilerException::__toString()</a> in Smarty.class.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">_createNocacheBlockChild</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Internal_CacheCreate.html#method_createNocacheBlockChild">Smarty_Internal_CacheCreate::_createNocacheBlockChild()</a> in smarty_internal_cachecreate.php</div>
+							<div class="index-item-description">Creates an inheritance block in cache file</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">_getBlockMethodSource</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Internal_CacheCreate.html#method_getBlockMethodSource">Smarty_Internal_CacheCreate::_getBlockMethodSource()</a> in smarty_internal_cachecreate.php</div>
+							<div class="index-item-description">Get block method source</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">__construct</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Template_Cached.html#method__construct">Smarty_Template_Cached::__construct()</a> in smarty_cacheresource.php</div>
+							<div class="index-item-description">create Cached Object container</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">__get</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Template_Cached.html#method__get">Smarty_Template_Cached::__get()</a> in smarty_cacheresource.php</div>
+							<div class="index-item-description">&lt;&lt;magic&gt;&gt; Generic getter.</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">__set</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Template_Cached.html#method__set">Smarty_Template_Cached::__set()</a> in smarty_cacheresource.php</div>
+							<div class="index-item-description">&lt;&lt;magic&gt;&gt; Generic setter.</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">__construct</span>
@@ -393,13 +422,6 @@
 							<div class="index-item-description">[util function] counts an array, arrayaccess/traversable or PDOStatement object</div>
 					</dd>
 			<dt class="field">
-						<span class="method-title">_createInheritanceTemplate</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Template/Smarty_Internal_Content.html#method_createInheritanceTemplate">Smarty_Internal_Content::_createInheritanceTemplate()</a> in smarty_internal_content.php</div>
-							<div class="index-item-description">Template runtime function to setup inheritance template chain</div>
-					</dd>
-			<dt class="field">
 						<span class="method-title">_createLocalArrayVariable</span>
 					</dt>
 		<dd class="index-item-body">
@@ -414,18 +436,39 @@
 							<div class="index-item-description">[util function] to use either var_export or unserialize/serialize to generate code for the  cachevalue optionflag of {assign} tag</div>
 					</dd>
 			<dt class="field">
-						<span class="method-title">_fetch_block_child_template</span>
+						<span class="method-title">_fetchBlockChildTemplate</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Template/Smarty_Internal_Content.html#method_fetch_block_child_template">Smarty_Internal_Content::_fetch_block_child_template()</a> in smarty_internal_content.php</div>
+			<div class="index-item-details"><a href="Smarty/Template/Smarty_Internal_Content_Inheritance.html#method_fetchBlockChildTemplate">Smarty_Internal_Content_Inheritance::_fetchBlockChildTemplate()</a> in smarty_internal_content_inheritance.php</div>
 							<div class="index-item-description">Fetch output of extended child {block} or {$smarty.block.child}</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">_fetch_block_parent_template</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Template/Smarty_Internal_Content.html#method_fetch_block_parent_template">Smarty_Internal_Content::_fetch_block_parent_template()</a> in smarty_internal_content.php</div>
+			<div class="index-item-details"><a href="Smarty/Template/Smarty_Internal_Content_Inheritance.html#method_fetch_block_parent_template">Smarty_Internal_Content_Inheritance::_fetch_block_parent_template()</a> in smarty_internal_content_inheritance.php</div>
 							<div class="index-item-description">Fetch output of {$smarty.block.parent}</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">_find_block_child_template</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Template/Smarty_Internal_Content_Inheritance.html#method_find_block_child_template">Smarty_Internal_Content_Inheritance::_find_block_child_template()</a> in smarty_internal_content_inheritance.php</div>
+							<div class="index-item-description">Find inheritance child block template</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">_getBlock</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Template/Smarty_Internal_Content_Inheritance.html#method_getBlock">Smarty_Internal_Content_Inheritance::_getBlock()</a> in smarty_internal_content_inheritance.php</div>
+							<div class="index-item-description">resolve inheritance for block an return content</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">_getInheritanceTemplate</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Template/Smarty_Internal_Content_Inheritance.html#method_getInheritanceTemplate">Smarty_Internal_Content_Inheritance::_getInheritanceTemplate()</a> in smarty_internal_content_inheritance.php</div>
+							<div class="index-item-description">Template runtime function to fetch inheritance template</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">_getScopePointer</span>
@@ -480,29 +523,8 @@
 						<span class="method-title">__construct</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Template/Smarty_Internal_Content.html#method__construct">Smarty_Internal_Content::__construct()</a> in smarty_internal_content.php</div>
-							<div class="index-item-description">constructor</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">__construct</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Template/SmartyBC.html#method__construct">SmartyBC::__construct()</a> in SmartyBC.class.php</div>
-							<div class="index-item-description">Initialize new SmartyBC object</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">__construct</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Template/Smarty_Variable_Container.html#method__construct">Smarty_Variable_Container::__construct()</a> in smarty_internal_data.php</div>
-							<div class="index-item-description">constructor to create backlink to Smarty|Smarty_Internal_Template|Smarty_Data</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">__construct</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Template/Smarty.html#method__construct">Smarty::__construct()</a> in Smarty.class.php</div>
-							<div class="index-item-description">Initialize new Smarty object</div>
+			<div class="index-item-details"><a href="Smarty/Template/Smarty_Data.html#method__construct">Smarty_Data::__construct()</a> in smarty_internal_data.php</div>
+							<div class="index-item-description">create Smarty data object</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">__construct</span>
@@ -515,8 +537,36 @@
 						<span class="method-title">__construct</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Template/Smarty_Data.html#method__construct">Smarty_Data::__construct()</a> in smarty_internal_data.php</div>
-							<div class="index-item-description">create Smarty data object</div>
+			<div class="index-item-details"><a href="Smarty/Template/Smarty_Variable.html#method__construct">Smarty_Variable::__construct()</a> in smarty_internal_data.php</div>
+							<div class="index-item-description">create Smarty variable object</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">__construct</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Template/Smarty_Variable_Container.html#method__construct">Smarty_Variable_Container::__construct()</a> in smarty_internal_data.php</div>
+							<div class="index-item-description">constructor to create backlink to Smarty|Smarty_Data</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">__construct</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Template/Smarty_Internal_Content.html#method__construct">Smarty_Internal_Content::__construct()</a> in smarty_internal_content.php</div>
+							<div class="index-item-description">constructor</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">__construct</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Template/Smarty.html#method__construct">Smarty::__construct()</a> in Smarty.class.php</div>
+							<div class="index-item-description">Initialize new Smarty object</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">__construct</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Template/SmartyBC.html#method__construct">SmartyBC::__construct()</a> in SmartyBC.class.php</div>
+							<div class="index-item-description">Initialize new SmartyBC object</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">__destruct</span>
@@ -529,8 +579,8 @@
 						<span class="method-title">__get</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Template/Smarty_Variable_Container.html#method__get">Smarty_Variable_Container::__get()</a> in smarty_internal_data.php</div>
-							<div class="index-item-description">magic __get function called at access of unknown variable</div>
+			<div class="index-item-details"><a href="Smarty/Template/SmartyBC31.html#method__get">SmartyBC31::__get()</a> in SmartyBC31.class.php</div>
+							<div class="index-item-description">&lt;&lt;magic&gt;&gt; Generic getter.</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">__get</span>
@@ -540,6 +590,13 @@
 							<div class="index-item-description">&lt;&lt;magic&gt;&gt; Generic getter.</div>
 					</dd>
 			<dt class="field">
+						<span class="method-title">__get</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Template/Smarty_Variable_Container.html#method__get">Smarty_Variable_Container::__get()</a> in smarty_internal_data.php</div>
+							<div class="index-item-description">magic __get function called at access of unknown variable</div>
+					</dd>
+			<dt class="field">
 						<span class="method-title">__set</span>
 					</dt>
 		<dd class="index-item-body">
@@ -547,18 +604,11 @@
 							<div class="index-item-description">&lt;&lt;magic&gt;&gt; Generic setter.</div>
 					</dd>
 			<dt class="field">
-						<span class="method-title">__construct</span>
+						<span class="method-title">__toString</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Cached.html#method__construct">Smarty_Template_Cached::__construct()</a> in smarty_cacheresource.php</div>
-							<div class="index-item-description">create Cached Object container</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">__construct</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Source.html#method__construct">Smarty_Template_Source::__construct()</a> in smarty_resource.php</div>
-							<div class="index-item-description">create Source Object container</div>
+			<div class="index-item-details"><a href="Smarty/Template/Smarty_Variable.html#method__toString">Smarty_Variable::__toString()</a> in smarty_internal_data.php</div>
+							<div class="index-item-description">&lt;&lt;magic&gt;&gt; String conversion</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">__construct</span>
@@ -566,6 +616,13 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Internal_Resource_PHP.html#method__construct">Smarty_Internal_Resource_PHP::__construct()</a> in smarty_internal_resource_php.php</div>
 							<div class="index-item-description">Create a new PHP Resource</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">__construct</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Source.html#method__construct">Smarty_Template_Source::__construct()</a> in smarty_resource.php</div>
+							<div class="index-item-description">create Source Object container</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">__get</span>
@@ -589,90 +646,6 @@
 		<div style="clear: both"></div>
 	</div>
 	<dl>
-			<dt class="field">
-						ALL
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#constALL">Smarty_Internal_Info::ALL</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">analyze</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#methodanalyze">Smarty_Internal_Info::analyze()</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">analyzeConstants</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#methodanalyzeConstants">Smarty_Internal_Info::analyzeConstants()</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">analyzeDefaults</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#methodanalyzeDefaults">Smarty_Internal_Info::analyzeDefaults()</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">analyzeDirectory</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#methodanalyzeDirectory">Smarty_Internal_Info::analyzeDirectory()</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">analyzeEnvironment</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#methodanalyzeEnvironment">Smarty_Internal_Info::analyzeEnvironment()</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">analyzeFilesystem</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#methodanalyzeFilesystem">Smarty_Internal_Info::analyzeFilesystem()</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">analyzePlugins</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#methodanalyzePlugins">Smarty_Internal_Info::analyzePlugins()</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">analyzeProperties</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#methodanalyzeProperties">Smarty_Internal_Info::analyzeProperties()</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">analyzePropertiesPlausibility</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#methodanalyzePropertiesPlausibility">Smarty_Internal_Info::analyzePropertiesPlausibility()</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">analyzeRegistered</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#methodanalyzeRegistered">Smarty_Internal_Info::analyzeRegistered()</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">analyzeSecurity</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#methodanalyzeSecurity">Smarty_Internal_Info::analyzeSecurity()</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">analyzeStatics</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#methodanalyzeStatics">Smarty_Internal_Info::analyzeStatics()</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">analyzeTemplates</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#methodanalyzeTemplates">Smarty_Internal_Info::analyzeTemplates()</a> in smarty_internal_info.php</div>
-					</dd>
 			<dt class="field">
 						<span class="method-title">acquireLock</span>
 					</dt>
@@ -823,8 +796,8 @@
 						<span class="method-title">appendByRef</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Template/Smarty_Internal_Data.html#methodappendByRef">Smarty_Internal_Data::appendByRef()</a> in smarty_internal_data.php</div>
-							<div class="index-item-description">appends values to template variables by reference</div>
+			<div class="index-item-details"><a href="Smarty/Template/SmartyBC31.html#methodappendByRef">SmartyBC31::appendByRef()</a> in SmartyBC31.class.php</div>
+							<div class="index-item-description">DEPRECATED FUNCTION  appends values to template variables by reference</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">append_by_ref</span>
@@ -844,8 +817,8 @@
 						<span class="method-title">assignByRef</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Template/Smarty_Internal_Data.html#methodassignByRef">Smarty_Internal_Data::assignByRef()</a> in smarty_internal_data.php</div>
-							<div class="index-item-description">assigns values to template variables by reference</div>
+			<div class="index-item-details"><a href="Smarty/Template/SmartyBC31.html#methodassignByRef">SmartyBC31::assignByRef()</a> in SmartyBC31.class.php</div>
+							<div class="index-item-description">DEPRECATED FUNCTION  assigns values to template variables by reference</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">assignCached</span>
@@ -883,20 +856,6 @@
 		<div style="clear: both"></div>
 	</div>
 	<dl>
-			<dt class="field">
-						<span class="var-title">$block_functions</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_TemplateCompilerBase.html#var$block_functions">Smarty_Internal_TemplateCompilerBase::$block_functions</a> in smarty_internal_templatecompilerbase.php</div>
-							<div class="index-item-description">block function properties</div>
-					</dd>
-			<dt class="field">
-						<span class="var-title">$block_functions_code</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_TemplateCompilerBase.html#var$block_functions_code">Smarty_Internal_TemplateCompilerBase::$block_functions_code</a> in smarty_internal_templatecompilerbase.php</div>
-							<div class="index-item-description">block function compiled code</div>
-					</dd>
 			<dt class="field">
 						<span class="var-title">$block_nesting_level</span>
 					</dt>
@@ -986,22 +945,32 @@
 	</div>
 	<dl>
 			<dt class="field">
-						<span class="var-title">$constants</span>
+						<span class="var-title">$cache_id</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#var$constants">Smarty_Internal_Info::$constants</a> in smarty_internal_info.php</div>
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Template_Cached.html#var$cache_id">Smarty_Template_Cached::$cache_id</a> in smarty_cacheresource.php</div>
+							<div class="index-item-description">Template Cache Id (Smarty::$cache_id)</div>
 					</dd>
 			<dt class="field">
-						<span class="var-title">$constructed</span>
+						<span class="var-title">$code_obj</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#var$constructed">Smarty_Internal_Info::$constructed</a> in smarty_internal_info.php</div>
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Internal_CacheCreate.html#var$code_obj">Smarty_Internal_CacheCreate::$code_obj</a> in smarty_internal_cachecreate.php</div>
+							<div class="index-item-description">Code Object</div>
 					</dd>
 			<dt class="field">
-						CONSTANTS
+						<span class="var-title">$compile_id</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#constCONSTANTS">Smarty_Internal_Info::CONSTANTS</a> in smarty_internal_info.php</div>
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Template_Cached.html#var$compile_id">Smarty_Template_Cached::$compile_id</a> in smarty_cacheresource.php</div>
+							<div class="index-item-description">Template Compile Id (Smarty::$compile_id)</div>
+					</dd>
+			<dt class="field">
+						<span class="var-title">$content</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Template_Cached.html#var$content">Smarty_Template_Cached::$content</a> in smarty_cacheresource.php</div>
+							<div class="index-item-description">Source Content</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$contents</span>
@@ -1014,7 +983,7 @@
 						<span class="method-title">clear</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Internal_CacheResource_File.html#methodclear">Smarty_Internal_CacheResource_File::clear()</a> in smarty_internal_cacheresource_file.php</div>
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_CacheResource_Custom.html#methodclear">Smarty_CacheResource_Custom::clear()</a> in smarty_cacheresource_custom.php</div>
 							<div class="index-item-description">Empty cache for a specific template</div>
 					</dd>
 			<dt class="field">
@@ -1035,7 +1004,7 @@
 						<span class="method-title">clear</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_CacheResource_Custom.html#methodclear">Smarty_CacheResource_Custom::clear()</a> in smarty_cacheresource_custom.php</div>
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Internal_CacheResource_File.html#methodclear">Smarty_Internal_CacheResource_File::clear()</a> in smarty_internal_cacheresource_file.php</div>
 							<div class="index-item-description">Empty cache for a specific template</div>
 					</dd>
 			<dt class="field">
@@ -1065,6 +1034,20 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_CacheResource.html#methodclearAll">Smarty_CacheResource::clearAll()</a> in smarty_cacheresource.php</div>
 							<div class="index-item-description">Empty cache</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">createCacheFile</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Internal_CacheCreate.html#methodcreateCacheFile">Smarty_Internal_CacheCreate::createCacheFile()</a> in smarty_internal_cachecreate.php</div>
+							<div class="index-item-description">Create new cache file</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">createSmartyContentClass</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Internal_CacheCreate.html#methodcreateSmartyContentClass">Smarty_Internal_CacheCreate::createSmartyContentClass()</a> in smarty_internal_cachecreate.php</div>
+							<div class="index-item-description">Create Smarty content class for cache files</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$compileds</span>
@@ -1102,6 +1085,13 @@
 							<div class="index-item-description">called subfuntions from template function</div>
 					</dd>
 			<dt class="field">
+						<span class="var-title">$compiled_footer_code</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_TemplateCompilerBase.html#var$compiled_footer_code">Smarty_Internal_TemplateCompilerBase::$compiled_footer_code</a> in smarty_internal_templatecompilerbase.php</div>
+							<div class="index-item-description">compiled footer code</div>
+					</dd>
+			<dt class="field">
 						<span class="var-title">$compiles_template_function</span>
 					</dt>
 		<dd class="index-item-body">
@@ -1133,7 +1123,7 @@
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_TemplateCompilerBase.html#methodcallTagCompiler">Smarty_Internal_TemplateCompilerBase::callTagCompiler()</a> in smarty_internal_templatecompilerbase.php</div>
-							<div class="index-item-description">lazy loads internal compile plugin for tag and calls the compile methode</div>
+							<div class="index-item-description">lazy loads internal compile plugin for tag and calls the compile method</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">closeTag</span>
@@ -1146,29 +1136,8 @@
 						<span class="method-title">compile</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Private_Function_Plugin.html#methodcompile">Smarty_Internal_Compile_Private_Function_Plugin::compile()</a> in smarty_internal_compile_private_function_plugin.php</div>
-							<div class="index-item-description">Compiles code for the execution of function plugin</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">compile</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Private_Inheritance_template.html#methodcompile">Smarty_Internal_Compile_Private_Inheritance_template::compile()</a> in smarty_internal_compile_private_inheritance_template.php</div>
+			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Private_Inheritance_Template.html#methodcompile">Smarty_Internal_Compile_Private_Inheritance_Template::compile()</a> in smarty_internal_compile_private_inheritance_template.php</div>
 							<div class="index-item-description">Compiles code for callind interitance templaes</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">compile</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Private_Object_Block_Function.html#methodcompile">Smarty_Internal_Compile_Private_Object_Block_Function::compile()</a> in smarty_internal_compile_private_object_block_function.php</div>
-							<div class="index-item-description">Compiles code for the execution of block plugin</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">compile</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Private_Compiler_PluginClose.html#methodcompile">Smarty_Internal_Compile_Private_Compiler_PluginClose::compile()</a> in smarty_internal_compile_private_compiler_plugin.php</div>
-							<div class="index-item-description">Compiles code for the execution of function plugin</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">compile</span>
@@ -1181,14 +1150,28 @@
 						<span class="method-title">compile</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Ldelim.html#methodcompile">Smarty_Internal_Compile_Ldelim::compile()</a> in smarty_internal_compile_ldelim.php</div>
-							<div class="index-item-description">Compiles code for the {ldelim} tag</div>
+			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Private_Object_Block_Function.html#methodcompile">Smarty_Internal_Compile_Private_Object_Block_Function::compile()</a> in smarty_internal_compile_private_object_block_function.php</div>
+							<div class="index-item-description">Compiles code for the execution of block plugin</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">compile</span>
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Private_Object_Function.html#methodcompile">Smarty_Internal_Compile_Private_Object_Function::compile()</a> in smarty_internal_compile_private_object_function.php</div>
+							<div class="index-item-description">Compiles code for the execution of function plugin</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">compile</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Private_Function_Plugin.html#methodcompile">Smarty_Internal_Compile_Private_Function_Plugin::compile()</a> in smarty_internal_compile_private_function_plugin.php</div>
+							<div class="index-item-description">Compiles code for the execution of function plugin</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">compile</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Private_Compiler_PluginClose.html#methodcompile">Smarty_Internal_Compile_Private_Compiler_PluginClose::compile()</a> in smarty_internal_compile_private_compiler_plugin.php</div>
 							<div class="index-item-description">Compiles code for the execution of function plugin</div>
 					</dd>
 			<dt class="field">
@@ -1218,6 +1201,13 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Private_Compiler_Plugin.html#methodcompile">Smarty_Internal_Compile_Private_Compiler_Plugin::compile()</a> in smarty_internal_compile_private_compiler_plugin.php</div>
 							<div class="index-item-description">Compiles code for the execution of function plugin</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">compile</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Private_Print_Expression.html#methodcompile">Smarty_Internal_Compile_Private_Print_Expression::compile()</a> in smarty_internal_compile_private_print_expression.php</div>
+							<div class="index-item-description">Compiles code for gererting output from any expression</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">compile</span>
@@ -1272,13 +1262,6 @@
 						<span class="method-title">compile</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Private_Registered_Block.html#methodcompile">Smarty_Internal_Compile_Private_Registered_Block::compile()</a> in smarty_internal_compile_private_registered_block.php</div>
-							<div class="index-item-description">Compiles code for the execution of a block function</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">compile</span>
-					</dt>
-		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Private_Registered_Function.html#methodcompile">Smarty_Internal_Compile_Private_Registered_Function::compile()</a> in smarty_internal_compile_private_registered_function.php</div>
 							<div class="index-item-description">Compiles code for the execution of a registered function</div>
 					</dd>
@@ -1300,15 +1283,22 @@
 						<span class="method-title">compile</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Private_Print_Expression.html#methodcompile">Smarty_Internal_Compile_Private_Print_Expression::compile()</a> in smarty_internal_compile_private_print_expression.php</div>
-							<div class="index-item-description">Compiles code for gererting output from any expression</div>
+			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Insert.html#methodcompile">Smarty_Internal_Compile_Insert::compile()</a> in smarty_internal_compile_insert.php</div>
+							<div class="index-item-description">Compiles code for the {insert} tag</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">compile</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Insert.html#methodcompile">Smarty_Internal_Compile_Insert::compile()</a> in smarty_internal_compile_insert.php</div>
-							<div class="index-item-description">Compiles code for the {insert} tag</div>
+			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Private_Registered_Block.html#methodcompile">Smarty_Internal_Compile_Private_Registered_Block::compile()</a> in smarty_internal_compile_private_registered_block.php</div>
+							<div class="index-item-description">Compiles code for the execution of a block function</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">compile</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Ldelim.html#methodcompile">Smarty_Internal_Compile_Ldelim::compile()</a> in smarty_internal_compile_ldelim.php</div>
+							<div class="index-item-description">Compiles code for the {ldelim} tag</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">compile</span>
@@ -1890,20 +1880,6 @@
 							<div class="index-item-description">creates a template object</div>
 					</dd>
 			<dt class="field">
-						<span class="var-title">$cache_id</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Cached.html#var$cache_id">Smarty_Template_Cached::$cache_id</a> in smarty_cacheresource.php</div>
-							<div class="index-item-description">Template Cache Id (Smarty_Internal_Template::$cache_id)</div>
-					</dd>
-			<dt class="field">
-						<span class="var-title">$code_obj</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Cached.html#var$code_obj">Smarty_Template_Cached::$code_obj</a> in smarty_cacheresource.php</div>
-							<div class="index-item-description">Code Object</div>
-					</dd>
-			<dt class="field">
 						<span class="var-title">$compiler_class</span>
 					</dt>
 		<dd class="index-item-body">
@@ -1918,32 +1894,11 @@
 							<div class="index-item-description">Name of the Class to compile this resource's contents with</div>
 					</dd>
 			<dt class="field">
-						<span class="var-title">$compile_id</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Cached.html#var$compile_id">Smarty_Template_Cached::$compile_id</a> in smarty_cacheresource.php</div>
-							<div class="index-item-description">Template Compile Id (Smarty_Internal_Template::$compile_id)</div>
-					</dd>
-			<dt class="field">
 						<span class="var-title">$components</span>
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Source.html#var$components">Smarty_Template_Source::$components</a> in smarty_resource.php</div>
 							<div class="index-item-description">The Components an extended template is made of</div>
-					</dd>
-			<dt class="field">
-						<span class="var-title">$content</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Cached.html#var$content">Smarty_Template_Cached::$content</a> in smarty_cacheresource.php</div>
-							<div class="index-item-description">Source Content</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">createSmartyContentClass</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Cached.html#methodcreateSmartyContentClass">Smarty_Template_Cached::createSmartyContentClass()</a> in smarty_cacheresource.php</div>
-							<div class="index-item-description">Create Smarty content class for cache files</div>
 					</dd>
 		</dl>
 	<a name="d"></a>
@@ -1953,24 +1908,6 @@
 		<div style="clear: both"></div>
 	</div>
 	<dl>
-			<dt class="field">
-						<span class="var-title">$data</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#var$data">Smarty_Internal_Info::$data</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						<span class="var-title">$defaults</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#var$defaults">Smarty_Internal_Info::$defaults</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						DEFAULTS
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#constDEFAULTS">Smarty_Internal_Info::DEFAULTS</a> in smarty_internal_info.php</div>
-					</dd>
 			<dt class="field">
 						<span class="const-title">DS</span>
 					</dt>
@@ -2016,8 +1953,15 @@
 						<span class="method-title">doCompile</span>
 					</dt>
 		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_TemplateCompilerBase.html#methoddoCompile">Smarty_Internal_TemplateCompilerBase::doCompile()</a> in smarty_internal_templatecompilerbase.php</div>
+							<div class="index-item-description">Method to compile a Smarty template</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">doCompile</span>
+					</dt>
+		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_SmartyTemplateCompiler.html#methoddoCompile">Smarty_Internal_SmartyTemplateCompiler::doCompile()</a> in smarty_internal_smartytemplatecompiler.php</div>
-							<div class="index-item-description">Methode to compile a Smarty template</div>
+							<div class="index-item-description">Method to compile a Smarty template</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">doParse</span>
@@ -2192,10 +2136,17 @@
 	</div>
 	<dl>
 			<dt class="field">
-						<span class="var-title">$errors</span>
+						<span class="var-title">$escape</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#var$errors">Smarty_Internal_Info::$errors</a> in smarty_internal_info.php</div>
+			<div class="index-item-details"><a href="Smarty/SmartyException.html#var$escape">SmartyException::$escape</a> in Smarty.class.php</div>
+					</dd>
+			<dt class="field">
+						<span class="var-title">$exists</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Template_Cached.html#var$exists">Smarty_Template_Cached::$exists</a> in smarty_cacheresource.php</div>
+							<div class="index-item-description">Source Existance</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$exists</span>
@@ -2203,13 +2154,6 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/CompiledResources/Smarty_Compiled.html#var$exists">Smarty_Compiled::$exists</a> in smarty_compiled.php</div>
 							<div class="index-item-description">Compiled Existance</div>
-					</dd>
-			<dt class="field">
-						<span class="var-title">$extends_resource_name</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_TemplateCompilerBase.html#var$extends_resource_name">Smarty_Internal_TemplateCompilerBase::$extends_resource_name</a> in smarty_internal_templatecompilerbase.php</div>
-							<div class="index-item-description">inheritance extends template</div>
 					</dd>
 			<dt class="field">
 						Err1
@@ -2285,13 +2229,6 @@
 			<div class="index-item-details"><a href="Smarty/Template/Smarty.html#methodenableSecurity">Smarty::enableSecurity()</a> in Smarty.class.php</div>
 							<div class="index-item-description">Loads security class and enables security</div>
 					</dd>
-			<dt class="field">
-						<span class="var-title">$exists</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Cached.html#var$exists">Smarty_Template_Cached::$exists</a> in smarty_cacheresource.php</div>
-							<div class="index-item-description">Source Existance</div>
-					</dd>
 		</dl>
 	<a name="f"></a>
 	<div class="index-letter-section">
@@ -2301,29 +2238,18 @@
 	</div>
 	<dl>
 			<dt class="field">
-						<span class="var-title">$filesystem</span>
+						<span class="var-title">$filepath</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#var$filesystem">Smarty_Internal_Info::$filesystem</a> in smarty_internal_info.php</div>
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Template_Cached.html#var$filepath">Smarty_Template_Cached::$filepath</a> in smarty_cacheresource.php</div>
+							<div class="index-item-description">Source Filepath</div>
 					</dd>
 			<dt class="field">
-						<span class="var-title">$flags</span>
+						<span class="var-title">$file_dependency</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#var$flags">Smarty_Internal_Info::$flags</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						FILESYSTEM
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#constFILESYSTEM">Smarty_Internal_Info::FILESYSTEM</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">fetch</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_CacheResource_Custom.html#methodfetch">Smarty_CacheResource_Custom::fetch()</a> in smarty_cacheresource_custom.php</div>
-							<div class="index-item-description">fetch cached content and its modification time from data source</div>
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Internal_CacheCreate.html#var$file_dependency">Smarty_Internal_CacheCreate::$file_dependency</a> in smarty_internal_cachecreate.php</div>
+							<div class="index-item-description">file dependencies</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">fetch</span>
@@ -2333,11 +2259,25 @@
 							<div class="index-item-description">Fetch and prepare a cache object.</div>
 					</dd>
 			<dt class="field">
+						<span class="method-title">fetch</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_CacheResource_Custom.html#methodfetch">Smarty_CacheResource_Custom::fetch()</a> in smarty_cacheresource_custom.php</div>
+							<div class="index-item-description">fetch cached content and its modification time from data source</div>
+					</dd>
+			<dt class="field">
 						<span class="method-title">fetchTimestamp</span>
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_CacheResource_Custom.html#methodfetchTimestamp">Smarty_CacheResource_Custom::fetchTimestamp()</a> in smarty_cacheresource_custom.php</div>
 							<div class="index-item-description">Fetch cached content's modification timestamp from data source</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">findCachedObject</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Internal_CacheCreate.html#methodfindCachedObject">Smarty_Internal_CacheCreate::findCachedObject()</a> in smarty_internal_cachecreate.php</div>
+							<div class="index-item-description">Find template object of cache file and return Smarty_Template_Cached</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$filepath</span>
@@ -2520,20 +2460,6 @@
 							<div class="index-item-description">Source Filepath</div>
 					</dd>
 			<dt class="field">
-						<span class="var-title">$filepath</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Cached.html#var$filepath">Smarty_Template_Cached::$filepath</a> in smarty_cacheresource.php</div>
-							<div class="index-item-description">Source Filepath</div>
-					</dd>
-			<dt class="field">
-						<span class="var-title">$file_dependency</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Cached.html#var$file_dependency">Smarty_Template_Cached::$file_dependency</a> in smarty_cacheresource.php</div>
-							<div class="index-item-description">file dependencies</div>
-					</dd>
-			<dt class="field">
 						<span class="method-title">fetch</span>
 					</dt>
 		<dd class="index-item-body">
@@ -2563,18 +2489,6 @@
 	</div>
 	<dl>
 			<dt class="field">
-						<span class="method-title">getArray</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#methodgetArray">Smarty_Internal_Info::getArray()</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">getHtml</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#methodgetHtml">Smarty_Internal_Info::getHtml()</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
 						<span class="method-title">getCachedContent</span>
 					</dt>
 		<dd class="index-item-body">
@@ -2594,6 +2508,13 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_CacheResource_KeyValueStore.html#methodgetMetaTimestamp">Smarty_CacheResource_KeyValueStore::getMetaTimestamp()</a> in smarty_cacheresource_keyvaluestore.php</div>
 							<div class="index-item-description">Extract the timestamp the $content was cached</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">getRenderedTemplate</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Template_Cached.html#methodgetRenderedTemplate">Smarty_Template_Cached::getRenderedTemplate()</a> in smarty_cacheresource.php</div>
+							<div class="index-item-description">get rendered template output from cached template</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">getTemplateUid</span>
@@ -2823,13 +2744,6 @@
 						<span class="method-title">getBasename</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Resource.html#methodgetBasename">Smarty_Resource::getBasename()</a> in smarty_resource.php</div>
-							<div class="index-item-description">Determine basename for compiled filename</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">getBasename</span>
-					</dt>
-		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Internal_Resource_Registered.html#methodgetBasename">Smarty_Internal_Resource_Registered::getBasename()</a> in smarty_internal_resource_registered.php</div>
 							<div class="index-item-description">Determine basename for compiled filename</div>
 					</dd>
@@ -2844,7 +2758,14 @@
 						<span class="method-title">getBasename</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Resource_Custom.html#methodgetBasename">Smarty_Resource_Custom::getBasename()</a> in smarty_resource_custom.php</div>
+			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Internal_Resource_Eval.html#methodgetBasename">Smarty_Internal_Resource_Eval::getBasename()</a> in smarty_internal_resource_eval.php</div>
+							<div class="index-item-description">Determine basename for compiled filename</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">getBasename</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Resource.html#methodgetBasename">Smarty_Resource::getBasename()</a> in smarty_resource.php</div>
 							<div class="index-item-description">Determine basename for compiled filename</div>
 					</dd>
 			<dt class="field">
@@ -2858,7 +2779,7 @@
 						<span class="method-title">getBasename</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Internal_Resource_Eval.html#methodgetBasename">Smarty_Internal_Resource_Eval::getBasename()</a> in smarty_internal_resource_eval.php</div>
+			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Resource_Custom.html#methodgetBasename">Smarty_Resource_Custom::getBasename()</a> in smarty_resource_custom.php</div>
 							<div class="index-item-description">Determine basename for compiled filename</div>
 					</dd>
 			<dt class="field">
@@ -2886,13 +2807,6 @@
 						<span class="method-title">getContent</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Resource_Custom.html#methodgetContent">Smarty_Resource_Custom::getContent()</a> in smarty_resource_custom.php</div>
-							<div class="index-item-description">Load template's source into current template object</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">getContent</span>
-					</dt>
-		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Internal_Resource_Stream.html#methodgetContent">Smarty_Internal_Resource_Stream::getContent()</a> in smarty_internal_resource_stream.php</div>
 							<div class="index-item-description">Load template's source from stream into current template object</div>
 					</dd>
@@ -2909,6 +2823,13 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Internal_Resource_Eval.html#methodgetContent">Smarty_Internal_Resource_Eval::getContent()</a> in smarty_internal_resource_eval.php</div>
 							<div class="index-item-description">Load template's source from $resource_name into current template object</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">getContent</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Resource_Custom.html#methodgetContent">Smarty_Resource_Custom::getContent()</a> in smarty_resource_custom.php</div>
+							<div class="index-item-description">Load template's source into current template object</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">getContent</span>
@@ -2935,8 +2856,15 @@
 						<span class="method-title">getRenderedTemplate</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Cached.html#methodgetRenderedTemplate">Smarty_Template_Cached::getRenderedTemplate()</a> in smarty_cacheresource.php</div>
-							<div class="index-item-description">get rendered template output from cached template</div>
+			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Resource_Uncompiled.html#methodgetRenderedTemplate">Smarty_Resource_Uncompiled::getRenderedTemplate()</a> in smarty_resource_uncompiled.php</div>
+							<div class="index-item-description">get rendered template output from compiled template</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">getRenderedTemplate</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Source.html#methodgetRenderedTemplate">Smarty_Template_Source::getRenderedTemplate()</a> in smarty_resource.php</div>
+							<div class="index-item-description">get rendered template output from compiled template</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">getTemplateTimestamp</span>
@@ -2960,6 +2888,13 @@
 		<div style="clear: both"></div>
 	</div>
 	<dl>
+			<dt class="field">
+						<span class="var-title">$handler</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Template_Cached.html#var$handler">Smarty_Template_Cached::$handler</a> in smarty_cacheresource.php</div>
+							<div class="index-item-description">CacheResource Handler</div>
+					</dd>
 			<dt class="field">
 						<span class="method-title">hasLock</span>
 					</dt>
@@ -3008,13 +2943,6 @@
 			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Source.html#var$handler">Smarty_Template_Source::$handler</a> in smarty_resource.php</div>
 							<div class="index-item-description">Resource Handler</div>
 					</dd>
-			<dt class="field">
-						<span class="var-title">$handler</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Cached.html#var$handler">Smarty_Template_Cached::$handler</a> in smarty_cacheresource.php</div>
-							<div class="index-item-description">CacheResource Handler</div>
-					</dd>
 		</dl>
 	<a name="i"></a>
 	<div class="index-letter-section">
@@ -3024,10 +2952,25 @@
 	</div>
 	<dl>
 			<dt class="field">
-						<span class="var-title">$ignored_properties</span>
+						<span class="var-title">$inheritance_blocks</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#var$ignored_properties">Smarty_Internal_Info::$ignored_properties</a> in smarty_internal_info.php</div>
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Internal_CacheCreate.html#var$inheritance_blocks">Smarty_Internal_CacheCreate::$inheritance_blocks</a> in smarty_internal_cachecreate.php</div>
+							<div class="index-item-description">block function properties</div>
+					</dd>
+			<dt class="field">
+						<span class="var-title">$inheritance_blocks_code</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Internal_CacheCreate.html#var$inheritance_blocks_code">Smarty_Internal_CacheCreate::$inheritance_blocks_code</a> in smarty_internal_cachecreate.php</div>
+							<div class="index-item-description">block function compiled code</div>
+					</dd>
+			<dt class="field">
+						<span class="var-title">$is_locked</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Template_Cached.html#var$is_locked">Smarty_Template_Cached::$is_locked</a> in smarty_cacheresource.php</div>
+							<div class="index-item-description">flag that cache is locked by this instance</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">invalidate</span>
@@ -3061,6 +3004,34 @@
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Code.html#var$indent_on">Smarty_Internal_Code::$indent_on</a> in smarty_internal_code.php</div>
+					</dd>
+			<dt class="field">
+						<span class="var-title">$inheritance_blocks</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_TemplateCompilerBase.html#var$inheritance_blocks">Smarty_Internal_TemplateCompilerBase::$inheritance_blocks</a> in smarty_internal_templatecompilerbase.php</div>
+							<div class="index-item-description">block function properties</div>
+					</dd>
+			<dt class="field">
+						<span class="var-title">$inheritance_blocks_code</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_TemplateCompilerBase.html#var$inheritance_blocks_code">Smarty_Internal_TemplateCompilerBase::$inheritance_blocks_code</a> in smarty_internal_templatecompilerbase.php</div>
+							<div class="index-item-description">block function compiled code</div>
+					</dd>
+			<dt class="field">
+						<span class="var-title">$isInheritance</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_TemplateCompilerBase.html#var$isInheritance">Smarty_Internal_TemplateCompilerBase::$isInheritance</a> in smarty_internal_templatecompilerbase.php</div>
+							<div class="index-item-description">flag when compiling inheritance</div>
+					</dd>
+			<dt class="field">
+						<span class="var-title">$isInheritanceChild</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_TemplateCompilerBase.html#var$isInheritanceChild">Smarty_Internal_TemplateCompilerBase::$isInheritanceChild</a> in smarty_internal_templatecompilerbase.php</div>
+							<div class="index-item-description">flag when compiling inheritance</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">indent</span>
@@ -3161,13 +3132,6 @@
 							<div class="index-item-description">Check if URI (e.g. {fetch} or {html_image}) is trusted</div>
 					</dd>
 			<dt class="field">
-						<span class="var-title">$inheritanceParentTemplate</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Template/Smarty.html#var$inheritanceParentTemplate">Smarty::$inheritanceParentTemplate</a> in Smarty.class.php</div>
-							<div class="index-item-description">forward pointer to inheritance template parent</div>
-					</dd>
-			<dt class="field">
 						<span class="var-title">$is_cache</span>
 					</dt>
 		<dd class="index-item-body">
@@ -3175,18 +3139,18 @@
 							<div class="index-item-description">flag if class is from cache file</div>
 					</dd>
 			<dt class="field">
-						<span class="var-title">$is_child</span>
+						<span class="var-title">$is_inheritance_child</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Template/Smarty.html#var$is_child">Smarty::$is_child</a> in Smarty.class.php</div>
-							<div class="index-item-description">flag if inheritance template is child</div>
+			<div class="index-item-details"><a href="Smarty/Template/Smarty_Internal_Content.html#var$is_inheritance_child">Smarty_Internal_Content::$is_inheritance_child</a> in smarty_internal_content.php</div>
+							<div class="index-item-description">flag if content is inheritance child</div>
 					</dd>
 			<dt class="field">
-						<span class="var-title">$is_config</span>
+						<span class="var-title">$is_inheritance_child</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Template/Smarty.html#var$is_config">Smarty::$is_config</a> in Smarty.class.php</div>
-							<div class="index-item-description">flag if this instance is a template object is for config files</div>
+			<div class="index-item-details"><a href="Smarty/Template/Smarty.html#var$is_inheritance_child">Smarty::$is_inheritance_child</a> in Smarty.class.php</div>
+							<div class="index-item-description">flag this is inheritance child template</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$is_nocache</span>
@@ -3194,13 +3158,6 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Template/Smarty.html#var$is_nocache">Smarty::$is_nocache</a> in Smarty.class.php</div>
 							<div class="index-item-description">flag set when nocache code sections are executed</div>
-					</dd>
-			<dt class="field">
-						<span class="var-title">$is_template</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Template/Smarty.html#var$is_template">Smarty::$is_template</a> in Smarty.class.php</div>
-							<div class="index-item-description">flag if this instance is a template object</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$is_valid</span>
@@ -3238,11 +3195,29 @@
 							<div class="index-item-description">test to see if valid cache exists for this template</div>
 					</dd>
 			<dt class="field">
-						<span class="var-title">$is_locked</span>
+						IS_CONFIG
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Cached.html#var$is_locked">Smarty_Template_Cached::$is_locked</a> in smarty_cacheresource.php</div>
-							<div class="index-item-description">flag that cache is locked by this instance</div>
+			<div class="index-item-details"><a href="Smarty/Template/Smarty.html#constIS_CONFIG">Smarty::IS_CONFIG</a> in Smarty.class.php</div>
+					</dd>
+			<dt class="field">
+						IS_DATA
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Template/Smarty.html#constIS_DATA">Smarty::IS_DATA</a> in Smarty.class.php</div>
+					</dd>
+			<dt class="field">
+						IS_SMARTY
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Template/Smarty.html#constIS_SMARTY">Smarty::IS_SMARTY</a> in Smarty.class.php</div>
+							<div class="index-item-description">define data object types</div>
+					</dd>
+			<dt class="field">
+						IS_TEMPLATE
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Template/Smarty.html#constIS_TEMPLATE">Smarty::IS_TEMPLATE</a> in Smarty.class.php</div>
 					</dd>
 		</dl>
 	<a name="j"></a>
@@ -3296,6 +3271,13 @@
 			<div class="index-item-details"><a href="Smarty/SmartyRuntimeException.html#var$line">SmartyRuntimeException::$line</a> in Smarty.class.php</div>
 					</dd>
 			<dt class="field">
+						<span class="var-title">$lock_id</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Template_Cached.html#var$lock_id">Smarty_Template_Cached::$lock_id</a> in smarty_cacheresource.php</div>
+							<div class="index-item-description">Id for cache locking</div>
+					</dd>
+			<dt class="field">
 						<span class="method-title">listInvalidationKeys</span>
 					</dt>
 		<dd class="index-item-body">
@@ -3314,6 +3296,13 @@
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_CacheResource.html#methodlocked">Smarty_CacheResource::locked()</a> in smarty_cacheresource.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">loadContent</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/CompiledResources/Smarty_Compiled.html#methodloadContent">Smarty_Compiled::loadContent()</a> in smarty_compiled.php</div>
+							<div class="index-item-description">Load compiled template content</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$lex</span>
@@ -3410,13 +3399,6 @@
 							<div class="index-item-description">load a filter of specified type and name</div>
 					</dd>
 			<dt class="field">
-						<span class="var-title">$lock_id</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Cached.html#var$lock_id">Smarty_Template_Cached::$lock_id</a> in smarty_cacheresource.php</div>
-							<div class="index-item-description">Id for cache locking</div>
-					</dd>
-			<dt class="field">
 						<span class="method-title">load</span>
 					</dt>
 		<dd class="index-item-body">
@@ -3432,10 +3414,18 @@
 	</div>
 	<dl>
 			<dt class="field">
-						<span class="method-title">merge_called_nocache_template_functions</span>
+						<span class="method-title">mergeFromCompiled</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/CompiledResources/Smarty_Compiled.html#methodmerge_called_nocache_template_functions">Smarty_Compiled::merge_called_nocache_template_functions()</a> in smarty_compiled.php</div>
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Internal_CacheCreate.html#methodmergeFromCompiled">Smarty_Internal_CacheCreate::mergeFromCompiled()</a> in smarty_internal_cachecreate.php</div>
+							<div class="index-item-description">Merge plugin info, dependencies and nocache template functions into cache</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">mergeNocacheTemplateFunction</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Internal_CacheCreate.html#methodmergeNocacheTemplateFunction">Smarty_Internal_CacheCreate::mergeNocacheTemplateFunction()</a> in smarty_internal_cachecreate.php</div>
+							<div class="index-item-description">Merge plugin info, dependencies and nocache template functions into cache</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$major</span>
@@ -3693,12 +3683,6 @@
 	</div>
 	<dl>
 			<dt class="field">
-						NOT_AVAILABLE
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#constNOT_AVAILABLE">Smarty_Internal_Info::NOT_AVAILABLE</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
 						<span class="var-title">$nocache</span>
 					</dt>
 		<dd class="index-item-body">
@@ -3749,6 +3733,13 @@
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Config/Smarty_Internal_Configfilelexer.html#constNAKED_STRING_VALUE">Smarty_Internal_Configfilelexer::NAKED_STRING_VALUE</a> in smarty_internal_configfilelexer.php</div>
+					</dd>
+			<dt class="field">
+						<span class="var-title">$nocache</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Template/Smarty_Variable.html#var$nocache">Smarty_Variable::$nocache</a> in smarty_internal_data.php</div>
+							<div class="index-item-description">if true any output of this variable will be not cached</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$name</span>
@@ -3978,7 +3969,7 @@
 						<span class="var-title">$option_flags</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Private_Inheritance_template.html#var$option_flags">Smarty_Internal_Compile_Private_Inheritance_template::$option_flags</a> in smarty_internal_compile_private_inheritance_template.php</div>
+			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Private_Inheritance_Template.html#var$option_flags">Smarty_Internal_Compile_Private_Inheritance_Template::$option_flags</a> in smarty_internal_compile_private_inheritance_template.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">offsetExists</span>
@@ -4056,42 +4047,6 @@
 		<div style="clear: both"></div>
 	</div>
 	<dl>
-			<dt class="field">
-						<span class="var-title">$php</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#var$php">Smarty_Internal_Info::$php</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						<span class="var-title">$plugins</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#var$plugins">Smarty_Internal_Info::$plugins</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						<span class="var-title">$properties</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#var$properties">Smarty_Internal_Info::$properties</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						PHP
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#constPHP">Smarty_Internal_Info::PHP</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						PLUGINS
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#constPLUGINS">Smarty_Internal_Info::PLUGINS</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						PROPERTIES
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#constPROPERTIES">Smarty_Internal_Info::PROPERTIES</a> in smarty_internal_info.php</div>
-					</dd>
 			<dt class="field">
 						<span class="method-title">populate</span>
 					</dt>
@@ -4329,13 +4284,6 @@
 			<div class="index-item-details"><a href="Smarty/Template/Smarty.html#constPLUGIN_MODIFIERCOMPILER">Smarty::PLUGIN_MODIFIERCOMPILER</a> in Smarty.class.php</div>
 					</dd>
 			<dt class="field">
-						<span class="var-title">$processed</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Cached.html#var$processed">Smarty_Template_Cached::$processed</a> in smarty_cacheresource.php</div>
-							<div class="index-item-description">Cache was processed</div>
-					</dd>
-			<dt class="field">
 						<span class="method-title">parseResourceName</span>
 					</dt>
 		<dd class="index-item-body">
@@ -4346,7 +4294,7 @@
 						<span class="method-title">populate</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Resource.html#methodpopulate">Smarty_Resource::populate()</a> in smarty_resource.php</div>
+			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Internal_Resource_Eval.html#methodpopulate">Smarty_Internal_Resource_Eval::populate()</a> in smarty_internal_resource_eval.php</div>
 							<div class="index-item-description">populate Source Object with meta data from Resource</div>
 					</dd>
 			<dt class="field">
@@ -4374,14 +4322,14 @@
 						<span class="method-title">populate</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Resource_Custom.html#methodpopulate">Smarty_Resource_Custom::populate()</a> in smarty_resource_custom.php</div>
+			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Resource.html#methodpopulate">Smarty_Resource::populate()</a> in smarty_resource.php</div>
 							<div class="index-item-description">populate Source Object with meta data from Resource</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">populate</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Internal_Resource_Eval.html#methodpopulate">Smarty_Internal_Resource_Eval::populate()</a> in smarty_internal_resource_eval.php</div>
+			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Resource_Custom.html#methodpopulate">Smarty_Resource_Custom::populate()</a> in smarty_resource_custom.php</div>
 							<div class="index-item-description">populate Source Object with meta data from Resource</div>
 					</dd>
 			<dt class="field">
@@ -4416,14 +4364,14 @@
 						<span class="method-title">populateCompiledFilepath</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Resource_Recompiled.html#methodpopulateCompiledFilepath">Smarty_Resource_Recompiled::populateCompiledFilepath()</a> in smarty_resource_recompiled.php</div>
+			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Resource_Uncompiled.html#methodpopulateCompiledFilepath">Smarty_Resource_Uncompiled::populateCompiledFilepath()</a> in smarty_resource_uncompiled.php</div>
 							<div class="index-item-description">populate Compiled Object with compiled filepath</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">populateCompiledFilepath</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Resource_Uncompiled.html#methodpopulateCompiledFilepath">Smarty_Resource_Uncompiled::populateCompiledFilepath()</a> in smarty_resource_uncompiled.php</div>
+			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Resource_Recompiled.html#methodpopulateCompiledFilepath">Smarty_Resource_Recompiled::populateCompiledFilepath()</a> in smarty_resource_recompiled.php</div>
 							<div class="index-item-description">populate Compiled Object with compiled filepath</div>
 					</dd>
 			<dt class="field">
@@ -4470,40 +4418,11 @@
 	</div>
 	<dl>
 			<dt class="field">
-						<span class="var-title">$registered</span>
+						<span class="var-title">$required_plugins</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#var$registered">Smarty_Internal_Info::$registered</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">reflectedAnnotations</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#methodreflectedAnnotations">Smarty_Internal_Info::reflectedAnnotations()</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">reflectedFunctionFromFile</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#methodreflectedFunctionFromFile">Smarty_Internal_Info::reflectedFunctionFromFile()</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">reflectedFunctionOfCallable</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#methodreflectedFunctionOfCallable">Smarty_Internal_Info::reflectedFunctionOfCallable()</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">reflectedSignature</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#methodreflectedSignature">Smarty_Internal_Info::reflectedSignature()</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						REGISTERED
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#constREGISTERED">Smarty_Internal_Info::REGISTERED</a> in smarty_internal_info.php</div>
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Internal_CacheCreate.html#var$required_plugins">Smarty_Internal_CacheCreate::$required_plugins</a> in smarty_internal_cachecreate.php</div>
+							<div class="index-item-description">required plugins</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$resources</span>
@@ -4530,6 +4449,12 @@
 						<span class="method-title">releaseLock</span>
 					</dt>
 		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_CacheResource.html#methodreleaseLock">Smarty_CacheResource::releaseLock()</a> in smarty_cacheresource.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">releaseLock</span>
+					</dt>
+		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_CacheResource_KeyValueStore.html#methodreleaseLock">Smarty_CacheResource_KeyValueStore::releaseLock()</a> in smarty_cacheresource_keyvaluestore.php</div>
 							<div class="index-item-description">Unlock cache for this template</div>
 					</dd>
@@ -4539,12 +4464,6 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_CacheResource_Custom.html#methodreleaseLock">Smarty_CacheResource_Custom::releaseLock()</a> in smarty_cacheresource_custom.php</div>
 							<div class="index-item-description">Unlock cache for this template</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">releaseLock</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_CacheResource.html#methodreleaseLock">Smarty_CacheResource::releaseLock()</a> in smarty_cacheresource.php</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$required_attributes</span>
@@ -4565,6 +4484,13 @@
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Include.html#var$required_attributes">Smarty_Internal_Compile_Include::$required_attributes</a> in smarty_internal_compile_include.php</div>
+							<div class="index-item-description">Attribute definition: Overwrites base class.</div>
+					</dd>
+			<dt class="field">
+						<span class="var-title">$required_attributes</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Import.html#var$required_attributes">Smarty_Internal_Compile_Import::$required_attributes</a> in smarty_internal_compile_import.php</div>
 							<div class="index-item-description">Attribute definition: Overwrites base class.</div>
 					</dd>
 			<dt class="field">
@@ -4592,7 +4518,7 @@
 						<span class="var-title">$required_attributes</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Private_Inheritance_template.html#var$required_attributes">Smarty_Internal_Compile_Private_Inheritance_template::$required_attributes</a> in smarty_internal_compile_private_inheritance_template.php</div>
+			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Private_Inheritance_Template.html#var$required_attributes">Smarty_Internal_Compile_Private_Inheritance_Template::$required_attributes</a> in smarty_internal_compile_private_inheritance_template.php</div>
 							<div class="index-item-description">Attribute definition: Overwrites base class.</div>
 					</dd>
 			<dt class="field">
@@ -4606,6 +4532,13 @@
 						<span class="var-title">$required_attributes</span>
 					</dt>
 		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Foreach.html#var$required_attributes">Smarty_Internal_Compile_Foreach::$required_attributes</a> in smarty_internal_compile_foreach.php</div>
+							<div class="index-item-description">Attribute definition: Overwrites base class.</div>
+					</dd>
+			<dt class="field">
+						<span class="var-title">$required_attributes</span>
+					</dt>
+		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Function.html#var$required_attributes">Smarty_Internal_Compile_Function::$required_attributes</a> in smarty_internal_compile_function.php</div>
 							<div class="index-item-description">Attribute definition: Overwrites base class.</div>
 					</dd>
@@ -4613,21 +4546,7 @@
 						<span class="var-title">$required_attributes</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Import.html#var$required_attributes">Smarty_Internal_Compile_Import::$required_attributes</a> in smarty_internal_compile_import.php</div>
-							<div class="index-item-description">Attribute definition: Overwrites base class.</div>
-					</dd>
-			<dt class="field">
-						<span class="var-title">$required_attributes</span>
-					</dt>
-		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Call.html#var$required_attributes">Smarty_Internal_Compile_Call::$required_attributes</a> in smarty_internal_compile_call.php</div>
-							<div class="index-item-description">Attribute definition: Overwrites base class.</div>
-					</dd>
-			<dt class="field">
-						<span class="var-title">$required_attributes</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Foreach.html#var$required_attributes">Smarty_Internal_Compile_Foreach::$required_attributes</a> in smarty_internal_compile_foreach.php</div>
 							<div class="index-item-description">Attribute definition: Overwrites base class.</div>
 					</dd>
 			<dt class="field">
@@ -4655,14 +4574,14 @@
 						<span class="var-title">$required_attributes</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Extends.html#var$required_attributes">Smarty_Internal_Compile_Extends::$required_attributes</a> in smarty_internal_compile_extends.php</div>
+			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Eval.html#var$required_attributes">Smarty_Internal_Compile_Eval::$required_attributes</a> in smarty_internal_compile_eval.php</div>
 							<div class="index-item-description">Attribute definition: Overwrites base class.</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$required_attributes</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Eval.html#var$required_attributes">Smarty_Internal_Compile_Eval::$required_attributes</a> in smarty_internal_compile_eval.php</div>
+			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Extends.html#var$required_attributes">Smarty_Internal_Compile_Extends::$required_attributes</a> in smarty_internal_compile_extends.php</div>
 							<div class="index-item-description">Attribute definition: Overwrites base class.</div>
 					</dd>
 			<dt class="field">
@@ -4676,13 +4595,20 @@
 						<span class="var-title">$retvalue</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Configfileparser.html#var$retvalue">Smarty_Internal_Configfileparser::$retvalue</a> in smarty_internal_configfileparser.php</div>
+			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Templateparser.html#var$retvalue">Smarty_Internal_Templateparser::$retvalue</a> in smarty_internal_templateparser.php</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$retvalue</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Templateparser.html#var$retvalue">Smarty_Internal_Templateparser::$retvalue</a> in smarty_internal_templateparser.php</div>
+			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Configfileparser.html#var$retvalue">Smarty_Internal_Configfileparser::$retvalue</a> in smarty_internal_configfileparser.php</div>
+					</dd>
+			<dt class="field">
+						<span class="var-title">$root_block_name</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Block.html#var$root_block_name">Smarty_Internal_Compile_Block::$root_block_name</a> in smarty_internal_compile_block.php</div>
+							<div class="index-item-description">route block name</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">raw</span>
@@ -4936,18 +4862,11 @@
 							<div class="index-item-description">Source must be recompiled on every occasion</div>
 					</dd>
 			<dt class="field">
-						<span class="var-title">$required_plugins</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Cached.html#var$required_plugins">Smarty_Template_Cached::$required_plugins</a> in smarty_cacheresource.php</div>
-							<div class="index-item-description">required plugins</div>
-					</dd>
-			<dt class="field">
 						<span class="var-title">$resource</span>
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Source.html#var$resource">Smarty_Template_Source::$resource</a> in smarty_resource.php</div>
-							<div class="index-item-description">Template Resource (Smarty_Internal_Template::$template_resource)</div>
+							<div class="index-item-description">Template Resource (Smarty::$template_resource)</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$resources</span>
@@ -4967,13 +4886,6 @@
 						<span class="method-title">renderUncompiled</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Source.html#methodrenderUncompiled">Smarty_Template_Source::renderUncompiled()</a> in smarty_resource.php</div>
-							<div class="index-item-description">render the uncompiled source</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">renderUncompiled</span>
-					</dt>
-		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Internal_Resource_PHP.html#methodrenderUncompiled">Smarty_Internal_Resource_PHP::renderUncompiled()</a> in smarty_internal_resource_php.php</div>
 							<div class="index-item-description">Render and output the template (without using the compiler)</div>
 					</dd>
@@ -4986,52 +4898,10 @@
 	</div>
 	<dl>
 			<dt class="field">
-						<span class="var-title">$security</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#var$security">Smarty_Internal_Info::$security</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						<span class="var-title">$smarty</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#var$smarty">Smarty_Internal_Info::$smarty</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						<span class="var-title">$statics</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#var$statics">Smarty_Internal_Info::$statics</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
 						<span class="include-title">Smarty.class.php</span>
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/_libs---Smarty.class.php.html">Smarty.class.php</a> in Smarty.class.php</div>
-					</dd>
-			<dt class="field">
-						<span class="include-title">smarty_cacheresource.php</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/_libs---sysplugins---smarty_cacheresource.php.html">smarty_cacheresource.php</a> in smarty_cacheresource.php</div>
-					</dd>
-			<dt class="field">
-						<span class="include-title">smarty_internal_info.php</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/_libs---sysplugins---smarty_internal_info.php.html">smarty_internal_info.php</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">sanitizeValue</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#methodsanitizeValue">Smarty_Internal_Info::sanitizeValue()</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
-						SECURITY
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#constSECURITY">Smarty_Internal_Info::SECURITY</a> in smarty_internal_info.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">smartyAutoload</span>
@@ -5067,12 +4937,6 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/_libs---Smarty.class.php.html#defineSMARTY_DIR">SMARTY_DIR</a> in Smarty.class.php</div>
 							<div class="index-item-description">set SMARTY_DIR to absolute path to Smarty library files.</div>
-					</dd>
-			<dt class="field">
-						Smarty_Internal_Info
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html">Smarty_Internal_Info</a> in smarty_internal_info.php</div>
 					</dd>
 			<dt class="field">
 						<span class="const-title">SMARTY_MBSTRING</span>
@@ -5113,10 +4977,18 @@
 							<div class="index-item-description">set SMARTY_SYSPLUGINS_DIR to absolute path to Smarty internal plugins.</div>
 					</dd>
 			<dt class="field">
-						STATICS
+						<span class="var-title">$smarty_content</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#constSTATICS">Smarty_Internal_Info::STATICS</a> in smarty_internal_info.php</div>
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Template_Cached.html#var$smarty_content">Smarty_Template_Cached::$smarty_content</a> in smarty_cacheresource.php</div>
+							<div class="index-item-description">instance of smarty content from cached file</div>
+					</dd>
+			<dt class="field">
+						<span class="var-title">$source</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Template_Cached.html#var$source">Smarty_Template_Cached::$source</a> in smarty_cacheresource.php</div>
+							<div class="index-item-description">Source Object</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$sysplugins</span>
@@ -5124,6 +4996,12 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_CacheResource.html#var$sysplugins">Smarty_CacheResource::$sysplugins</a> in smarty_cacheresource.php</div>
 							<div class="index-item-description">resource types provided by the core</div>
+					</dd>
+			<dt class="field">
+						<span class="include-title">smarty_cacheresource.php</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/_libs---sysplugins---smarty_cacheresource.php.html">smarty_cacheresource.php</a> in smarty_cacheresource.php</div>
 					</dd>
 			<dt class="field">
 						<span class="include-title">smarty_cacheresource_custom.php</span>
@@ -5136,6 +5014,12 @@
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Cacher/_libs---sysplugins---smarty_cacheresource_keyvaluestore.php.html">smarty_cacheresource_keyvaluestore.php</a> in smarty_cacheresource_keyvaluestore.php</div>
+					</dd>
+			<dt class="field">
+						<span class="include-title">smarty_internal_cachecreate.php</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/_libs---sysplugins---smarty_internal_cachecreate.php.html">smarty_internal_cachecreate.php</a> in smarty_internal_cachecreate.php</div>
 					</dd>
 			<dt class="field">
 						<span class="include-title">smarty_internal_cacheresource_file.php</span>
@@ -5179,11 +5063,25 @@
 							<div class="index-item-description">Smarty Cache Handler Base for Key/Value Storage Implementations</div>
 					</dd>
 			<dt class="field">
+						Smarty_Internal_CacheCreate
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Internal_CacheCreate.html">Smarty_Internal_CacheCreate</a> in smarty_internal_cachecreate.php</div>
+							<div class="index-item-description">Cache Support Routines To Creacte Cache</div>
+					</dd>
+			<dt class="field">
 						Smarty_Internal_CacheResource_File
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Internal_CacheResource_File.html">Smarty_Internal_CacheResource_File</a> in smarty_internal_cacheresource_file.php</div>
 							<div class="index-item-description">This class does contain all necessary methods for the HTML cache on file system</div>
+					</dd>
+			<dt class="field">
+						Smarty_Template_Cached
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a> in smarty_cacheresource.php</div>
+							<div class="index-item-description">Smarty Resource Data Object</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$smarty_content</span>
@@ -5906,7 +5804,7 @@
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Nocache.html">Smarty_Internal_Compile_Nocache</a> in smarty_internal_compile_nocache.php</div>
-							<div class="index-item-description">Smarty Internal Plugin Compile Nocache Classv</div>
+							<div class="index-item-description">Smarty Internal Plugin Compile Nocache Class</div>
 					</dd>
 			<dt class="field">
 						Smarty_Internal_Compile_Nocacheclose
@@ -5958,10 +5856,10 @@
 							<div class="index-item-description">Smarty Internal Plugin Compile Function Plugin Class</div>
 					</dd>
 			<dt class="field">
-						Smarty_Internal_Compile_Private_Inheritance_template
+						Smarty_Internal_Compile_Private_Inheritance_Template
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Private_Inheritance_template.html">Smarty_Internal_Compile_Private_Inheritance_template</a> in smarty_internal_compile_private_inheritance_template.php</div>
+			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Compile_Private_Inheritance_Template.html">Smarty_Internal_Compile_Private_Inheritance_Template</a> in smarty_internal_compile_private_inheritance_template.php</div>
 							<div class="index-item-description">Smarty Internal Compile Call Of Inheritance Templates Class</div>
 					</dd>
 			<dt class="field">
@@ -6684,6 +6582,20 @@
 							<div class="index-item-description">This class does contain the security settings</div>
 					</dd>
 			<dt class="field">
+						<span class="var-title">$scope</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Template/Smarty_Variable.html#var$scope">Smarty_Variable::$scope</a> in smarty_internal_data.php</div>
+							<div class="index-item-description">the scope the variable will have  (local,parent or root)</div>
+					</dd>
+			<dt class="field">
+						<span class="var-title">$scope_name</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Template/Smarty_Internal_Data.html#var$scope_name">Smarty_Internal_Data::$scope_name</a> in smarty_internal_data.php</div>
+							<div class="index-item-description">scope name of Smarty_Internal_Data</div>
+					</dd>
+			<dt class="field">
 						<span class="var-title">$security_class</span>
 					</dt>
 		<dd class="index-item-body">
@@ -6725,10 +6637,22 @@
 			<div class="index-item-details"><a href="Smarty/Template/_libs---SmartyBC.class.php.html">SmartyBC.class.php</a> in SmartyBC.class.php</div>
 					</dd>
 			<dt class="field">
+						<span class="include-title">SmartyBC31.class.php</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Template/_libs---SmartyBC31.class.php.html">SmartyBC31.class.php</a> in SmartyBC31.class.php</div>
+					</dd>
+			<dt class="field">
 						<span class="include-title">smarty_internal_content.php</span>
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Template/_libs---sysplugins---smarty_internal_content.php.html">smarty_internal_content.php</a> in smarty_internal_content.php</div>
+					</dd>
+			<dt class="field">
+						<span class="include-title">smarty_internal_content_inheritance.php</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Template/_libs---sysplugins---smarty_internal_content_inheritance.php.html">smarty_internal_content_inheritance.php</a> in smarty_internal_content_inheritance.php</div>
 					</dd>
 			<dt class="field">
 						<span class="include-title">smarty_internal_data.php</span>
@@ -6829,7 +6753,14 @@
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Template/SmartyBC.html">SmartyBC</a> in SmartyBC.class.php</div>
-							<div class="index-item-description">Smarty Backward Compatability Wrapper Class</div>
+							<div class="index-item-description">Smarty Backward Compatibility Wrapper Class for Smarty 2</div>
+					</dd>
+			<dt class="field">
+						SmartyBC31
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Template/SmartyBC31.html">SmartyBC31</a> in SmartyBC31.class.php</div>
+							<div class="index-item-description">Smarty Backward Compatibility Wrapper Class for Smarty 3.1</div>
 					</dd>
 			<dt class="field">
 						Smarty_Data
@@ -6843,20 +6774,27 @@
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Template/Smarty_Internal_Content.html">Smarty_Internal_Content</a> in smarty_internal_content.php</div>
-							<div class="index-item-description">Class with shared content processing methodes</div>
+							<div class="index-item-description">Class with shared content processing methods</div>
+					</dd>
+			<dt class="field">
+						Smarty_Internal_Content_Inheritance
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Template/Smarty_Internal_Content_Inheritance.html">Smarty_Internal_Content_Inheritance</a> in smarty_internal_content_inheritance.php</div>
+							<div class="index-item-description">Class with inheritance processing methods</div>
 					</dd>
 			<dt class="field">
 						Smarty_Internal_Data
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Template/Smarty_Internal_Data.html">Smarty_Internal_Data</a> in smarty_internal_data.php</div>
-							<div class="index-item-description">Base class with template and variable methodes</div>
+							<div class="index-item-description">Base class with template and variable methods</div>
 					</dd>
 			<dt class="field">
 						Smarty_Internal_Template
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Template/Smarty_Internal_Template.html">Smarty_Internal_Template</a> in Smarty.class.php</div>
+			<div class="index-item-details"><a href="Smarty/Template/Smarty_Internal_Template.html">Smarty_Internal_Template</a> in SmartyBC31.class.php</div>
 							<div class="index-item-description">Dummy Template class for Smarty 3.1 BC</div>
 					</dd>
 			<dt class="field">
@@ -6865,6 +6803,13 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Template/_libs---SmartyBC.class.php.html#functionsmarty_php_tag">smarty_php_tag()</a> in SmartyBC.class.php</div>
 							<div class="index-item-description">Smarty {php}{/php} block function</div>
+					</dd>
+			<dt class="field">
+						Smarty_Variable
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Template/Smarty_Variable.html">Smarty_Variable</a> in smarty_internal_data.php</div>
+							<div class="index-item-description">class for the Smarty variable object</div>
 					</dd>
 			<dt class="field">
 						Smarty_Variable_Container
@@ -6888,18 +6833,11 @@
 							<div class="index-item-description">container for short_open_tag directive's value before executing PHP templates</div>
 					</dd>
 			<dt class="field">
-						<span class="var-title">$smarty_content</span>
+						<span class="var-title">$smarty</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Cached.html#var$smarty_content">Smarty_Template_Cached::$smarty_content</a> in smarty_cacheresource.php</div>
-							<div class="index-item-description">instance of smarty content from cached file</div>
-					</dd>
-			<dt class="field">
-						<span class="var-title">$source</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Cached.html#var$source">Smarty_Template_Cached::$source</a> in smarty_cacheresource.php</div>
-							<div class="index-item-description">Source Object</div>
+			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Source.html#var$smarty">Smarty_Template_Source::$smarty</a> in smarty_resource.php</div>
+							<div class="index-item-description">Smarty object</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$sources</span>
@@ -7059,13 +6997,6 @@
 							<div class="index-item-description">Smarty Resource Plugin</div>
 					</dd>
 			<dt class="field">
-						Smarty_Template_Cached
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Cached.html">Smarty_Template_Cached</a> in smarty_cacheresource.php</div>
-							<div class="index-item-description">Smarty Resource Data Object</div>
-					</dd>
-			<dt class="field">
 						Smarty_Template_Source
 					</dt>
 		<dd class="index-item-body">
@@ -7088,10 +7019,31 @@
 	</div>
 	<dl>
 			<dt class="field">
-						<span class="var-title">$template</span>
+						<span class="var-title">$trace_call_stack</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#var$template">Smarty_Internal_Info::$template</a> in smarty_internal_info.php</div>
+			<div class="index-item-details"><a href="Smarty/SmartyRuntimeException.html#var$trace_call_stack">SmartyRuntimeException::$trace_call_stack</a> in Smarty.class.php</div>
+					</dd>
+			<dt class="field">
+						<span class="var-title">$template_functions</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Internal_CacheCreate.html#var$template_functions">Smarty_Internal_CacheCreate::$template_functions</a> in smarty_internal_cachecreate.php</div>
+							<div class="index-item-description">template function properties</div>
+					</dd>
+			<dt class="field">
+						<span class="var-title">$template_functions_code</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Internal_CacheCreate.html#var$template_functions_code">Smarty_Internal_CacheCreate::$template_functions_code</a> in smarty_internal_cachecreate.php</div>
+							<div class="index-item-description">template function properties</div>
+					</dd>
+			<dt class="field">
+						<span class="var-title">$timestamp</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Template_Cached.html#var$timestamp">Smarty_Template_Cached::$timestamp</a> in smarty_cacheresource.php</div>
+							<div class="index-item-description">Source Timestamp</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$timestamps</span>
@@ -7928,31 +7880,17 @@
 							<div class="index-item-description">trigger Smarty error</div>
 					</dd>
 			<dt class="field">
-						<span class="var-title">$template_functions</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Cached.html#var$template_functions">Smarty_Template_Cached::$template_functions</a> in smarty_cacheresource.php</div>
-							<div class="index-item-description">template function properties</div>
-					</dd>
-			<dt class="field">
-						<span class="var-title">$template_functions_code</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Cached.html#var$template_functions_code">Smarty_Template_Cached::$template_functions_code</a> in smarty_cacheresource.php</div>
-							<div class="index-item-description">template function properties</div>
-					</dd>
-			<dt class="field">
 						<span class="var-title">$template_lexer_class</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Source.html#var$template_lexer_class">Smarty_Template_Source::$template_lexer_class</a> in smarty_resource.php</div>
+			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Resource.html#var$template_lexer_class">Smarty_Resource::$template_lexer_class</a> in smarty_resource.php</div>
 							<div class="index-item-description">Name of the Class to tokenize this resource's contents with</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$template_lexer_class</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Resource.html#var$template_lexer_class">Smarty_Resource::$template_lexer_class</a> in smarty_resource.php</div>
+			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Source.html#var$template_lexer_class">Smarty_Template_Source::$template_lexer_class</a> in smarty_resource.php</div>
 							<div class="index-item-description">Name of the Class to tokenize this resource's contents with</div>
 					</dd>
 			<dt class="field">
@@ -7968,13 +7906,6 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Source.html#var$template_parser_class">Smarty_Template_Source::$template_parser_class</a> in smarty_resource.php</div>
 							<div class="index-item-description">Name of the Class to parse this resource's contents with</div>
-					</dd>
-			<dt class="field">
-						<span class="var-title">$timestamp</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Cached.html#var$timestamp">Smarty_Template_Cached::$timestamp</a> in smarty_cacheresource.php</div>
-							<div class="index-item-description">Source Timestamp</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$type</span>
@@ -7996,6 +7927,13 @@
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Compiler/Smarty_Internal_Templateparser.html#methodupdateNocacheLineTrace">Smarty_Internal_Templateparser::updateNocacheLineTrace()</a> in smarty_internal_templateparser.php</div>
+					</dd>
+			<dt class="field">
+						<span class="var-title">$usage</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Template/Smarty_Internal_Data.html#var$usage">Smarty_Internal_Data::$usage</a> in smarty_internal_data.php</div>
+							<div class="index-item-description">usage of Smarty_Internal_Data</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$used_tags</span>
@@ -8179,6 +8117,13 @@
 	</div>
 	<dl>
 			<dt class="field">
+						<span class="var-title">$valid</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Template_Cached.html#var$valid">Smarty_Template_Cached::$valid</a> in smarty_cacheresource.php</div>
+							<div class="index-item-description">Cache Is Valid</div>
+					</dd>
+			<dt class="field">
 						<span class="var-title">$value</span>
 					</dt>
 		<dd class="index-item-body">
@@ -8203,6 +8148,13 @@
 			<div class="index-item-details"><a href="Smarty/PluginsFilter/_libs---plugins---variablefilter.htmlspecialchars.php.html">variablefilter.htmlspecialchars.php</a> in variablefilter.htmlspecialchars.php</div>
 					</dd>
 			<dt class="field">
+						<span class="var-title">$value</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Template/Smarty_Variable.html#var$value">Smarty_Variable::$value</a> in smarty_internal_data.php</div>
+							<div class="index-item-description">variable value</div>
+					</dd>
+			<dt class="field">
 						<span class="var-title">$variable_filters</span>
 					</dt>
 		<dd class="index-item-body">
@@ -8216,13 +8168,6 @@
 			<div class="index-item-details"><a href="Smarty/Template/Smarty_Internal_Content.html#var$version">Smarty_Internal_Content::$version</a> in smarty_internal_content.php</div>
 							<div class="index-item-description">Smarty version class was compiled with</div>
 					</dd>
-			<dt class="field">
-						<span class="var-title">$valid</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Cached.html#var$valid">Smarty_Template_Cached::$valid</a> in smarty_cacheresource.php</div>
-							<div class="index-item-description">Cache Is Valid</div>
-					</dd>
 		</dl>
 	<a name="w"></a>
 	<div class="index-letter-section">
@@ -8232,12 +8177,6 @@
 	</div>
 	<dl>
 			<dt class="field">
-						<span class="var-title">$warnings</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Smarty_Internal_Info.html#var$warnings">Smarty_Internal_Info::$warnings</a> in smarty_internal_info.php</div>
-					</dd>
-			<dt class="field">
 						<span class="method-title">write</span>
 					</dt>
 		<dd class="index-item-body">
@@ -8245,11 +8184,11 @@
 							<div class="index-item-description">Save values for a set of keys to cache</div>
 					</dd>
 			<dt class="field">
-						<span class="method-title">writeCachedContent</span>
+						<span class="method-title">write</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Internal_CacheResource_File.html#methodwriteCachedContent">Smarty_Internal_CacheResource_File::writeCachedContent()</a> in smarty_internal_cacheresource_file.php</div>
-							<div class="index-item-description">Write the rendered template output to cache</div>
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Template_Cached.html#methodwrite">Smarty_Template_Cached::write()</a> in smarty_cacheresource.php</div>
+							<div class="index-item-description">Write this cache object to handler</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">writeCachedContent</span>
@@ -8262,7 +8201,7 @@
 						<span class="method-title">writeCachedContent</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_CacheResource.html#methodwriteCachedContent">Smarty_CacheResource::writeCachedContent()</a> in smarty_cacheresource.php</div>
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_Internal_CacheResource_File.html#methodwriteCachedContent">Smarty_Internal_CacheResource_File::writeCachedContent()</a> in smarty_internal_cacheresource_file.php</div>
 							<div class="index-item-description">Write the rendered template output to cache</div>
 					</dd>
 			<dt class="field">
@@ -8270,6 +8209,13 @@
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_CacheResource_Custom.html#methodwriteCachedContent">Smarty_CacheResource_Custom::writeCachedContent()</a> in smarty_cacheresource_custom.php</div>
+							<div class="index-item-description">Write the rendered template output to cache</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">writeCachedContent</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Smarty/Cacher/Smarty_CacheResource.html#methodwriteCachedContent">Smarty_CacheResource::writeCachedContent()</a> in smarty_cacheresource.php</div>
 							<div class="index-item-description">Write the rendered template output to cache</div>
 					</dd>
 			<dt class="field">
@@ -8285,13 +8231,6 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Smarty/PluginsInternal/Smarty_Internal_Write_File.html#methodwriteFile">Smarty_Internal_Write_File::writeFile()</a> in smarty_internal_write_file.php</div>
 							<div class="index-item-description">Writes file in a safe way to disk</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">write</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Smarty/TemplateResources/Smarty_Template_Cached.html#methodwrite">Smarty_Template_Cached::write()</a> in smarty_cacheresource.php</div>
-							<div class="index-item-description">Write this cache object to handler</div>
 					</dd>
 		</dl>
 	<a name="y"></a>

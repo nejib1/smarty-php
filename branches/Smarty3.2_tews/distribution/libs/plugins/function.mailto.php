@@ -45,11 +45,12 @@
  * @version 1.2
  * @author Monte Ohrt <monte at ohrt dot com>
  * @author credits to Jason Sweat (added cc, bcc and subject functionality)
- * @param array                    $params   parameters
- * @param Smarty_Internal_Template $template template object
+ * @param array $params   parameters
+ * @param Smarty $template template object
  * @return string
  */
-function smarty_function_mailto($params, $template) {
+function smarty_function_mailto($params, $template)
+{
     static $_allowed_encoding = array('javascript' => true, 'javascript_charcode' => true, 'hex' => true, 'none' => true);
     $extra = '';
 
@@ -115,11 +116,11 @@ function smarty_function_mailto($params, $template) {
         }
 
         $_ret = "<script type=\"text/javascript\" language=\"javascript\">\n"
-                . "{document.write(String.fromCharCode("
-                . implode(',', $ord)
-                . "))"
-                . "}\n"
-                . "</script>\n";
+            . "{document.write(String.fromCharCode("
+            . implode(',', $ord)
+            . "))"
+            . "}\n"
+            . "</script>\n";
 
         return $_ret;
     } elseif ($encode == 'hex') {

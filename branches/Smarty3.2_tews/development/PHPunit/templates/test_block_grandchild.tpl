@@ -1,2 +1,2 @@
-{extends file='test_block_child.tpl'} 
+{extends file='test_block_child.tpl'}
 {block name='title'}Grandchild Page Title{/block}

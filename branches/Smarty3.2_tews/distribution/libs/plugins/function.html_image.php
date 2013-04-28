@@ -2,14 +2,14 @@
 
 /**
  * Smarty plugin
- * 
+ *
  * @package Smarty
  * @subpackage PluginsFunction
  */
 
 /**
  * Smarty {html_image} function plugin
- * 
+ *
  * Type:     function<br>
  * Name:     html_image<br>
  * Date:     Feb 24, 2003<br>
@@ -24,18 +24,20 @@
  * - basedir     - (optional) - base directory for absolute paths, default is environment variable DOCUMENT_ROOT
  * - path_prefix - prefix for path output (optional, default empty)
  * </pre>
- * 
+ *
  * @link http://www.smarty.net/docs/en/language.function.html.image.tpl {html_image}
  *      (Smarty online manual)
- * @author Monte Ohrt <monte at ohrt dot com> 
- * @author credits to Duda <duda@big.hu> 
+ * @author Monte Ohrt <monte at ohrt dot com>
+ * @author credits to Duda <duda@big.hu>
  * @version 1.0
- * @param array                    $params   parameters
- * @param Smarty_Internal_Template $template template object
- * @return string 
+ * @param array $params   parameters
+ * @param Smarty $template template object
+ * @throws SmartyException
+ * @return string
  * @uses smarty_function_escape_special_chars()
  */
-function smarty_function_html_image($params, $template) {
+function smarty_function_html_image($params, $template)
+{
     require_once(SMARTY_PLUGINS_DIR . 'shared.escape_special_chars.php');
 
     $alt = '';
@@ -105,7 +107,7 @@ function smarty_function_html_image($params, $template) {
 
     if (isset($template->security_policy)) {
         if ($protocol) {
-            // remote resource (or php stream, …)
+            // remote resource (or php stream, ï¿½)
             if (!$template->security_policy->isTrustedUri($params['file'])) {
                 return;
             }
@@ -143,7 +145,7 @@ function smarty_function_html_image($params, $template) {
     if (isset($params['dpi'])) {
         if (strstr($_SERVER['HTTP_USER_AGENT'], 'Mac')) {
             // FIXME: (rodneyrehm) wrong dpi assumption
-            // don't know who thought this up… even if it was true in 1998, it's definitely wrong in 2011.
+            // don't know who thought this upï¿½ even if it was true in 1998, it's definitely wrong in 2011.
             $dpi_default = 72;
         } else {
             $dpi_default = 96;

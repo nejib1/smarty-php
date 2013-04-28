@@ -106,7 +106,7 @@ td {
 <table id="table_assigned_vars">
     {foreach $assigned_vars as $vars}
        <tr class="{if $vars@iteration % 2 eq 0}odd{else}even{/if}">   
-       <th>${$vars@key|escape:'html'}</th>
+       <th>${$vars@key|escape:'html' nofilter}</th>
        <td>{$vars|debug_print_var nofilter}</td></tr>
     {/foreach}
 </table>
@@ -116,7 +116,7 @@ td {
 <table id="table_config_vars">
     {foreach $config_vars as $vars}
        <tr class="{if $vars@iteration % 2 eq 0}odd{else}even{/if}">   
-       <th>{$vars@key|escape:'html'}</th>
+       <th>{$vars@key|escape:'html' nofilter}</th>
        <td>{$vars|debug_print_var nofilter}</td></tr>
     {/foreach}
 

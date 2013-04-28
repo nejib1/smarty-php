@@ -1,17 +1,18 @@
 <?php
 /**
-* Smarty PHPunit tests for deleting compiled templates
-*
-* @package PHPunit
-* @author Uwe Tews
-* @author Rodney Rehm
-*/
+ * Smarty PHPunit tests for deleting compiled templates
+ *
+ * @package PHPunit
+ * @author Uwe Tews
+ * @author Rodney Rehm
+ */
 
 
 /**
-* class for delete compiled template tests
-*/
-class ClearCompiledTests extends PHPUnit_Framework_TestCase {
+ * class for delete compiled template tests
+ */
+class ClearCompiledTests extends PHPUnit_Framework_TestCase
+{
 
     public function setUp()
     {
@@ -42,25 +43,27 @@ class ClearCompiledTests extends PHPUnit_Framework_TestCase {
         // $it = new RecursiveIteratorIterator($di, RecursiveIteratorIterator::CHILD_FIRST | FilesystemIterator::SKIP_DOTS);
         $it = new RecursiveIteratorIterator($di, RecursiveIteratorIterator::CHILD_FIRST);
         foreach ($it as $file) {
-           $_file = $file->__toString();
+            $_file = $file->__toString();
 
             if (preg_match("#[\\\\/]\.#", $_file)) {
                 continue;
             }
 
-			if ($file->isDir()) {
-				rmdir($_file);
-			} else {
-				unlink($_file);
-			}
+            if ($file->isDir()) {
+                rmdir($_file);
+            } else {
+                unlink($_file);
+            }
 
         }
     }
+
     /**
      * list of compiled files
      * @var array
      */
     protected $_files = array();
+
     /**
      * generate compiled files
      * @uses $_files to store references
@@ -94,6 +97,7 @@ class ClearCompiledTests extends PHPUnit_Framework_TestCase {
 
         return $this->_files;
     }
+
     /**
      * Transform $id to $path
      *
@@ -111,6 +115,7 @@ class ClearCompiledTests extends PHPUnit_Framework_TestCase {
         sort($files);
         return $files;
     }
+
     /**
      * update mtime of compiled files
      *
@@ -118,7 +123,7 @@ class ClearCompiledTests extends PHPUnit_Framework_TestCase {
      * @param string $offset time offset added to time()
      * @return void
      */
-    protected function touchFiles($keys, $offset=0)
+    protected function touchFiles($keys, $offset = 0)
     {
         $base = rtrim($this->smarty->getCompileDir(), "\\/");
         $time = time();
@@ -128,6 +133,7 @@ class ClearCompiledTests extends PHPUnit_Framework_TestCase {
             }
         }
     }
+
     /**
      * find all compiled files
      *
@@ -152,7 +158,7 @@ class ClearCompiledTests extends PHPUnit_Framework_TestCase {
                 continue;
             }
 
-			$files[] = substr($file->__toString(), $directory_length);
+            $files[] = substr($file->__toString(), $directory_length);
         }
         sort($files);
         return $files;
@@ -164,10 +170,12 @@ class ClearCompiledTests extends PHPUnit_Framework_TestCase {
     {
         $this->runClearAll(false);
     }
+
     public function testSubsClearAll()
     {
         $this->runClearAll(true);
     }
+
     public function runClearAll($use_sub_dirs)
     {
         $this->smarty->use_sub_dirs = $use_sub_dirs;
@@ -186,18 +194,22 @@ class ClearCompiledTests extends PHPUnit_Framework_TestCase {
     {
         $this->runClearTemplate(false);
     }
+
     public function testSubsClearTemplate()
     {
         $this->runClearTemplate(true);
     }
+
     public function testClearOtherTemplate()
     {
         $this->runClearOtherTemplate(false);
     }
+
     public function testSubsClearOtherTemplate()
     {
         $this->runClearOtherTemplate(true);
     }
+
     public function runClearTemplate($use_sub_dirs)
     {
         $this->smarty->use_sub_dirs = $use_sub_dirs;
@@ -214,6 +226,7 @@ class ClearCompiledTests extends PHPUnit_Framework_TestCase {
         $this->assertEquals($this->expectFiles($expected), $this->getFiles());
         $this->clearFiles();
     }
+
     public function runClearOtherTemplate($use_sub_dirs)
     {
         $this->smarty->use_sub_dirs = $use_sub_dirs;
@@ -232,18 +245,22 @@ class ClearCompiledTests extends PHPUnit_Framework_TestCase {
     {
         $this->runClearCompileid(false);
     }
+
     public function testSubsClearCompileid()
     {
         $this->runClearCompileid(true);
     }
+
     public function testClearOtherCompileid()
     {
         $this->runClearOtherCompileid(false);
     }
+
     public function testSubsClearOtherCompileid()
     {
         $this->runClearOtherCompileid(true);
     }
+
     public function runClearCompileid($use_sub_dirs)
     {
         $this->smarty->use_sub_dirs = $use_sub_dirs;
@@ -262,6 +279,7 @@ class ClearCompiledTests extends PHPUnit_Framework_TestCase {
         $this->clearFiles();
 
     }
+
     public function runClearOtherCompileid($use_sub_dirs)
     {
         $this->smarty->use_sub_dirs = $use_sub_dirs;
@@ -280,10 +298,12 @@ class ClearCompiledTests extends PHPUnit_Framework_TestCase {
     {
         $this->runClearExpired(false);
     }
+
     public function testSubsClearExpired()
     {
         $this->runClearExpired(true);
     }
+
     public function runClearExpired($use_sub_dirs)
     {
         $this->smarty->use_sub_dirs = $use_sub_dirs;
@@ -303,10 +323,12 @@ class ClearCompiledTests extends PHPUnit_Framework_TestCase {
     {
         $this->runClearTemplateExpired(false);
     }
+
     public function testSubsClearTemplateExpired()
     {
         $this->runClearTemplateExpired(true);
     }
+
     public function runClearTemplateExpired($use_sub_dirs)
     {
         $this->smarty->use_sub_dirs = $use_sub_dirs;
@@ -331,10 +353,12 @@ class ClearCompiledTests extends PHPUnit_Framework_TestCase {
     {
         $this->runClearTemplateCacheidExpired(false);
     }
+
     public function testSubsClearTemplateCacheidExpired()
     {
         $this->runClearTemplateCacheidExpired(true);
     }
+
     public function runClearTemplateCacheidExpired($use_sub_dirs)
     {
         $this->smarty->use_sub_dirs = $use_sub_dirs;
@@ -359,10 +383,12 @@ class ClearCompiledTests extends PHPUnit_Framework_TestCase {
     {
         $this->runClearCacheidExpired(false);
     }
+
     public function testSubsClearCacheidExpired()
     {
         $this->runClearCacheidExpired(true);
     }
+
     public function runClearCacheidExpired($use_sub_dirs)
     {
         $this->smarty->use_sub_dirs = $use_sub_dirs;
@@ -387,10 +413,12 @@ class ClearCompiledTests extends PHPUnit_Framework_TestCase {
     {
         $this->runClearTemplateCacheid(false);
     }
+
     public function testSubsClearTemplateCacheid()
     {
         $this->runClearTemplateCacheid(true);
     }
+
     public function runClearTemplateCacheid($use_sub_dirs)
     {
         $this->smarty->use_sub_dirs = $use_sub_dirs;
@@ -413,10 +441,12 @@ class ClearCompiledTests extends PHPUnit_Framework_TestCase {
     {
         $this->runClearAmbiguousTemplate(false);
     }
+
     public function testSubsAmbiguousTemplate()
     {
         $this->runClearAmbiguousTemplate(true);
     }
+
     public function runClearAmbiguousTemplate($use_sub_dirs)
     {
         $this->smarty->use_sub_dirs = $use_sub_dirs;

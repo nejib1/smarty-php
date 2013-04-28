@@ -2,10 +2,10 @@
 /**
 * Smarty Internal Plugin Configfilelexer
 *
-* This is the lexer to break the config file source into tokens
+* This is the lexer to break the config file source into tokens 
 * @package Smarty
 * @subpackage Config
-* @author Uwe Tews
+* @author Uwe Tews 
 */
 /**
 * Smarty Internal Plugin Configfilelexer
@@ -22,14 +22,14 @@ class Smarty_Internal_Configfilelexer
     private $state = 1;
     public $smarty_token_names = array (		// Text for parser error messages
    				);
-
-
+    				
+    				
     function __construct($data, $compiler)
     {
         $this->data = $data . "\n"; //now all lines are \n-terminated
         $this->counter = 0;
         $this->line = 1;
-        $this->compiler = $compiler;
+        $this->compiler = $compiler; 
         $this->mbstring_overload = ini_get('mbstring.func_overload') & 2;
     }
 
@@ -671,7 +671,7 @@ class Smarty_Internal_Configfilelexer
     $to = $match[0][1];
   } else {
     $this->compiler->trigger_template_error ("missing or misspelled literal closing tag");
-  }
+  }  
   if ($this->mbstring_overload) {
     $this->value = mb_substr($this->data,$this->counter,$to-$this->counter,'latin1');
   } else {

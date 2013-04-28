@@ -10,9 +10,11 @@ function foo()
     return 'FUNCTION';
 }
 
-class Baz {
+class Baz
+{
     const FOO = 'CONSTANT';
     public static $FOO = 'STATIC';
+
     public static function foo()
     {
         return 'FUNCTION';

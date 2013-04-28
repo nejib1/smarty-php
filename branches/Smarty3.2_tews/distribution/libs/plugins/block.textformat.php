@@ -26,14 +26,15 @@
  *
  * @link http://www.smarty.net/docs/en/language.function.textformat.tpl {textformat}
  *       (Smarty online manual)
- * @param array                    $params   parameters
- * @param string                   $content  contents of the block
- * @param Smarty_Internal_Template $template template object
- * @param boolean                  &$repeat  repeat flag
+ * @param array $params   parameters
+ * @param string $content  contents of the block
+ * @param Smarty $template template object
+ * @param boolean &$repeat  repeat flag
  * @return string content re-formatted
  * @author Monte Ohrt <monte at ohrt dot com>
  */
-function smarty_block_textformat($params, $content, $template, &$repeat) {
+function smarty_block_textformat($params, $content, $template, &$repeat)
+{
     if (is_null($content)) {
         return;
     }
@@ -53,17 +54,17 @@ function smarty_block_textformat($params, $content, $template, &$repeat) {
             case 'indent_char':
             case 'wrap_char':
             case 'assign':
-                $$_key = (string) $_val;
+                $$_key = (string)$_val;
                 break;
 
             case 'indent':
             case 'indent_first':
             case 'wrap':
-                $$_key = (int) $_val;
+                $$_key = (int)$_val;
                 break;
 
             case 'wrap_cut':
-                $$_key = (bool) $_val;
+                $$_key = (bool)$_val;
                 break;
 
             default:
@@ -76,7 +77,6 @@ function smarty_block_textformat($params, $content, $template, &$repeat) {
     }
     // split into paragraphs
     $_paragraphs = preg_split('![\r\n]{2}!', $content);
-    $_output = '';
 
 
     foreach ($_paragraphs as &$_paragraph) {

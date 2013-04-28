@@ -1,16 +1,17 @@
 <?php
 /**
-* Smarty PHPunit tests deault template handler
-*
-* @package PHPunit
-* @author Rodney Rehm
-*/
+ * Smarty PHPunit tests deault template handler
+ *
+ * @package PHPunit
+ * @author Rodney Rehm
+ */
 
 
 /**
-* class for block plugin tests
-*/
-class ReflectionTests extends PHPUnit_Framework_TestCase {
+ * class for block plugin tests
+ */
+class ReflectionTests extends PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
@@ -31,9 +32,9 @@ class ReflectionTests extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $this->smarty->fetch('eval:{"hello world"|modifier_with_smarty:2}'));
     }
 
-    public static function modifier_with_smarty(Smarty $smarty, $string, $repeat=1)
+    public static function modifier_with_smarty(Smarty $smarty, $string, $repeat = 1)
     {
-        return $string .' '. str_repeat($smarty->getTemplateVars('having_fun'), $repeat);
+        return $string . ' ' . str_repeat($smarty->getTemplateVars('having_fun'), $repeat);
     }
 
     public function testModifierTemplate()
@@ -45,9 +46,9 @@ class ReflectionTests extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $tpl->fetch());
     }
 
-    public static function modifier_with_template(Smarty_Internal_Template $template, $string, $repeat=1)
+    public static function modifier_with_template(Smarty $template, $string, $repeat = 1)
     {
-        return $string .' '. str_repeat($template->getTemplateVars('having_fun'), $repeat);
+        return $string . ' ' . str_repeat($template->getTemplateVars('having_fun'), $repeat);
     }
 
     public function testModifierFail()
@@ -55,7 +56,7 @@ class ReflectionTests extends PHPUnit_Framework_TestCase {
         $this->smarty->registerPlugin('modifier', 'modifier_with_smarty_fail', array('ReflectionTests', 'modifier_with_smarty_fail'));
         try {
             $this->smarty->fetch('eval:{"hello world"|modifier_with_smarty_fail}');
-        } catch(SmartyCompilerException $e) {
+        } catch (SmartyCompilerException $e) {
             $this->assertContains('Missing required', $e->getMessage());
             return;
         }
@@ -77,9 +78,9 @@ class ReflectionTests extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $this->smarty->fetch('eval:{function_with_smarty content="hello world" repeat=2}'));
     }
 
-    public static function function_with_smarty(Smarty $smarty, $content, $repeat=1)
+    public static function function_with_smarty(Smarty $smarty, $content, $repeat = 1)
     {
-        return $content .' '. str_repeat($smarty->getTemplateVars('having_fun'), $repeat);
+        return $content . ' ' . str_repeat($smarty->getTemplateVars('having_fun'), $repeat);
     }
 
     public function testFunctionTemplate()
@@ -91,9 +92,9 @@ class ReflectionTests extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $tpl->fetch());
     }
 
-    public static function function_with_template(Smarty_Internal_Template $template, $content, $repeat=1)
+    public static function function_with_template(Smarty $template, $content, $repeat = 1)
     {
-        return $content .' '. str_repeat($template->getTemplateVars('having_fun'), $repeat);
+        return $content . ' ' . str_repeat($template->getTemplateVars('having_fun'), $repeat);
     }
 
     public function testFunctionFail()
@@ -101,7 +102,7 @@ class ReflectionTests extends PHPUnit_Framework_TestCase {
         $this->smarty->registerPlugin('function', 'function_with_smarty_fail', array('ReflectionTests', 'function_with_smarty_fail'));
         try {
             $this->smarty->fetch('eval:{function_with_smarty_fail content="hello world"}');
-        } catch(SmartyCompilerException $e) {
+        } catch (SmartyCompilerException $e) {
             $this->assertContains('repeat', $e->getMessage());
             return;
         }
@@ -127,9 +128,9 @@ class ReflectionTests extends PHPUnit_Framework_TestCase {
     {
         if ($content == null) return;
         return $content
-            .' '. $first
-            .' '. $second
-            .' '. $smarty->getTemplateVars('having_fun');
+            . ' ' . $first
+            . ' ' . $second
+            . ' ' . $smarty->getTemplateVars('having_fun');
     }
 
     public function testBlockTemplate()
@@ -141,13 +142,13 @@ class ReflectionTests extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $tpl->fetch());
     }
 
-    public static function block_with_template(Smarty_Internal_Template $template, $content, &$repeat, $first, $second)
+    public static function block_with_template(Smarty $template, $content, &$repeat, $first, $second)
     {
         if ($content == null) return;
         return $content
-            .' '. $first
-            .' '. $second
-            .' '. $template->getTemplateVars('having_fun');
+            . ' ' . $first
+            . ' ' . $second
+            . ' ' . $template->getTemplateVars('having_fun');
     }
 
     public function testBlockFail()
@@ -155,7 +156,7 @@ class ReflectionTests extends PHPUnit_Framework_TestCase {
         $this->smarty->registerPlugin('block', 'block_with_smarty_fail', array('ReflectionTests', 'block_with_smarty_fail'));
         try {
             $this->smarty->fetch('eval:{block_with_smarty_fail first="hello world"}con-tent{/block_with_smarty_fail}');
-        } catch(SmartyCompilerException $e) {
+        } catch (SmartyCompilerException $e) {
             $this->assertContains('second', $e->getMessage());
             return;
         }
@@ -173,7 +174,7 @@ class ReflectionTests extends PHPUnit_Framework_TestCase {
         $this->smarty->registerPlugin('block', 'block_with_smarty_fail_content', array('ReflectionTests', 'block_with_smarty_fail_content'));
         try {
             $this->smarty->fetch('eval:{block_with_smarty_fail_content first="hello world" content="nono"}con-tent{/block_with_smarty_fail_content}');
-        } catch(SmartyCompilerException $e) {
+        } catch (SmartyCompilerException $e) {
             $this->assertContains('content', $e->getMessage());
             return;
         }
@@ -191,7 +192,7 @@ class ReflectionTests extends PHPUnit_Framework_TestCase {
         $this->smarty->registerPlugin('block', 'block_with_smarty_fail_repeat', array('ReflectionTests', 'block_with_smarty_fail_repeat'));
         try {
             $this->smarty->fetch('eval:{block_with_smarty_fail_repeat first="hello world" repeat="nono"}con-tent{/block_with_smarty_fail_repeat}');
-        } catch(SmartyCompilerException $e) {
+        } catch (SmartyCompilerException $e) {
             $this->assertContains('repeat', $e->getMessage());
             return;
         }

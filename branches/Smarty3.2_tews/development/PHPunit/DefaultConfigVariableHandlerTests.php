@@ -1,16 +1,17 @@
 <?php
 /**
-* Smarty PHPunit tests variable variables
-*
-* @package PHPunit
-* @author Rodney Rehm
-*/
+ * Smarty PHPunit tests variable variables
+ *
+ * @package PHPunit
+ * @author Rodney Rehm
+ */
 
 
 /**
-* class for variable variables tests
-*/
-class DefaultConfigVariableHandlerTests extends PHPUnit_Framework_TestCase {
+ * class for variable variables tests
+ */
+class DefaultConfigVariableHandlerTests extends PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
@@ -45,6 +46,7 @@ class DefaultConfigVariableHandlerTests extends PHPUnit_Framework_TestCase {
     }
 
     protected $_errors = array();
+
     public function error_handler($errno, $errstr, $errfile, $errline, $errcontext)
     {
         $this->_errors[] = $errstr;
@@ -73,7 +75,7 @@ class DefaultConfigVariableHandlerTests extends PHPUnit_Framework_TestCase {
         $tpl = $this->smarty->createTemplate('eval:{#foo#}');
         try {
             $tpl->fetch();
-        } catch(SmartyException $e) {
+        } catch (SmartyException $e) {
             $this->assertEquals("Unassigned config variable 'foo'", $e->getMessage());
             return;
         }
@@ -84,7 +86,7 @@ class DefaultConfigVariableHandlerTests extends PHPUnit_Framework_TestCase {
 
 function DefaultConfigVariableHandlerTests_value($name, &$value, $context)
 {
-    $value = $name .'-'. ($context->is_template ? 'Template' : 'Smarty');
+    $value = $name . '-' . ($context->usage == Smarty::IS_TEMPLATE ? 'Template' : 'Smarty');
     return true;
 }
 

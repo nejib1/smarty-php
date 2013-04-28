@@ -17,11 +17,13 @@
  * @link http://www.smarty.net/docs/en/language.function.fetch.tpl {fetch}
  *       (Smarty online manual)
  * @author Monte Ohrt <monte at ohrt dot com>
- * @param array                    $params   parameters
- * @param Smarty_Internal_Template $template template object
+ * @param array $params   parameters
+ * @param Smarty $template template object
+ * @throws SmartyException
  * @return string|null if the assign parameter is passed, Smarty assigns the result to a template variable
  */
-function smarty_function_fetch($params, $template) {
+function smarty_function_fetch($params, $template)
+{
     if (empty($params['file'])) {
         trigger_error("[plugin] fetch parameter 'file' cannot be empty", E_USER_NOTICE);
         return;
@@ -39,7 +41,7 @@ function smarty_function_fetch($params, $template) {
 
     if (isset($template->security_policy)) {
         if ($protocol) {
-            // remote resource (or php stream, …)
+            // remote resource (or php stream, ï¿½)
             if (!$template->security_policy->isTrustedUri($params['file'])) {
                 return;
             }
@@ -62,7 +64,7 @@ function smarty_function_fetch($params, $template) {
             $agent = "Smarty Template Engine " . Smarty::SMARTY_VERSION;
             $referer = "";
             $uri = !empty($uri_parts['path']) ? $uri_parts['path'] : '/';
-            $uri .=!empty($uri_parts['query']) ? '?' . $uri_parts['query'] : '';
+            $uri .= !empty($uri_parts['query']) ? '?' . $uri_parts['query'] : '';
             $_is_proxy = false;
             if (empty($uri_parts['port'])) {
                 $port = 80;
@@ -114,7 +116,7 @@ function smarty_function_fetch($params, $template) {
                         break;
                     case "proxy_port":
                         if (!preg_match('!\D!', $param_value)) {
-                            $proxy_port = (int) $param_value;
+                            $proxy_port = (int)$param_value;
                         } else {
                             trigger_error("[plugin] invalid value for attribute '" . $param_key . "'", E_USER_NOTICE);
                             return;
@@ -132,7 +134,7 @@ function smarty_function_fetch($params, $template) {
                         break;
                     case "timeout":
                         if (!preg_match('!\D!', $param_value)) {
-                            $timeout = (int) $param_value;
+                            $timeout = (int)$param_value;
                         } else {
                             trigger_error("[plugin] invalid value for attribute '" . $param_key . "'", E_USER_NOTICE);
                             return;

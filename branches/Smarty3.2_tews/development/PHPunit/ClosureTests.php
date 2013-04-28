@@ -1,12 +1,13 @@
 <?php
 /**
-* Smarty PHPunit tests closure plugins
-*
-* @package PHPunit
-* @author Rodney Rehm
-*/
+ * Smarty PHPunit tests closure plugins
+ *
+ * @package PHPunit
+ * @author Rodney Rehm
+ */
 
-class ClosureTests extends PHPUnit_Framework_TestCase {
+class ClosureTests extends PHPUnit_Framework_TestCase
+{
 
     public function setUp()
     {
@@ -16,12 +17,12 @@ class ClosureTests extends PHPUnit_Framework_TestCase {
 
     public static function isRunnable()
     {
-        return false;
+        return true;
     }
 
     public function testPluginFunction()
     {
-        $this->smarty->registerPlugin('function', 'closure_function', function($params, $template) {
+        $this->smarty->registerPlugin('function', 'closure_function', function ($params, $template) {
             return "[closure-function]";
         });
         $this->assertEquals("[closure-function]", $this->smarty->fetch('eval:{closure_function}'));
@@ -29,7 +30,7 @@ class ClosureTests extends PHPUnit_Framework_TestCase {
 
     public function testPluginBlock()
     {
-        $this->smarty->registerPlugin('block', 'closure_block', function($params, $content, $template, &$repeat) {
+        $this->smarty->registerPlugin('block', 'closure_block', function ($params, $content, $template, &$repeat) {
             $t = $repeat ? "[closure-block]" : '';
             $repeat = false;
             return $t;
@@ -39,7 +40,7 @@ class ClosureTests extends PHPUnit_Framework_TestCase {
 
     public function testPluginModifier()
     {
-        $this->smarty->registerPlugin('modifier', 'closure_modifier', function($text) {
+        $this->smarty->registerPlugin('modifier', 'closure_modifier', function ($text) {
             return "[closure-modifier]";
         });
         $this->assertEquals("[closure-modifier]", $this->smarty->fetch('eval:{""|closure_modifier}'));
@@ -47,7 +48,7 @@ class ClosureTests extends PHPUnit_Framework_TestCase {
 
     public function testPluginModifierCompiler()
     {
-        $this->smarty->registerPlugin('modifiercompiler', 'closure_modifiercompiler', function($params) {
+        $this->smarty->registerPlugin('modifiercompiler', 'closure_modifiercompiler', function ($params) {
             return '"[closure-modifiercompiler]"';
         });
         $this->assertEquals("[closure-modifiercompiler]", $this->smarty->fetch('eval:{""|closure_modifiercompiler}'));
@@ -55,7 +56,7 @@ class ClosureTests extends PHPUnit_Framework_TestCase {
 
     public function testFilterPre()
     {
-        $this->smarty->registerFilter('pre', function($tpl_source, $template){
+        $this->smarty->registerFilter('pre', function ($tpl_source, $template) {
             return $tpl_source . "[closure-filter-pre]";
         });
         $this->assertEquals("foo[closure-filter-pre]", $this->smarty->fetch('eval:foo'));
@@ -63,23 +64,23 @@ class ClosureTests extends PHPUnit_Framework_TestCase {
 
     public function testFilterPost()
     {
-        $this->smarty->registerFilter('pre', function($tpl_source, $template){
-            return $tpl_source . "[closure-filter-pre]";
-        });
-        $this->assertEquals("foo[closure-filter-pre]", $this->smarty->fetch('eval:foo'));
-    }
-
-    public function testFilterOutput()
-    {
-        $this->smarty->registerFilter('post', function($compiled, $template){
-            return $compiled . '<?php echo "[closure-filter-post]"; ?>';
+        $this->smarty->registerFilter('post', function ($compiled, $template) {
+            return $compiled . 'echo "[closure-filter-post]";';
         });
         $this->assertEquals("foo[closure-filter-post]", $this->smarty->fetch('eval:foo'));
     }
 
+    public function testFilterOutput()
+    {
+        $this->smarty->registerFilter('output', function ($output, $template) {
+            return $output . "[closure-filter-output]";
+        });
+        $this->assertEquals("foo[closure-filter-output]", $this->smarty->fetch('eval:foo'));
+    }
+
     public function testFilterVariable()
     {
-        $this->smarty->registerFilter('variable', function($variable, $template){
+        $this->smarty->registerFilter('variable', function ($variable, $template) {
             return $variable . "[closure-filter-variable]";
         });
         $this->smarty->assign('foo', 'foo');

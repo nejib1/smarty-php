@@ -1,15 +1,16 @@
 <?php
 /**
-* Smarty PHPunit tests compilation of compiler plugins
-*
-* @package PHPunit
-* @author Uwe Tews
-*/
+ * Smarty PHPunit tests compilation of compiler plugins
+ *
+ * @package PHPunit
+ * @author Uwe Tews
+ */
 
 /**
-* class for compiler plugin tests
-*/
-class CompileCompilerPluginTests extends PHPUnit_Framework_TestCase {
+ * class for compiler plugin tests
+ */
+class CompileCompilerPluginTests extends PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
@@ -23,25 +24,27 @@ class CompileCompilerPluginTests extends PHPUnit_Framework_TestCase {
     }
 
     /**
-    * test compiler plugin tag in template file
-    */
+     * test compiler plugin tag in template file
+     */
     public function testCompilerPluginFromTemplateFile()
     {
-        $this->smarty->registerPlugin(Smarty::PLUGIN_COMPILER,'compilerplugin', 'mycompilerplugin');
+        $this->smarty->registerPlugin(Smarty::PLUGIN_COMPILER, 'compilerplugin', 'mycompilerplugin');
         $tpl = $this->smarty->createTemplate('compilerplugintest.tpl');
         $this->assertContains("Hello World", $this->smarty->fetch($tpl));
     }
+
     /**
-    * test compiler plugin tag in compiled template file
-    */
+     * test compiler plugin tag in compiled template file
+     */
     public function testCompilerPluginFromCompiledTemplateFile()
     {
         $this->smarty->force_compile = false;
-        $this->smarty->registerPlugin(Smarty::PLUGIN_COMPILER,'compilerplugin', 'mycompilerplugin');
+        $this->smarty->registerPlugin(Smarty::PLUGIN_COMPILER, 'compilerplugin', 'mycompilerplugin');
         $tpl = $this->smarty->createTemplate('compilerplugintest.tpl');
         $this->assertContains("Hello World", $this->smarty->fetch($tpl));
     }
 }
+
 function mycompilerplugin($params, $compiler)
 {
     return '<?php echo \'Hello World\';?>';

@@ -1,16 +1,17 @@
 <?php
 /**
-* Smarty PHPunit tests for string resources
-*
-* @package PHPunit
-* @author Uwe Tews
-*/
+ * Smarty PHPunit tests for string resources
+ *
+ * @package PHPunit
+ * @author Uwe Tews
+ */
 
 
 /**
-* class for string resource tests
-*/
-class StringResourceTests extends PHPUnit_Framework_TestCase {
+ * class for string resource tests
+ */
+class StringResourceTests extends PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
@@ -26,124 +27,138 @@ class StringResourceTests extends PHPUnit_Framework_TestCase {
 
     protected function relative($path)
     {
-        $path = str_replace( dirname(__FILE__), '.', $path );
+        $path = str_replace(dirname(__FILE__), '.', $path);
         if (DS == "\\") {
-            $path = str_replace( "\\", "/", $path );
+            $path = str_replace("\\", "/", $path);
         }
         return $path;
     }
 
     /**
-    * test template string exits
-    */
+     * test template string exits
+     */
     public function testTemplateStringExists1()
     {
         $tpl = $this->smarty->createTemplate('string:{$foo}');
         $this->assertTrue($tpl->source->exists);
     }
+
     public function testTemplateStringExists2()
     {
         $this->assertTrue($this->smarty->templateExists('string:{$foo}'));
     }
+
     /**
-    * test getTemplateFilepath
-    */
+     * test getTemplateFilepath
+     */
     public function testGetTemplateFilepath()
     {
         $tpl = $this->smarty->createTemplate('string:hello world');
         $this->assertEquals('2aae6c35c94fcfb415dbe95f408b9ce91ee846ed', $tpl->source->filepath);
     }
+
     /**
-    * test getTemplateTimestamp
-    */
+     * test getTemplateTimestamp
+     */
     public function testGetTemplateTimestamp()
     {
         $tpl = $this->smarty->createTemplate('string:hello world');
-        $this->assertEquals(0,$tpl->source->timestamp);
+        $this->assertEquals(0, $tpl->source->timestamp);
     }
+
     /**
-    * test getTemplateSource
-    */
+     * test getTemplateSource
+     */
     public function testGetTemplateSource()
     {
         $tpl = $this->smarty->createTemplate('string:hello world{$foo}');
         $this->assertEquals('hello world{$foo}', $tpl->source->content);
     }
+
     /**
-    * test usesCompiler
-    */
+     * test usesCompiler
+     */
     public function testUsesCompiler()
     {
         $tpl = $this->smarty->createTemplate('string:hello world');
         $this->assertFalse($tpl->source->uncompiled);
     }
+
     /**
-    * test isEvaluated
-    */
+     * test isEvaluated
+     */
     public function testIsEvaluated()
     {
         $tpl = $this->smarty->createTemplate('string:hello world');
         $this->assertFalse($tpl->source->recompiled);
     }
+
     /**
-    * test mustCompile
-    */
+     * test mustCompile
+     */
     public function testMustCompile()
     {
         $tpl = $this->smarty->createTemplate('string:hello world');
         $this->assertTrue($tpl->mustCompile);
     }
+
     /**
-    * test getCompiledFilepath
-    */
+     * test getCompiledFilepath
+     */
     public function testGetCompiledFilepath()
     {
         $tpl = $this->smarty->createTemplate('string:hello world');
         $this->assertEquals('./templates_c/2aae6c35c94fcfb415dbe95f408b9ce91ee846ed_0.string.php', $this->relative($tpl->compiled->filepath));
     }
+
     /**
-    * test getCompiledTimestamp
-    */
+     * test getCompiledTimestamp
+     */
     public function testGetCompiledTimestamp()
     {
         $tpl = $this->smarty->createTemplate('string:hello world');
         $this->assertFalse($tpl->compiled->timestamp);
     }
+
     /**
-    * test getCachedTimestamp
-    */
+     * test getCachedTimestamp
+     */
     public function testGetCachedTimestamp()
     {
         $tpl = $this->smarty->createTemplate('string:hello world');
         $this->assertFalse($tpl->cached->timestamp);
     }
+
     /**
-    * test writeCachedContent
-    */
+     * test writeCachedContent
+     */
     public function testWriteCachedContent()
     {
         $tpl = $this->smarty->createTemplate('string:hello world');
         $this->assertTrue($tpl->cached->write($tpl, 'dummy'));
     }
+
     /**
-    * test isCached
-    */
+     * test isCached
+     */
     public function testIsCached()
     {
         $tpl = $this->smarty->createTemplate('string:hello world');
         $this->assertFalse($tpl->isCached());
     }
+
     /**
-    * test getRenderedTemplate
-    */
+     * test getRenderedTemplate
+     */
     public function testGetRenderedTemplate()
     {
         $tpl = $this->smarty->createTemplate('string:hello world');
         $this->assertEquals('hello world', $tpl->fetch());
     }
+
     /**
-    * test $smarty->is_cached
-    */
+     * test $smarty->is_cached
+     */
     public function testSmartyIsCached()
     {
         $this->smarty->caching = true;

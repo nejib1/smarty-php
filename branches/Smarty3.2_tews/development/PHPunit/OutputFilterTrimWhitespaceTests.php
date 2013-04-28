@@ -1,15 +1,16 @@
 <?php
 /**
-* Smarty PHPunit tests for PHP resources
-* 
-* @package PHPunit
-* @author Uwe Tews 
-*/
+ * Smarty PHPunit tests for PHP resources
+ *
+ * @package PHPunit
+ * @author Uwe Tews
+ */
 
 /**
-* class for PHP resource tests
-*/
-class OutputFilterTrimWhitespaceTests extends PHPUnit_Framework_TestCase {
+ * class for PHP resource tests
+ */
+class OutputFilterTrimWhitespaceTests extends PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
@@ -17,12 +18,12 @@ class OutputFilterTrimWhitespaceTests extends PHPUnit_Framework_TestCase {
         $this->smarty->clearAllCache();
         $this->smarty->clearCompiledTemplate();
         $this->smarty->loadFilter('output', 'trimwhitespace');
-    } 
+    }
 
     public static function isRunnable()
     {
         return true;
-    } 
+    }
 
     public function testWhitespace()
     {
@@ -39,15 +40,15 @@ class OutputFilterTrimWhitespaceTests extends PHPUnit_Framework_TestCase {
 		foobar
 	</textarea> </p> </body> </html>
 EOT;
-        
+
         $this->assertEquals($expected, $this->smarty->fetch('whitespace.tpl'));
-    } 
+    }
 
     public function teardown()
     {
         $this->smarty->clearAllCache();
         $this->smarty->clearCompiledTemplate();
-    } 
-} 
+    }
+}
 
 ?>

@@ -38,26 +38,30 @@
  * @package Smarty
  * @subpackage Security
  */
-class Smarty_Internal_Utility {
+class Smarty_Internal_Utility
+{
 
     /**
      * private constructor to prevent calls creation of new instances
      */
-    private final function __construct() {
+    private final function __construct()
+    {
         // intentionally left blank
     }
 
     /**
      * Compile all template files
      *
-     * @param string $extension     template file name extension
-     * @param bool   $force_compile force all to recompile
-     * @param int    $time_limit    set maximum execution time
-     * @param int    $max_errors    set maximum allowed errors
+     * @param string $extension  extension of template file names
+     * @param boolean $force_compile  true to force recompilation of all templates
+     * @param int $time_limit    set maximum execution time
+     * @param int $max_errors    set maximum allowed errors
      * @param Smarty $smarty        Smarty instance
+     * @internal param string $extension template file name extension
      * @return integer number of template files compiled
      */
-    public static function compileAllTemplates($extention, $force_compile, $time_limit, $max_errors, Smarty $smarty) {
+    public static function compileAllTemplates($extension, $force_compile, $time_limit, $max_errors, Smarty $smarty)
+    {
         // switch off time limit
         if (function_exists('set_time_limit')) {
             @set_time_limit($time_limit);
@@ -73,7 +77,7 @@ class Smarty_Internal_Utility {
                 $_file = $_fileinfo->getFilename();
                 if (substr(basename($_fileinfo->getPathname()), 0, 1) == '.' || strpos($_file, '.svn') !== false)
                     continue;
-                if (!substr_compare($_file, $extention, - strlen($extention)) == 0)
+                if (!substr_compare($_file, $extension, -strlen($extension)) == 0)
                     continue;
                 if ($_fileinfo->getPath() == substr($_dir, 0, -1)) {
                     $_template_file = $_file;
@@ -91,7 +95,7 @@ class Smarty_Internal_Utility {
                         $_count++;
                         echo ' compiled in  ', microtime(true) - $_start_time, ' seconds';
                         flush();
-                        echo '<br>'.memory_get_usage(true);
+                        echo '<br>' . memory_get_usage(true);
                     } else {
                         echo ' is up to date';
                         flush();
@@ -115,14 +119,15 @@ class Smarty_Internal_Utility {
     /**
      * Compile all config files
      *
-     * @param string $extension     config file name extension
-     * @param bool   $force_compile force all to recompile
-     * @param int    $time_limit    set maximum execution time
-     * @param int    $max_errors    set maximum allowed errors
+     * @param string $extension  extension of config file names
+     * @param bool $force_compile force all to recompile
+     * @param int $time_limit    set maximum execution time
+     * @param int $max_errors    set maximum allowed errors
      * @param Smarty $smarty        Smarty instance
      * @return integer number of config files compiled
      */
-    public static function compileAllConfig($extention, $force_compile, $time_limit, $max_errors, Smarty $smarty) {
+    public static function compileAllConfig($extension, $force_compile, $time_limit, $max_errors, Smarty $smarty)
+    {
         // switch off time limit
         if (function_exists('set_time_limit')) {
             @set_time_limit($time_limit);
@@ -138,7 +143,7 @@ class Smarty_Internal_Utility {
                 $_file = $_fileinfo->getFilename();
                 if (substr(basename($_fileinfo->getPathname()), 0, 1) == '.' || strpos($_file, '.svn') !== false)
                     continue;
-                if (!substr_compare($_file, $extention, - strlen($extention)) == 0)
+                if (!substr_compare($_file, $extension, -strlen($extension)) == 0)
                     continue;
                 if ($_fileinfo->getPath() == substr($_dir, 0, -1)) {
                     $_config_file = $_file;
@@ -150,13 +155,13 @@ class Smarty_Internal_Utility {
                 $_start_time = microtime(true);
                 try {
                     $_tpl = $smarty->createTemplate($_config_file);
-                    $_tpl->is_config = true;
+                    $_tpl->usage = Smarty::IS_CONFIG;
                     if ($_tpl->mustCompile) {
                         $_tpl->compiler->compileTemplateSource();
                         $_tpl->cleanPointer();
                         $_count++;
                         echo ' compiled in  ', microtime(true) - $_start_time, ' seconds';
-                        echo '<br>'.memory_get_usage(true);
+                        echo '<br>' . memory_get_usage(true);
                         flush();
                     } else {
                         echo ' is up to date';
@@ -181,10 +186,11 @@ class Smarty_Internal_Utility {
     /**
      * Return array of tag/attributes of all tags used by an template
      *
-     * @param Smarty_Internal_Template $template template object
+     * @param Smarty $template template object
      * @return array of tag/attributes
      */
-    public static function getTags(Smarty_Internal_Template $template) {
+    public static function getTags(Smarty $template)
+    {
         $template->get_used_tags = true;
         $template->compiler->compileTemplateSource();
         unset($template->compiler);
@@ -197,10 +203,11 @@ class Smarty_Internal_Utility {
      * If $errors is secified, the diagnostic report will be appended to the array, rather than being output.
      *
      * @param Smarty $smarty  Smarty instance to test
-     * @param array  $errors array to push results into rather than outputting them
+     * @param array $errors array to push results into rather than outputting them
      * @return bool status, true if everything is fine, false else
      */
-    public static function testInstall(Smarty $smarty, &$errors=null) {
+    public static function testInstall(Smarty $smarty, &$errors = null)
+    {
         $status = true;
 
         if ($errors === null) {

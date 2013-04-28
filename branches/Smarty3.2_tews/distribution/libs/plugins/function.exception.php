@@ -17,10 +17,11 @@
  * @link http://www.smarty.net/docs/en/language.function.exception.tpl {exception}
  *       (Smarty online manual)
  * @author Uwe Tews
- * @param Smarty_Internal_Template $template template object
- * @param string  $message   exception messsage
+ * @param Smarty $template template object
+ * @param string $message   exception messsage
+ * @throws SmartyRunTimeException
  */
-function smarty_function_exception(Smarty_Internal_Template $template, $message = 'User Exception') {
+function smarty_function_exception(Smarty $template, $message = 'User Exception')
+{
     throw new SmartyRunTimeException($message, $template);
-    return;
 }

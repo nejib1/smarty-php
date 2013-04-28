@@ -13,12 +13,13 @@
  * Trim unnecessary whitespace from HTML markup.
  *
  * @author   Rodney Rehm
- * @param string                   $source input string
- * @param Smarty_Internal_Template $smarty Smarty object
+ * @param string $source input string
+ * @param Smarty $smarty Smarty object
  * @return string filtered output
  * @todo substr_replace() is not overloaded by mbstring.func_overload - so this function might fail!
  */
-function smarty_outputfilter_trimwhitespace($source, Smarty_Internal_Template $smarty) {
+function smarty_outputfilter_trimwhitespace($source, Smarty $smarty)
+{
     $store = array();
     $_store = 0;
     $_offset = 0;

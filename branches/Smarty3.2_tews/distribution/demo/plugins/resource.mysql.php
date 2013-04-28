@@ -30,7 +30,7 @@ class Smarty_Resource_Mysql extends Smarty_Resource_Custom {
 
     public function __construct() {
         try {
-            $this->db = new PDO("mysql:dbname=test;host=localhost", "smarty", "smarty");
+            $this->db = new PDO("mysql:dbname=test;host=localhost", "smarty");
         } catch (PDOException $e) {
             throw new SmartyException('Mysql Resource failed: ' . $e->getMessage());
         }

@@ -22,6 +22,7 @@
  * @return string with compiled code
  */
 // NOTE: The parser does pass all parameter as strings which could be directly inserted into the compiled code string
-function smarty_modifiercompiler_string_format($input, $format) {
+function smarty_modifiercompiler_string_format($input, $format)
+{
     return "sprintf({$format}, {$input})";
 }

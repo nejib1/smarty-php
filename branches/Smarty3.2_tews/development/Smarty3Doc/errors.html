@@ -13,16 +13,16 @@
 <a href="#cacheresource.mysql.php">cacheresource.mysql.php</a><br>
 <a href="#index.php">index.php</a><br>
 <a href="#info.php">info.php</a><br>
-<a href="#modifiercompiler.strip.php">modifiercompiler.strip.php</a><br>
 <a href="#resource.extendsall.php">resource.extendsall.php</a><br>
 <a href="#resource.mysql.php">resource.mysql.php</a><br>
 <a href="#resource.mysqls.php">resource.mysqls.php</a><br>
 <a href="#shared.escape_special_chars.php">shared.escape_special_chars.php</a><br>
+<a href="#smarty_cacheresource.php">smarty_cacheresource.php</a><br>
 <a href="#smarty_compiled.php">smarty_compiled.php</a><br>
+<a href="#smarty_internal_cachecreate.php">smarty_internal_cachecreate.php</a><br>
 <a href="#smarty_internal_configfilelexer.php">smarty_internal_configfilelexer.php</a><br>
 <a href="#smarty_internal_configfileparser.php">smarty_internal_configfileparser.php</a><br>
 <a href="#smarty_internal_data.php">smarty_internal_data.php</a><br>
-<a href="#smarty_internal_info.php">smarty_internal_info.php</a><br>
 <a href="#smarty_internal_resource_php.php">smarty_internal_resource_php.php</a><br>
 <a href="#smarty_internal_templatelexer.php">smarty_internal_templatelexer.php</a><br>
 <a href="#smarty_internal_templateparser.php">smarty_internal_templateparser.php</a><br>
@@ -55,11 +55,6 @@
 <b>Warning on line 6</b> - Page-level DocBlock precedes "require_once dirname(__FILE__).'/../libs/Smarty.class.php'", use another DocBlock to document the source element<br>
 <b>Warning on line 28</b> - no @package tag was used in a DocBlock for class MySecurity<br>
 <b>Warning on line 34</b> - no @package tag was used in a DocBlock for class InfoFoo<br>
-<a name="modifiercompiler.strip.php"></a>
-<h1>modifiercompiler.strip.php</h1>
-<h2>Warnings:</h2><br>
-<b>Warning on line 27</b> - Unknown tag "@params" used<br>
-<b>Warning on line 27</b> - Unknown tag "@params" used<br>
 <a name="resource.extendsall.php"></a>
 <h1>resource.extendsall.php</h1>
 <h2>Warnings:</h2><br>
@@ -76,13 +71,15 @@
 <a name="shared.escape_special_chars.php"></a>
 <h1>shared.escape_special_chars.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 48</b> - 
+<b>Warning on line 50</b> - 
 duplicate function element "smarty_function_escape_special_chars" in file C:\wamp\www\Smarty3.2.cm\distribution\libs\plugins\shared.escape_special_chars.php will be ignored.
 Use an @ignore tag on the original if you want this case to be documented.<br>
 <a name="smarty_compiled.php"></a>
 <h1>smarty_compiled.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 16</b> - no @package tag was used in a DocBlock for class Smarty_Compiled<br>
+<b>Warning on line 17</b> - no @package tag was used in a DocBlock for class Smarty_Compiled<br>
+<h2>Errors:</h2><br>
+<b>Error on line 83</b> - "@return" tag was used without any parameters, illegal<br>
 <a name="smarty_internal_configfilelexer.php"></a>
 <h1>smarty_internal_configfilelexer.php</h1>
 <h2>Warnings:</h2><br>
@@ -92,20 +89,15 @@ Use an @ignore tag on the original if you want this case to be documented.<br>
 <h2>Warnings:</h2><br>
 <b>Warning on line 12</b> - DocBlock would be page-level, but precedes class "TPC_yyToken", use another DocBlock to document the file<br>
 <b>Warning on line 76</b> - no @package tag was used in a DocBlock for class TPC_yyStackEntry<br>
-<b>Warning on line 87</b> - no @package tag was used in a DocBlock for class Smarty_Internal_Configfileparser<br>
+<b>Warning on line 89</b> - no @package tag was used in a DocBlock for class Smarty_Internal_Configfileparser<br>
 <a name="smarty_internal_data.php"></a>
 <h1>smarty_internal_data.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 514</b> - no @package tag was used in a DocBlock for class Smarty_Variable_Container<br>
-<a name="smarty_internal_info.php"></a>
-<h1>smarty_internal_info.php</h1>
-<h2>Warnings:</h2><br>
-<b>Warning on line 2</b> - no @package tag was used in a DocBlock for class Smarty_Internal_Info<br>
-<b>Warning on line 889</b> - File "C:\wamp\www\Smarty3.2.cm\distribution\libs\sysplugins\smarty_internal_info.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<b>Warning on line 522</b> - no @package tag was used in a DocBlock for class Smarty_Variable_Container<br>
 <a name="smarty_internal_resource_php.php"></a>
 <h1>smarty_internal_resource_php.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 12</b> - DocBlock would be page-level, but precedes class "Smarty_Internal_Resource_PHP", use another DocBlock to document the file<br>
+<b>Warning on line 13</b> - DocBlock would be page-level, but precedes class "Smarty_Internal_Resource_PHP", use another DocBlock to document the file<br>
 <a name="smarty_internal_templatelexer.php"></a>
 <h1>smarty_internal_templatelexer.php</h1>
 <h2>Warnings:</h2><br>
@@ -119,13 +111,21 @@ Use an @ignore tag on the original if you want this case to be documented.<br>
 <a name="smarty_resource.php"></a>
 <h1>smarty_resource.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 444</b> - Unknown tag "@note" used<br>
+<b>Warning on line 453</b> - Unknown tag "@note" used<br>
 <a name="smarty_security.php"></a>
 <h1>smarty_security.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 21</b> - no @package tag was used in a DocBlock for class Smarty_Security<br>
+<b>Warning on line 22</b> - no @package tag was used in a DocBlock for class Smarty_Security<br>
+<a name="smarty_cacheresource.php"></a>
+<h1>smarty_cacheresource.php</h1>
+<h2>Errors:</h2><br>
+<b>Error on line 358</b> - "@return" tag was used without any parameters, illegal<br>
+<a name="smarty_internal_cachecreate.php"></a>
+<h1>smarty_internal_cachecreate.php</h1>
+<h2>Errors:</h2><br>
+<b>Error on line 94</b> - "@return" tag was used without any parameters, illegal<br>
 	<p class="notes" id="credit">
-		Documentation generated on Tue, 11 Dec 2012 21:29:02 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Sun, 28 Apr 2013 12:40:40 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</body>
 </html>

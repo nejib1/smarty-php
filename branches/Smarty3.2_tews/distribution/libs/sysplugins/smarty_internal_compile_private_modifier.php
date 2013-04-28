@@ -16,17 +16,19 @@
  * @package Smarty
  * @subpackage Compiler
  */
-class Smarty_Internal_Compile_Private_Modifier extends Smarty_Internal_CompileBase {
+class Smarty_Internal_Compile_Private_Modifier extends Smarty_Internal_CompileBase
+{
 
     /**
      * Compiles code for modifier execution
      *
-     * @param array  $args      array with attributes from parser
+     * @param array $args      array with attributes from parser
      * @param object $compiler  compiler object
-     * @param array  $parameter array with compilation parameter
+     * @param array $parameter array with compilation parameter
      * @return string compiled code
      */
-    public function compile($args, $compiler, $parameter) {
+    public function compile($args, $compiler, $parameter)
+    {
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);
         $output = $parameter['value'];
@@ -66,7 +68,7 @@ class Smarty_Internal_Compile_Private_Modifier extends Smarty_Internal_CompileBa
                     case 2:
                         // registered modifier compiler
                         if (isset($compiler->template->registered_plugins[Smarty::PLUGIN_MODIFIERCOMPILER][$modifier][0])) {
-                            $output = call_user_func($compiler->template->registered_plugins[Smarty::PLUGIN_MODIFIERCOMPILER][$modifier][0], $single_modifier, $compiler->smarty);
+                            $output = call_user_func($compiler->template->registered_plugins[Smarty::PLUGIN_MODIFIERCOMPILER][$modifier][0], $single_modifier, $compiler->template);
                             $compiler->known_modifier_type[$modifier] = $type;
                             break 2;
                         }
@@ -159,12 +161,13 @@ class Smarty_Internal_Compile_Private_Modifier extends Smarty_Internal_CompileBa
      * Check number of required modifer parameter oand optionally return context object
      *
      * @param string $modifier modifier name
-     * @param callback $function modifier callback
-     * @param array  $params parameter array
+     * @param callback $callback modifier callback
+     * @param array $params parameter array
      * @param object $compiler  compiler object
      * @return string variable with context object or empty
      */
-    private function testParameter($modifier, $callback, $params, $compiler) {
+    private function testParameter($modifier, $callback, $params, $compiler)
+    {
         $object = '';
         //NOTE: For some PHP functions in PHP < 5.3 getParameters() did not return a result
         if ($parameters = $this->buildReflection($callback)->getParameters()) {

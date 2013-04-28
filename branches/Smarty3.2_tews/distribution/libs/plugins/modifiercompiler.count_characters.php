@@ -19,12 +19,12 @@
  *
  * @param Smarty_Internal_TemplateCompilerBase $compiler compiler object
  * @param string $input  input string
- * @param bool   $whitespace   flag count whitespaces
- * @param array $params parameters
+ * @param bool|string $whitespace flag count whitespaces
  * @return string with compiled code
  */
 // NOTE: The parser does pass all parameter as strings which could be directly inserted into the compiled code string
-function smarty_modifiercompiler_count_characters(Smarty_Internal_TemplateCompilerBase $compiler, $input, $whitespace = 'false') {
+function smarty_modifiercompiler_count_characters(Smarty_Internal_TemplateCompilerBase $compiler, $input, $whitespace = 'false')
+{
     if (preg_match('/^([\'"]?)[a-zA-Z0-9_]+(\\1)$/', $whitespace)) {
         $wspace = trim($whitespace, "'\"");
         if ($wspace == 'false') {

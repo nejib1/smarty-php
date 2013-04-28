@@ -16,7 +16,8 @@
  * @package Smarty
  * @subpackage Compiler
  */
-class Smarty_Internal_Compile_Private_Compiler_Plugin extends Smarty_Internal_CompileBase {
+class Smarty_Internal_Compile_Private_Compiler_Plugin extends Smarty_Internal_CompileBase
+{
 
     /**
      * Attribute definition: Overwrites base class.
@@ -44,7 +45,8 @@ class Smarty_Internal_Compile_Private_Compiler_Plugin extends Smarty_Internal_Co
      * @param string $function PHP function name
      * @return string compiled code
      */
-    public function compile($args, $compiler, $parameter, $tag, $function) {
+    public function compile($args, $compiler, $parameter, $tag, $function)
+    {
         // This tag does create output
         $compiler->has_output = true;
 
@@ -97,7 +99,8 @@ class Smarty_Internal_Compile_Private_Compiler_Plugin extends Smarty_Internal_Co
         // check if it is a compiler plugin fpr blocks
         $closetag = $tag . 'close';
         if (isset($compiler->template->registered_plugins[Smarty::PLUGIN_COMPILER][$closetag]) || isset($compiler->default_handler_plugins[Smarty::PLUGIN_COMPILER][$closetag])
-            || $compiler->template->loadPlugin('smarty_compiler_' . $closetag)) {
+            || $compiler->template->loadPlugin('smarty_compiler_' . $closetag)
+        ) {
             $this->openTag($compiler, $tag, $compiler->nocache);
             // maybe nocache because of nocache variables
             $compiler->nocache = $compiler->nocache | $compiler->tag_nocache;
@@ -119,7 +122,8 @@ class Smarty_Internal_Compile_Private_Compiler_Plugin extends Smarty_Internal_Co
  * @package Smarty
  * @subpackage Compiler
  */
-class Smarty_Internal_Compile_Private_Compiler_PluginClose extends Smarty_Internal_CompileBase {
+class Smarty_Internal_Compile_Private_Compiler_PluginClose extends Smarty_Internal_CompileBase
+{
 
     /**
      * Attribute definition: Overwrites base class.
@@ -147,7 +151,8 @@ class Smarty_Internal_Compile_Private_Compiler_PluginClose extends Smarty_Intern
      * @param string $function PHP function name
      * @return string compiled code
      */
-    public function compile($args, $compiler, $parameter, $tag, $function) {
+    public function compile($args, $compiler, $parameter, $tag, $function)
+    {
         // This tag does create output
         $compiler->has_output = true;
 
@@ -156,6 +161,8 @@ class Smarty_Internal_Compile_Private_Compiler_PluginClose extends Smarty_Intern
 
         $this->tag_nocache = $compiler->nocache;
         $compiler->nocache = $this->closeTag($compiler, array(substr($tag, 0, -5)));
+
+        $new_args = array();
 
         $plugin = 'smarty_compiler_' . $tag;
         if (isset($compiler->template->registered_plugins[Smarty::PLUGIN_COMPILER][$tag]) || isset($compiler->default_handler_plugins[Smarty::PLUGIN_COMPILER][$tag])) {

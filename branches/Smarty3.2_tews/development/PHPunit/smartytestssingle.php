@@ -5,21 +5,24 @@
  * @package PHPunit
  * @author Uwe Tews
  */
-define ('SMARTY_DIR', realpath('../../distribution/libs/'). '/');
+define ('SMARTY_DIR', realpath('../../distribution/libs/') . '/');
 
 require_once SMARTY_DIR . 'SmartyBC.class.php';
 
 /**
  * class for running test suite
  */
-class SmartyTests extends PHPUnit_Framework_TestSuite {
-    static $smarty = null ;
-    static $smartyBC = null ;
+class SmartyTests extends PHPUnit_Framework_TestSuite
+{
+    static $smarty = null;
+    static $smartyBC = null;
+    static $smartyBC31 = null;
 
     public function __construct()
     {
-        SmartyTests::$smarty = new Smarty();
         SmartyTests::$smartyBC = new SmartyBC();
+        SmartyTests::$smartyBC31 = new SmartyBC31();
+        SmartyTests::$smarty = new Smarty();
     }
 
     protected static function _init($smarty)
@@ -72,13 +75,15 @@ class SmartyTests extends PHPUnit_Framework_TestSuite {
         error_reporting(E_ALL | E_STRICT);
         self::_init(SmartyTests::$smarty);
         self::_init(SmartyTests::$smartyBC);
+        self::_init(SmartyTests::$smartyBC31);
         Smarty_Resource::$sources = array();
         Smarty_Compiled::$compileds = array();
         Smarty::$global_tpl_vars = new Smarty_Variable_Container();
         Smarty::$_smarty_vars = array();
         Smarty_CacheResource::$resources = array();
-        SmartyTests::$smartyBC->registerPlugin('block','php','smarty_php_tag');
+        SmartyTests::$smartyBC->registerPlugin('block', 'php', 'smarty_php_tag');
     }
+
     /**
      * look for test units and run them
      */
@@ -105,7 +110,7 @@ class SmartyTests extends PHPUnit_Framework_TestSuite {
 
         if (false) {
             foreach (new DirectoryIterator(dirname(__FILE__)) as $file) {
-                if (!$file->isDot() && !$file->isDir() && (string) $file !== 'smartytests.php' && (string) $file !== 'smartysingletests.php' && substr((string) $file, -4) === '.php') {
+                if (!$file->isDot() && !$file->isDir() && (string)$file !== 'smartytests.php' && (string)$file !== 'smartysingletests.php' && substr((string)$file, -4) === '.php') {
                     $class = basename($file, '.php');
                     if (!in_array($class, $testorder)) {
                         require_once $file->getPathname();

@@ -20,18 +20,22 @@
 			|											<a href="#sec-vars">Vars</a>
 						|											<a href="#sec-methods">Methods</a>
 						
-					</div>
+											<a href="#sec-consts">Constants</a>
+						
+			</div>
 	<div class="info-box-body">
         		<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Dummy Template class for Smarty 3.1 BC</p>
 		<p class="notes">
-			Located in <a class="field" href="_libs---Smarty.class.php.html">/libs/Smarty.class.php</a> (line <span class="field">105</span>)
+			Located in <a class="field" href="_libs---SmartyBC31.class.php.html">/libs/SmartyBC31.class.php</a> (line <span class="field">43</span>)
 		</p>
 		
 				
 		<pre><a href="../../Smarty/Template/Smarty_Internal_Data.html">Smarty_Internal_Data</a>
    |
-   --Smarty_Internal_Template</pre>
+   --<a href="../../Smarty/Template/Smarty.html">Smarty</a>
+      |
+      --Smarty_Internal_Template</pre>
 	
 			</div>
 </div>
@@ -45,7 +49,9 @@
 			|												<a href="#sec-vars">Vars</a>
 								|															<a href="#sec-methods">Methods</a>
 							
-								</div>
+															<a href="#sec-consts">Constants</a>
+							
+					</div>
 		<div class="info-box-body">
 			<table cellpadding="2" cellspacing="0" class="class-table">
 				<tr>
@@ -53,9 +59,9 @@
 					<th class="class-table-header">Description</th>
 				</tr>
 								<tr>
-					<td style="padding-right: 2em"><a href="../../Smarty/Template/Smarty.html">Smarty</a></td>
+					<td style="padding-right: 2em"><a href="../../Smarty/Template/SmartyBC31.html">SmartyBC31</a></td>
 					<td>
-											This is the main Smarty class
+											Smarty Backward Compatibility Wrapper Class for Smarty 3.1
 										</td>
 				</tr>
 							</table>
@@ -74,6 +80,8 @@
 										<span class="disabled">Vars</span>
 						
 			
+												<a href="#sec-consts">Constants</a>
+							
 										| 
 									<a href="#sec-methods">Methods</a>
 							
@@ -81,13 +89,289 @@
 		<div class="info-box-body">
 										<h4>Inherited Variables</h4>
 				<A NAME='inherited_vars'><!-- --></A>
+									<p>Inherited from <span class="classname"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span></p>
+					<blockquote>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$allow_ambiguous_resources">Smarty::$allow_ambiguous_resources</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$allow_php_templates">Smarty::$allow_php_templates</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$allow_relative_path">Smarty::$allow_relative_path</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$autoload_filters">Smarty::$autoload_filters</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$auto_literal">Smarty::$auto_literal</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$block">Smarty::$block</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$cached_subtemplates">Smarty::$cached_subtemplates</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$cache_id">Smarty::$cache_id</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$cache_lifetime">Smarty::$cache_lifetime</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$cache_locking">Smarty::$cache_locking</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$cache_modified_check">Smarty::$cache_modified_check</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$caching">Smarty::$caching</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$caching_type">Smarty::$caching_type</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$compiletime_options">Smarty::$compiletime_options</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$compile_check">Smarty::$compile_check</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$compile_id">Smarty::$compile_id</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$compile_locking">Smarty::$compile_locking</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$config_booleanize">Smarty::$config_booleanize</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$config_overwrite">Smarty::$config_overwrite</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$config_read_hidden">Smarty::$config_read_hidden</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$debugging">Smarty::$debugging</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$debugging_ctrl">Smarty::$debugging_ctrl</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$debug_tpl">Smarty::$debug_tpl</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$default_config_handler_func">Smarty::$default_config_handler_func</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$default_config_type">Smarty::$default_config_type</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$default_config_variable_handler_func">Smarty::$default_config_variable_handler_func</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$default_modifiers">Smarty::$default_modifiers</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$default_plugin_handler_func">Smarty::$default_plugin_handler_func</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$default_resource_type">Smarty::$default_resource_type</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$default_template_handler_func">Smarty::$default_template_handler_func</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$default_variable_handler_func">Smarty::$default_variable_handler_func</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$direct_access_security">Smarty::$direct_access_security</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$disable_core_plugins">Smarty::$disable_core_plugins</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$enable_traceback">Smarty::$enable_traceback</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$error_reporting">Smarty::$error_reporting</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$error_unassigned">Smarty::$error_unassigned</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$escape_html">Smarty::$escape_html</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$force_cache">Smarty::$force_cache</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$force_compile">Smarty::$force_compile</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$get_used_tags">Smarty::$get_used_tags</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$global_tpl_vars">Smarty::$global_tpl_vars</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$has_nocache_code">Smarty::$has_nocache_code</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$is_inheritance_child">Smarty::$is_inheritance_child</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$is_nocache">Smarty::$is_nocache</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$joined_config_dir">Smarty::$joined_config_dir</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$joined_template_dir">Smarty::$joined_template_dir</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$left_delimiter">Smarty::$left_delimiter</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$locking_timeout">Smarty::$locking_timeout</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$merge_compiled_includes">Smarty::$merge_compiled_includes</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$php_handling">Smarty::$php_handling</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$plugin_search_order">Smarty::$plugin_search_order</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$properties">Smarty::$properties</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$registered_cache_resources">Smarty::$registered_cache_resources</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$registered_classes">Smarty::$registered_classes</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$registered_filters">Smarty::$registered_filters</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$registered_objects">Smarty::$registered_objects</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$registered_plugins">Smarty::$registered_plugins</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$registered_resources">Smarty::$registered_resources</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$right_delimiter">Smarty::$right_delimiter</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$rootTemplate">Smarty::$rootTemplate</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$security_class">Smarty::$security_class</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$security_policy">Smarty::$security_policy</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$smarty_debug_id">Smarty::$smarty_debug_id</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$start_time">Smarty::$start_time</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$template_functions">Smarty::$template_functions</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$template_function_chain">Smarty::$template_function_chain</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$template_objects">Smarty::$template_objects</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$template_resource">Smarty::$template_resource</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$trace_call_stack">Smarty::$trace_call_stack</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$used_tags">Smarty::$used_tags</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$use_include_path">Smarty::$use_include_path</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$use_sub_dirs">Smarty::$use_sub_dirs</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$variable_filters">Smarty::$variable_filters</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$_callbacks">Smarty::$_callbacks</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$_capture_stack">Smarty::$_capture_stack</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$_CHARSET">Smarty::$_CHARSET</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$_current_file">Smarty::$_current_file</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$_DATE_FORMAT">Smarty::$_DATE_FORMAT</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$_dir_perms">Smarty::$_dir_perms</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$_file_perms">Smarty::$_file_perms</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$_IS_WINDOWS">Smarty::$_IS_WINDOWS</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$_MBSTRING">Smarty::$_MBSTRING</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$_muted_directories">Smarty::$_muted_directories</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$_parserdebug">Smarty::$_parserdebug</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$_previous_error_handler">Smarty::$_previous_error_handler</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$_resource_handlers">Smarty::$_resource_handlers</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$_smarty_vars">Smarty::$_smarty_vars</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$_tag_stack">Smarty::$_tag_stack</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$_UTF8_MODIFIER">Smarty::$_UTF8_MODIFIER</a></span><br>
+							</span>
+											</blockquote> 
 									<p>Inherited from <span class="classname"><a href="../../Smarty/Template/Smarty_Internal_Data.html">Smarty_Internal_Data</a></span></p>
 					<blockquote>
 													<span class="var-title">
 								<span class="var-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#var$parent">Smarty_Internal_Data::$parent</a></span><br>
 							</span>
 													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#var$scope_name">Smarty_Internal_Data::$scope_name</a></span><br>
+							</span>
+													<span class="var-title">
 								<span class="var-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#var$tpl_vars">Smarty_Internal_Data::$tpl_vars</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#var$usage">Smarty_Internal_Data::$usage</a></span><br>
 							</span>
 											</blockquote> 
 										
@@ -101,7 +385,9 @@
 			<a href="#sec-description">Description</a> |
 							<a href="#sec-descendents">Descendents</a> |
 															<a href="#sec-vars">Vars</a>
-																	<span class="disabled">Methods</span>
+																			<a href="#sec-consts">Constants</a>
+							
+										<span class="disabled">Methods</span>
 						
 		</div>
 		<div class="info-box-body">
@@ -110,13 +396,90 @@
 							<h4>Inherited Methods</h4>
 				<a name='inherited_methods'><!-- --></a>	
 									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#method__construct">Smarty::__construct()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodaddAutoloadFilters">Smarty::addAutoloadFilters()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodaddConfigDir">Smarty::addConfigDir()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodaddDefaultModifiers">Smarty::addDefaultModifiers()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodaddPluginsDir">Smarty::addPluginsDir()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodaddTemplateDir">Smarty::addTemplateDir()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodassignCached">Smarty::assignCached()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodcleanPointer">Smarty::cleanPointer()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodclearAllCache">Smarty::clearAllCache()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodclearCache">Smarty::clearCache()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodclearCompiledTemplate">Smarty::clearCompiledTemplate()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodcompileAllConfig">Smarty::compileAllConfig()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodcompileAllTemplates">Smarty::compileAllTemplates()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodcreateData">Smarty::createData()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodcreateTemplate">Smarty::createTemplate()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methoddisableSecurity">Smarty::disableSecurity()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methoddisplay">Smarty::display()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodenableSecurity">Smarty::enableSecurity()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodfetch">Smarty::fetch()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodfindRootTemplate">Smarty::findRootTemplate()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodgetAutoloadFilters">Smarty::getAutoloadFilters()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodgetCacheDir">Smarty::getCacheDir()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodgetCachedVars">Smarty::getCachedVars()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodgetCompileDir">Smarty::getCompileDir()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodgetConfigDir">Smarty::getConfigDir()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodgetDebugTemplate">Smarty::getDebugTemplate()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodgetDefaultModifiers">Smarty::getDefaultModifiers()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodgetGlobal">Smarty::getGlobal()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodgetPluginsDir">Smarty::getPluginsDir()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodgetTags">Smarty::getTags()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodgetTemplateDir">Smarty::getTemplateDir()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodinfo">Smarty::info()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodinfo_TEMPLATE">Smarty::info_TEMPLATE()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodisCached">Smarty::isCached()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodloadFilter">Smarty::loadFilter()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodloadPlugin">Smarty::loadPlugin()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodmuteExpectedErrors">Smarty::muteExpectedErrors()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodmutingErrorHandler">Smarty::mutingErrorHandler()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodregisterCacheResource">Smarty::registerCacheResource()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodregisterCallback">Smarty::registerCallback()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodregisterClass">Smarty::registerClass()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodregisterDefaultConfigHandler">Smarty::registerDefaultConfigHandler()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodregisterDefaultConfigVariableHandler">Smarty::registerDefaultConfigVariableHandler()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodregisterDefaultPluginHandler">Smarty::registerDefaultPluginHandler()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodregisterDefaultTemplateHandler">Smarty::registerDefaultTemplateHandler()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodregisterDefaultVariableHandler">Smarty::registerDefaultVariableHandler()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodregisterFilter">Smarty::registerFilter()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodregisterPlugin">Smarty::registerPlugin()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodregisterResource">Smarty::registerResource()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodsetAutoloadFilters">Smarty::setAutoloadFilters()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodsetCacheDir">Smarty::setCacheDir()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodsetCompileDir">Smarty::setCompileDir()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodsetConfigDir">Smarty::setConfigDir()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodsetDebugTemplate">Smarty::setDebugTemplate()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodsetDefaultModifiers">Smarty::setDefaultModifiers()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodsetPluginsDir">Smarty::setPluginsDir()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodsetTemplateDir">Smarty::setTemplateDir()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodtemplateExists">Smarty::templateExists()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodtestInstall">Smarty::testInstall()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodtriggerCallback">Smarty::triggerCallback()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodunloadFilter">Smarty::unloadFilter()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodunmuteExpectedErrors">Smarty::unmuteExpectedErrors()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodunregisterCacheResource">Smarty::unregisterCacheResource()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodunregisterFilter">Smarty::unregisterFilter()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodunregisterPlugin">Smarty::unregisterPlugin()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#methodunregisterResource">Smarty::unregisterResource()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#method_capture_error">Smarty::_capture_error()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#method_export_cache_value">Smarty::_export_cache_value()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#method_getScopePointer">Smarty::_getScopePointer()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#method_get_filter_name">Smarty::_get_filter_name()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#method__call">Smarty::__call()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#method__clone">Smarty::__clone()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#method__destruct">Smarty::__destruct()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#method__get">Smarty::__get()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/Smarty.html#method__set">Smarty::__set()</a></span><br>
+											</blockquote>
+									<!-- =========== Summary =========== -->
 					<p>Inherited From <span class="classname"><a href="../../Smarty/Template/Smarty_Internal_Data.html">Smarty_Internal_Data</a></span></p>
 					<blockquote>
 													<span class="method-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#method__construct">Smarty_Internal_Data::__construct()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#methodappend">Smarty_Internal_Data::append()</a></span><br>
-													<span class="method-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#methodappendByRef">Smarty_Internal_Data::appendByRef()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#methodassign">Smarty_Internal_Data::assign()</a></span><br>
-													<span class="method-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#methodassignByRef">Smarty_Internal_Data::assignByRef()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#methodassignGlobal">Smarty_Internal_Data::assignGlobal()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#methodassignParents">Smarty_Internal_Data::assignParents()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#methodclearAllAssign">Smarty_Internal_Data::clearAllAssign()</a></span><br>
@@ -132,9 +495,128 @@
 		</div>
 	</div>
 
+	<a name="sec-consts"></a>
+	<div class="info-box">
+		<div class="info-box-title">Class Constants</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendants</a> |
+										<span class="disabled">Constants</span>
+						
+			
+												<a href="#sec-vars">Vars</a>
+														| 
+									<a href="#sec-methods">Methods</a>
+							
+					</div>
+		<div class="info-box-body">
+										<h4>Inherited Constants</h4>
+				<A NAME='inherited_vars'><!-- --></A>
+									<p>Inherited from <span class="classname"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span></p>
+					<blockquote>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constCACHING_LIFETIME_CURRENT">Smarty::CACHING_LIFETIME_CURRENT</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constCACHING_LIFETIME_SAVED">Smarty::CACHING_LIFETIME_SAVED</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constCACHING_NOCACHE_CODE">Smarty::CACHING_NOCACHE_CODE</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constCACHING_OFF">Smarty::CACHING_OFF</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constCOMPILECHECK_CACHEMISS">Smarty::COMPILECHECK_CACHEMISS</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constCOMPILECHECK_OFF">Smarty::COMPILECHECK_OFF</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constCOMPILECHECK_ON">Smarty::COMPILECHECK_ON</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constFILTER_OUTPUT">Smarty::FILTER_OUTPUT</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constFILTER_POST">Smarty::FILTER_POST</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constFILTER_PRE">Smarty::FILTER_PRE</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constFILTER_VARIABLE">Smarty::FILTER_VARIABLE</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constIS_CONFIG">Smarty::IS_CONFIG</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constIS_DATA">Smarty::IS_DATA</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constIS_SMARTY">Smarty::IS_SMARTY</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constIS_TEMPLATE">Smarty::IS_TEMPLATE</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constPHP_ALLOW">Smarty::PHP_ALLOW</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constPHP_PASSTHRU">Smarty::PHP_PASSTHRU</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constPHP_QUOTE">Smarty::PHP_QUOTE</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constPHP_REMOVE">Smarty::PHP_REMOVE</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constPLUGIN_BLOCK">Smarty::PLUGIN_BLOCK</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constPLUGIN_COMPILER">Smarty::PLUGIN_COMPILER</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constPLUGIN_FUNCTION">Smarty::PLUGIN_FUNCTION</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constPLUGIN_MODIFIER">Smarty::PLUGIN_MODIFIER</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constPLUGIN_MODIFIERCOMPILER">Smarty::PLUGIN_MODIFIERCOMPILER</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constSCOPE_GLOBAL">Smarty::SCOPE_GLOBAL</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constSCOPE_LOCAL">Smarty::SCOPE_LOCAL</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constSCOPE_PARENT">Smarty::SCOPE_PARENT</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constSCOPE_ROOT">Smarty::SCOPE_ROOT</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constSMARTY_VERSION">Smarty::SMARTY_VERSION</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constUNASSIGNED_EXCEPTION">Smarty::UNASSIGNED_EXCEPTION</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constUNASSIGNED_IGNORE">Smarty::UNASSIGNED_IGNORE</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constUNASSIGNED_NOTICE">Smarty::UNASSIGNED_NOTICE</a></span><br>
+							</span>
+											</blockquote> 
+										
+		</div>
+	</div>
 
 	<p class="notes" id="credit">
-		Documentation generated on Tue, 11 Dec 2012 21:28:41 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Sun, 28 Apr 2013 12:40:29 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

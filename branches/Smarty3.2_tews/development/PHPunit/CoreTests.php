@@ -1,16 +1,17 @@
 <?php
 /**
-* Smarty PHPunit basic core function tests
-*
-* @package PHPunit
-* @author Uwe Tews
-*/
+ * Smarty PHPunit basic core function tests
+ *
+ * @package PHPunit
+ * @author Uwe Tews
+ */
 
 
 /**
-* class core function tests
-*/
-class CoreTests extends PHPUnit_Framework_TestCase {
+ * class core function tests
+ */
+class CoreTests extends PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
@@ -24,23 +25,24 @@ class CoreTests extends PHPUnit_Framework_TestCase {
 
 
     /**
-    * loadPlugin test unkown plugin
-    */
+     * loadPlugin test unkown plugin
+     */
     public function testLoadPluginErrorReturn()
     {
         $this->assertFalse($this->smarty->loadPlugin('Smarty_Not_Known'));
     }
+
     /**
-    * loadPlugin test Smarty_Internal_Debug exists
-    */
+     * loadPlugin test Smarty_Internal_Debug exists
+     */
     public function testLoadPluginSmartyInternalDebug()
     {
         $this->assertTrue($this->smarty->loadPlugin('Smarty_Internal_Debug') == true);
     }
 
     /**
-    * loadPlugin test loaging from plugins_dir
-    */
+     * loadPlugin test loaging from plugins_dir
+     */
     public function testLoadPluginSmartyPluginCounter()
     {
         $this->assertTrue($this->smarty->loadPlugin('smarty_function_counter') == true);

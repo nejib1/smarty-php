@@ -16,7 +16,8 @@
  * @package Smarty
  * @subpackage Compiler
  */
-class Smarty_Internal_Compile_Private_Print_Expression extends Smarty_Internal_CompileBase {
+class Smarty_Internal_Compile_Private_Print_Expression extends Smarty_Internal_CompileBase
+{
 
     /**
      * Attribute definition: Overwrites base class.
@@ -37,12 +38,14 @@ class Smarty_Internal_Compile_Private_Print_Expression extends Smarty_Internal_C
     /**
      * Compiles code for gererting output from any expression
      *
-     * @param array  $args      array with attributes from parser
+     * @param array $args      array with attributes from parser
      * @param object $compiler  compiler object
-     * @param array  $parameter array with compilation parameter
+     * @param array $parameter array with compilation parameter
+     * @throws SmartyException
      * @return string compiled code
      */
-    public function compile($args, $compiler, $parameter) {
+    public function compile($args, $compiler, $parameter)
+    {
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);
         // nocache option
@@ -104,7 +107,7 @@ class Smarty_Internal_Compile_Private_Print_Expression extends Smarty_Internal_C
                 }
                 // auto loaded filters
                 if (isset($compiler->template->autoload_filters[Smarty::FILTER_VARIABLE])) {
-                    foreach ((array) $compiler->template->autoload_filters[Smarty::FILTER_VARIABLE] as $name) {
+                    foreach ((array)$compiler->template->autoload_filters[Smarty::FILTER_VARIABLE] as $name) {
                         $result = $this->compile_output_filter($compiler, $name, $output);
                         if ($result !== false) {
                             $output = $result;
@@ -134,10 +137,11 @@ class Smarty_Internal_Compile_Private_Print_Expression extends Smarty_Internal_C
     /**
      * @param object $compiler compiler object
      * @param string $name     name of variable filter
-     * @param type   $output   embedded output
+     * @param string $output   embedded output
      * @return string
      */
-    private function compile_output_filter($compiler, $name, $output) {
+    private function compile_output_filter($compiler, $name, $output)
+    {
         $plugin_name = "smarty_variablefilter_{$name}";
         $path = $compiler->template->loadPlugin($plugin_name, false);
         if ($path) {

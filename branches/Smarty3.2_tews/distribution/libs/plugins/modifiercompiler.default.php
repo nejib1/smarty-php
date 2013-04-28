@@ -21,7 +21,8 @@
  * @return string with compiled code
  */
 // NOTE: The parser does pass all parameter as strings which could be directly inserted into the compiled code string
-function smarty_modifiercompiler_default() {
+function smarty_modifiercompiler_default()
+{
     $params = func_get_args();
     $output = $params[0];
     if (!isset($params[1])) {

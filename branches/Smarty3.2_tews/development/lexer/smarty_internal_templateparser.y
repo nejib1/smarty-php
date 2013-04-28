@@ -52,7 +52,7 @@
 			 } else {
 			    $var = '{'.$variable.'}';
 			 }
-			 return '$_smarty_tpl->tpl_vars->'. $var . "['value']";
+			 return '$_smarty_tpl->tpl_vars->'. $var . '->value';
     }
     
     public function updateNocacheLineTrace($allways = false) {
@@ -275,10 +275,13 @@ template_element ::= TEXT(o). {
         $this->compiler->prefix_code[] = o;
         $this->compiler->nocacheCode('', true, $line);
     } else {
-        if ($this->strip) {
-            $this->compiler->php('echo ')->string(preg_replace('![\t ]*[\r\n]+[\t ]*!', '', o))->raw(";\n");
-        } else {
-            $this->compiler->php('echo ')->string(o)->raw(";\n");
+        // inheritance child templates shall not output text
+        if (!$this->compiler->isInheritanceChild || Smarty_Internal_Compile_Block::$block_nesting_level > 0) {
+            if ($this->strip) {
+                $this->compiler->php('echo ')->string(preg_replace('![\t ]*[\r\n]+[\t ]*!', '', o))->raw(";\n");
+            } else {
+                $this->compiler->php('echo ')->string(o)->raw(";\n");
+            }
         }
     }
 }
@@ -394,7 +397,7 @@ smartytag(res)   ::= LDEL ID(i) RDEL. {
 
                   // registered object tag
 smartytag(res)   ::= LDEL ID(i) PTR ID(m) attributes(a) RDEL. {
-    res = $this->compiler->compileTag(i,a,array('object_methode'=>m));
+    res = $this->compiler->compileTag(i,a,array('object_method'=>m));
 }
 
                   // tag with modifier and optional Smarty2 style attributes
@@ -405,7 +408,7 @@ smartytag(res)   ::= LDEL ID(i) modifierlist(l)attributes(a) RDEL. {
 
                   // registered object tag with modifiers
 smartytag(res)   ::= LDEL ID(i) PTR ID(me) modifierlist(l) attributes(a) RDEL. {
-    res = 'ob_start(); '.$this->compiler->compileTag(i,a,array('object_methode'=>me)).' echo ';
+    res = 'ob_start(); '.$this->compiler->compileTag(i,a,array('object_method'=>me)).' echo ';
     res .= $this->compiler->compileTag('private_modifier',array(),array('modifierlist'=>l,'value'=>'ob_get_clean()')).';';
 }
 
@@ -491,11 +494,11 @@ smartytag(res)   ::= LDELSLASH ID(i) modifierlist(l) RDEL. {
 
                   // end of block object tag  {/....}                 
 smartytag(res)   ::= LDELSLASH ID(i) PTR ID(m) RDEL. {
-    res = $this->compiler->compileTag(i.'close',array(),array('object_methode'=>m));
+    res = $this->compiler->compileTag(i.'close',array(),array('object_method'=>m));
 }
 
 smartytag(res)   ::= LDELSLASH ID(i) PTR ID(m) modifierlist(l) RDEL. {
-    res = $this->compiler->compileTag(i.'close',array(),array('object_methode'=>m, 'modifier_list'=>l));
+    res = $this->compiler->compileTag(i.'close',array(),array('object_method'=>m, 'modifier_list'=>l));
 }
 
 //
@@ -783,7 +786,7 @@ value(res)       ::= doublequoted_with_quotes(s). {
 
 value(res)    ::= IDINCDEC(v). {
     $len = strlen(v);
-    res = '$_smarty_tpl->tpl_vars->' . substr(v,1,$len-3) . "['value']". substr(v,$len-2);
+    res = '$_smarty_tpl->tpl_vars->' . substr(v,1,$len-3) . '->value' . substr(v,$len-2);
 }
 
                   // static class access
@@ -847,7 +850,7 @@ variable(res)    ::= varindexed(vi). {
 
                   // variable with property
 variable(res)    ::= DOLLAR varvar(v) AT ID(p). {
-    res = '$_smarty_tpl->tpl_vars->' . trim(v,"'") . "['". p . "']";
+    res = '$_smarty_tpl->tpl_vars->' . trim(v,"'") . '->' . p;
 }
 
                   // object
@@ -858,20 +861,20 @@ variable(res)    ::= object(o). {
                   // config variable
 variable(res)    ::= HATCH ID(i) HATCH. {
     $var = trim(i,'\'');
-    res = "\$_smarty_tpl->tpl_vars->___config_var_{$var}['value']";
+    res = "\$_smarty_tpl->tpl_vars->___config_var_{$var}";
 }
 
 variable(res)    ::= HATCH ID(i) HATCH arrayindex(a). {
     $var = trim(i,'\'');
-    res = "\$_smarty_tpl->tpl_vars->___config_var_{$var}['value']".a;
+    res = "\$_smarty_tpl->tpl_vars->___config_var_{$var}".a;
 }
 
 variable(res)    ::= HATCH variable(v) HATCH. {
-    res = "\$_smarty_tpl->tpl_vars->___config_var_{{v}}['value']";
+    res = "\$_smarty_tpl->tpl_vars->___config_var_{{v}}";
 }
 
 variable(res)    ::= HATCH variable(v) HATCH arrayindex(a). {
-    res = "\$_smarty_tpl->tpl_vars->___config_var_{{v}}['value']".a;
+    res = "\$_smarty_tpl->tpl_vars->___config_var_{{v}}".a;
 }
 
 varindexed(res)  ::= DOLLAR varvar(v) arrayindex(a). {
@@ -1025,7 +1028,7 @@ function(res)     ::= ID(f) OPENP params(p) CLOSEP. {
                 $par = implode(',',p);
                 preg_match('/\$_smarty_tpl->tpl_vars->([0-9]*[a-zA-Z_]\w*)(.*)/',$par,$match);
                 if (isset($match[1])) {
-                    $search = array('/\$_smarty_tpl->tpl_vars->([0-9]*[a-zA-Z_]\w*)/','/\[\'[0-9]*[a-zA-Z_]\w*\'\].*/');
+                    $search = array('/\$_smarty_tpl->tpl_vars->([0-9]*[a-zA-Z_]\w*)/','/->value.*/');
                     $replace = array('$_smarty_tpl->getVariable(\'\1\', null, true, false)','');
                     $this->prefix_number++;
                     $this->compiler->prefix_code[] = '$_tmp'.$this->prefix_number.'='.preg_replace($search, $replace, $par).';';
@@ -1139,12 +1142,12 @@ modparameter(res) ::= COLON array(mp). {
     res = array(mp);
 }
 
-                  // static class methode call
+                  // static class method call
 static_class_access(res)       ::= method(m). {
     res = m;
 }
 
-                  // static class methode call with object chainig
+                  // static class method call with object chainig
 static_class_access(res)       ::= method(m) objectchain(oc). {
     res = m.oc;
 }
@@ -1294,9 +1297,9 @@ doublequotedcontent(res)           ::=  BACKTICK expr(e) BACKTICK. {
 
 doublequotedcontent(res)           ::=  DOLLARID(i). {
     if (empty($this->db_quote_code_buffer)) {
-        res = '(string)$_smarty_tpl->tpl_vars->'. substr(i,1) . "['value']";
+        res = '(string)$_smarty_tpl->tpl_vars->'. substr(i,1) . '->value';
     } else {
-        $this->db_quote_code_buffer .= 'echo (string)$_smarty_tpl->tpl_vars->'. substr(i,1) . "['value'];";
+        $this->db_quote_code_buffer .= 'echo (string)$_smarty_tpl->tpl_vars->'. substr(i,1) . '->value;';
         res = false;
     }
 }

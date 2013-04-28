@@ -19,15 +19,15 @@
  * @author Uwe Tews
  *
  * @param string $input  input string
- * @param bool   $whitespace   flag count whitespaces
- * @param array $params parameters
+ * @param bool $whitespace   flag count whitespaces
  * @return string with compiled code
  */
-function smarty_modifier_count_characters($input, $whitespace = false) {
+function smarty_modifier_count_characters($input, $whitespace = false)
+{
     if (!$whitespace) {
         return preg_match_all('/[^\s]/u', $input, $tmp);
     }
-    if (SMARTY_MBSTRING /* ^phpunit */ && empty($_SERVER['SMARTY_PHPUNIT_DISABLE_MBSTRING'])/* phpunit$ */) {
+    if (SMARTY_MBSTRING /* ^phpunit */ && empty($_SERVER['SMARTY_PHPUNIT_DISABLE_MBSTRING']) /* phpunit$ */) {
         return mb_strlen($input, SMARTY_RESOURCE_CHAR_SET);
     }
     // no MBString fallback

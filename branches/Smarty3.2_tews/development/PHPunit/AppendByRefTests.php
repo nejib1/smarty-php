@@ -1,18 +1,20 @@
 <?php
 /**
-* Smarty PHPunit tests appendByRef methode
-*
-* @package PHPunit
-* @author Uwe Tews
-*/
+ * Smarty PHPunit tests appendByRef methode
+ *
+ * @package PHPunit
+ * @author Uwe Tews
+ */
 
 /**
-* class for appendByRef tests
-*/
-class AppendByRefTests extends PHPUnit_Framework_TestCase {
+ * class for appendByRef tests
+ */
+class AppendByRefTests extends PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
-        $this->smarty = SmartyTests::$smarty;
+        // appendByRef is now deprcated and only supported by SmartyBC31
+        $this->smarty = SmartyTests::$smartyBC31;
         $this->smartyBC = SmartyTests::$smartyBC;
         SmartyTests::init();
     }
@@ -23,8 +25,8 @@ class AppendByRefTests extends PHPUnit_Framework_TestCase {
     }
 
     /**
-    * test appendByRef
-    */
+     * test appendByRef
+     */
     public function testAppendByRef()
     {
         $bar = 'bar';
@@ -35,6 +37,7 @@ class AppendByRefTests extends PHPUnit_Framework_TestCase {
         $bar2 = 'newbar2';
         $this->assertEquals('newbar newbar2', $this->smarty->fetch('eval:{$foo[0]} {$foo[1]}'));
     }
+
     public function testSmarty2AppendByRef()
     {
         $bar = 'bar';
@@ -45,9 +48,10 @@ class AppendByRefTests extends PHPUnit_Framework_TestCase {
         $bar2 = 'newbar2';
         $this->assertEquals('newbar newbar2', $this->smartyBC->fetch('eval:{$foo[0]} {$foo[1]}'));
     }
+
     /**
-    * test appendByRef to unassigned variable
-    */
+     * test appendByRef to unassigned variable
+     */
     public function testAppendByRefUnassigned()
     {
         $bar2 = 'bar2';
@@ -55,21 +59,23 @@ class AppendByRefTests extends PHPUnit_Framework_TestCase {
         $bar2 = 'newbar2';
         $this->assertEquals('newbar2', $this->smarty->fetch('eval:{$foo[0]}'));
     }
-     public function testSmarty2AppendByRefUnassigned()
+
+    public function testSmarty2AppendByRefUnassigned()
     {
         $bar2 = 'bar2';
         $this->smartyBC->append_by_ref('foo', $bar2);
         $bar2 = 'newbar2';
         $this->assertEquals('newbar2', $this->smartyBC->fetch('eval:{$foo[0]}'));
     }
+
     /**
-    * test appendByRef merge
-    *
-    * @todo fix testAppendByRefMerge
-    */
+     * test appendByRef merge
+     *
+     * @todo fix testAppendByRefMerge
+     */
     public function testAppendByRefMerge()
     {
-        $foo =  array('a' => 'a', 'b' => 'b', 'c' => 'c');
+        $foo = array('a' => 'a', 'b' => 'b', 'c' => 'c');
         $bar = array('b' => 'd');
         $this->smarty->assignByRef('foo', $foo);
         $this->smarty->appendByRef('foo', $bar, true);

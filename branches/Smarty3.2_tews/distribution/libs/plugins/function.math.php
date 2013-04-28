@@ -18,15 +18,16 @@
  * @link http://www.smarty.net/docs/en/language.function.math.tpl {math}
  *          (Smarty online manual)
  * @author   Monte Ohrt <monte at ohrt dot com>
- * @param array                    $params   parameters
- * @param Smarty_Internal_Template $template template object
+ * @param array $params   parameters
+ * @param Smarty $template template object
  * @return string|null
  */
-function smarty_function_math($params, $template) {
+function smarty_function_math($params, $template)
+{
     static $_allowed_funcs = array(
-'int' => true, 'abs' => true, 'ceil' => true, 'cos' => true, 'exp' => true, 'floor' => true,
- 'log' => true, 'log10' => true, 'max' => true, 'min' => true, 'pi' => true, 'pow' => true,
- 'rand' => true, 'round' => true, 'sin' => true, 'sqrt' => true, 'srand' => true, 'tan' => true
+        'int' => true, 'abs' => true, 'ceil' => true, 'cos' => true, 'exp' => true, 'floor' => true,
+        'log' => true, 'log10' => true, 'max' => true, 'min' => true, 'pi' => true, 'pow' => true,
+        'rand' => true, 'round' => true, 'sin' => true, 'sqrt' => true, 'srand' => true, 'tan' => true
     );
     // be sure equation parameter is present
     if (empty($params['equation'])) {

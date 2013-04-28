@@ -1,4 +1,4 @@
-{extends file='test_block_include_parent.tpl'} 
+{extends file='test_block_include_parent.tpl'}
 
 {block name="p"}page 3<br>{/block}
 

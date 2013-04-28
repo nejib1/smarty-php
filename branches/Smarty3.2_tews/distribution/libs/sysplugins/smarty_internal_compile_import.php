@@ -16,7 +16,8 @@
  * @package Smarty
  * @subpackage Compiler
  */
-class Smarty_Internal_Compile_Import extends Smarty_Internal_CompileBase {
+class Smarty_Internal_Compile_Import extends Smarty_Internal_CompileBase
+{
 
     /**
      * Attribute definition: Overwrites base class.
@@ -58,7 +59,8 @@ class Smarty_Internal_Compile_Import extends Smarty_Internal_CompileBase {
      * @param array $parameter array with compilation parameter
      * @return string compiled code
      */
-    public function compile($args, $compiler, $parameter) {
+    public function compile($args, $compiler, $parameter)
+    {
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);
 
@@ -74,12 +76,15 @@ class Smarty_Internal_Compile_Import extends Smarty_Internal_CompileBase {
         $tpl->parent = $compiler->template;
         $tpl->caching = $compiler->template->caching;
         $tpl->compiler->nocache = $compiler->nocache;
-        // get compiled code
+        // set up parameter
         $tpl->compiler->suppressHeader = true;
         $tpl->compiler->suppressTemplatePropertyHeader = true;
         $tpl->compiler->suppressPostFilter = true;
         $tpl->compiler->write_compiled_code = false;
         $tpl->compiler->indentation = $compiler->indentation;
+        $tpl->compiler->isInheritance = $compiler->isInheritance;
+        $tpl->compiler->isInheritanceChild = $compiler->isInheritanceChild;
+       // get compiled code 
         $compiled_code = $tpl->compiler->compileTemplate();
         // merge compiled code for {function} tags
         if (!empty($tpl->compiler->template_functions)) {
@@ -87,9 +92,9 @@ class Smarty_Internal_Compile_Import extends Smarty_Internal_CompileBase {
             $compiler->template_functions_code = array_merge($compiler->template_functions_code, $tpl->compiler->template_functions_code);
         }
         // merge compiled code for {block} tags
-        if (!empty($tpl->compiler->block_functions)) {
-            $compiler->block_functions = array_merge($compiler->block_functions, $tpl->compiler->block_functions);
-            $compiler->block_functions_code = array_merge($compiler->block_functions_code, $tpl->compiler->block_functions_code);
+        if (!empty($tpl->compiler->inheritance_blocks)) {
+            $compiler->inheritance_blocks = array_merge($compiler->inheritance_blocks, $tpl->compiler->inheritance_blocks);
+            $compiler->inheritance_blocks_code = array_merge($compiler->inheritance_blocks_code, $tpl->compiler->inheritance_blocks_code);
         }
         $compiler->required_plugins['compiled'] = array_merge($compiler->required_plugins['compiled'], $tpl->compiler->required_plugins['compiled']);
         $compiler->required_plugins['nocache'] = array_merge($compiler->required_plugins['nocache'], $tpl->compiler->required_plugins['nocache']);

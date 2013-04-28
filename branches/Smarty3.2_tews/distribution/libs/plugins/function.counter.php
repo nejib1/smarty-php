@@ -16,11 +16,12 @@
  * @author Monte Ohrt <monte at ohrt dot com>
  * @link http://www.smarty.net/docs/en/language.custom.functions.tpl#language.function.counter {counter}
  *       (Smarty online manual)
- * @param array                    $params   parameters
- * @param Smarty_Internal_Template $template template object
+ * @param array $params   parameters
+ * @param Smarty $template template object
  * @return string|null
  */
-function smarty_function_counter($params, $template) {
+function smarty_function_counter($params, $template)
+{
     static $counters = array();
 
     $name = (isset($params['name'])) ? $params['name'] : 'default';
@@ -35,7 +36,7 @@ function smarty_function_counter($params, $template) {
     $counter = & $counters[$name];
 
     if (isset($params['start'])) {
-        $counter['start'] = $counter['count'] = (int) $params['start'];
+        $counter['start'] = $counter['count'] = (int)$params['start'];
     }
 
     if (!empty($params['assign'])) {
@@ -47,7 +48,7 @@ function smarty_function_counter($params, $template) {
     }
 
     if (isset($params['print'])) {
-        $print = (bool) $params['print'];
+        $print = (bool)$params['print'];
     } else {
         $print = empty($counter['assign']);
     }

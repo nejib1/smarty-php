@@ -1,0 +1,7 @@
+ whitespace control
+ https://gist.github.com/3013807
+ 
+ ClosureTest sind disabled
+ ExtendsresourceTest disabled
+ 
+ Check for SMARTY_INTERAL_TEMPLATE references

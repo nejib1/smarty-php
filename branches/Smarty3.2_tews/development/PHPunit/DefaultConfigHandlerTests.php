@@ -1,16 +1,17 @@
 <?php
 /**
-* Smarty PHPunit tests deault template handler
-*
-* @package PHPunit
-* @author Uwe Tews
-*/
+ * Smarty PHPunit tests deault template handler
+ *
+ * @package PHPunit
+ * @author Uwe Tews
+ */
 
 
 /**
-* class for block plugin tests
-*/
-class DefaultConfigHandlerTests extends PHPUnit_Framework_TestCase {
+ * class for block plugin tests
+ */
+class DefaultConfigHandlerTests extends PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
@@ -30,9 +31,8 @@ class DefaultConfigHandlerTests extends PHPUnit_Framework_TestCase {
         try {
             $this->smarty->configLoad('foo.conf');
             $this->assertEquals("123.4", $this->smarty->fetch('eval:{#Number#}'));
-        }
-        catch (Exception $e) {
-            $this->assertContains("Unable to read source file file 'foo.conf'" , $e->getMessage());
+        } catch (Exception $e) {
+            $this->assertContains("Unable to read source file file 'foo.conf'", $e->getMessage());
             return;
         }
         $this->fail('Exception for none existing config has not been raised.');
@@ -42,8 +42,7 @@ class DefaultConfigHandlerTests extends PHPUnit_Framework_TestCase {
     {
         try {
             $this->smarty->registerDefaultConfigHandler('foo');
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $this->assertContains("registerDefaultConfigHandler(): Invalid callback", $e->getMessage());
             return;
         }
@@ -71,8 +70,7 @@ class DefaultConfigHandlerTests extends PHPUnit_Framework_TestCase {
         try {
             $this->smarty->configLoad('foo.conf');
             $this->assertEquals("123.4", $this->smarty->fetch('eval:{#Number#}'));
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $this->assertContains("Unable to read source file file 'foo.conf'", $e->getMessage());
             return;
         }
@@ -81,25 +79,27 @@ class DefaultConfigHandlerTests extends PHPUnit_Framework_TestCase {
 
     public function testConfigResourceDb4()
     {
-        $this->smarty->addPluginsDir(dirname(__FILE__)."/PHPunitplugins/");
+        $this->smarty->addPluginsDir(dirname(__FILE__) . "/PHPunitplugins/");
         $this->smarty->configLoad('db4:foo.conf');
         $this->assertEquals("bar", $this->smarty->fetch('eval:{#foo#}'));
     }
 
 }
 
-function my_config_handler ($resource_type, $resource_name, &$config_source, &$config_timestamp, Smarty $smarty)
+function my_config_handler($resource_type, $resource_name, &$config_source, &$config_timestamp, Smarty $smarty)
 {
     $output = "foo = 'bar'\n";
     $config_source = $output;
     $config_timestamp = time();
     return true;
 }
-function my_config_handler_file ($resource_type, $resource_name, &$config_source, &$config_timestamp, Smarty $smarty)
+
+function my_config_handler_file($resource_type, $resource_name, &$config_source, &$config_timestamp, Smarty $smarty)
 {
     return $smarty->getConfigDir(0) . 'test.conf';
 }
-function my_config_false ($resource_type, $resource_name, &$config_source, &$config_timestamp, Smarty $smarty)
+
+function my_config_false($resource_type, $resource_name, &$config_source, &$config_timestamp, Smarty $smarty)
 {
     return false;
 }

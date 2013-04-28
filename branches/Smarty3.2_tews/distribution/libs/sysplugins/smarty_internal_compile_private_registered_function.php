@@ -16,7 +16,8 @@
  * @package Smarty
  * @subpackage Compiler
  */
-class Smarty_Internal_Compile_Private_Registered_Function extends Smarty_Internal_CompileBase {
+class Smarty_Internal_Compile_Private_Registered_Function extends Smarty_Internal_CompileBase
+{
 
     /**
      * Attribute definition: Overwrites base class.
@@ -29,13 +30,14 @@ class Smarty_Internal_Compile_Private_Registered_Function extends Smarty_Interna
     /**
      * Compiles code for the execution of a registered function
      *
-     * @param array  $args      array with attributes from parser
+     * @param array $args      array with attributes from parser
      * @param object $compiler  compiler object
-     * @param array  $parameter array with compilation parameter
+     * @param array $parameter array with compilation parameter
      * @param string $tag       name of function
      * @return string compiled code
      */
-    public function compile($args, $compiler, $parameter, $tag) {
+    public function compile($args, $compiler, $parameter, $tag)
+    {
         // This tag does create output
         $compiler->has_output = true;
         // check and get attributes
@@ -58,7 +60,7 @@ class Smarty_Internal_Compile_Private_Registered_Function extends Smarty_Interna
         $this->iniTagCode($compiler);
 
         if ($function instanceof Closure) {
-            $output = "echo \$_smarty_tpl->registered_plugins[Smarty::PLUGIN_FUNCTION]['{$tag}'][0]({$result});";
+            $this->php("echo \$_smarty_tpl->registered_plugins[Smarty::PLUGIN_FUNCTION]['{$tag}'][0]({$result});")->newline();
         } else if (!is_array($function)) {
             $this->php("echo {$function}({$result});")->newline();
         } else if (is_object($function[0])) {

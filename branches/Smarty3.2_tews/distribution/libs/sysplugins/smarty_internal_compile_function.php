@@ -16,7 +16,8 @@
  * @package Smarty
  * @subpackage Compiler
  */
-class Smarty_Internal_Compile_Function extends Smarty_Internal_CompileBase {
+class Smarty_Internal_Compile_Function extends Smarty_Internal_CompileBase
+{
 
     /**
      * Attribute definition: Overwrites base class.
@@ -50,7 +51,8 @@ class Smarty_Internal_Compile_Function extends Smarty_Internal_CompileBase {
      * @param array $parameter array with compilation parameter
      * @return boolean true
      */
-    public function compile($args, $compiler, $parameter) {
+    public function compile($args, $compiler, $parameter)
+    {
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);
 
@@ -78,7 +80,8 @@ class Smarty_Internal_Compile_Function extends Smarty_Internal_CompileBase {
  * @package Smarty
  * @subpackage Compiler
  */
-class Smarty_Internal_Compile_Functionclose extends Smarty_Internal_CompileBase {
+class Smarty_Internal_Compile_Functionclose extends Smarty_Internal_CompileBase
+{
 
     /**
      * Compiles code for the {/function} tag
@@ -88,7 +91,8 @@ class Smarty_Internal_Compile_Functionclose extends Smarty_Internal_CompileBase 
      * @param array $parameter array with compilation parameter
      * @return boolean true
      */
-    public function compile($args, $compiler, $parameter) {
+    public function compile($args, $compiler, $parameter)
+    {
         $_attr = $this->getAttributes($compiler, $args);
 
         $saved_data = $this->closeTag($compiler, array('function'));
@@ -140,10 +144,10 @@ class Smarty_Internal_Compile_Functionclose extends Smarty_Internal_CompileBase 
         $this->php("array_unshift(\$_smarty_tpl->trace_call_stack, array('{$resource}',{$saved_data[4]} , '{$compiler->template->source->type}'));")->newline();
         $this->php("\$saved_tpl_vars = clone \$_smarty_tpl->tpl_vars;")->newline();
         $this->php("foreach (\$this->template_functions['{$_name}']['parameter'] as \$key => \$value) {")->newline()->indent();
-        $this->php("\$_smarty_tpl->tpl_vars->\$key = array('value' => \$value);")->newline();
+        $this->php("\$_smarty_tpl->tpl_vars->\$key = new Smarty_Variable (\$value);")->newline();
         $this->outdent()->php("}")->newline();
         $this->php("foreach (\$params as \$key => \$value) {")->newline()->indent();
-        $this->php("\$_smarty_tpl->tpl_vars->\$key = array('value' => \$value);")->newline();
+        $this->php("\$_smarty_tpl->tpl_vars->\$key = new Smarty_Variable (\$value);")->newline();
         $this->outdent()->php("}")->newline();
 
         $compiler->template_functions_code[$_name] = $this->buffer;

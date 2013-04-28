@@ -1,4 +1,7 @@
 ﻿===== Smarty 3.2-DEV  =====
+28.04.2013
+- backup work in progress after major rewrite of internals
+
 12.12.2012
 - couple of code fixes
 - update internal documentation

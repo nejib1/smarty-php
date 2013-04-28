@@ -16,7 +16,8 @@
  * @package Smarty
  * @subpackage Compiler
  */
-class Smarty_Internal_Compile_Insert extends Smarty_Internal_CompileBase {
+class Smarty_Internal_Compile_Insert extends Smarty_Internal_CompileBase
+{
 
     /**
      * Attribute definition: Overwrites base class.
@@ -45,11 +46,12 @@ class Smarty_Internal_Compile_Insert extends Smarty_Internal_CompileBase {
     /**
      * Compiles code for the {insert} tag
      *
-     * @param array  $args     array with attributes from parser
+     * @param array $args     array with attributes from parser
      * @param object $compiler compiler object
      * @return string compiled code
      */
-    public function compile($args, $compiler) {
+    public function compile($args, $compiler)
+    {
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);
         // never compile as nocache code
@@ -67,7 +69,7 @@ class Smarty_Internal_Compile_Insert extends Smarty_Internal_CompileBase {
             // output will be stored in a smarty variable instead of being displayed
             $_assign = $_attr['assign'];
             // create variable to make shure that the compiler knows about its nocache status
-            $compiler->template->tpl_vars->{trim($_attr['assign'], "'")} = array('value' => null, 'nocache' => true);
+            $compiler->template->tpl_vars->{trim($_attr['assign'], "'")} = new Smarty_Variable(null, true);
         }
         if (isset($_attr['script'])) {
             // script which must be included
@@ -84,7 +86,7 @@ class Smarty_Internal_Compile_Insert extends Smarty_Internal_CompileBase {
                     $_dir = $compiler->template->trusted_dir;
                 }
                 if (!empty($_dir)) {
-                    foreach ((array) $_dir as $_script_dir) {
+                    foreach ((array)$_dir as $_script_dir) {
                         $_script_dir = rtrim($_script_dir, '/\\') . DS;
                         if (file_exists($_script_dir . $_script)) {
                             $_filepath = $_script_dir . $_script;
@@ -103,7 +105,6 @@ class Smarty_Internal_Compile_Insert extends Smarty_Internal_CompileBase {
                 $compiler->trigger_template_error(" {insert} function '{$_function}' is not callable in script file '{$_script}'", $compiler->lex->taglineno);
             }
         } else {
-            $_filepath = 'null';
             $_function = "insert_{$_name}";
             // function in PHP script ?
             if (!is_callable($_function)) {

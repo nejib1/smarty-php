@@ -1,29 +1,30 @@
 <?php
 /**
-* Smarty PHPunit tests of modifier
-* 
-* @package PHPunit
-* @author Rodney Rehm 
-*/
+ * Smarty PHPunit tests of modifier
+ *
+ * @package PHPunit
+ * @author Rodney Rehm
+ */
 
 require_once(dirname(__FILE__) . '/helpers/_object_tostring.php');
 
 /**
-* class for modifier tests
-*/
-class PluginFunctionHtmlRadiosTests extends PHPUnit_Framework_TestCase {
+ * class for modifier tests
+ */
+class PluginFunctionHtmlRadiosTests extends PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
         SmartyTests::init();
-    } 
-    
+    }
+
     public static function isRunnable()
     {
         return true;
     }
-    
-    
+
+
     public function testAssociativeArray()
     {
         $n = "\n";
@@ -40,10 +41,10 @@ class PluginFunctionHtmlRadiosTests extends PHPUnit_Framework_TestCase {
             1002 => 'Jane Johnson',
             1003 => 'Charlie Brown',
         ));
-        
+
         $this->assertEquals($expected, $tpl->fetch());
     }
-    
+
     public function testSeparateArrays()
     {
         $n = "\n";
@@ -51,20 +52,20 @@ class PluginFunctionHtmlRadiosTests extends PHPUnit_Framework_TestCase {
             . $n . '<label><input type="radio" name="id" value="1001" checked="checked" />Jack Smith</label><br />'
             . $n . '<label><input type="radio" name="id" value="1002" />Jane Johnson</label><br />'
             . $n . '<label><input type="radio" name="id" value="1003" />Charlie Brown</label><br />';
-            
+
         $tpl = $this->smarty->createTemplate('eval:{html_radios name="id" values=$cust_ids output=$cust_names selected=$customer_id separator="<br />"}');
         $tpl->assign('customer_id', 1001);
-        $tpl->assign('cust_ids', array(1000,1001,1002,1003));
+        $tpl->assign('cust_ids', array(1000, 1001, 1002, 1003));
         $tpl->assign('cust_names', array(
             'Joe Schmoe',
             'Jack Smith',
             'Jane Johnson',
             'Charlie Brown',
         ));
-        
+
         $this->assertEquals($expected, $tpl->fetch());
     }
-    
+
     public function testIterator()
     {
         $n = "\n";
@@ -72,20 +73,20 @@ class PluginFunctionHtmlRadiosTests extends PHPUnit_Framework_TestCase {
             . $n . '<label><input type="radio" name="id" value="1001" checked="checked" />Jack Smith</label><br />'
             . $n . '<label><input type="radio" name="id" value="1002" />Jane Johnson</label><br />'
             . $n . '<label><input type="radio" name="id" value="1003" />Charlie Brown</label><br />';
-            
+
         $tpl = $this->smarty->createTemplate('eval:{html_radios name="id" values=$cust_ids output=$cust_names selected=$customer_id separator="<br />"}');
         $tpl->assign('customer_id', 1001);
-        $tpl->assign('cust_ids', array(1000,1001,1002,1003));
+        $tpl->assign('cust_ids', array(1000, 1001, 1002, 1003));
         $tpl->assign('cust_names', new ArrayIterator(array(
             'Joe Schmoe',
             'Jack Smith',
             'Jane Johnson',
             'Charlie Brown',
         )));
-        
+
         $this->assertEquals($expected, $tpl->fetch());
     }
-    
+
     public function testNoLabels()
     {
         $n = "\n";
@@ -102,10 +103,10 @@ class PluginFunctionHtmlRadiosTests extends PHPUnit_Framework_TestCase {
             1002 => 'Jane Johnson',
             1003 => 'Charlie Brown',
         ));
-        
+
         $this->assertEquals($expected, $tpl->fetch());
     }
-    
+
     public function testWithId()
     {
         $n = "\n";
@@ -122,10 +123,10 @@ class PluginFunctionHtmlRadiosTests extends PHPUnit_Framework_TestCase {
             1002 => 'Jane Johnson',
             'work s ä' => 'Charlie Brown',
         ));
-        
+
         $this->assertEquals($expected, $tpl->fetch());
     }
-    
+
     public function testNullString()
     {
         $n = "\n";
@@ -134,7 +135,7 @@ class PluginFunctionHtmlRadiosTests extends PHPUnit_Framework_TestCase {
             . $n . '<label><input type="radio" name="id" value="0" />zero</label><br />'
             . $n . '<label><input type="radio" name="id" value="1" />one</label><br />'
             . $n . '<label><input type="radio" name="id" value="2" />two</label><br />';
-            
+
         $tpl = $this->smarty->createTemplate('eval:{html_radios name="id" options=$options selected=$selected separator="<br />"}');
         $tpl->assign('selected', "null");
         $tpl->assign('options', array(
@@ -144,10 +145,10 @@ class PluginFunctionHtmlRadiosTests extends PHPUnit_Framework_TestCase {
             1 => 'one',
             2 => 'two',
         ));
-        
+
         $this->assertEquals($expected, $tpl->fetch());
     }
-    
+
     public function testNullValue()
     {
         $n = "\n";
@@ -156,7 +157,7 @@ class PluginFunctionHtmlRadiosTests extends PHPUnit_Framework_TestCase {
             . $n . '<label><input type="radio" name="id" value="0" />zero</label><br />'
             . $n . '<label><input type="radio" name="id" value="1" />one</label><br />'
             . $n . '<label><input type="radio" name="id" value="2" />two</label><br />';
-            
+
         $tpl = $this->smarty->createTemplate('eval:{html_radios name="id" options=$options selected=$selected separator="<br />"}');
         $tpl->assign('selected', null);
         $tpl->assign('options', array(
@@ -166,10 +167,10 @@ class PluginFunctionHtmlRadiosTests extends PHPUnit_Framework_TestCase {
             1 => 'one',
             2 => 'two',
         ));
-        
+
         $this->assertEquals($expected, $tpl->fetch());
     }
-    
+
     public function testZeroValue()
     {
         $n = "\n";
@@ -178,7 +179,7 @@ class PluginFunctionHtmlRadiosTests extends PHPUnit_Framework_TestCase {
             . $n . '<label><input type="radio" name="id" value="0" checked="checked" />zero</label><br />'
             . $n . '<label><input type="radio" name="id" value="1" />one</label><br />'
             . $n . '<label><input type="radio" name="id" value="2" />two</label><br />';
-            
+
         $tpl = $this->smarty->createTemplate('eval:{html_radios name="id" options=$options selected=$selected separator="<br />"}');
         $tpl->assign('selected', 0);
         $tpl->assign('options', array(
@@ -188,10 +189,10 @@ class PluginFunctionHtmlRadiosTests extends PHPUnit_Framework_TestCase {
             1 => 'one',
             2 => 'two',
         ));
-        
+
         $this->assertEquals($expected, $tpl->fetch());
     }
-    
+
     public function testZeroStringValue()
     {
         $n = "\n";
@@ -200,7 +201,7 @@ class PluginFunctionHtmlRadiosTests extends PHPUnit_Framework_TestCase {
             . $n . '<label><input type="radio" name="id" value="0" checked="checked" />zero</label><br />'
             . $n . '<label><input type="radio" name="id" value="1" />one</label><br />'
             . $n . '<label><input type="radio" name="id" value="2" />two</label><br />';
-            
+
         $tpl = $this->smarty->createTemplate('eval:{html_radios name="id" options=$options selected=$selected separator="<br />"}');
         $tpl->assign('selected', "0");
         $tpl->assign('options', array(
@@ -210,10 +211,10 @@ class PluginFunctionHtmlRadiosTests extends PHPUnit_Framework_TestCase {
             1 => 'one',
             2 => 'two',
         ));
-        
+
         $this->assertEquals($expected, $tpl->fetch());
     }
-    
+
     public function testEmptyStringValue()
     {
         $n = "\n";
@@ -222,7 +223,7 @@ class PluginFunctionHtmlRadiosTests extends PHPUnit_Framework_TestCase {
             . $n . '<label><input type="radio" name="id" value="0" />zero</label><br />'
             . $n . '<label><input type="radio" name="id" value="1" />one</label><br />'
             . $n . '<label><input type="radio" name="id" value="2" />two</label><br />';
-            
+
         $tpl = $this->smarty->createTemplate('eval:{html_radios name="id" options=$options selected=$selected separator="<br />"}');
         $tpl->assign('selected', "");
         $tpl->assign('options', array(
@@ -232,10 +233,10 @@ class PluginFunctionHtmlRadiosTests extends PHPUnit_Framework_TestCase {
             1 => 'one',
             2 => 'two',
         ));
-        
+
         $this->assertEquals($expected, $tpl->fetch());
     }
-    
+
     public function testObject()
     {
         $n = "\n";
@@ -252,10 +253,10 @@ class PluginFunctionHtmlRadiosTests extends PHPUnit_Framework_TestCase {
             1002 => 'Jane Johnson',
             1003 => 'Charlie Brown',
         ));
-        
+
         $this->assertEquals($expected, $tpl->fetch());
     }
-    
+
     public function testObjectList()
     {
         $n = "\n";
@@ -272,22 +273,23 @@ class PluginFunctionHtmlRadiosTests extends PHPUnit_Framework_TestCase {
             1002 => new _object_toString('Jane Johnson'),
             1003 => new _object_toString('Charlie Brown'),
         ));
-        
+
         $this->assertEquals($expected, $tpl->fetch());
     }
-    
-    
+
+
     protected $_errors = array();
+
     public function error_handler($errno, $errstr, $errfile, $errline, $errcontext)
     {
         $this->_errors[] = $errstr;
     }
-    
+
     public function testObjectNoString()
     {
         $this->_errors = array();
         set_error_handler(array($this, 'error_handler'));
-        
+
         $n = "\n";
         $expected = '<label><input type="radio" name="id" value="1000" />Joe Schmoe</label><br />'
             . $n . '<label><input type="radio" name="id" value="1001" checked="checked" />Jack Smith</label><br />'
@@ -302,19 +304,19 @@ class PluginFunctionHtmlRadiosTests extends PHPUnit_Framework_TestCase {
             1002 => 'Jane Johnson',
             1003 => 'Charlie Brown',
         ));
-        
+
         $tpl->fetch();
         $this->assertEquals(1, count($this->_errors));
         $this->assertStringEndsWith("without __toString() method", $this->_errors[0]);
-        
+
         restore_error_handler();
     }
-    
+
     public function testObjectListNoString()
     {
         $this->_errors = array();
         set_error_handler(array($this, 'error_handler'));
-        
+
         $n = "\n";
         $expected = '<label><input type="radio" name="id" value="1000" />Joe Schmoe</label><br />'
             . $n . '<label><input type="radio" name="id" value="1001" checked="checked" />Jack Smith</label><br />'
@@ -329,13 +331,13 @@ class PluginFunctionHtmlRadiosTests extends PHPUnit_Framework_TestCase {
             1002 => new _object_toString('Jane Johnson'),
             1003 => new _object_toString('Charlie Brown'),
         ));
-        
+
         $tpl->fetch();
         $this->assertEquals(1, count($this->_errors));
         $this->assertStringEndsWith("without __toString() method", $this->_errors[0]);
-        
+
         restore_error_handler();
     }
-} 
+}
 
 ?>

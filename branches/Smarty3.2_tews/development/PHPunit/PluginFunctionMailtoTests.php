@@ -1,25 +1,26 @@
 <?php
 /**
-* Smarty PHPunit tests of modifier
-* 
-* @package PHPunit
-* @author Rodney Rehm 
-*/
+ * Smarty PHPunit tests of modifier
+ *
+ * @package PHPunit
+ * @author Rodney Rehm
+ */
 
 /**
-* class for modifier tests
-*/
-class PluginFunctionMailtoTests extends PHPUnit_Framework_TestCase {
+ * class for modifier tests
+ */
+class PluginFunctionMailtoTests extends PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
         SmartyTests::init();
-    } 
+    }
 
     public static function isRunnable()
     {
         return true;
-    } 
+    }
 
     public function testDefault()
     {
@@ -27,7 +28,7 @@ class PluginFunctionMailtoTests extends PHPUnit_Framework_TestCase {
         $tpl = $this->smarty->createTemplate('eval:{mailto address="me@example.com"}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
     }
-    
+
     public function testDefaultWithoutMbstring()
     {
         Smarty::$_MBSTRING = false;
@@ -44,7 +45,7 @@ class PluginFunctionMailtoTests extends PHPUnit_Framework_TestCase {
         $tpl = $this->smarty->createTemplate('eval:{mailto address="me@example.com" text="send me some mail"}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
     }
-    
+
     public function testTextWithoutMbstring()
     {
         Smarty::$_MBSTRING = false;
@@ -61,7 +62,7 @@ class PluginFunctionMailtoTests extends PHPUnit_Framework_TestCase {
         $tpl = $this->smarty->createTemplate('eval:{mailto address="me@example.com" encode="javascript"}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
     }
-    
+
     public function testEncodeJavascriptWithoutMbstring()
     {
         Smarty::$_MBSTRING = false;
@@ -78,7 +79,7 @@ class PluginFunctionMailtoTests extends PHPUnit_Framework_TestCase {
         $tpl = $this->smarty->createTemplate('eval:{mailto address="me@example.com" encode="javascript_charcode"}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
     }
-    
+
     public function testEncodeJavascriptCharcodeWithoutMbstring()
     {
         Smarty::$_MBSTRING = false;
@@ -95,7 +96,7 @@ class PluginFunctionMailtoTests extends PHPUnit_Framework_TestCase {
         $tpl = $this->smarty->createTemplate('eval:{mailto address="me@example.com" encode="hex"}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
     }
-    
+
     public function testEncodeHexWithoutMbstring()
     {
         Smarty::$_MBSTRING = false;
@@ -112,7 +113,7 @@ class PluginFunctionMailtoTests extends PHPUnit_Framework_TestCase {
         $tpl = $this->smarty->createTemplate('eval:{mailto address="me@example.com" subject="Hello to you!"}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
     }
-    
+
     public function testSubjectWithoutMbstring()
     {
         Smarty::$_MBSTRING = false;
@@ -129,7 +130,7 @@ class PluginFunctionMailtoTests extends PHPUnit_Framework_TestCase {
         $tpl = $this->smarty->createTemplate('eval:{mailto address="me@example.com" cc="you@example.com,they@example.com"}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
     }
-    
+
     public function testCcWithoutMbstring()
     {
         Smarty::$_MBSTRING = false;
@@ -146,7 +147,7 @@ class PluginFunctionMailtoTests extends PHPUnit_Framework_TestCase {
         $tpl = $this->smarty->createTemplate('eval:{mailto address="me@example.com" extra=\'class="email"\'}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
     }
-    
+
     public function testExtraWithoutMbstring()
     {
         Smarty::$_MBSTRING = false;
@@ -155,14 +156,14 @@ class PluginFunctionMailtoTests extends PHPUnit_Framework_TestCase {
         $this->assertEquals($result, $this->smarty->fetch($tpl));
         Smarty::$_MBSTRING = true;
     }
-    
+
     public function testUmlauts()
     {
         $result = '<a href="mailto:me+smtpext@example.com?cc=you@example.com,they@example.com&subject=h%C3%A4llo%20w%C3%B6rld" >me+smtpext@example.com</a>';
         $tpl = $this->smarty->createTemplate('eval:{mailto address="me+smtpext@example.com" cc="you@example.com,they@example.com" subject="hällo wörld"}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
     }
-    
+
     public function testUmlautsWithoutMbstring()
     {
         Smarty::$_MBSTRING = false;
@@ -172,6 +173,6 @@ class PluginFunctionMailtoTests extends PHPUnit_Framework_TestCase {
         Smarty::$_MBSTRING = true;
     }
 
-} 
+}
 
 ?>

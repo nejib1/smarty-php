@@ -1,18 +1,20 @@
 <?php
 /**
-* Smarty PHPunit tests assignByRef methode
-*
-* @package PHPunit
-* @author Uwe Tews
-*/
+ * Smarty PHPunit tests assignByRef methode
+ *
+ * @package PHPunit
+ * @author Uwe Tews
+ */
 
 /**
-* class for assignByRef tests
-*/
-class AssignByRefTests extends PHPUnit_Framework_TestCase {
+ * class for assignByRef tests
+ */
+class AssignByRefTests extends PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
-        $this->smarty = SmartyTests::$smarty;
+        // assignByRef is now deprcated and only supported by SmartyBC31
+        $this->smarty = SmartyTests::$smartyBC31;
         $this->smartyBC = SmartyTests::$smartyBC;
         SmartyTests::init();
     }
@@ -23,8 +25,8 @@ class AssignByRefTests extends PHPUnit_Framework_TestCase {
     }
 
     /**
-    * test simple assignByRef
-    */
+     * test simple assignByRef
+     */
     public function testSimpleAssignByRef()
     {
         $bar = 'bar';
@@ -32,9 +34,10 @@ class AssignByRefTests extends PHPUnit_Framework_TestCase {
         $bar = 'newbar';
         $this->assertEquals('newbar', $this->smarty->fetch('eval:{$foo}'));
     }
+
     /**
-    * test Smarty2 assign_By_Ref
-    */
+     * test Smarty2 assign_By_Ref
+     */
     public function testSmarty2AssignByRef()
     {
         $bar = 'bar';
@@ -42,9 +45,10 @@ class AssignByRefTests extends PHPUnit_Framework_TestCase {
         $bar = 'newbar';
         $this->assertEquals('newbar', $this->smartyBC->fetch('eval:{$foo}'));
     }
+
     /**
-    * test Smarty2's behaviour of assign_By_Ref (Issue 88)
-    */
+     * test Smarty2's behaviour of assign_By_Ref (Issue 88)
+     */
     public function testSmarty2AssignByRef2()
     {
         $bar = 'bar';

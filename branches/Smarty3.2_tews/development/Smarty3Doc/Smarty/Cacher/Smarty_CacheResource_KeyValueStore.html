@@ -116,7 +116,7 @@
 												<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#acquireLock" title="details" class="method-name">acquireLock</a>
-											(<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type"><a href="../../Smarty/TemplateResources/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
+											(<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type"><a href="../../Smarty/Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
@@ -136,7 +136,7 @@
 																<div class="method-definition">
 											<span class="method-result">boolean</span>
 										<a href="#delete" title="details" class="method-name">delete</a>
-											(<span class="var-type"></span>&nbsp;<span class="var-name">$keys</span>)
+											(<span class="var-type">array</span>&nbsp;<span class="var-name">$keys</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result">boolean</span>
@@ -156,12 +156,12 @@
 																<div class="method-definition">
 											<span class="method-result">string</span>
 										<a href="#getTemplateUid" title="details" class="method-name">getTemplateUid</a>
-											(<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$resource_name</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$cache_id</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$compile_id</span>)
+											(<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$resource_name</span>)
 									</div>
 																<div class="method-definition">
-											<span class="method-result">booelan</span>
+											<span class="method-result">bool</span>
 										<a href="#hasLock" title="details" class="method-name">hasLock</a>
-											(<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type"><a href="../../Smarty/TemplateResources/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
+											(<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type"><a href="../../Smarty/Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
@@ -176,17 +176,17 @@
 																<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#populate" title="details" class="method-name">populate</a>
-											(<span class="var-type"><a href="../../Smarty/TemplateResources/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>, <span class="var-type"><a href="../../Smarty/Template/Smarty_Internal_Template.html">Smarty_Internal_Template</a></span>&nbsp;<span class="var-name">$_template</span>)
+											(<span class="var-type"><a href="../../Smarty/Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>, <span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$_template</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#populateTimestamp" title="details" class="method-name">populateTimestamp</a>
-											(<span class="var-type"><a href="../../Smarty/TemplateResources/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
+											(<span class="var-type"><a href="../../Smarty/Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
 									</div>
 																<div class="method-definition">
-											<span class="method-result">booelan</span>
+											<span class="method-result">bool</span>
 										<a href="#process" title="details" class="method-name">process</a>
-											(<span class="var-type"><a href="../../Smarty/Template/Smarty_Internal_Template.html">Smarty_Internal_Template</a></span>&nbsp;<span class="var-name">$_template</span>, [<span class="var-type"><a href="../../Smarty/TemplateResources/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span> = <span class="var-default">null</span>])
+											(<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$_template</span>, [<span class="var-type"><a href="../../Smarty/Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span> = <span class="var-default">null</span>])
 									</div>
 																<div class="method-definition">
 											<span class="method-result">boolean</span>
@@ -196,12 +196,12 @@
 																<div class="method-definition">
 											<span class="method-result">array</span>
 										<a href="#read" title="details" class="method-name">read</a>
-											(<span class="var-type"></span>&nbsp;<span class="var-name">$keys</span>)
+											(<span class="var-type">array</span>&nbsp;<span class="var-name">$keys</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#releaseLock" title="details" class="method-name">releaseLock</a>
-											(<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type"><a href="../../Smarty/TemplateResources/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
+											(<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type"><a href="../../Smarty/Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result">string</span>
@@ -211,12 +211,12 @@
 																<div class="method-definition">
 											<span class="method-result">boolean</span>
 										<a href="#write" title="details" class="method-name">write</a>
-											(<span class="var-type"></span>&nbsp;<span class="var-name">$keys</span>, [<span class="var-type">int</span>&nbsp;<span class="var-name">$expire</span> = <span class="var-default">null</span>])
+											(<span class="var-type">array</span>&nbsp;<span class="var-name">$keys</span>, [<span class="var-type">int</span>&nbsp;<span class="var-name">$expire</span> = <span class="var-default">null</span>])
 									</div>
 																<div class="method-definition">
 											<span class="method-result">boolean</span>
 										<a href="#writeCachedContent" title="details" class="method-name">writeCachedContent</a>
-											(<span class="var-type"><a href="../../Smarty/Template/Smarty_Internal_Template.html">Smarty_Internal_Template</a></span>&nbsp;<span class="var-name">$_template</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$content</span>)
+											(<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$_template</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$content</span>)
 									</div>
 								</div>
 		</div>
@@ -237,13 +237,13 @@
 					</div>
 		<div class="info-box-body">
 			<a name="var$contents" id="$contents"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$contents</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">41</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">42</span>)
 		</span>
 	</div>
 
@@ -259,13 +259,13 @@
 
 </div>
 <a name="var$timestamps" id="$timestamps"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$timestamps</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">47</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">48</span>)
 		</span>
 	</div>
 
@@ -309,10 +309,10 @@
 			<A NAME='method_detail'></A>
 
 <a name="methodacquireLock" id="acquireLock"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">acquireLock</span> (line <span class="line-number">382</span>)
+		<span class="method-title">acquireLock</span> (line <span class="line-number">393</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -326,7 +326,7 @@
 		<span class="method-name">
 			acquireLock
 		</span>
-					(<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type"><a href="../../Smarty/TemplateResources/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
+					(<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type"><a href="../../Smarty/Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
 			</div>
 	
 			<ul class="parameters">
@@ -334,7 +334,7 @@
 				<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>
 				<span class="var-name">$smarty</span><span class="var-description">: Smarty object</span>			</li>
 					<li>
-				<span class="var-type"><a href="../../Smarty/TemplateResources/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>
+				<span class="var-type"><a href="../../Smarty/Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>
 				<span class="var-name">$cached</span><span class="var-description">: cached object</span>			</li>
 				</ul>
 		
@@ -346,10 +346,10 @@
 			
 	</div>
 <a name="methodaddMetaTimestamp" id="addMetaTimestamp"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">addMetaTimestamp</span> (line <span class="line-number">228</span>)
+		<span class="method-title">addMetaTimestamp</span> (line <span class="line-number">236</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -376,10 +376,10 @@
 			
 	</div>
 <a name="methodclear" id="clear"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">clear</span> (line <span class="line-number">150</span>)
+		<span class="method-title">clear</span> (line <span class="line-number">156</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -428,10 +428,10 @@
 			
 	</div>
 <a name="methodclearAll" id="clearAll"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">clearAll</span> (line <span class="line-number">128</span>)
+		<span class="method-title">clearAll</span> (line <span class="line-number">133</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -470,10 +470,10 @@
 			
 	</div>
 <a name="methoddelete" id="delete"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">delete</span> (line <span class="line-number">423</span>)
+		<span class="method-title">delete</span> (line <span class="line-number">437</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -490,7 +490,7 @@
 		<span class="method-name">
 			delete
 		</span>
-					(<span class="var-type"></span>&nbsp;<span class="var-name">$keys</span>)
+					(<span class="var-type">array</span>&nbsp;<span class="var-name">$keys</span>)
 			</div>
 	
 			<ul class="parameters">
@@ -514,10 +514,10 @@
 				</ul>
 	</div>
 <a name="methodfetch" id="fetch"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">fetch</span> (line <span class="line-number">205</span>)
+		<span class="method-title">fetch</span> (line <span class="line-number">212</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -565,10 +565,10 @@
 			
 	</div>
 <a name="methodgetLatestInvalidationTimestamp" id="getLatestInvalidationTimestamp"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">getLatestInvalidationTimestamp</span> (line <span class="line-number">293</span>)
+		<span class="method-title">getLatestInvalidationTimestamp</span> (line <span class="line-number">300</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -607,10 +607,10 @@
 			
 	</div>
 <a name="methodgetMetaTimestamp" id="getMetaTimestamp"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">getMetaTimestamp</span> (line <span class="line-number">240</span>)
+		<span class="method-title">getMetaTimestamp</span> (line <span class="line-number">249</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -637,10 +637,10 @@
 			
 	</div>
 <a name="methodgetTemplateUid" id="getTemplateUid"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">getTemplateUid</span> (line <span class="line-number">167</span>)
+		<span class="method-title">getTemplateUid</span> (line <span class="line-number">172</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -655,7 +655,7 @@
 		<span class="method-name">
 			getTemplateUid
 		</span>
-					(<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$resource_name</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$cache_id</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$compile_id</span>)
+					(<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$resource_name</span>)
 			</div>
 	
 			<ul class="parameters">
@@ -665,21 +665,15 @@
 					<li>
 				<span class="var-type">string</span>
 				<span class="var-name">$resource_name</span><span class="var-description">: template name</span>			</li>
-					<li>
-				<span class="var-type">string</span>
-				<span class="var-name">$cache_id</span><span class="var-description">: cache id</span>			</li>
-					<li>
-				<span class="var-type">string</span>
-				<span class="var-name">$compile_id</span><span class="var-description">: compile id</span>			</li>
 				</ul>
 		
 			
 	</div>
 <a name="methodhasLock" id="hasLock"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">hasLock</span> (line <span class="line-number">370</span>)
+		<span class="method-title">hasLock</span> (line <span class="line-number">379</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -690,11 +684,11 @@
 			</ul>
 	
 	<div class="method-signature">
-		<span class="method-result">booelan</span>
+		<span class="method-result">bool</span>
 		<span class="method-name">
 			hasLock
 		</span>
-					(<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type"><a href="../../Smarty/TemplateResources/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
+					(<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type"><a href="../../Smarty/Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
 			</div>
 	
 			<ul class="parameters">
@@ -702,7 +696,7 @@
 				<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>
 				<span class="var-name">$smarty</span><span class="var-description">: Smarty object</span>			</li>
 					<li>
-				<span class="var-type"><a href="../../Smarty/TemplateResources/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>
+				<span class="var-type"><a href="../../Smarty/Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>
 				<span class="var-name">$cached</span><span class="var-description">: cached object</span>			</li>
 				</ul>
 		
@@ -714,10 +708,10 @@
 			
 	</div>
 <a name="methodinvalidate" id="invalidate"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">invalidate</span> (line <span class="line-number">257</span>)
+		<span class="method-title">invalidate</span> (line <span class="line-number">267</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -757,10 +751,10 @@
 			
 	</div>
 <a name="methodlistInvalidationKeys" id="listInvalidationKeys"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">listInvalidationKeys</span> (line <span class="line-number">325</span>)
+		<span class="method-title">listInvalidationKeys</span> (line <span class="line-number">333</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -801,10 +795,10 @@
 			
 	</div>
 <a name="methodpopulate" id="populate"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">populate</span> (line <span class="line-number">56</span>)
+		<span class="method-title">populate</span> (line <span class="line-number">57</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -818,15 +812,15 @@
 		<span class="method-name">
 			populate
 		</span>
-					(<span class="var-type"><a href="../../Smarty/TemplateResources/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>, <span class="var-type"><a href="../../Smarty/Template/Smarty_Internal_Template.html">Smarty_Internal_Template</a></span>&nbsp;<span class="var-name">$_template</span>)
+					(<span class="var-type"><a href="../../Smarty/Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>, <span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$_template</span>)
 			</div>
 	
 			<ul class="parameters">
 					<li>
-				<span class="var-type"><a href="../../Smarty/TemplateResources/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>
+				<span class="var-type"><a href="../../Smarty/Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>
 				<span class="var-name">$cached</span><span class="var-description">: cached object</span>			</li>
 					<li>
-				<span class="var-type"><a href="../../Smarty/Template/Smarty_Internal_Template.html">Smarty_Internal_Template</a></span>
+				<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>
 				<span class="var-name">$_template</span><span class="var-description">: template object</span>			</li>
 				</ul>
 		
@@ -839,10 +833,10 @@
 			
 	</div>
 <a name="methodpopulateTimestamp" id="populateTimestamp"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">populateTimestamp</span> (line <span class="line-number">71</span>)
+		<span class="method-title">populateTimestamp</span> (line <span class="line-number">73</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -856,12 +850,12 @@
 		<span class="method-name">
 			populateTimestamp
 		</span>
-					(<span class="var-type"><a href="../../Smarty/TemplateResources/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
+					(<span class="var-type"><a href="../../Smarty/Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
 			</div>
 	
 			<ul class="parameters">
 					<li>
-				<span class="var-type"><a href="../../Smarty/TemplateResources/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>
+				<span class="var-type"><a href="../../Smarty/Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>
 				<span class="var-name">$cached</span><span class="var-description">: cached object</span>			</li>
 				</ul>
 		
@@ -874,10 +868,10 @@
 			
 	</div>
 <a name="methodprocess" id="process"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">process</span> (line <span class="line-number">87</span>)
+		<span class="method-title">process</span> (line <span class="line-number">90</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -888,19 +882,19 @@
 			</ul>
 	
 	<div class="method-signature">
-		<span class="method-result">booelan</span>
+		<span class="method-result">bool</span>
 		<span class="method-name">
 			process
 		</span>
-					(<span class="var-type"><a href="../../Smarty/Template/Smarty_Internal_Template.html">Smarty_Internal_Template</a></span>&nbsp;<span class="var-name">$_template</span>, [<span class="var-type"><a href="../../Smarty/TemplateResources/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span> = <span class="var-default">null</span>])
+					(<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$_template</span>, [<span class="var-type"><a href="../../Smarty/Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span> = <span class="var-default">null</span>])
 			</div>
 	
 			<ul class="parameters">
 					<li>
-				<span class="var-type"><a href="../../Smarty/Template/Smarty_Internal_Template.html">Smarty_Internal_Template</a></span>
+				<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>
 				<span class="var-name">$_template</span><span class="var-description">: template object</span>			</li>
 					<li>
-				<span class="var-type"><a href="../../Smarty/TemplateResources/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>
+				<span class="var-type"><a href="../../Smarty/Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>
 				<span class="var-name">$cached</span><span class="var-description">: cached object</span>			</li>
 				</ul>
 		
@@ -913,10 +907,10 @@
 			
 	</div>
 <a name="methodpurge" id="purge"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">purge</span> (line <span class="line-number">430</span>)
+		<span class="method-title">purge</span> (line <span class="line-number">444</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -951,10 +945,10 @@
 				</ul>
 	</div>
 <a name="methodread" id="read"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">read</span> (line <span class="line-number">406</span>)
+		<span class="method-title">read</span> (line <span class="line-number">420</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -970,7 +964,7 @@
 		<span class="method-name">
 			read
 		</span>
-					(<span class="var-type"></span>&nbsp;<span class="var-name">$keys</span>)
+					(<span class="var-type">array</span>&nbsp;<span class="var-name">$keys</span>)
 			</div>
 	
 			<ul class="parameters">
@@ -994,10 +988,10 @@
 				</ul>
 	</div>
 <a name="methodreleaseLock" id="releaseLock"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">releaseLock</span> (line <span class="line-number">394</span>)
+		<span class="method-title">releaseLock</span> (line <span class="line-number">407</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1011,7 +1005,7 @@
 		<span class="method-name">
 			releaseLock
 		</span>
-					(<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type"><a href="../../Smarty/TemplateResources/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
+					(<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type"><a href="../../Smarty/Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
 			</div>
 	
 			<ul class="parameters">
@@ -1019,7 +1013,7 @@
 				<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>
 				<span class="var-name">$smarty</span><span class="var-description">: Smarty object</span>			</li>
 					<li>
-				<span class="var-type"><a href="../../Smarty/TemplateResources/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>
+				<span class="var-type"><a href="../../Smarty/Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>
 				<span class="var-name">$cached</span><span class="var-description">: cached object</span>			</li>
 				</ul>
 		
@@ -1031,10 +1025,10 @@
 			
 	</div>
 <a name="methodsanitize" id="sanitize"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">sanitize</span> (line <span class="line-number">184</span>)
+		<span class="method-title">sanitize</span> (line <span class="line-number">190</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1061,10 +1055,10 @@
 			
 	</div>
 <a name="methodwrite" id="write"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">write</span> (line <span class="line-number">415</span>)
+		<span class="method-title">write</span> (line <span class="line-number">429</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1080,7 +1074,7 @@
 		<span class="method-name">
 			write
 		</span>
-					(<span class="var-type"></span>&nbsp;<span class="var-name">$keys</span>, [<span class="var-type">int</span>&nbsp;<span class="var-name">$expire</span> = <span class="var-default">null</span>])
+					(<span class="var-type">array</span>&nbsp;<span class="var-name">$keys</span>, [<span class="var-type">int</span>&nbsp;<span class="var-name">$expire</span> = <span class="var-default">null</span>])
 			</div>
 	
 			<ul class="parameters">
@@ -1107,10 +1101,10 @@
 				</ul>
 	</div>
 <a name="methodwriteCachedContent" id="writeCachedContent"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">writeCachedContent</span> (line <span class="line-number">112</span>)
+		<span class="method-title">writeCachedContent</span> (line <span class="line-number">116</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1125,12 +1119,12 @@
 		<span class="method-name">
 			writeCachedContent
 		</span>
-					(<span class="var-type"><a href="../../Smarty/Template/Smarty_Internal_Template.html">Smarty_Internal_Template</a></span>&nbsp;<span class="var-name">$_template</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$content</span>)
+					(<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$_template</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$content</span>)
 			</div>
 	
 			<ul class="parameters">
 					<li>
-				<span class="var-type"><a href="../../Smarty/Template/Smarty_Internal_Template.html">Smarty_Internal_Template</a></span>
+				<span class="var-type"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>
 				<span class="var-name">$_template</span><span class="var-description">: template object</span>			</li>
 					<li>
 				<span class="var-type">string</span>
@@ -1170,7 +1164,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Tue, 11 Dec 2012 21:28:43 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Sun, 28 Apr 2013 12:40:30 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

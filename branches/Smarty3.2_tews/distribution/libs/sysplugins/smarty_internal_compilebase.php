@@ -14,7 +14,8 @@
  * @package Smarty
  * @subpackage Compiler
  */
-class Smarty_Internal_CompileBase extends Smarty_Internal_Code {
+class Smarty_Internal_CompileBase extends Smarty_Internal_Code
+{
 
     /**
      * Array of names of required attribute required by tag
@@ -54,10 +55,11 @@ class Smarty_Internal_CompileBase extends Smarty_Internal_Code {
      * as valid
      *
      * @param object $compiler   compiler object
-     * @param array  $attributes attributes applied to the tag
+     * @param array $attributes attributes applied to the tag
      * @return array of mapped attributes for further processing
      */
-    public function getAttributes($compiler, $attributes) {
+    public function getAttributes($compiler, $attributes)
+    {
         $_indexed_attr = array();
         // loop over attributes
         foreach ($attributes as $key => $mixed) {
@@ -132,11 +134,12 @@ class Smarty_Internal_CompileBase extends Smarty_Internal_Code {
      *
      * Optionally additional data can be saved on stack
      *
-     * @param object    $compiler   compiler object
-     * @param string    $openTag    the opening tag's name
-     * @param mixed     $data       optional data saved
+     * @param object $compiler   compiler object
+     * @param string $openTag    the opening tag's name
+     * @param mixed $data       optional data saved
      */
-    public function openTag($compiler, $openTag, $data = null) {
+    public function openTag($compiler, $openTag, $data = null)
+    {
         array_push($compiler->_tag_stack, array($openTag, $data));
     }
 
@@ -145,16 +148,17 @@ class Smarty_Internal_CompileBase extends Smarty_Internal_Code {
      *
      * Raise an error if this stack-top doesn't match with expected opening tags
      *
-     * @param object       $compiler    compiler object
+     * @param object $compiler    compiler object
      * @param array|string $expectedTag the expected opening tag names
      * @return mixed any type the opening tag's name or saved data
      */
-    public function closeTag($compiler, $expectedTag) {
+    public function closeTag($compiler, $expectedTag)
+    {
         if (count($compiler->_tag_stack) > 0) {
             // get stacked info
             list($_openTag, $_data) = array_pop($compiler->_tag_stack);
             // open tag must match with the expected ones
-            if (in_array($_openTag, (array) $expectedTag)) {
+            if (in_array($_openTag, (array)$expectedTag)) {
                 if (is_null($_data)) {
                     // return opening tag
                     return $_openTag;
@@ -176,10 +180,11 @@ class Smarty_Internal_CompileBase extends Smarty_Internal_Code {
      * Get Annotation From PHPdoc comments
      *
      * @param mixed callback function or class method to be parsed
-     * @param string parameter name
+     * @param string $parameter name
      * @return mixed data
      */
-    public function getAnnotation($callback, $parameter) {
+    public function getAnnotation($callback, $parameter)
+    {
         // get PHPdoc data
         $doc = $this->buildReflection($callback)->getDocComment();
         if ($doc && preg_match('#@' . $parameter . '(.*)$#m', $doc, $matches)) {
@@ -198,11 +203,12 @@ class Smarty_Internal_CompileBase extends Smarty_Internal_Code {
      * Find object position by type-hint
      *
      * @param mixed callback function or class method to be parsed
-     * @param array objects array of class name to look for
-     * @param mixed position  int => check specified position; null => scan all parameter
+     * @param array $objects array of class name to look for
+     * @param mixed $position  int => check specified position; null => scan all parameter
      * @return mixed  false if failed, array of call found and position
      */
-    public function injectObject($callback, $objects, $position = null) {
+    public function injectObject($callback, $objects, $position = null)
+    {
         // get list of parameters
         $args = $this->buildReflection($callback)->getParameters();
         if (!$args) {
@@ -235,22 +241,22 @@ class Smarty_Internal_CompileBase extends Smarty_Internal_Code {
     /**
      * Get create plugin parameter string
      *
-     * @param mixed callback function or class method to be parsed
+     * @param callback $callback of plugin
      * @param array $params parameter from template
+     * @param object $compiler compiler object
+     * @param boolean $block true if block plugin
+     * @param null $cache_attr
      * @return mixed data
-     * @throws SmartyCompilerException
      */
-    public function getPluginParameterString($callback, $params, $compiler, $block, $cache_attr = null) {
+    public function getPluginParameterString($callback, $params, $compiler, $block, $cache_attr = null)
+    {
         $object = '$_smarty_tpl';
         if ($result = $this->injectObject($callback, array('Smarty', 'Smarty_Internal_Template'))) {
-            if ($result[0] == 'Smarty') {
-                $object = '$_smarty_tpl->smarty';
-            }
             if ($result[1] == 0) {
                 $par_array = array();
                 $par_names = array();
                 $parameters = $this->buildReflection($callback)->getParameters();
-                // lose first argument, since it must've been Smarty or Smarty_Internal_Template
+                // lose first argument, since it must've been Smarty
                 array_shift($parameters);
                 if ($block) {
                     if ($parameters[0]->getName() != 'content') {
@@ -269,7 +275,7 @@ class Smarty_Internal_CompileBase extends Smarty_Internal_Code {
                     $optional = $par->isOptional();
                     if (isset($params[$name])) {
                         if ($compiler->template->caching && is_array($cache_attr) && in_array($name, $cache_attr)) {
-                            $value = str_replace(array('$', '"'), array('^##^','^#^'), $params[$name]);
+                            $value = str_replace(array('$', '"'), array('^##^', '^#^'), $params[$name]);
                             $par_array[] = "'$name'=>^#^.var_export($value,true).^#^";
                         } else {
                             $par_array[] = $params[$name];
@@ -300,7 +306,7 @@ class Smarty_Internal_CompileBase extends Smarty_Internal_Code {
             if (is_int($key)) {
                 $par_array[] = "$key=>$value";
             } elseif ($compiler->template->caching && is_array($cache_attr) && in_array($key, $cache_attr)) {
-                $value = str_replace(array('$', '"'), array('^##^','^#^'), $value);
+                $value = str_replace(array('$', '"'), array('^##^', '^#^'), $value);
                 $par_array[] = "'$key'=>^#^.var_export($value,true).^#^";
             } else {
                 $par_array[] = "'$key'=>$value";
@@ -321,18 +327,20 @@ class Smarty_Internal_CompileBase extends Smarty_Internal_Code {
      * @return int number of required parameter
      * @throws SmartyCompilerException
      */
-    public function getNoOfRequiredParameter($callback) {
+    public function getNoOfRequiredParameter($callback)
+    {
         return $this->buildReflection($callback)->getNumberOfRequiredParameters();
     }
 
     /**
      * Build reflection object dependent of callback
      *
-     * @param mixed callback function or class method to be parsed
+     * @param $callback callback function or class method to be parsed
+     * @throws SmartyException
      * @return object refelction object
-     * @throws SmartyCompilerException
      */
-    public function buildReflection($callback) {
+    public function buildReflection($callback)
+    {
         if (is_string($callback) || $callback instanceof Closure) {
             $reflection = new ReflectionFunction($callback);
         } elseif (is_array($callback)) {

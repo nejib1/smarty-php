@@ -9,7 +9,8 @@
 /**
  * class for {php} and <?php...?> tag tests
  */
-class CompilePhpTests extends PHPUnit_Framework_TestCase {
+class CompilePhpTests extends PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
         $this->smartyBC = SmartyTests::$smartyBC;
@@ -19,7 +20,8 @@ class CompilePhpTests extends PHPUnit_Framework_TestCase {
 
     public static function isRunnable()
     {
-        return true;
+        // TODO enable PHP test
+        return false;
     }
 
     /**
@@ -32,6 +34,7 @@ class CompilePhpTests extends PHPUnit_Framework_TestCase {
         $content = $this->smartyBC->fetch($tpl);
         $this->assertEquals("<?php echo 'hello world'; ?>", $content);
     }
+
     // ALLOW
     public function testPhpTagAllow()
     {
@@ -41,6 +44,7 @@ class CompilePhpTests extends PHPUnit_Framework_TestCase {
         $content = $this->smartyBC->fetch($tpl);
         $this->assertEquals('hello world', $content);
     }
+
     /**
      * test <?=...\> shorttag
      * default is PASSTHRU
@@ -361,7 +365,7 @@ STR;
             // For some reason $content doesn't preserve newline format. Not a big problem, I think.
             $this->assertEquals(preg_replace("/\r\n/", "\n", $str),
                 preg_replace("/\r\n/", "\n", $content)
-                );
+            );
 
             $this->smartyBC->php_handling = Smarty::PHP_ALLOW;
             $this->smartyBC->disableSecurity();
@@ -384,7 +388,7 @@ STR;
             // For some reason $content doesn't preserve newline format. Not a big problem, I think.
             $this->assertEquals(preg_replace("/\r\n/", "\n", $str),
                 preg_replace("/\r\n/", "\n", $content)
-                );
+            );
 
             if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
                 $this->smartyBC->php_handling = Smarty::PHP_ALLOW;

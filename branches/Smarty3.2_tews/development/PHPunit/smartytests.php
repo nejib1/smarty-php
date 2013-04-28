@@ -13,14 +13,17 @@ require_once SMARTY_DIR . 'SmartyBC.class.php';
 /**
  * class for running test suite
  */
-class SmartyTests extends PHPUnit_Framework_TestSuite {
-    static $smarty = null ;
-    static $smartyBC = null ;
+class SmartyTests extends PHPUnit_Framework_TestSuite
+{
+    static $smarty = null;
+    static $smartyBC = null;
+    static $smartyBC31 = null;
 
     public function __construct()
     {
-        SmartyTests::$smarty = new Smarty();
         SmartyTests::$smartyBC = new SmartyBC();
+        SmartyTests::$smartyBC31 = new SmartyBC31();
+        SmartyTests::$smarty = new Smarty();
     }
 
     protected static function _init($smarty)
@@ -30,10 +33,6 @@ class SmartyTests extends PHPUnit_Framework_TestSuite {
         $smarty->setPluginsDir(SMARTY_PLUGINS_DIR);
         $smarty->setCacheDir('.' . DS . 'cache' . DS);
         $smarty->setConfigDir('.' . DS . 'configs' . DS);
-        foreach (Smarty::$template_objects as $tpl) {
-            $tpl->cleanPointer();
-            unset($tpl);
-        }
         Smarty::$template_objects = array();
         $smarty->tpl_vars = new Smarty_Variable_Container($smarty);
         $smarty->template_functions = array();
@@ -65,7 +64,6 @@ class SmartyTests extends PHPUnit_Framework_TestSuite {
         $smarty->cache_id = null;
         $smarty->compile_id = null;
         $smarty->default_resource_type = 'file';
-        Smarty_CacheResource::$resources = array();
     }
 
     public static function init()
@@ -73,19 +71,25 @@ class SmartyTests extends PHPUnit_Framework_TestSuite {
         error_reporting(E_ALL | E_STRICT);
         self::_init(SmartyTests::$smarty);
         self::_init(SmartyTests::$smartyBC);
+        self::_init(SmartyTests::$smartyBC31);
         Smarty_Resource::$sources = array();
         Smarty_Compiled::$compileds = array();
-        Smarty::$global_tpl_vars = new Smarty_Variable_Container();
+        Smarty::$global_tpl_vars = new stdClass;
         Smarty::$_smarty_vars = array();
+        foreach (Smarty::$template_objects as $tpl) {
+            $tpl->cleanPointer();
+            unset($tpl);
+        }
         Smarty_CacheResource::$resources = array();
-        SmartyTests::$smartyBC->registerPlugin('block','php','smarty_php_tag');
+        SmartyTests::$smartyBC->registerPlugin('block', 'php', 'smarty_php_tag');
     }
+
     /**
      * look for test units and run them
      */
     public static function suite()
     {
-        $testorder = array('CoreTests', 'ClearCompiledTests', 'ClearCacheTests', 'StringResourceTests', 'FileResourceTests' ,'DoubleQuotedStringTests',  'CompileAssignTests', 'AttributeTests');
+        $testorder = array('CoreTests', 'ClearCompiledTests', 'ClearCacheTests', 'StringResourceTests', 'FileResourceTests', 'DoubleQuotedStringTests', 'CompileAssignTests', 'AttributeTests');
         $smarty_libs_dir = dirname(__FILE__) . '/../../distribution/libs';
         if (method_exists('PHPUnit_Util_Filter', 'addDirectoryToWhitelist')) {
             // Older versions of PHPUnit did not have this function,
@@ -104,7 +108,7 @@ class SmartyTests extends PHPUnit_Framework_TestSuite {
 
         $_classes = array();
         foreach (new DirectoryIterator(dirname(__FILE__)) as $file) {
-            if (!$file->isDot() && !$file->isDir() && (string) $file !== 'smartytests.php' && (string) $file !== 'smartytestssingle.php' && (string) $file !== 'smartytestsfile.php' && substr((string) $file, -4) === '.php') {
+            if (!$file->isDot() && !$file->isDir() && !in_array((string)$file, array('smartytests.php','smartytestssingle.php','smartytestsfile.php','smartytestdebug.php','smartytestdebug.inc.php')) && substr((string)$file, -4) === '.php') {
                 $class = basename($file, '.php');
                 if (!in_array($class, $testorder)) {
                     require_once $file->getPathname();

@@ -17,16 +17,18 @@
  * @package Smarty
  * @subpackage Cacher
  */
-class Smarty_Internal_CacheResource_File extends Smarty_CacheResource {
+class Smarty_Internal_CacheResource_File extends Smarty_CacheResource
+{
 
     /**
      * populate Cached Object with meta data from Resource
      *
-     * @param Smarty_Template_Cached   $cached    cached object
-     * @param Smarty_Internal_Template $_template template object
+     * @param Smarty_Template_Cached $cached    cached object
+     * @param Smarty $_template template object
      * @return void
      */
-    public function populate(Smarty_Template_Cached $cached, Smarty_Internal_Template $_template) {
+    public function populate(Smarty_Template_Cached $cached, Smarty $_template)
+    {
         $_source_file_path = str_replace(':', '.', $_template->source->filepath);
         $_cache_id = isset($_template->cache_id) ? preg_replace('![^\w\|]+!', '_', $_template->cache_id) : null;
         $_compile_id = isset($_template->compile_id) ? preg_replace('![^\w\|]+!', '_', $_template->compile_id) : null;
@@ -43,8 +45,8 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource {
                     }
                 }
                 $_filepath .= substr($_cache_id_hash, 0, 2) . DS
-                        . substr($_cache_id_hash, 2, 2) . DS
-                        . substr($_cache_id_hash, 4, 2) . DS;
+                    . substr($_cache_id_hash, 2, 2) . DS
+                    . substr($_cache_id_hash, 4, 2) . DS;
                 $_filepath .= $_cache_id_parts[$_cache_id_last];
             }
             $_filepath .= '^' . $_compile_id . '^';
@@ -73,7 +75,8 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource {
      * @param Smarty_Template_Cached $cached cached object
      * @return void
      */
-    public function populateTimestamp(Smarty_Template_Cached $cached) {
+    public function populateTimestamp(Smarty_Template_Cached $cached)
+    {
         $cached->timestamp = @filemtime($cached->filepath);
         $cached->exists = !!$cached->timestamp;
     }
@@ -81,11 +84,12 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource {
     /**
      * Read the cached template and process its header
      *
-     * @param Smarty_Internal_Template $_template template object
+     * @param Smarty $_template template object
      * @param Smarty_Template_Cached $cached cached object
-     * @return booelan true or false if the cached content does not exist
+     * @return bool true or false if the cached content does not exist
      */
-    public function process(Smarty_Internal_Template $_template, Smarty_Template_Cached $cached=null) {
+    public function process(Smarty $_template, Smarty_Template_Cached $cached = null)
+    {
         include $_template->cached->filepath;
         return true;
     }
@@ -93,11 +97,12 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource {
     /**
      * Write the rendered template output to cache
      *
-     * @param Smarty_Internal_Template $_template template object
-     * @param string                   $content   content to cache
+     * @param Smarty $_template template object
+     * @param string $content   content to cache
      * @return boolean success
      */
-    public function writeCachedContent(Smarty_Internal_Template $_template, $content) {
+    public function writeCachedContent(Smarty $_template, $content)
+    {
         if (Smarty_Internal_Write_File::writeFile($_template->cached->filepath, $content, $_template) === true) {
             $_template->cached->timestamp = @filemtime($_template->cached->filepath);
             $_template->cached->exists = !!$_template->cached->timestamp;
@@ -111,11 +116,12 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource {
     /**
      * Empty cache
      *
-     * @param Smarty_Internal_Template $_template template object
-     * @param integer                  $exp_time  expiration time (number of seconds, not timestamp)
+     * @param Smarty $smarty Smarty object
+     * @param integer $exp_time  expiration time (number of seconds, not timestamp)
      * @return integer number of cache files deleted
      */
-    public function clearAll(Smarty $smarty, $exp_time = null) {
+    public function clearAll(Smarty $smarty, $exp_time = null)
+    {
         $save_use_sub_dirs = $smarty->use_sub_dirs;
         $smarty->use_sub_dirs = false;
         $count = $this->clear($smarty, null, null, null, $exp_time);
@@ -128,14 +134,15 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource {
     /**
      * Empty cache for a specific template
      *
-     * @param Smarty  $_template     template object
-     * @param string  $resource_name template name
-     * @param string  $cache_id      cache id
-     * @param string  $compile_id    compile id
+     * @param Smarty $smarty  Smarty object
+     * @param string $resource_name template name
+     * @param string $cache_id      cache id
+     * @param string $compile_id    compile id
      * @param integer $exp_time      expiration time (number of seconds, not timestamp)
      * @return integer number of cache files deleted
      */
-    public function clear(Smarty $smarty, $resource_name, $cache_id, $compile_id, $exp_time) {
+    public function clear(Smarty $smarty, $resource_name, $cache_id, $compile_id, $exp_time)
+    {
         $_cache_id = isset($cache_id) ? preg_replace('![^\w\|]+!', '_', $cache_id) : null;
         $_compile_id = isset($compile_id) ? preg_replace('![^\w\|]+!', '_', $compile_id) : null;
         $_preg_compile_id = ($_compile_id == null) ? '(.*)?' : preg_quote($_compile_id);
@@ -207,8 +214,8 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource {
                 }
                 // hash for highest level of cache_id
                 $_dir_cache_id2 = $_dir_cache_id . substr($_cache_id_hash, 0, 2) . DS
-                        . substr($_cache_id_hash, 2, 2) . DS
-                        . substr($_cache_id_hash, 4, 2) . DS;
+                    . substr($_cache_id_hash, 2, 2) . DS
+                    . substr($_cache_id_hash, 4, 2) . DS;
                 $_preg_cache_id2 = preg_quote($_cache_id_parts[$_cache_id_last]);
                 // add highest level
                 $_dir_cache_id .= $_cache_id_parts[$_cache_id_last] . DS;
@@ -309,9 +316,10 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource {
      *
      * @param Smarty $smarty Smarty object
      * @param Smarty_Template_Cached $cached cached object
-     * @return booelan true or false if cache is locked
+     * @return bool true or false if cache is locked
      */
-    public function hasLock(Smarty $smarty, Smarty_Template_Cached $cached) {
+    public function hasLock(Smarty $smarty, Smarty_Template_Cached $cached)
+    {
         if (version_compare(PHP_VERSION, '5.3.0', '>=')) {
             clearstatcache(true, $cached->lock_id);
         } else {
@@ -326,8 +334,10 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource {
      *
      * @param Smarty $smarty Smarty object
      * @param Smarty_Template_Cached $cached cached object
+     * @return void
      */
-    public function acquireLock(Smarty $smarty, Smarty_Template_Cached $cached) {
+    public function acquireLock(Smarty $smarty, Smarty_Template_Cached $cached)
+    {
         $cached->is_locked = true;
         touch($cached->lock_id);
     }
@@ -337,8 +347,10 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource {
      *
      * @param Smarty $smarty Smarty object
      * @param Smarty_Template_Cached $cached cached object
+     * @return void
      */
-    public function releaseLock(Smarty $smarty, Smarty_Template_Cached $cached) {
+    public function releaseLock(Smarty $smarty, Smarty_Template_Cached $cached)
+    {
         $cached->is_locked = false;
         @unlink($cached->lock_id);
     }

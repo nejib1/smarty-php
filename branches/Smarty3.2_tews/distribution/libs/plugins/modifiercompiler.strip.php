@@ -20,11 +20,12 @@
  * @link http://www.smarty.net/docs/en/language.modifier.strip.tpl strip (Smarty online manual)
  * @author Uwe Tews
  *
- * @params string $input input string
- * @params string $replacement replacement string
+ * @param string $input input string
+ * @param string $replacement replacement string
  * @return string with compiled code
  */
 // NOTE: The parser does pass all parameter as strings which could be directly inserted into the compiled code string
-function smarty_modifiercompiler_strip($input, $replacement = "' '") {
+function smarty_modifiercompiler_strip($input, $replacement = "' '")
+{
     return "preg_replace('!\s+!" . Smarty::$_UTF8_MODIFIER . "', {$replacement},{$input})";
 }

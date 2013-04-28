@@ -16,7 +16,8 @@
  * @package Smarty
  * @subpackage Debug
  */
-class Smarty_Internal_Debug extends Smarty_Internal_Data {
+class Smarty_Internal_Debug extends Smarty_Internal_Data
+{
 
     /**
      * template data
@@ -30,7 +31,8 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data {
      *
      * @param object $_template
      */
-    public static function start_compile($_template) {
+    public static function start_compile($_template)
+    {
         $key = self::get_key($_template);
         self::$_template_data[$key]['start_time'] = microtime(true);
     }
@@ -40,7 +42,8 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data {
      *
      * @param object $_template
      */
-    public static function end_compile($_template) {
+    public static function end_compile($_template)
+    {
         $key = self::get_key($_template);
         self::$_template_data[$key]['compile_time'] += microtime(true) - self::$_template_data[$key]['start_time'];
     }
@@ -50,7 +53,8 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data {
      *
      * @param object $_template
      */
-    public static function start_render($_template) {
+    public static function start_render($_template)
+    {
         $key = self::get_key($_template);
         self::$_template_data[$key]['start_time'] = microtime(true);
     }
@@ -60,7 +64,8 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data {
      *
      * @param object $_template
      */
-    public static function end_render($_template) {
+    public static function end_render($_template)
+    {
         $key = self::get_key($_template);
         self::$_template_data[$key]['render_time'] += microtime(true) - self::$_template_data[$key]['start_time'];
     }
@@ -70,7 +75,8 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data {
      *
      * @param object $_template cached template
      */
-    public static function start_cache($_template) {
+    public static function start_cache($_template)
+    {
         $key = self::get_key($_template);
         self::$_template_data[$key]['start_time'] = microtime(true);
     }
@@ -80,7 +86,8 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data {
      *
      * @param object $_template cached template
      */
-    public static function end_cache($_template) {
+    public static function end_cache($_template)
+    {
         $key = self::get_key($_template);
         self::$_template_data[$key]['cache_time'] += microtime(true) - self::$_template_data[$key]['start_time'];
     }
@@ -88,13 +95,14 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data {
     /**
      * Opens a window for the Smarty Debugging Consol and display the data
      *
-     * @param Smarty_Internal_Template|Smarty $obj object to debug
+     * @param Smarty $obj object to debug
      */
-    public static function display_debug($obj) {
+    public static function display_debug($obj)
+    {
         // prepare information of assigned variables
         $ptr = self::get_debug_vars($obj);
         $_template = clone $obj;
-        $_template->is_template = true;
+        $_template->usage = Smarty::IS_TEMPLATE;
         unset($_template->source, $_template->compiled, $_template->cached, $_template->compiler, $_template->mustCompile);
         $_template->tpl_vars = new Smarty_Variable_Container($_template);
         $_template->template_resource = $_template->debug_tpl;
@@ -114,15 +122,12 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data {
         ksort($_assigned_vars);
         $_config_vars = $ptr->config_vars;
         ksort($_config_vars);
-        if ($obj->is_template) {
+        if ($obj->usage == Smarty::IS_TEMPLATE) {
             $_template->assign('template_name', $obj->source->type . ':' . $obj->source->name);
+            $_template->assign('template_data', null);
         } else {
             $_template->assign('template_name', null);
-        }
-        if (!$obj->is_template) {
             $_template->assign('template_data', self::$_template_data);
-        } else {
-            $_template->assign('template_data', null);
         }
         $_template->assign('assigned_vars', $_assigned_vars);
         $_template->assign('config_vars', $_config_vars);
@@ -133,32 +138,29 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data {
     /**
      * Recursively gets variables from all template/data scopes
      *
-     * @param Smarty_Internal_Template|Smarty_Data $obj object to debug
+     * @param Smarty|Smarty_Data $obj object to debug
      * @return StdClass
      */
-    public static function get_debug_vars($obj) {
+    public static function get_debug_vars($obj)
+    {
         $config_vars = array();
         $tpl_vars = array();
         foreach ($obj->tpl_vars as $key => $value) {
             if ($key != '___scope') {
                 if (strpos($key, '___config_var_') !== 0) {
                     $tpl_vars[$key] = $value;
-                    if ($obj->is_template) {
-                        $tpl_vars[$key]['source'] = $obj->source->type . ':' . $obj->source->name;
-                    } elseif (!property_exists($obj, 'is_template')) {
-                        $tpl_vars[$key]['source'] = 'Data object';
+                    if ($obj->usage == Smarty::IS_TEMPLATE) {
+                        $tpl_vars[$key]->source = $obj->source->type . ':' . $obj->source->name;
                     } else {
-                        $tpl_vars[$key]['source'] = 'Smarty object';
+                        $tpl_vars[$key]->source = $obj->scope_name;
                     }
                 } else {
                     $key = substr($key, 14);
                     $config_vars[$key] = $value;
-                    if ($obj->is_template) {
+                    if ($obj->usage == Smarty::IS_TEMPLATE) {
                         $config_vars[$key]['source'] = $obj->source->type . ':' . $obj->source->name;
-                    } elseif (!property_exists($obj, 'is_template')) {
-                        $config_vars[$key]['source'] = 'Data object';
                     } else {
-                        $config_vars[$key]['source'] = 'Smarty object';
+                        $config_vars[$key]['source'] = $obj->scope_name;
                     }
                 }
             }
@@ -174,7 +176,7 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data {
                     if (!isset($tpl_vars[$key])) {
                         if (strpos($key, '___smarty_conf_') !== 0) {
                             $tpl_vars[$key] = $var;
-                            $tpl_vars[$key]['source'] = 'Global';
+                            $tpl_vars[$key]->source = 'Smarty global';
                         } else {
 
                         }
@@ -182,7 +184,7 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data {
                 }
             }
         }
-        return (object) array('tpl_vars' => $tpl_vars, 'config_vars' => $config_vars);
+        return (object)array('tpl_vars' => $tpl_vars, 'config_vars' => $config_vars);
     }
 
     /**
@@ -191,7 +193,8 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data {
      * @param object $_template  template object
      * @return string   key into $_template_data
      */
-    private static function get_key($_template) {
+    private static function get_key($_template)
+    {
         static $_is_stringy = array('string' => true, 'eval' => true);
         // calculate Uid if not already done
         if ($_template->source->uid == '') {
@@ -223,12 +226,13 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data {
  * Purpose:  formats variable contents for display in the console
  *
  * @param array|object $var     variable to be formatted
- * @param integer      $depth   maximum recursion depth if $var is an array
- * @param integer      $length  maximum string length if $var is a string
- * @param bool         $root    flag true if called in debug.tpl
+ * @param integer $depth   maximum recursion depth if $var is an array
+ * @param integer $length  maximum string length if $var is a string
+ * @param bool $root    flag true if called in debug.tpl
  * @return string
  */
-function smarty_modifier_debug_print_var($var, $depth = 0, $length = 40, $root = true) {
+function smarty_modifier_debug_print_var($var, $depth = 0, $length = 40, $root = true)
+{
     $_replace = array("\n" => '<i>\n</i>',
         "\r" => '<i>\r</i>',
         "\t" => '<i>\t</i>'
@@ -243,8 +247,8 @@ function smarty_modifier_debug_print_var($var, $depth = 0, $length = 40, $root =
             }
             foreach ($var as $curr_key => $curr_val) {
                 $results .= '<br>' . str_repeat('&nbsp;', $depth * 2)
-                        . '<b>' . strtr($curr_key, $_replace) . '</b> =&gt; '
-                        . smarty_modifier_debug_print_var($curr_val, ++$depth, $length, false);
+                    . '<b>' . strtr($curr_key, $_replace) . '</b> =&gt; '
+                    . smarty_modifier_debug_print_var($curr_val, ++$depth, $length, false);
                 $depth--;
             }
             break;
@@ -254,8 +258,8 @@ function smarty_modifier_debug_print_var($var, $depth = 0, $length = 40, $root =
             $results = '<b>' . get_class($var) . ' Object (' . count($object_vars) . ')</b>';
             foreach ($object_vars as $curr_key => $curr_val) {
                 $results .= '<br>' . str_repeat('&nbsp;', $depth * 2)
-                        . '<b> -&gt;' . strtr($curr_key, $_replace) . '</b> = '
-                        . smarty_modifier_debug_print_var($curr_val, ++$depth, $length, false);
+                    . '<b> -&gt;' . strtr($curr_key, $_replace) . '</b> = '
+                    . smarty_modifier_debug_print_var($curr_val, ++$depth, $length, false);
                 $depth--;
             }
             break;
@@ -270,14 +274,14 @@ function smarty_modifier_debug_print_var($var, $depth = 0, $length = 40, $root =
             } elseif (null === $var) {
                 $results = 'null';
             } else {
-                $results = htmlspecialchars((string) $var);
+                $results = htmlspecialchars((string)$var);
             }
             $results = '<i>' . $results . '</i>';
             break;
 
         case 'integer' :
         case 'float' :
-            $results = htmlspecialchars((string) $var);
+            $results = htmlspecialchars((string)$var);
             break;
 
         case 'string' :

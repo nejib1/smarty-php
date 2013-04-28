@@ -15,15 +15,15 @@ class Smarty_Resource_Extendsall extends Smarty_Internal_Resource_Extends {
      * populate Source Object with meta data from Resource
      *
      * @param Smarty_Template_Source $source source object
-     * @param Smarty_Internal_Template $_template template object
+     * @param Smarty $_template template object
      * @return void
      */
-    public function populate(Smarty_Template_Source $source, Smarty_Internal_Template $_template=null)
+    public function populate(Smarty_Template_Source $source, Smarty $_template=null)
     {
         $uid = '';
         $sources = array();
         $exists = true;
-        foreach ($_template->smarty->getTemplateDir() as $key => $directory) {
+        foreach ($_template->getTemplateDir() as $key => $directory) {
             try {
                 $s = Smarty_Resource::source(null, $source->smarty, '[' . $key . ']' . $source->name );
                 if (!$s->exists) {
@@ -49,7 +49,7 @@ class Smarty_Resource_Extendsall extends Smarty_Internal_Resource_Extends {
         $source->filepath = $s->filepath;
         $source->uid = sha1($uid);
         $source->exists = $exists;
-        if ($_template && $_template->smarty->compile_check) {
+        if ($_template && $_template->compile_check) {
             $source->timestamp = $s->timestamp;
         }
         // need the template at getContent()

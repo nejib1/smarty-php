@@ -17,9 +17,11 @@
  * @link http://www.smarty.net/docs/en/language.modifier.strip.tags.tpl strip_tags (Smarty online manual)
  * @author Uwe Tews
  * @param array $params parameters
+ * @param object $compiler compiler object
  * @return string with compiled code
  */
-function smarty_modifiercompiler_strip_tags($params, $compiler) {
+function smarty_modifiercompiler_strip_tags($params, $compiler)
+{
     if (!isset($params[1])) {
         $params[1] = true;
     }

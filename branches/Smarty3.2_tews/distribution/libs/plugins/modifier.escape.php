@@ -18,14 +18,16 @@
  * @link http://www.smarty.net/docs/en/language.modifier.escape.tpl (Smarty online manual)
  * @author Monte Ohrt <monte at ohrt dot com>
  *
- * @param Smarty_Internal_Template $template template object
- * @param string  $string        input string
- * @param string  $esc_type      escape type
- * @param string  $char_set      character set, used for htmlspecialchars() or htmlentities()
+ * @param Smarty $template template object
+ * @param string $string        input string
+ * @param string $esc_type      escape type
+ * @param string $char_set      character set, used for htmlspecialchars() or htmlentities()
  * @param boolean $double_encode encode already encoded entitites again, used for htmlspecialchars() or htmlentities()
+ * @throws SmartyRuntimeException
  * @return string escaped input string
  */
-function smarty_modifier_escape(Smarty_Internal_Template $template, $string, $esc_type = 'html', $char_set = null, $double_encode = true) {
+function smarty_modifier_escape(Smarty $template, $string, $esc_type = 'html', $char_set = null, $double_encode = true)
+{
     static $_double_encode = null;
     if ($_double_encode === null) {
         $_double_encode = version_compare(PHP_VERSION, '5.2.3', '>=');

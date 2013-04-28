@@ -1,18 +1,19 @@
 <?php
 /**
-* Smarty PHPunit tests static class access to constants, variables and methodes
-*
-* @package PHPunit
-* @author Uwe Tews
-*/
+ * Smarty PHPunit tests static class access to constants, variables and methodes
+ *
+ * @package PHPunit
+ * @author Uwe Tews
+ */
 
 /**
-* class for static class access to constants, variables and methodes tests
-*/
-class NamespaceTests extends PHPUnit_Framework_TestCase {
+ * class for static class access to constants, variables and methodes tests
+ */
+class NamespaceTests extends PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
-        require_once dirname(__FILE__) .'/helpers/namespaced_class.php';
+        require_once dirname(__FILE__) . '/helpers/namespaced_class.php';
 
         $this->smarty = SmartyTests::$smarty;
         SmartyTests::init();

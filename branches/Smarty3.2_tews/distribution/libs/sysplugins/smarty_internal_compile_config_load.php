@@ -16,7 +16,8 @@
  * @package Smarty
  * @subpackage Compiler
  */
-class Smarty_Internal_Compile_Config_Load extends Smarty_Internal_CompileBase {
+class Smarty_Internal_Compile_Config_Load extends Smarty_Internal_CompileBase
+{
 
     /**
      * Attribute definition: Overwrites base class.
@@ -45,11 +46,12 @@ class Smarty_Internal_Compile_Config_Load extends Smarty_Internal_CompileBase {
     /**
      * Compiles code for the {config_load} tag
      *
-     * @param array  $args     array with attributes from parser
+     * @param array $args     array with attributes from parser
      * @param object $compiler compiler object
      * @return string compiled code
      */
-    public function compile($args, $compiler) {
+    public function compile($args, $compiler)
+    {
         static $_is_legal_scope = array('local' => true, 'parent' => true, 'root' => true, 'global' => true);
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);

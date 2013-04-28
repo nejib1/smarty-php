@@ -16,24 +16,26 @@
  * @package Smarty
  * @subpackage Compiler
  */
-class Smarty_Internal_Compile_Private_Special_Variable extends Smarty_Internal_CompileBase {
+class Smarty_Internal_Compile_Private_Special_Variable extends Smarty_Internal_CompileBase
+{
 
     /**
      * Compiles code for the speical $smarty variables
      *
-     * @param array  $args     array with attributes from parser
+     * @param array $args     array with attributes from parser
      * @param object $compiler compiler object
+     * @param string $parameter string with optional array indexes
      * @return string compiled code
      */
-    public function compile($args, $compiler, $parameter) {
+    public function compile($args, $compiler, $parameter)
+    {
         $_index = preg_split("/\]\[/", substr($parameter, 1, strlen($parameter) - 2));
         $compiled_ref = ' ';
         $variable = trim($_index[0], "'");
         switch ($variable) {
             case 'foreach':
-                return "\$_smarty_tpl->tpl_vars->smarty$parameter";
             case 'section':
-                return "\$_smarty_tpl->tpl_vars->smarty$parameter";
+                return "\$_smarty_tpl->tpl_vars->smarty->value$parameter";
             case 'capture':
                 return "Smarty::\$_smarty_vars$parameter";
             case 'now':
@@ -80,14 +82,14 @@ class Smarty_Internal_Compile_Private_Special_Variable extends Smarty_Internal_C
                     $compiler->trigger_template_error("(secure mode) constants not permitted");
                     break;
                 }
-                return '@' . trim($_index[1], "'");
+                return '@constant(' . $_index[1] . ')';
 
             case 'config':
                 $name = trim($_index[1], "'");
                 if (isset($_index[2])) {
-                    return "\$_smarty_tpl->tpl_vars->___config_var_{$name}['value'][{$_index[2]}]";
+                    return "\$_smarty_tpl->tpl_vars->___config_var_{$name}[{$_index[2]}]";
                 } else {
-                    return "\$_smarty_tpl->tpl_vars->___config_var_{$name}['value']";
+                    return "\$_smarty_tpl->tpl_vars->___config_var_{$name}";
                 }
             case 'ldelim':
                 $_ldelim = $compiler->template->left_delimiter;

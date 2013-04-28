@@ -16,7 +16,8 @@
  * @package Smarty
  * @subpackage Compiler
  */
-class Smarty_Internal_Compile_Include extends Smarty_Internal_CompileBase {
+class Smarty_Internal_Compile_Include extends Smarty_Internal_CompileBase
+{
 
     /**
      * Attribute definition: Overwrites base class.
@@ -58,7 +59,8 @@ class Smarty_Internal_Compile_Include extends Smarty_Internal_CompileBase {
      * @param array $parameter array with compilation parameter
      * @return string compiled code
      */
-    public function compile($args, $compiler, $parameter) {
+    public function compile($args, $compiler, $parameter)
+    {
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);
         // save posible attributes
@@ -126,10 +128,12 @@ class Smarty_Internal_Compile_Include extends Smarty_Internal_CompileBase {
 
         $has_compiled_template = false;
         if (($compiler->template->merge_compiled_includes || $_attr['inline'] === true) && !$compiler->template->source->recompiled
-                && !($compiler->template->caching && ($compiler->tag_nocache || $compiler->nocache || $compiler->nocache_nolog)) && $_caching != Smarty::CACHING_LIFETIME_CURRENT) {
+            && !($compiler->template->caching && ($compiler->tag_nocache || $compiler->nocache || $compiler->nocache_nolog)) && $_caching != Smarty::CACHING_LIFETIME_CURRENT
+        ) {
             // check if compiled code can be merged (contains no variable part)
             if (!$compiler->has_variable_string && (substr_count($include_file, '"') == 2 or substr_count($include_file, "'") == 2)
-                    and substr_count($include_file, '(') == 0 and substr_count($include_file, '$_smarty_tpl->') == 0) {
+                and substr_count($include_file, '(') == 0 and substr_count($include_file, '$_smarty_tpl->') == 0
+            ) {
                 $tpl_name = null;
                 eval("\$tpl_name = $include_file;");
                 if (!isset(Smarty_Internal_TemplateCompilerBase::$merged_inline_templates[$tpl_name])) {
@@ -143,7 +147,7 @@ class Smarty_Internal_Compile_Include extends Smarty_Internal_CompileBase {
                     }
                     // make sure whole chain gest compiled
                     $tpl->mustCompile = true;
-                    if (!($tpl->source->uncompiled) && $tpl->source->exists) {
+                    if (!$tpl->source->uncompiled && $tpl->source->exists) {
                         // get compiled code
                         $tpl->compiler->suppressHeader = true;
                         $tpl->compiler->suppressTemplatePropertyHeader = true;
@@ -157,11 +161,6 @@ class Smarty_Internal_Compile_Include extends Smarty_Internal_CompileBase {
                         if (!empty($tpl->compiler->template_functions)) {
                             $compiler->template_functions = array_merge($compiler->template_functions, $tpl->compiler->template_functions);
                             $compiler->template_functions_code = array_merge($compiler->template_functions_code, $tpl->compiler->template_functions_code);
-                        }
-                        // merge compiled code for {block} tags
-                        if (!empty($tpl->compiler->block_functions)) {
-                            $compiler->block_functions = array_merge($compiler->block_functions, $tpl->compiler->block_functions);
-                            $compiler->block_functions_code = array_merge($compiler->block_functions_code, $tpl->compiler->block_functions_code);
                         }
                         // save merged template
                         $tpl->compiler->buffer = '';
@@ -193,13 +192,11 @@ class Smarty_Internal_Compile_Include extends Smarty_Internal_CompileBase {
                     $_pairs[] = "'$key'=>$value";
                 }
                 $_vars = 'array(' . join(',', $_pairs) . ')';
-                $_has_vars = true;
             } else {
                 $compiler->trigger_template_error('variable passing not allowed in parent/global scope', $compiler->lex->taglineno);
             }
         } else {
             $_vars = 'array()';
-            $_has_vars = false;
         }
         $save = $compiler->nocache_nolog;
         // update nocache line number trace back
@@ -213,7 +210,7 @@ class Smarty_Internal_Compile_Include extends Smarty_Internal_CompileBase {
         }
         // was there an assign attribute
         if (isset($_assign)) {
-            $this->php("\$_smarty_tpl->tpl_vars->{$_assign} = array('value' => \$this->_getSubTemplate ($include_file, \$_smarty_tpl, $_cache_id, $_compile_id, $_caching, $_cache_lifetime, $_vars, $_parent_scope , $_class));")->newline();
+            $this->php("\$_smarty_tpl->tpl_vars->{$_assign} = new Smarty_Variable (\$this->_getSubTemplate ($include_file, \$_smarty_tpl, $_cache_id, $_compile_id, $_caching, $_cache_lifetime, $_vars, $_parent_scope , $_class));")->newline();
         } else {
             $this->php("echo \$this->_getSubTemplate ($include_file, \$_smarty_tpl, $_cache_id, $_compile_id, $_caching, $_cache_lifetime, $_vars, $_parent_scope, $_class);")->newline();
         }

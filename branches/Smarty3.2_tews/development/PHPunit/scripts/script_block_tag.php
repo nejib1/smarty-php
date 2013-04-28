@@ -1,7 +1,9 @@
 <?php
-function default_script_block_tag ($params, $content, $template, &$repeat) {
+function default_script_block_tag($params, $content, $template, &$repeat)
+{
     if (isset($content)) {
-        return 'scriptblock '.$content;
+        return 'scriptblock ' . $content;
     }
 }
+
 ?>

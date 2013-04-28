@@ -16,7 +16,8 @@
  * @package Smarty
  * @subpackage Compiler
  */
-class Smarty_Internal_Compile_Section extends Smarty_Internal_CompileBase {
+class Smarty_Internal_Compile_Section extends Smarty_Internal_CompileBase
+{
 
     /**
      * Attribute definition: Overwrites base class.
@@ -45,11 +46,12 @@ class Smarty_Internal_Compile_Section extends Smarty_Internal_CompileBase {
     /**
      * Compiles code for the {section} tag
      *
-     * @param array  $args     array with attributes from parser
+     * @param array $args     array with attributes from parser
      * @param object $compiler compiler object
      * @return string compiled code
      */
-    public function compile($args, $compiler) {
+    public function compile($args, $compiler)
+    {
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);
 
@@ -60,11 +62,11 @@ class Smarty_Internal_Compile_Section extends Smarty_Internal_CompileBase {
 
         $section_name = $_attr['name'];
 
-        $this->php("if (isset(\$_smarty_tpl->tpl_vars->smarty['section'][$section_name])) {")->newline()->indent();
-        $this->php("unset(\$_smarty_tpl->tpl_vars->smarty['section'][$section_name]);")->newline();
+        $this->php("if (isset(\$_smarty_tpl->tpl_vars->smarty->value['section'][$section_name])) {")->newline()->indent();
+        $this->php("unset(\$_smarty_tpl->tpl_vars->smarty->value['section'][$section_name]);")->newline();
         $this->outdent()->php("}")->newline();
 
-        $section_props = "\$_smarty_tpl->tpl_vars->smarty['section'][$section_name]";
+        $section_props = "\$_smarty_tpl->tpl_vars->smarty->value['section'][$section_name]";
 
         foreach ($_attr as $attr_name => $attr_value) {
             switch ($attr_name) {
@@ -157,16 +159,18 @@ class Smarty_Internal_Compile_Section extends Smarty_Internal_CompileBase {
  * @package Smarty
  * @subpackage Compiler
  */
-class Smarty_Internal_Compile_Sectionelse extends Smarty_Internal_CompileBase {
+class Smarty_Internal_Compile_Sectionelse extends Smarty_Internal_CompileBase
+{
 
     /**
      * Compiles code for the {sectionelse} tag
      *
-     * @param array  $args     array with attributes from parser
+     * @param array $args     array with attributes from parser
      * @param object $compiler compiler object
      * @return string compiled code
      */
-    public function compile($args, $compiler) {
+    public function compile($args, $compiler)
+    {
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);
 
@@ -189,16 +193,18 @@ class Smarty_Internal_Compile_Sectionelse extends Smarty_Internal_CompileBase {
  * @package Smarty
  * @subpackage Compiler
  */
-class Smarty_Internal_Compile_Sectionclose extends Smarty_Internal_CompileBase {
+class Smarty_Internal_Compile_Sectionclose extends Smarty_Internal_CompileBase
+{
 
     /**
      * Compiles code for the {/section} tag
      *
-     * @param array  $args     array with attributes from parser
+     * @param array $args     array with attributes from parser
      * @param object $compiler compiler object
      * @return string compiled code
      */
-    public function compile($args, $compiler) {
+    public function compile($args, $compiler)
+    {
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);
 

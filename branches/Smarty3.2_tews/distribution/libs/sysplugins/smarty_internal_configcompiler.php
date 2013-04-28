@@ -17,7 +17,8 @@
  * @package Smarty
  * @subpackage Config
  */
-class Smarty_Internal_ConfigCompiler extends Smarty_Internal_Code {
+class Smarty_Internal_ConfigCompiler extends Smarty_Internal_Code
+{
 
     /**
      * Lexer object
@@ -50,9 +51,12 @@ class Smarty_Internal_ConfigCompiler extends Smarty_Internal_Code {
     /**
      * Initialize compiler
      *
-     * @param Smarty $smarty base instance
+     * @param string $lexerclass config lexer class name
+     * @param string $parserclass config parser class name
+     * @param Smarty $template clone of Smarty class for config file
      */
-    public function __construct($lexerclass, $parserclass, $template) {
+    public function __construct($lexerclass, $parserclass, $template)
+    {
         $this->lexerclass = $lexerclass;
         $this->parserclass = $parserclass;
         $this->template = $template;
@@ -65,7 +69,8 @@ class Smarty_Internal_ConfigCompiler extends Smarty_Internal_Code {
      *
      * @return bool true if compiling succeeded, false if it failed
      */
-    public function compileTemplateSource() {
+    public function compileTemplateSource()
+    {
         /* here is where the compiling takes place. Smarty
           tags in the templates are replaces with PHP code,
           then written to compiled files. */
@@ -129,8 +134,10 @@ class Smarty_Internal_ConfigCompiler extends Smarty_Internal_Code {
      * If parameter $args contains a string this is used as error message
      *
      * @param string $args individual error message or null
+     * @throws SmartyCompilerException
      */
-    public function trigger_config_file_error($args = null) {
+    public function trigger_config_file_error($args = null)
+    {
         // get template source line which has error
         $line = $this->lex->line;
         if (isset($args)) {

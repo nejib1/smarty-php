@@ -21,11 +21,12 @@
  * @param Smarty_Internal_TemplateCompilerBase $compiler compiler object
  * @param string $input     output string
  * @param string $esc_type  escape type
- * @param string  $char_set      character set
+ * @param string $char_set      character set
  * @return string with compiled code
  */
 // NOTE: The parser does pass all parameter as strings which could be directly inserted into the compiled code string
-function smarty_modifiercompiler_unescape(Smarty_Internal_TemplateCompilerBase $compiler, $input, $esc_type = 'html', $char_set = 'null') {
+function smarty_modifiercompiler_unescape(Smarty_Internal_TemplateCompilerBase $compiler, $input, $esc_type = 'html', $char_set = 'null')
+{
     if (trim($char_set, "'\"") == 'null') {
         $char_set = '\'' . addslashes(Smarty::$_CHARSET) . '\'';
     }

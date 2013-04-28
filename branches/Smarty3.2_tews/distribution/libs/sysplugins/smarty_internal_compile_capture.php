@@ -16,7 +16,8 @@
  * @package Smarty
  * @subpackage Compiler
  */
-class Smarty_Internal_Compile_Capture extends Smarty_Internal_CompileBase {
+class Smarty_Internal_Compile_Capture extends Smarty_Internal_CompileBase
+{
 
     /**
      * Attribute definition: Overwrites base class.
@@ -37,11 +38,12 @@ class Smarty_Internal_Compile_Capture extends Smarty_Internal_CompileBase {
     /**
      * Compiles code for the {capture} tag
      *
-     * @param array  $args     array with attributes from parser
+     * @param array $args     array with attributes from parser
      * @param object $compiler compiler object
      * @return string compiled code
      */
-    public function compile($args, $compiler) {
+    public function compile($args, $compiler)
+    {
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);
 
@@ -69,16 +71,18 @@ class Smarty_Internal_Compile_Capture extends Smarty_Internal_CompileBase {
  * @package Smarty
  * @subpackage Compiler
  */
-class Smarty_Internal_Compile_CaptureClose extends Smarty_Internal_CompileBase {
+class Smarty_Internal_Compile_CaptureClose extends Smarty_Internal_CompileBase
+{
 
     /**
      * Compiles code for the {/capture} tag
      *
-     * @param array  $args     array with attributes from parser
+     * @param array $args     array with attributes from parser
      * @param object $compiler compiler object
      * @return string compiled code
      */
-    public function compile($args, $compiler) {
+    public function compile($args, $compiler)
+    {
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);
         // must endblock be nocache?
@@ -100,7 +104,7 @@ class Smarty_Internal_Compile_CaptureClose extends Smarty_Internal_CompileBase {
         $this->outdent()->php("}")->newline();
         $this->php("Smarty::\$_smarty_vars['capture'][\$_capture_buffer]=ob_get_clean();")->newline();
         $this->outdent()->php("} else {")->newline()->indent();
-        $this->php("\$_smarty_tpl->_capture_error();")->newline()->indent();
+        $this->php("\$_smarty_tpl->_capture_error();")->newline();
         $this->outdent()->php("}")->newline();
 
         return $this->returnTagCode($compiler);

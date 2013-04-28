@@ -21,14 +21,15 @@
  * @author Rodney Rehm
  *
  * @param Smarty_Internal_TemplateCompilerBase $compiler compiler object
- * @param string  $input         input string
- * @param string  $esc_type      escape type
- * @param string  $char_set      character set, used for htmlspecialchars() or htmlentities()
- * @param boolean $double_encode encode already encoded entitites again, used for htmlspecialchars() or htmlentities()
+ * @param string $input         input string
+ * @param string $esc_type      escape type
+ * @param string $char_set      character set, used for htmlspecialchars() or htmlentities()
+ * @param bool|string $double_encode encode already encoded entitites again, used for htmlspecialchars() or htmlentities()
  * @return string with compiled code
  */
 // NOTE: The parser does pass all parameter as strings which could be directly inserted into the compiled code string
-function smarty_modifiercompiler_escape(Smarty_Internal_TemplateCompilerBase $compiler, $input, $esc_type = 'html', $char_set = 'null', $double_encode = 'true') {
+function smarty_modifiercompiler_escape(Smarty_Internal_TemplateCompilerBase $compiler, $input, $esc_type = 'html', $char_set = 'null', $double_encode = 'true')
+{
     static $_double_encode = null;
     if ($_double_encode === null) {
         $_double_encode = version_compare(PHP_VERSION, '5.2.3', '>=');
@@ -41,7 +42,7 @@ function smarty_modifiercompiler_escape(Smarty_Internal_TemplateCompilerBase $co
         $esc = trim($esc_type, "'\"");
         switch ($esc) {
             case 'html':
-               if ($_double_encode) {
+                if ($_double_encode) {
                     return "htmlspecialchars({$input}, ENT_QUOTES, {$char_set}, {$double_encode})";
                 } else if ($double_encode) {
                     return "htmlspecialchars({$input}, ENT_QUOTES, {$char_set})";

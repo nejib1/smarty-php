@@ -24,7 +24,7 @@
 			</div>
 	<div class="info-box-body">
         		<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Smarty Backward Compatability Wrapper Class</p>
+<p class="short-description">Smarty Backward Compatibility Wrapper Class for Smarty 2</p>
 		<p class="notes">
 			Located in <a class="field" href="_libs---SmartyBC.class.php.html">/libs/SmartyBC.class.php</a> (line <span class="field">43</span>)
 		</p>
@@ -32,11 +32,13 @@
 				
 		<pre><a href="../../Smarty/Template/Smarty_Internal_Data.html">Smarty_Internal_Data</a>
    |
-   --<a href="../../Smarty/Template/Smarty_Internal_Template.html">Smarty_Internal_Template</a>
+   --<a href="../../Smarty/Template/Smarty.html">Smarty</a>
       |
-      --<a href="../../Smarty/Template/Smarty.html">Smarty</a>
+      --<a href="../../Smarty/Template/Smarty_Internal_Template.html">Smarty_Internal_Template</a>
          |
-         --SmartyBC</pre>
+         --<a href="../../Smarty/Template/SmartyBC31.html">SmartyBC31</a>
+            |
+            --SmartyBC</pre>
 	
 			</div>
 </div>
@@ -83,7 +85,7 @@
 												<div class="method-definition">
 											<span class="method-result">SmartyBC</span>
 										<a href="#__construct" title="details" class="method-name">__construct</a>
-											([<span class="var-type"></span>&nbsp;<span class="var-name">$options</span> = <span class="var-default">array()</span>])
+											([<span class="var-type">array</span>&nbsp;<span class="var-name">$options</span> = <span class="var-default">array()</span>])
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
@@ -161,9 +163,9 @@
 											(<span class="var-type">string</span>&nbsp;<span class="var-name">$type</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$name</span>)
 									</div>
 																<div class="method-definition">
-											<span class="method-result">Smarty_Internal_Templatebase</span>
+											<span class="method-result"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>
 										<a href="#registerObject" title="details" class="method-name">registerObject</a>
-											(<span class="var-type"></span>&nbsp;<span class="var-name">$object_name</span>, <span class="var-type">object</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">array</span>&nbsp;<span class="var-name">$allowed</span> = <span class="var-default">array()</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$smarty_args</span> = <span class="var-default">true</span>], [<span class="var-type">array</span>&nbsp;<span class="var-name">$block_methods</span> = <span class="var-default">array()</span>], <span class="var-type">array</span>&nbsp;<span class="var-name">$block_functs</span>)
+											(<span class="var-type">$object_name</span>&nbsp;<span class="var-name">$object_name</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">array</span>&nbsp;<span class="var-name">$allowed</span> = <span class="var-default">array()</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$smarty_args</span> = <span class="var-default">true</span>], [<span class="var-type">array</span>&nbsp;<span class="var-name">$block_methods</span> = <span class="var-default">array()</span>])
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
@@ -188,7 +190,7 @@
 																<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#register_object" title="details" class="method-name">register_object</a>
-											(<span class="var-type">string</span>&nbsp;<span class="var-name">$object</span>, <span class="var-type">object</span>&nbsp;<span class="var-name">$object_impl</span>, [<span class="var-type">array</span>&nbsp;<span class="var-name">$allowed</span> = <span class="var-default">array()</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$smarty_args</span> = <span class="var-default">true</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$block_methods</span> = <span class="var-default">array()</span>], <span class="var-type">array</span>&nbsp;<span class="var-name">$block_functs</span>)
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$object</span>, <span class="var-type">object</span>&nbsp;<span class="var-name">$object_impl</span>, [<span class="var-type">array</span>&nbsp;<span class="var-name">$allowed</span> = <span class="var-default">array()</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$smarty_args</span> = <span class="var-default">true</span>], [<span class="var-type">array</span>&nbsp;<span class="var-name">$block_methods</span> = <span class="var-default">array()</span>])
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
@@ -221,7 +223,7 @@
 											(<span class="var-type">string</span>&nbsp;<span class="var-name">$error_msg</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$error_type</span> = <span class="var-default">E_USER_WARNING</span>])
 									</div>
 																<div class="method-definition">
-											<span class="method-result">Smarty_Internal_Templatebase</span>
+											<span class="method-result"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>
 										<a href="#unregisterObject" title="details" class="method-name">unregisterObject</a>
 											(<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span>)
 									</div>
@@ -290,13 +292,13 @@
 					</div>
 		<div class="info-box-body">
 			<a name="var$_version" id="$_version"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">string</span>
 			<span class="var-name">$_version</span>
-			 = <span class="var-default"> self::SMARTY_VERSION</span>			(line <span class="line-number">49</span>)
+			 = <span class="var-default"> self::SMARTY_VERSION</span>			(line <span class="line-number">50</span>)
 		</span>
 	</div>
 
@@ -442,19 +444,10 @@
 								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$has_nocache_code">Smarty::$has_nocache_code</a></span><br>
 							</span>
 													<span class="var-title">
-								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$inheritanceParentTemplate">Smarty::$inheritanceParentTemplate</a></span><br>
-							</span>
-													<span class="var-title">
-								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$is_child">Smarty::$is_child</a></span><br>
-							</span>
-													<span class="var-title">
-								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$is_config">Smarty::$is_config</a></span><br>
+								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$is_inheritance_child">Smarty::$is_inheritance_child</a></span><br>
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$is_nocache">Smarty::$is_nocache</a></span><br>
-							</span>
-													<span class="var-title">
-								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$is_template">Smarty::$is_template</a></span><br>
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../../Smarty/Template/Smarty.html#var$joined_config_dir">Smarty::$joined_config_dir</a></span><br>
@@ -598,7 +591,13 @@
 								<span class="var-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#var$parent">Smarty_Internal_Data::$parent</a></span><br>
 							</span>
 													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#var$scope_name">Smarty_Internal_Data::$scope_name</a></span><br>
+							</span>
+													<span class="var-title">
 								<span class="var-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#var$tpl_vars">Smarty_Internal_Data::$tpl_vars</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#var$usage">Smarty_Internal_Data::$usage</a></span><br>
 							</span>
 											</blockquote> 
 										
@@ -620,10 +619,10 @@
 			<A NAME='method_detail'></A>
 
 <a name="method__construct" id="__construct"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">Constructor __construct</span> (line <span class="line-number">56</span>)
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">57</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -637,7 +636,7 @@
 		<span class="method-name">
 			__construct
 		</span>
-					([<span class="var-type"></span>&nbsp;<span class="var-name">$options</span> = <span class="var-default">array()</span>])
+					([<span class="var-type">array</span>&nbsp;<span class="var-name">$options</span> = <span class="var-default">array()</span>])
 			</div>
 	
 			<ul class="parameters">
@@ -655,10 +654,10 @@
 			
 	</div>
 <a name="methodappend_by_ref" id="append_by_ref"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">append_by_ref</span> (line <span class="line-number">79</span>)
+		<span class="method-title">append_by_ref</span> (line <span class="line-number">82</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -690,10 +689,10 @@
 			
 	</div>
 <a name="methodassign_by_ref" id="assign_by_ref"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">assign_by_ref</span> (line <span class="line-number">68</span>)
+		<span class="method-title">assign_by_ref</span> (line <span class="line-number">70</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -722,10 +721,10 @@
 			
 	</div>
 <a name="methodclear_all_assign" id="clear_all_assign"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">clear_all_assign</span> (line <span class="line-number">386</span>)
+		<span class="method-title">clear_all_assign</span> (line <span class="line-number">416</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -746,10 +745,10 @@
 			
 	</div>
 <a name="methodclear_all_cache" id="clear_all_cache"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">clear_all_cache</span> (line <span class="line-number">367</span>)
+		<span class="method-title">clear_all_cache</span> (line <span class="line-number">395</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -775,10 +774,10 @@
 			
 	</div>
 <a name="methodclear_assign" id="clear_assign"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">clear_assign</span> (line <span class="line-number">88</span>)
+		<span class="method-title">clear_assign</span> (line <span class="line-number">92</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -804,10 +803,10 @@
 			
 	</div>
 <a name="methodclear_cache" id="clear_cache"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">clear_cache</span> (line <span class="line-number">357</span>)
+		<span class="method-title">clear_cache</span> (line <span class="line-number">384</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -842,10 +841,10 @@
 			
 	</div>
 <a name="methodclear_compiled_tpl" id="clear_compiled_tpl"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">clear_compiled_tpl</span> (line <span class="line-number">400</span>)
+		<span class="method-title">clear_compiled_tpl</span> (line <span class="line-number">431</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -879,10 +878,10 @@
 			
 	</div>
 <a name="methodclear_config" id="clear_config"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">clear_config</span> (line <span class="line-number">460</span>)
+		<span class="method-title">clear_config</span> (line <span class="line-number">497</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -908,10 +907,10 @@
 			
 	</div>
 <a name="methodconfig_load" id="config_load"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">config_load</span> (line <span class="line-number">441</span>)
+		<span class="method-title">config_load</span> (line <span class="line-number">476</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -943,10 +942,10 @@
 			
 	</div>
 <a name="methodgetRegisteredObject" id="getRegisteredObject"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">getRegisteredObject</span> (line <span class="line-number">182</span>)
+		<span class="method-title">getRegisteredObject</span> (line <span class="line-number">192</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -973,10 +972,10 @@
 			
 	</div>
 <a name="methodget_config_vars" id="get_config_vars"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_config_vars</span> (line <span class="line-number">430</span>)
+		<span class="method-title">get_config_vars</span> (line <span class="line-number">464</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1002,10 +1001,10 @@
 			
 	</div>
 <a name="methodget_registered_object" id="get_registered_object"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_registered_object</span> (line <span class="line-number">451</span>)
+		<span class="method-title">get_registered_object</span> (line <span class="line-number">487</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1031,10 +1030,10 @@
 			
 	</div>
 <a name="methodget_template_vars" id="get_template_vars"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_template_vars</span> (line <span class="line-number">420</span>)
+		<span class="method-title">get_template_vars</span> (line <span class="line-number">453</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1060,10 +1059,10 @@
 			
 	</div>
 <a name="methodis_cached" id="is_cached"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">is_cached</span> (line <span class="line-number">379</span>)
+		<span class="method-title">is_cached</span> (line <span class="line-number">408</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1095,10 +1094,10 @@
 			
 	</div>
 <a name="methodload_filter" id="load_filter"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">load_filter</span> (line <span class="line-number">344</span>)
+		<span class="method-title">load_filter</span> (line <span class="line-number">370</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1127,32 +1126,31 @@
 			
 	</div>
 <a name="methodregisterObject" id="registerObject"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">registerObject</span> (line <span class="line-number">149</span>)
+		<span class="method-title">registerObject</span> (line <span class="line-number">158</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Registers object to be used in templates</p>
 	<ul class="tags">
-				<li><span class="field">return:</span> current Smarty_Internal_Templatebase (or Smarty or Smarty_Internal_Template) instance for chaining</li>
-				<li><span class="field">throws:</span> SmartyException if any of the methods in $allowed or $block_methods are invalid</li>
+				<li><span class="field">throws:</span> SmartyException</li>
 				<li><span class="field">access:</span> public</li>
 			</ul>
 	
 	<div class="method-signature">
-		<span class="method-result">Smarty_Internal_Templatebase</span>
+		<span class="method-result"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>
 		<span class="method-name">
 			registerObject
 		</span>
-					(<span class="var-type"></span>&nbsp;<span class="var-name">$object_name</span>, <span class="var-type">object</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">array</span>&nbsp;<span class="var-name">$allowed</span> = <span class="var-default">array()</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$smarty_args</span> = <span class="var-default">true</span>], [<span class="var-type">array</span>&nbsp;<span class="var-name">$block_methods</span> = <span class="var-default">array()</span>], <span class="var-type">array</span>&nbsp;<span class="var-name">$block_functs</span>)
+					(<span class="var-type">$object_name</span>&nbsp;<span class="var-name">$object_name</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">array</span>&nbsp;<span class="var-name">$allowed</span> = <span class="var-default">array()</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$smarty_args</span> = <span class="var-default">true</span>], [<span class="var-type">array</span>&nbsp;<span class="var-name">$block_methods</span> = <span class="var-default">array()</span>])
 			</div>
 	
 			<ul class="parameters">
 					<li>
-				<span class="var-type">object</span>
-				<span class="var-name">$object</span><span class="var-description">: the referenced PHP object to register</span>			</li>
+				<span class="var-type">string</span>
+				<span class="var-name">$object</span><span class="var-description">: $object        the referenced PHP object to register</span>			</li>
 					<li>
 				<span class="var-type">array</span>
 				<span class="var-name">$allowed</span><span class="var-description">: list of allowed methods (empty = all)</span>			</li>
@@ -1163,20 +1161,17 @@
 				<span class="var-type">array</span>
 				<span class="var-name">$block_methods</span><span class="var-description">: list of block-methods</span>			</li>
 					<li>
-				<span class="var-type">array</span>
-				<span class="var-name">$block_functs</span><span class="var-description">: list of methods that are block format</span>			</li>
-					<li>
-				<span class="var-type"></span>
+				<span class="var-type">$object_name</span>
 				<span class="var-name">$object_name</span>			</li>
 				</ul>
 		
 			
 	</div>
 <a name="methodregister_block" id="register_block"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">register_block</span> (line <span class="line-number">210</span>)
+		<span class="method-title">register_block</span> (line <span class="line-number">222</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1211,10 +1206,10 @@
 			
 	</div>
 <a name="methodregister_compiler_function" id="register_compiler_function"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">register_compiler_function</span> (line <span class="line-number">230</span>)
+		<span class="method-title">register_compiler_function</span> (line <span class="line-number">244</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1246,10 +1241,10 @@
 			
 	</div>
 <a name="methodregister_function" id="register_function"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">register_function</span> (line <span class="line-number">100</span>)
+		<span class="method-title">register_function</span> (line <span class="line-number">105</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1284,10 +1279,10 @@
 			
 	</div>
 <a name="methodregister_modifier" id="register_modifier"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">register_modifier</span> (line <span class="line-number">249</span>)
+		<span class="method-title">register_modifier</span> (line <span class="line-number">265</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1316,10 +1311,10 @@
 			
 	</div>
 <a name="methodregister_object" id="register_object"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">register_object</span> (line <span class="line-number">122</span>)
+		<span class="method-title">register_object</span> (line <span class="line-number">130</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1333,7 +1328,7 @@
 		<span class="method-name">
 			register_object
 		</span>
-					(<span class="var-type">string</span>&nbsp;<span class="var-name">$object</span>, <span class="var-type">object</span>&nbsp;<span class="var-name">$object_impl</span>, [<span class="var-type">array</span>&nbsp;<span class="var-name">$allowed</span> = <span class="var-default">array()</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$smarty_args</span> = <span class="var-default">true</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$block_methods</span> = <span class="var-default">array()</span>], <span class="var-type">array</span>&nbsp;<span class="var-name">$block_functs</span>)
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$object</span>, <span class="var-type">object</span>&nbsp;<span class="var-name">$object_impl</span>, [<span class="var-type">array</span>&nbsp;<span class="var-name">$allowed</span> = <span class="var-default">array()</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$smarty_args</span> = <span class="var-default">true</span>], [<span class="var-type">array</span>&nbsp;<span class="var-name">$block_methods</span> = <span class="var-default">array()</span>])
 			</div>
 	
 			<ul class="parameters">
@@ -1351,19 +1346,16 @@
 				<span class="var-name">$smarty_args</span><span class="var-description">: smarty argument format, else traditional</span>			</li>
 					<li>
 				<span class="var-type">array</span>
-				<span class="var-name">$block_functs</span><span class="var-description">: list of methods that are block format</span>			</li>
-					<li>
-				<span class="var-type"></span>
 				<span class="var-name">$block_methods</span>			</li>
 				</ul>
 		
 			
 	</div>
 <a name="methodregister_outputfilter" id="register_outputfilter"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">register_outputfilter</span> (line <span class="line-number">325</span>)
+		<span class="method-title">register_outputfilter</span> (line <span class="line-number">349</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1389,10 +1381,10 @@
 			
 	</div>
 <a name="methodregister_postfilter" id="register_postfilter"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">register_postfilter</span> (line <span class="line-number">306</span>)
+		<span class="method-title">register_postfilter</span> (line <span class="line-number">328</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1418,10 +1410,10 @@
 			
 	</div>
 <a name="methodregister_prefilter" id="register_prefilter"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">register_prefilter</span> (line <span class="line-number">287</span>)
+		<span class="method-title">register_prefilter</span> (line <span class="line-number">307</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1447,10 +1439,10 @@
 			
 	</div>
 <a name="methodregister_resource" id="register_resource"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">register_resource</span> (line <span class="line-number">268</span>)
+		<span class="method-title">register_resource</span> (line <span class="line-number">286</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1479,10 +1471,10 @@
 			
 	</div>
 <a name="methodtemplate_exists" id="template_exists"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">template_exists</span> (line <span class="line-number">410</span>)
+		<span class="method-title">template_exists</span> (line <span class="line-number">442</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1508,10 +1500,10 @@
 			
 	</div>
 <a name="methodtrigger_error" id="trigger_error"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">trigger_error</span> (line <span class="line-number">470</span>)
+		<span class="method-title">trigger_error</span> (line <span class="line-number">508</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1540,21 +1532,20 @@
 			
 	</div>
 <a name="methodunregisterObject" id="unregisterObject"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">unregisterObject</span> (line <span class="line-number">195</span>)
+		<span class="method-title">unregisterObject</span> (line <span class="line-number">206</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">unregister an object</p>
 	<ul class="tags">
-				<li><span class="field">return:</span> current Smarty_Internal_Templatebase (or Smarty or Smarty_Internal_Template) instance for chaining</li>
 				<li><span class="field">access:</span> public</li>
 			</ul>
 	
 	<div class="method-signature">
-		<span class="method-result">Smarty_Internal_Templatebase</span>
+		<span class="method-result"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span>
 		<span class="method-name">
 			unregisterObject
 		</span>
@@ -1570,10 +1561,10 @@
 			
 	</div>
 <a name="methodunregister_block" id="unregister_block"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">unregister_block</span> (line <span class="line-number">219</span>)
+		<span class="method-title">unregister_block</span> (line <span class="line-number">232</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1599,10 +1590,10 @@
 			
 	</div>
 <a name="methodunregister_compiler_function" id="unregister_compiler_function"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">unregister_compiler_function</span> (line <span class="line-number">239</span>)
+		<span class="method-title">unregister_compiler_function</span> (line <span class="line-number">254</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1628,10 +1619,10 @@
 			
 	</div>
 <a name="methodunregister_function" id="unregister_function"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">unregister_function</span> (line <span class="line-number">109</span>)
+		<span class="method-title">unregister_function</span> (line <span class="line-number">115</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1657,10 +1648,10 @@
 			
 	</div>
 <a name="methodunregister_modifier" id="unregister_modifier"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">unregister_modifier</span> (line <span class="line-number">258</span>)
+		<span class="method-title">unregister_modifier</span> (line <span class="line-number">275</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1686,10 +1677,10 @@
 			
 	</div>
 <a name="methodunregister_object" id="unregister_object"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">unregister_object</span> (line <span class="line-number">133</span>)
+		<span class="method-title">unregister_object</span> (line <span class="line-number">142</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1715,10 +1706,10 @@
 			
 	</div>
 <a name="methodunregister_outputfilter" id="unregister_outputfilter"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">unregister_outputfilter</span> (line <span class="line-number">334</span>)
+		<span class="method-title">unregister_outputfilter</span> (line <span class="line-number">359</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1744,10 +1735,10 @@
 			
 	</div>
 <a name="methodunregister_postfilter" id="unregister_postfilter"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">unregister_postfilter</span> (line <span class="line-number">315</span>)
+		<span class="method-title">unregister_postfilter</span> (line <span class="line-number">338</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1773,10 +1764,10 @@
 			
 	</div>
 <a name="methodunregister_prefilter" id="unregister_prefilter"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">unregister_prefilter</span> (line <span class="line-number">296</span>)
+		<span class="method-title">unregister_prefilter</span> (line <span class="line-number">317</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1802,10 +1793,10 @@
 			
 	</div>
 <a name="methodunregister_resource" id="unregister_resource"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">unregister_resource</span> (line <span class="line-number">277</span>)
+		<span class="method-title">unregister_resource</span> (line <span class="line-number">296</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1832,6 +1823,13 @@
 	</div>
 							<h4>Inherited Methods</h4>
 				<a name='inherited_methods'><!-- --></a>	
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../../Smarty/Template/SmartyBC31.html">SmartyBC31</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../../Smarty/Template/SmartyBC31.html#methodappendByRef">SmartyBC31::appendByRef()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/SmartyBC31.html#methodassignByRef">SmartyBC31::assignByRef()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Template/SmartyBC31.html#method__get">SmartyBC31::__get()</a></span><br>
+											</blockquote>
 									<!-- =========== Summary =========== -->
 					<p>Inherited From <span class="classname"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span></p>
 					<blockquote>
@@ -1916,9 +1914,7 @@
 					<blockquote>
 													<span class="method-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#method__construct">Smarty_Internal_Data::__construct()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#methodappend">Smarty_Internal_Data::append()</a></span><br>
-													<span class="method-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#methodappendByRef">Smarty_Internal_Data::appendByRef()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#methodassign">Smarty_Internal_Data::assign()</a></span><br>
-													<span class="method-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#methodassignByRef">Smarty_Internal_Data::assignByRef()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#methodassignGlobal">Smarty_Internal_Data::assignGlobal()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#methodassignParents">Smarty_Internal_Data::assignParents()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Template/Smarty_Internal_Data.html#methodclearAllAssign">Smarty_Internal_Data::clearAllAssign()</a></span><br>
@@ -1952,116 +1948,100 @@
 				<A NAME='inherited_vars'><!-- --></A>
 									<p>Inherited from <span class="classname"><a href="../../Smarty/Template/Smarty.html">Smarty</a></span></p>
 					<blockquote>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constCACHING_LIFETIME_CURRENT">Smarty::CACHING_LIFETIME_CURRENT</a></span><br>
 							</span>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constCACHING_LIFETIME_SAVED">Smarty::CACHING_LIFETIME_SAVED</a></span><br>
 							</span>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constCACHING_NOCACHE_CODE">Smarty::CACHING_NOCACHE_CODE</a></span><br>
 							</span>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constCACHING_OFF">Smarty::CACHING_OFF</a></span><br>
 							</span>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constCOMPILECHECK_CACHEMISS">Smarty::COMPILECHECK_CACHEMISS</a></span><br>
 							</span>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constCOMPILECHECK_OFF">Smarty::COMPILECHECK_OFF</a></span><br>
 							</span>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constCOMPILECHECK_ON">Smarty::COMPILECHECK_ON</a></span><br>
 							</span>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constFILTER_OUTPUT">Smarty::FILTER_OUTPUT</a></span><br>
 							</span>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constFILTER_POST">Smarty::FILTER_POST</a></span><br>
 							</span>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constFILTER_PRE">Smarty::FILTER_PRE</a></span><br>
 							</span>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constFILTER_VARIABLE">Smarty::FILTER_VARIABLE</a></span><br>
 							</span>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constIS_CONFIG">Smarty::IS_CONFIG</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constIS_DATA">Smarty::IS_DATA</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constIS_SMARTY">Smarty::IS_SMARTY</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constIS_TEMPLATE">Smarty::IS_TEMPLATE</a></span><br>
+							</span>
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constPHP_ALLOW">Smarty::PHP_ALLOW</a></span><br>
 							</span>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constPHP_PASSTHRU">Smarty::PHP_PASSTHRU</a></span><br>
 							</span>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constPHP_QUOTE">Smarty::PHP_QUOTE</a></span><br>
 							</span>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constPHP_REMOVE">Smarty::PHP_REMOVE</a></span><br>
 							</span>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constPLUGIN_BLOCK">Smarty::PLUGIN_BLOCK</a></span><br>
 							</span>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constPLUGIN_COMPILER">Smarty::PLUGIN_COMPILER</a></span><br>
 							</span>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constPLUGIN_FUNCTION">Smarty::PLUGIN_FUNCTION</a></span><br>
 							</span>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constPLUGIN_MODIFIER">Smarty::PLUGIN_MODIFIER</a></span><br>
 							</span>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constPLUGIN_MODIFIERCOMPILER">Smarty::PLUGIN_MODIFIERCOMPILER</a></span><br>
 							</span>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constSCOPE_GLOBAL">Smarty::SCOPE_GLOBAL</a></span><br>
 							</span>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constSCOPE_LOCAL">Smarty::SCOPE_LOCAL</a></span><br>
 							</span>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constSCOPE_PARENT">Smarty::SCOPE_PARENT</a></span><br>
 							</span>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constSCOPE_ROOT">Smarty::SCOPE_ROOT</a></span><br>
 							</span>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constSMARTY_VERSION">Smarty::SMARTY_VERSION</a></span><br>
 							</span>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constUNASSIGNED_EXCEPTION">Smarty::UNASSIGNED_EXCEPTION</a></span><br>
 							</span>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constUNASSIGNED_IGNORE">Smarty::UNASSIGNED_IGNORE</a></span><br>
 							</span>
-													<img src="../../media/images/Variable.png" />
-							<span class="const-title">
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Template/Smarty.html#constUNASSIGNED_NOTICE">Smarty::UNASSIGNED_NOTICE</a></span><br>
 							</span>
 											</blockquote> 
@@ -2070,7 +2050,7 @@
 	</div>
 
 	<p class="notes" id="credit">
-		Documentation generated on Tue, 11 Dec 2012 21:28:41 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Sun, 28 Apr 2013 12:40:27 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

@@ -16,7 +16,8 @@
  * @package Smarty
  * @subpackage Compiler
  */
-class Smarty_Internal_Compile_Private_Registered_Block extends Smarty_Internal_CompileBase {
+class Smarty_Internal_Compile_Private_Registered_Block extends Smarty_Internal_CompileBase
+{
 
     /**
      * Attribute definition: Overwrites base class.
@@ -29,13 +30,14 @@ class Smarty_Internal_Compile_Private_Registered_Block extends Smarty_Internal_C
     /**
      * Compiles code for the execution of a block function
      *
-     * @param array  $args      array with attributes from parser
+     * @param array $args      array with attributes from parser
      * @param object $compiler  compiler object
-     * @param array  $parameter array with compilation parameter
+     * @param array $parameter array with compilation parameter
      * @param string $tag       name of block function
      * @return string compiled code
      */
-    public function compile($args, $compiler, $parameter, $tag) {
+    public function compile($args, $compiler, $parameter, $tag)
+    {
         if (!isset($tag[5]) || substr($tag, -5) != 'close') {
             // opening tag of block plugin
             // check and get attributes
@@ -72,13 +74,11 @@ class Smarty_Internal_Compile_Private_Registered_Block extends Smarty_Internal_C
                 } else {
                     $this->php("echo {$function[0]}::{$function[1]}({$par_string['par']}, null, {$par_string['obj']}, \$_block_repeat);")->newline();
                 }
-                $this->php("while (\$_block_repeat) {")->newline()->indent();
-                $this->php("ob_start();")->newline();
             } else {
                 // new style with real parameter
                 $par_string = str_replace('__content__', 'null', $par_string);
-                $this->php("\$_smarty_tpl->_tag_stack[] = array('{$tag}', {$par_string});")->newline();
                 $this->php("\$_block_repeat=true;")->newline();
+                $this->php("\$_smarty_tpl->_tag_stack[] = array('{$tag}', {$par_string});")->newline();
                 if ($function instanceof Closure) {
                     $this->php("echo \$_smarty_tpl->registered_plugins['block']['{$tag}'][0]({$par_string});")->newline();
                 } else if (!is_array($function)) {
@@ -89,6 +89,8 @@ class Smarty_Internal_Compile_Private_Registered_Block extends Smarty_Internal_C
                     $this->php("echo {$function[0]}::{$function[1]}({$par_string});")->newline();
                 }
             }
+            $this->php("while (\$_block_repeat) {")->newline()->indent();
+            $this->php("ob_start();")->newline();
         } else {
             // must endblock be nocache?
             if ($compiler->nocache) {

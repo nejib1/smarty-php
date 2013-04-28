@@ -1,28 +1,29 @@
 <?php
 /**
-* Smarty PHPunit tests of modifier
-* 
-* @package PHPunit
-* @author Rodney Rehm 
-*/
+ * Smarty PHPunit tests of modifier
+ *
+ * @package PHPunit
+ * @author Rodney Rehm
+ */
 
 /**
-* class for modifier tests
-*/
-class PluginFunctionHtmlSelectTimeTests extends PHPUnit_Framework_TestCase {
+ * class for modifier tests
+ */
+class PluginFunctionHtmlSelectTimeTests extends PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
         SmartyTests::init();
-        
-        $this->now = mktime( 16, 15, 11, 2, 20, 2011 );
-    } 
-    
+
+        $this->now = mktime(16, 15, 11, 2, 20, 2011);
+    }
+
     public static function isRunnable()
     {
         return true;
     }
-    
+
     protected $now = null;
     protected $hours = array(
         'none' => '<option value="00">00</option>
@@ -670,189 +671,189 @@ class PluginFunctionHtmlSelectTimeTests extends PHPUnit_Framework_TestCase {
         'default' => '<option value="am">AM</option>
 <option value="pm" selected="selected">PM</option>',
     );
-    
-    
+
+
     public function testDefault()
     {
         $n = "\n";
-        $result = '<select name="Time_Hour">'.$n. $this->hours['default'] .$n.'</select>'
-            .$n.'<select name="Time_Minute">'.$n. $this->minutes['default'] .$n.'</select>'
-            .$n.'<select name="Time_Second">'.$n. $this->seconds['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .'}');
+        $result = '<select name="Time_Hour">' . $n . $this->hours['default'] . $n . '</select>'
+            . $n . '<select name="Time_Minute">' . $n . $this->minutes['default'] . $n . '</select>'
+            . $n . '<select name="Time_Second">' . $n . $this->seconds['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . '}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
     }
 
     public function testPrefix()
     {
         $n = "\n";
-        $result = '<select name="foobar_Hour">'.$n. $this->hours['default'] .$n.'</select>'
-            .$n.'<select name="foobar_Minute">'.$n. $this->minutes['default'] .$n.'</select>'
-            .$n.'<select name="foobar_Second">'.$n. $this->seconds['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' prefix="foobar_"}');
+        $result = '<select name="foobar_Hour">' . $n . $this->hours['default'] . $n . '</select>'
+            . $n . '<select name="foobar_Minute">' . $n . $this->minutes['default'] . $n . '</select>'
+            . $n . '<select name="foobar_Second">' . $n . $this->seconds['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' prefix="foobar_"}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
     }
-    
+
     public function testFieldArray()
     {
         $n = "\n";
-        $result = '<select name="namorized[Time_Hour]">'.$n. $this->hours['default'] .$n.'</select>'
-            .$n.'<select name="namorized[Time_Minute]">'.$n. $this->minutes['default'] .$n.'</select>'
-            .$n.'<select name="namorized[Time_Second]">'.$n. $this->seconds['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' field_array="namorized"}');
+        $result = '<select name="namorized[Time_Hour]">' . $n . $this->hours['default'] . $n . '</select>'
+            . $n . '<select name="namorized[Time_Minute]">' . $n . $this->minutes['default'] . $n . '</select>'
+            . $n . '<select name="namorized[Time_Second]">' . $n . $this->seconds['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' field_array="namorized"}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
 
-        $result = '<select name="namorized[foobar_Hour]">'.$n. $this->hours['default'] .$n.'</select>'
-            .$n.'<select name="namorized[foobar_Minute]">'.$n. $this->minutes['default'] .$n.'</select>'
-            .$n.'<select name="namorized[foobar_Second]">'.$n. $this->seconds['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' field_array="namorized" prefix="foobar_"}');
+        $result = '<select name="namorized[foobar_Hour]">' . $n . $this->hours['default'] . $n . '</select>'
+            . $n . '<select name="namorized[foobar_Minute]">' . $n . $this->minutes['default'] . $n . '</select>'
+            . $n . '<select name="namorized[foobar_Second]">' . $n . $this->seconds['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' field_array="namorized" prefix="foobar_"}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
     }
-    
+
     public function testExtra()
     {
         $n = "\n";
-        $result = '<select name="Time_Hour" data-foo="xy">'.$n. $this->hours['default'] .$n.'</select>'
-            .$n.'<select name="Time_Minute" data-foo="xy">'.$n. $this->minutes['default'] .$n.'</select>'
-            .$n.'<select name="Time_Second" data-foo="xy">'.$n. $this->seconds['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' all_extra="data-foo=\"xy\""}');
+        $result = '<select name="Time_Hour" data-foo="xy">' . $n . $this->hours['default'] . $n . '</select>'
+            . $n . '<select name="Time_Minute" data-foo="xy">' . $n . $this->minutes['default'] . $n . '</select>'
+            . $n . '<select name="Time_Second" data-foo="xy">' . $n . $this->seconds['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' all_extra="data-foo=\"xy\""}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
-        
-        $result = '<select name="Time_Hour" data-foo="hour">'.$n. $this->hours['default'] .$n.'</select>'
-            .$n.'<select name="Time_Minute" data-foo="minute">'.$n. $this->minutes['default'] .$n.'</select>'
-            .$n.'<select name="Time_Second" data-foo="second">'.$n. $this->seconds['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' hour_extra="data-foo=\"hour\"" minute_extra="data-foo=\"minute\"" second_extra="data-foo=\"second\""}');
+
+        $result = '<select name="Time_Hour" data-foo="hour">' . $n . $this->hours['default'] . $n . '</select>'
+            . $n . '<select name="Time_Minute" data-foo="minute">' . $n . $this->minutes['default'] . $n . '</select>'
+            . $n . '<select name="Time_Second" data-foo="second">' . $n . $this->seconds['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' hour_extra="data-foo=\"hour\"" minute_extra="data-foo=\"minute\"" second_extra="data-foo=\"second\""}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
-        
-        $result = '<select name="Time_Hour" data_foo="foo">'.$n. $this->hours['default'] .$n.'</select>'
-            .$n.'<select name="Time_Minute" data_foo="foo">'.$n. $this->minutes['default'] .$n.'</select>'
-            .$n.'<select name="Time_Second" data_foo="foo">'.$n. $this->seconds['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' data_foo="foo"}');
+
+        $result = '<select name="Time_Hour" data_foo="foo">' . $n . $this->hours['default'] . $n . '</select>'
+            . $n . '<select name="Time_Minute" data_foo="foo">' . $n . $this->minutes['default'] . $n . '</select>'
+            . $n . '<select name="Time_Second" data_foo="foo">' . $n . $this->seconds['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' data_foo="foo"}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
     }
 
     public function testFieldSeparator()
     {
         $n = "\n";
-        $result = '<select name="Time_Hour">'.$n. $this->hours['default'] .$n.'</select>'
-            .' - <select name="Time_Minute">'.$n. $this->minutes['default'] .$n.'</select>'
-            .' - <select name="Time_Second">'.$n. $this->seconds['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' field_separator=" - "}');
+        $result = '<select name="Time_Hour">' . $n . $this->hours['default'] . $n . '</select>'
+            . ' - <select name="Time_Minute">' . $n . $this->minutes['default'] . $n . '</select>'
+            . ' - <select name="Time_Second">' . $n . $this->seconds['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' field_separator=" - "}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
     }
-    
+
     public function testEmpty()
     {
         $n = "\n";
-        $result = '<select name="Time_Hour">'.$n.'<option value=""></option>'.$n. $this->hours['default'] .$n.'</select>'
-            .$n.'<select name="Time_Minute">'.$n.'<option value=""></option>'.$n. $this->minutes['default'] .$n.'</select>'
-            .$n.'<select name="Time_Second">'.$n.'<option value=""></option>'.$n. $this->seconds['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' all_empty=""}');
-        $this->assertEquals($result, $this->smarty->fetch($tpl));
-        
-        $result = '<select name="Time_Hour">'.$n.'<option value="">all</option>'.$n. $this->hours['default'] .$n.'</select>'
-            .$n.'<select name="Time_Minute">'.$n.'<option value="">all</option>'.$n. $this->minutes['default'] .$n.'</select>'
-            .$n.'<select name="Time_Second">'.$n.'<option value="">all</option>'.$n. $this->seconds['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' all_empty="all"}');
+        $result = '<select name="Time_Hour">' . $n . '<option value=""></option>' . $n . $this->hours['default'] . $n . '</select>'
+            . $n . '<select name="Time_Minute">' . $n . '<option value=""></option>' . $n . $this->minutes['default'] . $n . '</select>'
+            . $n . '<select name="Time_Second">' . $n . '<option value=""></option>' . $n . $this->seconds['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' all_empty=""}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
 
-        $result = '<select name="Time_Hour">'.$n. $this->hours['default'] .$n.'</select>'
-            .$n.'<select name="Time_Minute">'.$n. $this->minutes['default'] .$n.'</select>'
-            .$n.'<select name="Time_Second">'.$n.'<option value=""></option>'.$n. $this->seconds['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' second_empty=""}');
+        $result = '<select name="Time_Hour">' . $n . '<option value="">all</option>' . $n . $this->hours['default'] . $n . '</select>'
+            . $n . '<select name="Time_Minute">' . $n . '<option value="">all</option>' . $n . $this->minutes['default'] . $n . '</select>'
+            . $n . '<select name="Time_Second">' . $n . '<option value="">all</option>' . $n . $this->seconds['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' all_empty="all"}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
-        
-        $result = '<select name="Time_Hour">'.$n.'<option value="">hour</option>'.$n. $this->hours['default'] .$n.'</select>'
-            .$n.'<select name="Time_Minute">'.$n.'<option value="">minute</option>'.$n. $this->minutes['default'] .$n.'</select>'
-            .$n.'<select name="Time_Second">'.$n.'<option value="">second</option>'.$n. $this->seconds['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' hour_empty="hour" minute_empty="minute" second_empty="second"}');
+
+        $result = '<select name="Time_Hour">' . $n . $this->hours['default'] . $n . '</select>'
+            . $n . '<select name="Time_Minute">' . $n . $this->minutes['default'] . $n . '</select>'
+            . $n . '<select name="Time_Second">' . $n . '<option value=""></option>' . $n . $this->seconds['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' second_empty=""}');
+        $this->assertEquals($result, $this->smarty->fetch($tpl));
+
+        $result = '<select name="Time_Hour">' . $n . '<option value="">hour</option>' . $n . $this->hours['default'] . $n . '</select>'
+            . $n . '<select name="Time_Minute">' . $n . '<option value="">minute</option>' . $n . $this->minutes['default'] . $n . '</select>'
+            . $n . '<select name="Time_Second">' . $n . '<option value="">second</option>' . $n . $this->seconds['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' hour_empty="hour" minute_empty="minute" second_empty="second"}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
     }
-    
+
     public function testEmptyUnset()
     {
         $n = "\n";
-        $result = '<select name="Time_Hour">'.$n.'<option value=""></option>'.$n. $this->hours['none'] .$n.'</select>'
-            .$n.'<select name="Time_Minute">'.$n.'<option value=""></option>'.$n. $this->minutes['none'] .$n.'</select>'
-            .$n.'<select name="Time_Second">'.$n.'<option value=""></option>'.$n. $this->seconds['none'] .$n.'</select>';
+        $result = '<select name="Time_Hour">' . $n . '<option value=""></option>' . $n . $this->hours['none'] . $n . '</select>'
+            . $n . '<select name="Time_Minute">' . $n . '<option value=""></option>' . $n . $this->minutes['none'] . $n . '</select>'
+            . $n . '<select name="Time_Second">' . $n . '<option value=""></option>' . $n . $this->seconds['none'] . $n . '</select>';
         $tpl = $this->smarty->createTemplate('eval:{html_select_time time=null all_empty=""}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
-        
-        $result = '<select name="Time_Hour">'.$n.'<option value="">all</option>'.$n. $this->hours['none'] .$n.'</select>'
-            .$n.'<select name="Time_Minute">'.$n.'<option value="">all</option>'.$n. $this->minutes['none'] .$n.'</select>'
-            .$n.'<select name="Time_Second">'.$n.'<option value="">all</option>'.$n. $this->seconds['none'] .$n.'</select>';
+
+        $result = '<select name="Time_Hour">' . $n . '<option value="">all</option>' . $n . $this->hours['none'] . $n . '</select>'
+            . $n . '<select name="Time_Minute">' . $n . '<option value="">all</option>' . $n . $this->minutes['none'] . $n . '</select>'
+            . $n . '<select name="Time_Second">' . $n . '<option value="">all</option>' . $n . $this->seconds['none'] . $n . '</select>';
         $tpl = $this->smarty->createTemplate('eval:{html_select_time time=null all_empty="all"}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
 
-        $result = '<select name="Time_Hour">'.$n. $this->hours['none'] .$n.'</select>'
-            .$n.'<select name="Time_Minute">'.$n. $this->minutes['none'] .$n.'</select>'
-            .$n.'<select name="Time_Second">'.$n.'<option value=""></option>'.$n. $this->seconds['none'] .$n.'</select>';
+        $result = '<select name="Time_Hour">' . $n . $this->hours['none'] . $n . '</select>'
+            . $n . '<select name="Time_Minute">' . $n . $this->minutes['none'] . $n . '</select>'
+            . $n . '<select name="Time_Second">' . $n . '<option value=""></option>' . $n . $this->seconds['none'] . $n . '</select>';
         $tpl = $this->smarty->createTemplate('eval:{html_select_time time=null second_empty=""}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
-        
-        $result = '<select name="Time_Hour">'.$n.'<option value="">hour</option>'.$n. $this->hours['none'] .$n.'</select>'
-            .$n.'<select name="Time_Minute">'.$n.'<option value="">minute</option>'.$n. $this->minutes['none'] .$n.'</select>'
-            .$n.'<select name="Time_Second">'.$n.'<option value="">second</option>'.$n. $this->seconds['none'] .$n.'</select>';
+
+        $result = '<select name="Time_Hour">' . $n . '<option value="">hour</option>' . $n . $this->hours['none'] . $n . '</select>'
+            . $n . '<select name="Time_Minute">' . $n . '<option value="">minute</option>' . $n . $this->minutes['none'] . $n . '</select>'
+            . $n . '<select name="Time_Second">' . $n . '<option value="">second</option>' . $n . $this->seconds['none'] . $n . '</select>';
         $tpl = $this->smarty->createTemplate('eval:{html_select_time time=null hour_empty="hour" minute_empty="minute" second_empty="second"}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
     }
-   
+
     public function testId()
     {
         $n = "\n";
-        $result = '<select name="Time_Hour" id="Time_Hour">'.$n. $this->hours['default'] .$n.'</select>'
-            .$n.'<select name="Time_Minute" id="Time_Minute">'.$n. $this->minutes['default'] .$n.'</select>'
-            .$n.'<select name="Time_Second" id="Time_Second">'.$n. $this->seconds['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' all_id=""}');
+        $result = '<select name="Time_Hour" id="Time_Hour">' . $n . $this->hours['default'] . $n . '</select>'
+            . $n . '<select name="Time_Minute" id="Time_Minute">' . $n . $this->minutes['default'] . $n . '</select>'
+            . $n . '<select name="Time_Second" id="Time_Second">' . $n . $this->seconds['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' all_id=""}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
 
-        $result = '<select name="Time_Hour" id="all-Time_Hour">'.$n. $this->hours['default'] .$n.'</select>'
-            .$n.'<select name="Time_Minute" id="all-Time_Minute">'.$n. $this->minutes['default'] .$n.'</select>'
-            .$n.'<select name="Time_Second" id="all-Time_Second">'.$n. $this->seconds['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' all_id="all-"}');
+        $result = '<select name="Time_Hour" id="all-Time_Hour">' . $n . $this->hours['default'] . $n . '</select>'
+            . $n . '<select name="Time_Minute" id="all-Time_Minute">' . $n . $this->minutes['default'] . $n . '</select>'
+            . $n . '<select name="Time_Second" id="all-Time_Second">' . $n . $this->seconds['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' all_id="all-"}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
-        
-        $result = '<select name="Time_Hour" id="hour">'.$n. $this->hours['default'] .$n.'</select>'
-            .$n.'<select name="Time_Minute" id="minute">'.$n. $this->minutes['default'] .$n.'</select>'
-            .$n.'<select name="Time_Second" id="second">'.$n. $this->seconds['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' hour_id="hour" minute_id="minute" second_id="second"}');
+
+        $result = '<select name="Time_Hour" id="hour">' . $n . $this->hours['default'] . $n . '</select>'
+            . $n . '<select name="Time_Minute" id="minute">' . $n . $this->minutes['default'] . $n . '</select>'
+            . $n . '<select name="Time_Second" id="second">' . $n . $this->seconds['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' hour_id="hour" minute_id="minute" second_id="second"}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
     }
 
     public function testDisplay()
     {
         $n = "\n";
-        $result = '<select name="Time_Hour">'.$n. $this->hours['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' display_minutes=false display_seconds=false}');
+        $result = '<select name="Time_Hour">' . $n . $this->hours['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' display_minutes=false display_seconds=false}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
-        
-        $result = '<select name="Time_Minute">'.$n. $this->minutes['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' display_hours=false display_seconds=false}');
+
+        $result = '<select name="Time_Minute">' . $n . $this->minutes['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' display_hours=false display_seconds=false}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
-        
-        $result = '<select name="Time_Second">'.$n. $this->seconds['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' display_hours=false display_minutes=false}');
+
+        $result = '<select name="Time_Second">' . $n . $this->seconds['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' display_hours=false display_minutes=false}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
     }
-    
+
     public function testMeridian()
     {
         $n = "\n";
-        $result = '<select name="Time_Hour">'.$n. $this->hours['12h'] .$n.'</select>'
-            .$n.'<select name="Time_Minute">'.$n. $this->minutes['default'] .$n.'</select>'
-            .$n.'<select name="Time_Second">'.$n. $this->seconds['default'] .$n.'</select>'
-            .$n.'<select name="Time_Meridian">'.$n. $this->meridians['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' use_24_hours=false}');
+        $result = '<select name="Time_Hour">' . $n . $this->hours['12h'] . $n . '</select>'
+            . $n . '<select name="Time_Minute">' . $n . $this->minutes['default'] . $n . '</select>'
+            . $n . '<select name="Time_Second">' . $n . $this->seconds['default'] . $n . '</select>'
+            . $n . '<select name="Time_Meridian">' . $n . $this->meridians['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' use_24_hours=false}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
-        
+
         $n = "\n";
-        $result = '<select name="Time_Hour">'.$n. $this->hours['12h'] .$n.'</select>'
-            .$n.'<select name="Time_Minute">'.$n. $this->minutes['default'] .$n.'</select>'
-            .$n.'<select name="Time_Second">'.$n. $this->seconds['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' use_24_hours=false display_meridian=false}');
+        $result = '<select name="Time_Hour">' . $n . $this->hours['12h'] . $n . '</select>'
+            . $n . '<select name="Time_Minute">' . $n . $this->minutes['default'] . $n . '</select>'
+            . $n . '<select name="Time_Second">' . $n . $this->seconds['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' use_24_hours=false display_meridian=false}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
-        
-        $time = mktime( 0, 15, 11, 2, 20, 2011 );
-        $result = '<select name="Time_Hour">'.$n. '<option value="01">01</option>
+
+        $time = mktime(0, 15, 11, 2, 20, 2011);
+        $result = '<select name="Time_Hour">' . $n . '<option value="01">01</option>
 <option value="02">02</option>
 <option value="03">03</option>
 <option value="04">04</option>
@@ -869,11 +870,11 @@ class PluginFunctionHtmlSelectTimeTests extends PHPUnit_Framework_TestCase {
 <option value="am" selected="selected">AM</option>
 <option value="pm">PM</option>
 </select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $time .' use_24_hours=false display_minutes=false display_seconds=false}');
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $time . ' use_24_hours=false display_minutes=false display_seconds=false}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
-        
-        $time = mktime( 4, 15, 11, 2, 20, 2011 );
-        $result = '<select name="Time_Hour">'.$n. '<option value="01">01</option>
+
+        $time = mktime(4, 15, 11, 2, 20, 2011);
+        $result = '<select name="Time_Hour">' . $n . '<option value="01">01</option>
 <option value="02">02</option>
 <option value="03">03</option>
 <option value="04" selected="selected">04</option>
@@ -890,11 +891,11 @@ class PluginFunctionHtmlSelectTimeTests extends PHPUnit_Framework_TestCase {
 <option value="am" selected="selected">AM</option>
 <option value="pm">PM</option>
 </select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $time .' use_24_hours=false display_minutes=false display_seconds=false}');
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $time . ' use_24_hours=false display_minutes=false display_seconds=false}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
-        
-        $time = mktime( 12, 15, 11, 2, 20, 2011 );
-        $result = '<select name="Time_Hour">'.$n. '<option value="01">01</option>
+
+        $time = mktime(12, 15, 11, 2, 20, 2011);
+        $result = '<select name="Time_Hour">' . $n . '<option value="01">01</option>
 <option value="02">02</option>
 <option value="03">03</option>
 <option value="04">04</option>
@@ -911,11 +912,11 @@ class PluginFunctionHtmlSelectTimeTests extends PHPUnit_Framework_TestCase {
 <option value="am">AM</option>
 <option value="pm" selected="selected">PM</option>
 </select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $time .' use_24_hours=false display_minutes=false display_seconds=false}');
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $time . ' use_24_hours=false display_minutes=false display_seconds=false}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
-        
-        $time = mktime( 16, 15, 11, 2, 20, 2011 );
-        $result = '<select name="Time_Hour">'.$n. '<option value="01">01</option>
+
+        $time = mktime(16, 15, 11, 2, 20, 2011);
+        $result = '<select name="Time_Hour">' . $n . '<option value="01">01</option>
 <option value="02">02</option>
 <option value="03">03</option>
 <option value="04" selected="selected">04</option>
@@ -932,119 +933,119 @@ class PluginFunctionHtmlSelectTimeTests extends PHPUnit_Framework_TestCase {
 <option value="am">AM</option>
 <option value="pm" selected="selected">PM</option>
 </select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $time .' use_24_hours=false display_minutes=false display_seconds=false}');
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $time . ' use_24_hours=false display_minutes=false display_seconds=false}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
     }
-    
-    
+
+
     public function testMinuteInterval()
     {
         $n = "\n";
-        $result = '<select name="Time_Hour">'.$n. $this->hours['default'] .$n.'</select>'
-            .$n.'<select name="Time_Minute">'.$n. $this->minutes['30'] .$n.'</select>'
-            .$n.'<select name="Time_Second">'.$n. $this->seconds['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' minute_interval=30}');
+        $result = '<select name="Time_Hour">' . $n . $this->hours['default'] . $n . '</select>'
+            . $n . '<select name="Time_Minute">' . $n . $this->minutes['30'] . $n . '</select>'
+            . $n . '<select name="Time_Second">' . $n . $this->seconds['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' minute_interval=30}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
-        
-        $result = '<select name="Time_Hour">'.$n. $this->hours['default'] .$n.'</select>'
-            .$n.'<select name="Time_Minute">'.$n. $this->minutes['15'] .$n.'</select>'
-            .$n.'<select name="Time_Second">'.$n. $this->seconds['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' minute_interval=15}');
+
+        $result = '<select name="Time_Hour">' . $n . $this->hours['default'] . $n . '</select>'
+            . $n . '<select name="Time_Minute">' . $n . $this->minutes['15'] . $n . '</select>'
+            . $n . '<select name="Time_Second">' . $n . $this->seconds['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' minute_interval=15}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
-        
-        $result = '<select name="Time_Hour">'.$n. $this->hours['default'] .$n.'</select>'
-            .$n.'<select name="Time_Minute">'.$n. $this->minutes['10'] .$n.'</select>'
-            .$n.'<select name="Time_Second">'.$n. $this->seconds['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' minute_interval=10}');
+
+        $result = '<select name="Time_Hour">' . $n . $this->hours['default'] . $n . '</select>'
+            . $n . '<select name="Time_Minute">' . $n . $this->minutes['10'] . $n . '</select>'
+            . $n . '<select name="Time_Second">' . $n . $this->seconds['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' minute_interval=10}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
-        
-        $result = '<select name="Time_Hour">'.$n. $this->hours['default'] .$n.'</select>'
-            .$n.'<select name="Time_Minute">'.$n. $this->minutes['5'] .$n.'</select>'
-            .$n.'<select name="Time_Second">'.$n. $this->seconds['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' minute_interval=5}');
+
+        $result = '<select name="Time_Hour">' . $n . $this->hours['default'] . $n . '</select>'
+            . $n . '<select name="Time_Minute">' . $n . $this->minutes['5'] . $n . '</select>'
+            . $n . '<select name="Time_Second">' . $n . $this->seconds['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' minute_interval=5}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
     }
-    
+
     public function testSecondInterval()
     {
         $n = "\n";
-        $result = '<select name="Time_Hour">'.$n. $this->hours['default'] .$n.'</select>'
-            .$n.'<select name="Time_Minute">'.$n. $this->minutes['default'] .$n.'</select>'
-            .$n.'<select name="Time_Second">'.$n. $this->seconds['30'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' second_interval=30}');
+        $result = '<select name="Time_Hour">' . $n . $this->hours['default'] . $n . '</select>'
+            . $n . '<select name="Time_Minute">' . $n . $this->minutes['default'] . $n . '</select>'
+            . $n . '<select name="Time_Second">' . $n . $this->seconds['30'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' second_interval=30}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
-        
-        $result = '<select name="Time_Hour">'.$n. $this->hours['default'] .$n.'</select>'
-            .$n.'<select name="Time_Minute">'.$n. $this->minutes['default'] .$n.'</select>'
-            .$n.'<select name="Time_Second">'.$n. $this->seconds['15'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' second_interval=15}');
+
+        $result = '<select name="Time_Hour">' . $n . $this->hours['default'] . $n . '</select>'
+            . $n . '<select name="Time_Minute">' . $n . $this->minutes['default'] . $n . '</select>'
+            . $n . '<select name="Time_Second">' . $n . $this->seconds['15'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' second_interval=15}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
-        
-        $result = '<select name="Time_Hour">'.$n. $this->hours['default'] .$n.'</select>'
-            .$n.'<select name="Time_Minute">'.$n. $this->minutes['default'] .$n.'</select>'
-            .$n.'<select name="Time_Second">'.$n. $this->seconds['10'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' second_interval=10}');
+
+        $result = '<select name="Time_Hour">' . $n . $this->hours['default'] . $n . '</select>'
+            . $n . '<select name="Time_Minute">' . $n . $this->minutes['default'] . $n . '</select>'
+            . $n . '<select name="Time_Second">' . $n . $this->seconds['10'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' second_interval=10}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
-        
-        $result = '<select name="Time_Hour">'.$n. $this->hours['default'] .$n.'</select>'
-            .$n.'<select name="Time_Minute">'.$n. $this->minutes['default'] .$n.'</select>'
-            .$n.'<select name="Time_Second">'.$n. $this->seconds['5'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' second_interval=5}');
+
+        $result = '<select name="Time_Hour">' . $n . $this->hours['default'] . $n . '</select>'
+            . $n . '<select name="Time_Minute">' . $n . $this->minutes['default'] . $n . '</select>'
+            . $n . '<select name="Time_Second">' . $n . $this->seconds['5'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' second_interval=5}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
     }
-    
+
 
     public function testFormat()
     {
         $n = "\n";
-        $result = '<select name="Time_Hour">'.$n. $this->hours['format_%03d'] .$n.'</select>'
-            .$n.'<select name="Time_Minute">'.$n. $this->minutes['default'] .$n.'</select>'
-            .$n.'<select name="Time_Second">'.$n. $this->seconds['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' hour_format="%03d"}');
+        $result = '<select name="Time_Hour">' . $n . $this->hours['format_%03d'] . $n . '</select>'
+            . $n . '<select name="Time_Minute">' . $n . $this->minutes['default'] . $n . '</select>'
+            . $n . '<select name="Time_Second">' . $n . $this->seconds['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' hour_format="%03d"}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
-        
-        $result = '<select name="Time_Hour">'.$n. $this->hours['default'] .$n.'</select>'
-            .$n.'<select name="Time_Minute">'.$n. $this->minutes['format_%03d'] .$n.'</select>'
-            .$n.'<select name="Time_Second">'.$n. $this->seconds['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' minute_format="%03d"}');
+
+        $result = '<select name="Time_Hour">' . $n . $this->hours['default'] . $n . '</select>'
+            . $n . '<select name="Time_Minute">' . $n . $this->minutes['format_%03d'] . $n . '</select>'
+            . $n . '<select name="Time_Second">' . $n . $this->seconds['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' minute_format="%03d"}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
-        
-        $result = '<select name="Time_Hour">'.$n. $this->hours['default'] .$n.'</select>'
-            .$n.'<select name="Time_Minute">'.$n. $this->minutes['default'] .$n.'</select>'
-            .$n.'<select name="Time_Second">'.$n. $this->seconds['format_%03d'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' second_format="%03d"}');
+
+        $result = '<select name="Time_Hour">' . $n . $this->hours['default'] . $n . '</select>'
+            . $n . '<select name="Time_Minute">' . $n . $this->minutes['default'] . $n . '</select>'
+            . $n . '<select name="Time_Second">' . $n . $this->seconds['format_%03d'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' second_format="%03d"}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
     }
 
     public function testValueFormat()
     {
         $n = "\n";
-        $result = '<select name="Time_Hour">'.$n. $this->hours['format_value_%03d'] .$n.'</select>'
-            .$n.'<select name="Time_Minute">'.$n. $this->minutes['default'] .$n.'</select>'
-            .$n.'<select name="Time_Second">'.$n. $this->seconds['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' hour_value_format="%03d"}');
+        $result = '<select name="Time_Hour">' . $n . $this->hours['format_value_%03d'] . $n . '</select>'
+            . $n . '<select name="Time_Minute">' . $n . $this->minutes['default'] . $n . '</select>'
+            . $n . '<select name="Time_Second">' . $n . $this->seconds['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' hour_value_format="%03d"}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
-        
-        $result = '<select name="Time_Hour">'.$n. $this->hours['default'] .$n.'</select>'
-            .$n.'<select name="Time_Minute">'.$n. $this->minutes['format_value_%03d'] .$n.'</select>'
-            .$n.'<select name="Time_Second">'.$n. $this->seconds['default'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' minute_value_format="%03d"}');
+
+        $result = '<select name="Time_Hour">' . $n . $this->hours['default'] . $n . '</select>'
+            . $n . '<select name="Time_Minute">' . $n . $this->minutes['format_value_%03d'] . $n . '</select>'
+            . $n . '<select name="Time_Second">' . $n . $this->seconds['default'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' minute_value_format="%03d"}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
-        
-        $result = '<select name="Time_Hour">'.$n. $this->hours['default'] .$n.'</select>'
-            .$n.'<select name="Time_Minute">'.$n. $this->minutes['default'] .$n.'</select>'
-            .$n.'<select name="Time_Second">'.$n. $this->seconds['format_value_%03d'] .$n.'</select>';
-        $tpl = $this->smarty->createTemplate('eval:{html_select_time time='. $this->now .' second_value_format="%03d"}');
+
+        $result = '<select name="Time_Hour">' . $n . $this->hours['default'] . $n . '</select>'
+            . $n . '<select name="Time_Minute">' . $n . $this->minutes['default'] . $n . '</select>'
+            . $n . '<select name="Time_Second">' . $n . $this->seconds['format_value_%03d'] . $n . '</select>';
+        $tpl = $this->smarty->createTemplate('eval:{html_select_time time=' . $this->now . ' second_value_format="%03d"}');
         $this->assertEquals($result, $this->smarty->fetch($tpl));
     }
-    
+
     public function testTimeArray()
     {
         $n = "\n";
-        $result = '<select name="namorized[foobar_Hour]">'.$n. $this->hours['default'] .$n.'</select>'
-            .$n.'<select name="namorized[foobar_Minute]">'.$n. $this->minutes['default'] .$n.'</select>'
-            .$n.'<select name="namorized[foobar_Second]">'.$n. $this->seconds['default'] .$n.'</select>';
-        
+        $result = '<select name="namorized[foobar_Hour]">' . $n . $this->hours['default'] . $n . '</select>'
+            . $n . '<select name="namorized[foobar_Minute]">' . $n . $this->minutes['default'] . $n . '</select>'
+            . $n . '<select name="namorized[foobar_Second]">' . $n . $this->seconds['default'] . $n . '</select>';
+
         $time_array = array(
             'namorized' => array(
                 'foobar_Hour' => '16',
@@ -1052,24 +1053,24 @@ class PluginFunctionHtmlSelectTimeTests extends PHPUnit_Framework_TestCase {
                 'foobar_Second' => '11',
             ),
         );
-        
+
         $tpl = $this->smarty->createTemplate('eval:{html_select_time time=$time_array.namorized field_array="namorized" prefix="foobar_"}');
         $tpl->assign('time_array', $time_array);
         $this->assertEquals($result, $this->smarty->fetch($tpl));
-        
+
         $tpl = $this->smarty->createTemplate('eval:{html_select_time time=$time_array field_array="namorized" prefix="foobar_"}');
         $tpl->assign('time_array', $time_array);
         $this->assertEquals($result, $this->smarty->fetch($tpl));
     }
-    
+
     public function testTimeArrayMerdidian()
     {
         $n = "\n";
-        $result = '<select name="namorized[foobar_Hour]">'.$n. $this->hours['12h'] .$n.'</select>'
-            .$n.'<select name="namorized[foobar_Minute]">'.$n. $this->minutes['default'] .$n.'</select>'
-            .$n.'<select name="namorized[foobar_Second]">'.$n. $this->seconds['default'] .$n.'</select>'
-            .$n.'<select name="namorized[foobar_Meridian]">'.$n. $this->meridians['default'] .$n.'</select>';
-        
+        $result = '<select name="namorized[foobar_Hour]">' . $n . $this->hours['12h'] . $n . '</select>'
+            . $n . '<select name="namorized[foobar_Minute]">' . $n . $this->minutes['default'] . $n . '</select>'
+            . $n . '<select name="namorized[foobar_Second]">' . $n . $this->seconds['default'] . $n . '</select>'
+            . $n . '<select name="namorized[foobar_Meridian]">' . $n . $this->meridians['default'] . $n . '</select>';
+
         $time_array = array(
             'namorized' => array(
                 'foobar_Hour' => '04',
@@ -1078,11 +1079,11 @@ class PluginFunctionHtmlSelectTimeTests extends PHPUnit_Framework_TestCase {
                 'foobar_Meridian' => 'pm',
             ),
         );
-        
+
         $tpl = $this->smarty->createTemplate('eval:{html_select_time time=$time_array use_24_hours=false field_array="namorized" prefix="foobar_"}');
         $tpl->assign('time_array', $time_array);
         $this->assertEquals($result, $this->smarty->fetch($tpl));
     }
-} 
+}
 
 ?>

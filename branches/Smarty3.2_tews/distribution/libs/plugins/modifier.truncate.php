@@ -9,23 +9,24 @@
 
 /**
  * Smarty truncate modifier plugin
- * 
+ *
  * Type:     modifier<br>
  * Name:     truncate<br>
  * Purpose:  Truncate a string to a certain length if necessary,
  *               optionally splitting in the middle of a word, and
  *               appending the $etc string or inserting $etc into the middle.
- * 
+ *
  * @link http://www.smarty.net/docs/en/language.modifier.truncate.tpl truncate (Smarty online manual)
- * @author Monte Ohrt <monte at ohrt dot com> 
- * @param string  $string      input string
+ * @author Monte Ohrt <monte at ohrt dot com>
+ * @param string $string      input string
  * @param integer $length      length of truncated text
- * @param string  $etc         end string
+ * @param string $etc         end string
  * @param boolean $break_words truncate at word boundary
  * @param boolean $middle      truncate in the middle of text
  * @return string truncated string
  */
-function smarty_modifier_truncate($string, $length = 80, $etc = '...', $break_words = false, $middle = false) {
+function smarty_modifier_truncate($string, $length = 80, $etc = '...', $break_words = false, $middle = false)
+{
     if ($length == 0)
         return '';
 
@@ -38,7 +39,7 @@ function smarty_modifier_truncate($string, $length = 80, $etc = '...', $break_wo
             if (!$middle) {
                 return mb_substr($string, 0, $length, Smarty::$_CHARSET) . $etc;
             }
-            return mb_substr($string, 0, $length / 2, Smarty::$_CHARSET) . $etc . mb_substr($string, - $length / 2, $length, Smarty::$_CHARSET);
+            return mb_substr($string, 0, $length / 2, Smarty::$_CHARSET) . $etc . mb_substr($string, -$length / 2, $length, Smarty::$_CHARSET);
         }
         return $string;
     }
@@ -52,7 +53,7 @@ function smarty_modifier_truncate($string, $length = 80, $etc = '...', $break_wo
         if (!$middle) {
             return substr($string, 0, $length) . $etc;
         }
-        return substr($string, 0, $length / 2) . $etc . substr($string, - $length / 2);
+        return substr($string, 0, $length / 2) . $etc . substr($string, -$length / 2);
     }
     return $string;
 }

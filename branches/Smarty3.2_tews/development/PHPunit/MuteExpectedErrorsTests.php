@@ -9,7 +9,8 @@
 /**
  * class for filter tests
  */
-class MuteExpectedErrorsTests extends PHPUnit_Framework_TestCase {
+class MuteExpectedErrorsTests extends PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
@@ -23,9 +24,10 @@ class MuteExpectedErrorsTests extends PHPUnit_Framework_TestCase {
     }
 
     protected $_errors = array();
+
     public function error_handler($errno, $errstr, $errfile, $errline, $errcontext)
     {
-        $this->_errors[] = $errfile .' line ' . $errline;
+        $this->_errors[] = $errfile . ' line ' . $errline;
     }
 
     public function testMuted()
@@ -41,7 +43,7 @@ class MuteExpectedErrorsTests extends PHPUnit_Framework_TestCase {
         $this->assertEquals($this->_errors, array());
 
         @filemtime('ckxladanwijicajscaslyxck');
-        $error = array( __FILE__ . ' line ' . (__LINE__ -1));
+        $error = array(__FILE__ . ' line ' . (__LINE__ - 1));
         $this->assertEquals($this->_errors, $error);
 
         Smarty::unmuteExpectedErrors();
@@ -59,7 +61,7 @@ class MuteExpectedErrorsTests extends PHPUnit_Framework_TestCase {
         $this->assertEquals(Smarty::$_IS_WINDOWS ? 2 : 4, count($this->_errors));
 
         @filemtime('ckxladanwijicajscaslyxck');
-        $error = array( __FILE__ . ' line ' . (__LINE__ -1));
+        $error = array(__FILE__ . ' line ' . (__LINE__ - 1));
         $this->assertEquals(Smarty::$_IS_WINDOWS ? 3 : 5, count($this->_errors));
 
         restore_error_handler();
@@ -79,8 +81,8 @@ class MuteExpectedErrorsTests extends PHPUnit_Framework_TestCase {
         $this->assertEquals($this->_errors, array());
 
         @filemtime('ckxladanwijicajscaslyxck');
-        $error = array( __FILE__ . ' line ' . (__LINE__ -1));
-        $this->assertEquals($error,$this->_errors);
+        $error = array(__FILE__ . ' line ' . (__LINE__ - 1));
+        $this->assertEquals($error, $this->_errors);
 
         Smarty::unmuteExpectedErrors();
         restore_error_handler();
@@ -99,7 +101,7 @@ class MuteExpectedErrorsTests extends PHPUnit_Framework_TestCase {
         $this->assertEquals(Smarty::$_IS_WINDOWS ? 4 : 5, count($this->_errors));
 
         @filemtime('ckxladanwijicajscaslyxck');
-        $error = array( __FILE__ . ' line ' . (__LINE__ -1));
+        $error = array(__FILE__ . ' line ' . (__LINE__ - 1));
         $this->assertEquals(Smarty::$_IS_WINDOWS ? 5 : 6, count($this->_errors));
 
         restore_error_handler();

@@ -1,20 +1,21 @@
 <?php
 /**
-* Smarty PHPunit tests of modifier
-* 
-* @package PHPunit
-* @author Rodney Rehm 
-*/
+ * Smarty PHPunit tests of modifier
+ *
+ * @package PHPunit
+ * @author Rodney Rehm
+ */
 
 /**
-* class for modifier tests
-*/
-class PluginModifierCharsetTests extends PHPUnit_Framework_TestCase {
+ * class for modifier tests
+ */
+class PluginModifierCharsetTests extends PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
         SmartyTests::init();
-    } 
+    }
 
     public static function isRunnable()
     {
@@ -28,7 +29,7 @@ class PluginModifierCharsetTests extends PHPUnit_Framework_TestCase {
         $tpl = $this->smarty->createTemplate('eval:{"' . $encoded . '"|to_charset}');
         $this->assertEquals($result, $tpl->fetch());
     }
-    
+
     public function testToLatin1WithoutMbstring()
     {
         Smarty::$_MBSTRING = false;
@@ -38,7 +39,7 @@ class PluginModifierCharsetTests extends PHPUnit_Framework_TestCase {
         $this->assertEquals($encoded, $tpl->fetch());
         Smarty::$_MBSTRING = true;
     }
-    
+
     public function testFromLatin1()
     {
         $result = "hällö wörld 3";
@@ -46,7 +47,7 @@ class PluginModifierCharsetTests extends PHPUnit_Framework_TestCase {
         $tpl = $this->smarty->createTemplate('eval:{"' . $encoded . '"|from_charset}');
         $this->assertEquals($result, $tpl->fetch());
     }
-    
+
     public function testFromLatin1WithoutMbstring()
     {
         Smarty::$_MBSTRING = false;
@@ -56,8 +57,8 @@ class PluginModifierCharsetTests extends PHPUnit_Framework_TestCase {
         $this->assertEquals($encoded, $tpl->fetch());
         Smarty::$_MBSTRING = true;
     }
-    
-    
+
+
     public function testFromUtf32le()
     {
         $result = "hällö wörld 5";
@@ -65,7 +66,7 @@ class PluginModifierCharsetTests extends PHPUnit_Framework_TestCase {
         $tpl = $this->smarty->createTemplate('eval:{"' . $encoded . '"|from_charset:"UTF-32LE"}');
         $this->assertEquals($result, $tpl->fetch());
     }
-    
+
     public function testFromUtf32leWithoutMbstring()
     {
         Smarty::$_MBSTRING = false;
@@ -75,8 +76,8 @@ class PluginModifierCharsetTests extends PHPUnit_Framework_TestCase {
         $this->assertEquals($encoded, $tpl->fetch());
         Smarty::$_MBSTRING = true;
     }
-    
-    
+
+
     public function testToUtf32le()
     {
         $encoded = "hällö wörld 7";
@@ -84,7 +85,7 @@ class PluginModifierCharsetTests extends PHPUnit_Framework_TestCase {
         $tpl = $this->smarty->createTemplate('eval:{"' . $encoded . '"|to_charset:"UTF-32LE"}');
         $this->assertEquals($result, $tpl->fetch());
     }
-    
+
     public function testToUtf32leWithoutMbstring()
     {
         Smarty::$_MBSTRING = false;
@@ -94,6 +95,6 @@ class PluginModifierCharsetTests extends PHPUnit_Framework_TestCase {
         $this->assertEquals($encoded, $tpl->fetch());
         Smarty::$_MBSTRING = true;
     }
-} 
+}
 
 ?>
