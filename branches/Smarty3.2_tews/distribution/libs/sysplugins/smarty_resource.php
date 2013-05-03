@@ -3,8 +3,8 @@
 /**
  * Smarty Resource Plugin
  *
- * @package Smarty
- * @subpackage TemplateResources
+ *
+ * @package TemplateResources
  * @author Rodney Rehm
  */
 
@@ -13,8 +13,8 @@
  *
  * Base implementation for resource plugins
  *
- * @package Smarty
- * @subpackage TemplateResources
+ *
+ * @package TemplateResources
  */
 abstract class Smarty_Resource
 {
@@ -142,7 +142,6 @@ abstract class Smarty_Resource
         if ($_basename) {
             $_basename = '.' . $_basename;
         }
-
         $compiled->filepath = $_compile_dir . $_filepath . '.' . $compiled->source->type . $_basename . $_subtype . '.php';
     }
 
@@ -402,7 +401,7 @@ abstract class Smarty_Resource
 
         // try plugins dir
         $_resource_class = 'Smarty_Resource_' . ucfirst($type);
-        if ($smarty->loadPlugin($_resource_class)) {
+        if ($smarty->_loadPlugin($_resource_class)) {
             if (isset(self::$resources[$type])) {
                 return $smarty->_resource_handlers[$type] = self::$resources[$type];
             }
@@ -537,8 +536,8 @@ abstract class Smarty_Resource
  *
  * Meta Data Container for Template Files
  *
- * @package Smarty
- * @subpackage TemplateResources
+ *
+ * @package TemplateResources
  * @author Rodney Rehm
  *
  * @property integer $timestamp Source Timestamp

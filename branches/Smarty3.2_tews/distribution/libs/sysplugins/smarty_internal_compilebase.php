@@ -3,16 +3,16 @@
 /**
  * Smarty Internal Plugin CompileBase
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  * @author Uwe Tews
  */
 
 /**
  * This class does extend all internal compile plugins
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_CompileBase extends Smarty_Internal_Code
 {

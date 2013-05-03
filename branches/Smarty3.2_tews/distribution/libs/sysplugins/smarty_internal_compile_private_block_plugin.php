@@ -5,16 +5,16 @@
  *
  * Compiles code for the execution of block plugin
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  * @author Uwe Tews
  */
 
 /**
  * Smarty Internal Plugin Compile Block Plugin Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Private_Block_Plugin extends Smarty_Internal_CompileBase
 {

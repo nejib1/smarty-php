@@ -4,16 +4,16 @@
  * Smarty Internal Plugin Compile Rdelim
  *
  * Compiles the {rdelim} tag
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  * @author Uwe Tews
  */
 
 /**
  * Smarty Internal Plugin Compile Rdelim Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Rdelim extends Smarty_Internal_CompileBase
 {

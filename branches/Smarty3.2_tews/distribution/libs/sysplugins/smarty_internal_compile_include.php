@@ -5,16 +5,16 @@
  *
  * Compiles the {include} tag
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  * @author Uwe Tews
  */
 
 /**
  * Smarty Internal Plugin Compile Include Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Include extends Smarty_Internal_CompileBase
 {
@@ -69,6 +69,8 @@ class Smarty_Internal_Compile_Include extends Smarty_Internal_CompileBase
         if (isset($_attr['assign'])) {
             // output will be stored in a smarty variable instead of beind displayed
             $_assign = trim($_attr['assign'], "'\"");
+            // set flag that variable container must be cloned
+            $compiler->must_clone_vars = true;
         }
 
         $_parent_scope = Smarty::SCOPE_LOCAL;
@@ -131,7 +133,7 @@ class Smarty_Internal_Compile_Include extends Smarty_Internal_CompileBase
             && !($compiler->template->caching && ($compiler->tag_nocache || $compiler->nocache || $compiler->nocache_nolog)) && $_caching != Smarty::CACHING_LIFETIME_CURRENT
         ) {
             // check if compiled code can be merged (contains no variable part)
-            if (!$compiler->has_variable_string && (substr_count($include_file, '"') == 2 or substr_count($include_file, "'") == 2)
+            if ((substr_count($include_file, '"') == 2 or substr_count($include_file, "'") == 2)
                 and substr_count($include_file, '(') == 0 and substr_count($include_file, '$_smarty_tpl->') == 0
             ) {
                 $tpl_name = null;
@@ -153,7 +155,8 @@ class Smarty_Internal_Compile_Include extends Smarty_Internal_CompileBase
                         $tpl->compiler->suppressTemplatePropertyHeader = true;
                         $tpl->compiler->write_compiled_code = false;
                         $tpl->compiler->content_class = Smarty_Internal_TemplateCompilerBase::$merged_inline_templates[$tpl_name]['class'] = '__Smarty_Content_' . str_replace('.', '_', uniqid('', true));
-                        $code = $tpl->compiler->compileTemplate();
+                        $tpl->compiler->template_code->newline()->php("/* Inline subtemplate compiled from \"{$tpl->source->filepath}\" */")->newline();
+                        $tpl->compiler->compileTemplate();
                         $compiler->required_plugins['compiled'] = array_merge($compiler->required_plugins['compiled'], $tpl->compiler->required_plugins['compiled']);
                         $compiler->required_plugins['nocache'] = array_merge($compiler->required_plugins['nocache'], $tpl->compiler->required_plugins['nocache']);
                         $tpl->compiler->required_plugins = array();
@@ -163,12 +166,7 @@ class Smarty_Internal_Compile_Include extends Smarty_Internal_CompileBase
                             $compiler->template_functions_code = array_merge($compiler->template_functions_code, $tpl->compiler->template_functions_code);
                         }
                         // save merged template
-                        $tpl->compiler->buffer = '';
-                        $tpl->compiler->indentation = 0;
-                        $tpl->compiler->newline()->php("/* Inline subtemplate compiled from \"{$tpl->source->filepath}\" */")->newline();
-                        Smarty_Internal_TemplateCompilerBase::$merged_inline_templates[$tpl_name]['code'] = $tpl->compiler->createSmartyContentClass($tpl, $code, true);
-                        unset($code);
-                        $tpl->compiler->buffer = '';
+                        Smarty_Internal_TemplateCompilerBase::$merged_inline_templates[$tpl_name]['code'] = $tpl->compiler->_createSmartyContentClass($tpl, true);
                         // merge file dependency
                         $compiler->file_dependency[$tpl->source->uid] = array($tpl->source->filepath, $tpl->source->timestamp, $tpl->source->type);
                         $compiler->file_dependency = array_merge($compiler->file_dependency, $tpl->compiler->file_dependency);

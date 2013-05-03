@@ -3,8 +3,8 @@
 /**
  * Smarty Internal Plugin CacheResource File
  *
- * @package Smarty
- * @subpackage Cacher
+ *
+ * @package Cacher
  * @author Uwe Tews
  * @author Rodney Rehm
  */
@@ -14,8 +14,8 @@
  *
  * Implements the file system as resource for the HTML cache Version ussing nocache inserts.
  *
- * @package Smarty
- * @subpackage Cacher
+ *
+ * @package Cacher
  */
 class Smarty_Internal_CacheResource_File extends Smarty_CacheResource
 {

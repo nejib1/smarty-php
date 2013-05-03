@@ -5,16 +5,16 @@
  *
  * Compiles the special $smarty variables
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  * @author Uwe Tews
  */
 
 /**
  * Smarty Internal Plugin Compile special Smarty Variable Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Private_Special_Variable extends Smarty_Internal_CompileBase
 {

@@ -3,8 +3,8 @@
 /**
  * Smarty Internal Plugin Resource Extends
  *
- * @package Smarty
- * @subpackage TemplateResources
+ *
+ * @package TemplateResources
  * @author Uwe Tews
  * @author Rodney Rehm
  */
@@ -14,8 +14,8 @@
  *
  * Implements the file system as resource for Smarty which {extend}s a chain of template files templates
  *
- * @package Smarty
- * @subpackage TemplateResources
+ *
+ * @package TemplateResources
  */
 class Smarty_Internal_Resource_Extends extends Smarty_Resource
 {

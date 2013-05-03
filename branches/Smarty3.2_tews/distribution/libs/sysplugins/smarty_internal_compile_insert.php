@@ -5,16 +5,16 @@
  *
  * Compiles the {insert} tag
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  * @author Uwe Tews
  */
 
 /**
  * Smarty Internal Plugin Compile Insert Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Insert extends Smarty_Internal_CompileBase
 {
@@ -68,6 +68,8 @@ class Smarty_Internal_Compile_Insert extends Smarty_Internal_CompileBase
         if (isset($_attr['assign'])) {
             // output will be stored in a smarty variable instead of being displayed
             $_assign = $_attr['assign'];
+            // set flag that variable container must be cloned
+            $compiler->must_clone_vars = true;
             // create variable to make shure that the compiler knows about its nocache status
             $compiler->template->tpl_vars->{trim($_attr['assign'], "'")} = new Smarty_Variable(null, true);
         }

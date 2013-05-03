@@ -5,16 +5,16 @@
  *
  * Smarty filter handler class
  *
- * @package Smarty
- * @subpackage PluginsInternal
+ *
+ * @package PluginsInternal
  * @author Uwe Tews
  */
 
 /**
  * Class for filter processing
  *
- * @package Smarty
- * @subpackage PluginsInternal
+ *
+ * @package PluginsInternal
  */
 class Smarty_Internal_Filter_Handler
 {
@@ -40,7 +40,7 @@ class Smarty_Internal_Filter_Handler
         if (!empty($template->autoload_filters[$type])) {
             foreach ((array)$template->autoload_filters[$type] as $name) {
                 $plugin_name = "Smarty_{$type}filter_{$name}";
-                if ($template->loadPlugin($plugin_name)) {
+                if ($template->_loadPlugin($plugin_name)) {
                     if (function_exists($plugin_name)) {
                         // use loaded Smarty2 style plugin
                         $output = $plugin_name($output, $template);

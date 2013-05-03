@@ -5,8 +5,8 @@ ini_set('pcre.backtrack_limit', -1);
 /**
  * Smarty Code generator
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  * @author Uwe Tews
  */
 
@@ -15,8 +15,8 @@ ini_set('pcre.backtrack_limit', -1);
  *
  * Methods to manage code output buffer
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Code
 {
@@ -46,7 +46,7 @@ class Smarty_Internal_Code
     public function iniTagCode($compiler)
     {
         $this->buffer = '';
-        $this->indentation = $this->saved_indentation = $compiler->indentation;
+        $this->indentation = $this->saved_indentation = $compiler->template_code->indentation;
         $this->no_indent = !$compiler->suppressNocacheProcessing && $compiler->template->caching && ($compiler->nocache || $compiler->tag_nocache || $compiler->forceNocache);
         return $this;
     }
@@ -59,11 +59,9 @@ class Smarty_Internal_Code
      */
     public function returnTagCode($compiler)
     {
-        $_output = $this->buffer;
-        $this->buffer = '';
-        $compiler->indentation = $this->indentation;
-        $compiler->saved_indentation = $this->saved_indentation;
-        return $_output;
+        $compiler->template_code->indentation = $this->indentation;
+        $compiler->template_code->saved_indentation = $this->saved_indentation;
+        return $this->buffer;
     }
 
     /**

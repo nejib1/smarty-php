@@ -5,10 +5,13 @@
     * @package PHPunit
     * @author Uwe Tews
     */                              
-    $test = 'ExtendsResourceTests';
-    $function= array('testExtendExists');
+    $test = 'CompileIncludeTests';
+    $function= array();
 
     include 'smartytestdebug.inc.php';
+    SmartyTests::$smarty->clearAllCache();
+    SmartyTests::$smarty->clearCompiledTemplate();
+
     include $test.'.php';
 
 
@@ -38,6 +41,8 @@
         $o->$func();
     }
 
+    SmartyTests::$smarty->clearAllCache();
+    SmartyTests::$smarty->clearCompiledTemplate();
     // repeat error functions
     if (!empty($o->error_functions)) {
         $error_functions = $o->error_functions;

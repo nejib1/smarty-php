@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Revision: 2972 $ -->
-  <sect1 id="language.config.variables">
-			<title>Variabili caricate da file di configurazione</title>
-			<para>
-			 Le variabili caricate dai file di configurazione sono referenziate
-			 racchiudendole fra due simboli cancelletto (#), oppure attraverso
-			 la variabile <link
-			 linkend="language.variables.smarty.config">$smarty.config</link>.
-			 La seconda sintassi è utile per includerle in valori di attributi
-			 indicati fra virgolette.
-			</para>
-   <example>
-    <title>variabili di configurazione</title>
+<sect1 id="language.config.variables">
+    <title>Variabili caricate da file di configurazione</title>
     <para>
-     foo.conf:
+        Le variabili caricate dai file di configurazione sono referenziate
+        racchiudendole fra due simboli cancelletto (#), oppure attraverso
+        la variabile<link
+            linkend="language.variables.smarty.config">$smarty.config</link>.
+        La seconda sintassi è utile per includerle in valori di attributi
+        indicati fra virgolette.
     </para>
-    <programlisting>
-<![CDATA[
+    <example>
+        <title>variabili di configurazione</title>
+        <para>
+            foo.conf:
+        </para>
+        <programlisting>
+            <![CDATA[
 pageTitle = "This is mine"
 bodyBgColor = "#eeeeee"
 tableBorderSize = "3"
 tableBgColor = "#bbbbbb"
 rowBgColor = "#cccccc"
 ]]>
-    </programlisting>
-    <para>
-     index.tpl:
-    </para>
-    <programlisting>
-<![CDATA[
+        </programlisting>
+        <para>
+            index.tpl:
+        </para>
+        <programlisting>
+            <![CDATA[
 {config_load file="foo.conf"}
 <html>
 <title>{#pageTitle#}</title>
@@ -43,12 +43,12 @@ rowBgColor = "#cccccc"
 </body>
 </html>
 ]]>
-    </programlisting>
-    <para>
-     index.tpl: (sintassi alternativa)
-    </para>
-    <programlisting>
-<![CDATA[
+        </programlisting>
+        <para>
+            index.tpl: (sintassi alternativa)
+        </para>
+        <programlisting>
+            <![CDATA[
 {config_load file="foo.conf"}
 <html>
 <title>{$smarty.config.pageTitle}</title>
@@ -63,12 +63,12 @@ rowBgColor = "#cccccc"
 </body>
 </html>
 ]]>
-    </programlisting>
-    <para>
-     questo è l'output prodotto da entrambi gli esempi:
-    </para>
-    <screen>
-<![CDATA[
+        </programlisting>
+        <para>
+            questo è l'output prodotto da entrambi gli esempi:
+        </para>
+        <screen>
+            <![CDATA[
 <html>
 <title>This is mine</title>
 <body bgcolor="#eeeeee">
@@ -82,32 +82,32 @@ rowBgColor = "#cccccc"
 </body>
 </html>
 ]]>
-    </screen>
-   </example>
-			<para>
-			Le variabili dei file di configurazione non possono essere usate
-			fino a dopo che sono state caricate dal file che le contiene.
-			Questa procedura viene spiegata più avanti in questo documento, 
-			in <command>config_load</command>.
-			</para>
+        </screen>
+    </example>
+    <para>
+        Le variabili dei file di configurazione non possono essere usate
+        fino a dopo che sono state caricate dal file che le contiene.
+        Questa procedura viene spiegata più avanti in questo documento,
+        in<command>config_load</command>.
+    </para>
 </sect1>
-<!-- Keep this comment at the end of the file
-Local variables:
-mode: sgml
-sgml-omittag:t
-sgml-shorttag:t
-sgml-minimize-attributes:nil
-sgml-always-quote-attributes:t
-sgml-indent-step:1
-sgml-indent-data:t
-indent-tabs-mode:nil
-sgml-parent-document:nil
-sgml-default-dtd-file:"../../../../manual.ced"
-sgml-exposed-tags:nil
-sgml-local-catalogs:nil
-sgml-local-ecat-files:nil
-End:
-vim600: syn=xml fen fdm=syntax fdl=2 si
-vim: et tw=78 syn=sgml
-vi: ts=1 sw=1
--->
+        <!-- Keep this comment at the end of the file
+        Local variables:
+        mode: sgml
+        sgml-omittag:t
+        sgml-shorttag:t
+        sgml-minimize-attributes:nil
+        sgml-always-quote-attributes:t
+        sgml-indent-step:1
+        sgml-indent-data:t
+        indent-tabs-mode:nil
+        sgml-parent-document:nil
+        sgml-default-dtd-file:"../../../../manual.ced"
+        sgml-exposed-tags:nil
+        sgml-local-catalogs:nil
+        sgml-local-ecat-files:nil
+        End:
+        vim600: syn=xml fen fdm=syntax fdl=2 si
+        vim: et tw=78 syn=sgml
+        vi: ts=1 sw=1
+        -->

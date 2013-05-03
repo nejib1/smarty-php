@@ -5,16 +5,16 @@
  *
  * Compiles code of a compiler plugin
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  * @author Uwe Tews
  */
 
 /**
  * Smarty Internal Plugin Compile Compiler Plugin Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Private_Compiler_Plugin extends Smarty_Internal_CompileBase
 {
@@ -99,7 +99,7 @@ class Smarty_Internal_Compile_Private_Compiler_Plugin extends Smarty_Internal_Co
         // check if it is a compiler plugin fpr blocks
         $closetag = $tag . 'close';
         if (isset($compiler->template->registered_plugins[Smarty::PLUGIN_COMPILER][$closetag]) || isset($compiler->default_handler_plugins[Smarty::PLUGIN_COMPILER][$closetag])
-            || $compiler->template->loadPlugin('smarty_compiler_' . $closetag)
+            || $compiler->template->_loadPlugin('smarty_compiler_' . $closetag)
         ) {
             $this->openTag($compiler, $tag, $compiler->nocache);
             // maybe nocache because of nocache variables
@@ -119,8 +119,8 @@ class Smarty_Internal_Compile_Private_Compiler_Plugin extends Smarty_Internal_Co
 /**
  * Smarty Internal Plugin Compile Compiler Plugin Close Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Private_Compiler_PluginClose extends Smarty_Internal_CompileBase
 {

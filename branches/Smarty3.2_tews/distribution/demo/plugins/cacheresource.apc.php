@@ -9,12 +9,13 @@
  * @package CacheResource-examples
  * @author Uwe Tews
  */
-class Smarty_CacheResource_Apc extends Smarty_CacheResource_KeyValueStore {
+class Smarty_CacheResource_Apc extends Smarty_CacheResource_KeyValueStore
+{
 
     public function __construct()
     {
         // test if APC is present
-        if(!function_exists('apc_cache_info')) {
+        if (!function_exists('apc_cache_info')) {
             throw new Exception('APC Template Caching Error: APC is not installed');
         }
     }
@@ -43,7 +44,7 @@ class Smarty_CacheResource_Apc extends Smarty_CacheResource_KeyValueStore {
      * @param int $expire expiration time
      * @return boolean true on success, false on failure
      */
-    protected function write(array $keys, $expire=null)
+    protected function write(array $keys, $expire = null)
     {
         foreach ($keys as $k => $v) {
             apc_store($k, $v, $expire);

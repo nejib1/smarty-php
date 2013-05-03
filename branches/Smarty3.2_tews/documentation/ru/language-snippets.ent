@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Revision: 2761 $ -->
-<!-- EN-Revision: 2723 Maintainer: freespace Status: ready -->
+        <!-- $Revision: 2761 $ -->
+        <!-- EN-Revision: 2723 Maintainer: freespace Status: ready -->
 
-<!ENTITY note.parameter.merge '<note>
+        <!ENTITY note.parameter.merge '<note>
  <title>Техническое замечание</title>
  <para>
   Пераметр <parameter>merge</parameter> учитывает ключи массива,
@@ -14,7 +14,7 @@
  </para>
 </note>'>
 
-<!ENTITY note.parameter.function '<note>
+        <!ENTITY note.parameter.function '<note>
  <title>Техническое замечание</title>
  <para>
   Если значение параметра <parameter>function</parameter> указано в виде
@@ -25,7 +25,7 @@
  </para>
 </note>'>
 
-<!ENTITY parameter.compileid '<para>
+        <!ENTITY parameter.compileid '<para>
  В качестве необязательного третьего аргумента вы можете передать
  <parameter>$compile_id</parameter>.
  Это полезно в случае, если вы хотите
@@ -45,7 +45,7 @@
  вместо того, чтобы каждый раз передавать его при вызове этой функции.
 </para>'>
 
-<!ENTITY api.register.snippet '<para>
+        <!ENTITY api.register.snippet '<para>
  Callback-функция PHP может быть:
  <itemizedlist>
   <listitem>

@@ -5,16 +5,16 @@
  *
  * Compiles the {assign} tag
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  * @author Uwe Tews
  */
 
 /**
  * Smarty Internal Plugin Compile Assign Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Assign extends Smarty_Internal_CompileBase
 {
@@ -34,6 +34,11 @@ class Smarty_Internal_Compile_Assign extends Smarty_Internal_CompileBase
         $this->shorttag_order = array('var', 'value');
         $this->optional_attributes = array('scope');
         $this->option_flags = array('nocache', 'cachevalue');
+
+        // set flag that variable container must be cloned
+        $compiler->must_clone_vars = true;
+
+
         $_nocache = 'false';
         $_scope = Smarty::SCOPE_LOCAL;
         // check and get attributes
@@ -99,7 +104,7 @@ class Smarty_Internal_Compile_Assign extends Smarty_Internal_CompileBase
                 $compiler->trigger_template_error('cannot assign to array with "cachevalue" option', $compiler->lex->taglineno);
             } else {
                 if (!$compiler->tag_nocache && !$compiler->nocache) {
-                    $this->php("echo '/*%%SmartyNocache%%*/\$_smarty_tpl->tpl_vars->{$var} = new Smarty_Variable (' . \$_smarty_tpl->_export_cache_value({$_attr['value']}) . ');/*/%%SmartyNocache%%*/';")->newline();
+                    $this->php("echo '/*%%SmartyNocache%%*/\$_smarty_tpl->tpl_vars->{$var} = new Smarty_Variable (' . \$this->_exportCacheValue({$_attr['value']}) . ');/*/%%SmartyNocache%%*/';")->newline();
                 } else {
                     $compiler->trigger_template_error('cannot assign with "cachevalue" option inside nocache section', $compiler->lex->taglineno);
                 }

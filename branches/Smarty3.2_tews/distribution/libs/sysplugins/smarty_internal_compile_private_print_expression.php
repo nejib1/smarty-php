@@ -5,16 +5,16 @@
  *
  * Compiles any tag which will output an expression or variable
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  * @author Uwe Tews
  */
 
 /**
  * Smarty Internal Plugin Compile Print Expression Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Private_Print_Expression extends Smarty_Internal_CompileBase
 {
@@ -143,7 +143,7 @@ class Smarty_Internal_Compile_Private_Print_Expression extends Smarty_Internal_C
     private function compile_output_filter($compiler, $name, $output)
     {
         $plugin_name = "smarty_variablefilter_{$name}";
-        $path = $compiler->template->loadPlugin($plugin_name, false);
+        $path = $compiler->template->_loadPlugin($plugin_name, false);
         if ($path) {
             if ($compiler->template->caching) {
                 $compiler->required_plugins['nocache'][$name][Smarty::FILTER_VARIABLE]['file'] = $path;

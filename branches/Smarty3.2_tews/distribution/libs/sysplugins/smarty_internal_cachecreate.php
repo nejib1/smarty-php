@@ -3,15 +3,15 @@
 /**
  * Smarty Internal Plugin
  *
- * @package Smarty
- * @subpackage Cacher
+ *
+ * @package Cacher
  */
 
 /**
  * Cache Support Routines To Creacte Cache
  *
- * @package Smarty
- * @subpackage Cacher
+ *
+ * @package Cacher
  * @author Uwe Tews
  */
 class Smarty_Internal_CacheCreate
@@ -71,7 +71,7 @@ class Smarty_Internal_CacheCreate
      * @param Smarty $_template     current template
      * @return Smarty_Template_Cached
      */
-    static function findCachedObject($_template)
+    static function _getCachedObject($_template)
     {
         $_tpl = $_template;
         while ($_tpl->usage == Smarty::IS_TEMPLATE) {
@@ -92,7 +92,7 @@ class Smarty_Internal_CacheCreate
      * @throws Exception
      * @return
      */
-    public function createCacheFile($_template, $output, $no_output_filter)
+    public function _createCacheFile($_template, $output, $no_output_filter)
     {
         if ($_template->debugging) {
             Smarty_Internal_Debug::start_cache($_template);
@@ -120,7 +120,7 @@ class Smarty_Internal_CacheCreate
         }
         // write cache file content
         if (!$_template->source->recompiled && ($_template->caching == Smarty::CACHING_LIFETIME_CURRENT || $_template->caching == Smarty::CACHING_LIFETIME_SAVED)) {
-            $this->code_obj->buffer = $this->createSmartyContentClass($_template);
+            $this->code_obj->buffer = $this->_createSmartyContentClass($_template);
             try {
                 $level = ob_get_level();
                 $_template->compile_check = false; // no need to check again
@@ -149,7 +149,7 @@ class Smarty_Internal_CacheCreate
      * @param Smarty $_template   template object
      * @return string
      */
-    public function createSmartyContentClass(Smarty $_template)
+    public function _createSmartyContentClass(Smarty $_template)
     {
         $content = $this->code_obj->buffer;
         $this->code_obj->buffer = '';
@@ -200,13 +200,13 @@ class Smarty_Internal_CacheCreate
      *
      * @param Smarty $_template     current template
      */
-    public function mergeFromCompiled($_template)
+    public function _mergeFromCompiled($_template)
     {
         $this->required_plugins = array_merge($this->required_plugins, $_template->compiled->smarty_content->required_plugins_nocache);
         $this->file_dependency = array_merge($this->file_dependency, $_template->compiled->smarty_content->file_dependency);
         if (!empty($_template->compiled->smarty_content->called_nocache_template_functions)) {
             foreach ($_template->compiled->smarty_content->called_nocache_template_functions as $name => $dummy) {
-                self::mergeNocacheTemplateFunction($_template, $name);
+                self::_mergeNocacheTemplateFunction($_template, $name);
             }
         }
 
@@ -218,7 +218,7 @@ class Smarty_Internal_CacheCreate
      * @param Smarty $template     current template
      * @param string $name         name of template function
      */
-    public function mergeNocacheTemplateFunction($template, $name)
+    public function _mergeNocacheTemplateFunction($template, $name)
     {
         if (isset($this->template_functions[$name])) {
             return;
@@ -246,7 +246,7 @@ class Smarty_Internal_CacheCreate
             $source = file($file);
             for ($i = $start; $i < $end; $i++) {
                 if (preg_match("!/\*%%SmartyNocache%%\*/!", $source[$i])) {
-                    $this->code_obj->formatPHP(stripcslashes(preg_replace("!echo '/\*%%SmartyNocache%%\*/|/\*/%%SmartyNocache%%\*/';!", '', $source[$i])));
+                    $this->code_obj->formatPHP(stripcslashes(preg_replace("!echo\s(\"|')/\*%%SmartyNocache%%\*/|/\*/%%SmartyNocache%%\*/(\"|');!", '', $source[$i])));
                 } else {
                     $this->code_obj->buffer .= $source[$i];
                 }
@@ -255,7 +255,7 @@ class Smarty_Internal_CacheCreate
             $this->code_obj = null;
             if (isset($ptr->compiled->smarty_content->template_functions[$name]['called_functions'])) {
                 foreach ($ptr->compiled->smarty_content->template_functions[$name]['called_functions'] as $name => $dummy) {
-                    $this->mergeNocacheTemplateFunction($template, $name);
+                    $this->_mergeNocacheTemplateFunction($template, $name);
                 }
             }
         }
@@ -269,7 +269,45 @@ class Smarty_Internal_CacheCreate
      * @param object $scope_tpl     blocks must be processed in this variable scope
      * @return string
      */
+    // TODO has to be finished
     public function _createNocacheBlockChild($current_tpl, $name, $scope_tpl)
+    {
+        while ($current_tpl !== null && $current_tpl->usage == Smarty::IS_TEMPLATE) {
+            if (isset($current_tpl->compiled->smarty_content->inheritance_blocks[$name]['valid'])) {
+                if (isset($current_tpl->compiled->smarty_content->inheritance_blocks[$name]['hide'])) {
+                    break;
+                }
+                $block_tpl = $current_tpl;
+                if (isset($current_tpl->compiled->smarty_content->inheritance_blocks[$name]['inc_child'])) {
+                    $parent_tpl = $current_tpl;
+                }
+                if (isset($current_tpl->compiled->smarty_content->inheritance_blocks[$name]['overwrite'])) {
+                    $parent_tpl = null;
+                }
+                // back link pointers to inheritance parent template
+                $template_stack[] = $current_tpl;
+            }
+            if ($status == 0 && ($current_tpl->is_inheritance_child || $current_tpl->compiled->smarty_content->is_inheritance_child)) {
+                $status = 1;
+            }
+            $current_tpl = $current_tpl->parent;
+            if ($current_tpl === null || $current_tpl->usage != Smarty::IS_TEMPLATE || ($status == 1 && !$current_tpl->is_inheritance_child && !$current_tpl->compiled->smarty_content->is_inheritance_child)) {
+                // quit at first child of current inheritance chain
+                break;
+            }
+        }
+    }
+
+
+    /**
+     * Creates an inheritance block in cache file
+     *
+     * @param object $current_tpl   calling template
+     * @param string $name          name of block
+     * @param object $scope_tpl     blocks must be processed in this variable scope
+     * @return string
+     */
+    public function _createNocacheInheritanceBlock($current_tpl, $name, $scope_tpl)
     {
         $output = '';
         $status = 0;
@@ -282,7 +320,7 @@ class Smarty_Internal_CacheCreate
                     break;
                 }
                 $child_tpl = $current_tpl;
-                if (isset($current_tpl->compiled->smarty_content->inheritance_blocks[$name]['child'])) {
+                if (isset($current_tpl->compiled->smarty_content->inheritance_blocks[$name]['inc_child'])) {
                     $parent_tpl = $current_tpl;
                 }
                 if (isset($current_tpl->compiled->smarty_content->inheritance_blocks[$name]['overwrite'])) {
@@ -310,19 +348,19 @@ class Smarty_Internal_CacheCreate
             if (isset($smarty_content->inheritance_blocks[$name]['subblock'])) {
                 foreach ($smarty_content->inheritance_blocks[$name]['subblock'] as $subblock) {
                     $function = $smarty_content->inheritance_blocks[$subblock]['function'];
-                    $this->inheritance_blocks_code[$function] = $this->_getBlockMethodSource($smarty_content, $function);
+                    $this->inheritance_blocks_code[$function] = $this->_getInheritanceBlockMethodSource($smarty_content, $function);
                     $this->inheritance_blocks[$subblock]['function'] = $function;
                 }
             }
 
             $function = $smarty_content->inheritance_blocks[$name]['function'];
-            $this->inheritance_blocks_code[$function] = $this->_getBlockMethodSource($smarty_content, $function);
+            $this->inheritance_blocks_code[$function] = $this->_getInheritanceBlockMethodSource($smarty_content, $function);
             $this->inheritance_blocks[$name]['function'] = $function;
-            $output = "/*%%SmartyNocache%%*/echo \$this->_getBlock(\$_smarty_tpl, '{$name}', \$_smarty_tpl, 2);/*/%%SmartyNocache%%*/";
+            $output = "/*%%SmartyNocache%%*/echo \$this->_getInheritanceBlock(\$_smarty_tpl, '{$name}', \$_smarty_tpl, 2);/*/%%SmartyNocache%%*/";
             if (isset($child_tpl->compiled->smarty_content->inheritance_blocks[$name]['prepend'])) {
-                $output .= $child_tpl->compiled->smarty_content->_fetch_block_parent_template($name, $template_stack, $scope_tpl);
+                $output .= $child_tpl->compiled->smarty_content->_getInheritanceParentBlock($name, $template_stack, $scope_tpl);
             } elseif (isset($child_tpl->compiled->smarty_content->inheritance_blocks[$name]['append'])) {
-                $output = $child_tpl->compiled->smarty_content->_fetch_block_parent_template($name, $template_stack, $scope_tpl) . $output;
+                $output = $child_tpl->compiled->smarty_content->_getInheritanceParentBlock($name, $template_stack, $scope_tpl) . $output;
             }
         }
         return $output;
@@ -335,7 +373,7 @@ class Smarty_Internal_CacheCreate
      * @param string $function          method name of block
      * @return string                  source code
      */
-    public function _getBlockMethodSource($smarty_content, $function)
+    public function _getInheritanceBlockMethodSource($smarty_content, $function)
     {
         $code_obj = new Smarty_Internal_Code(3);
         $obj = new ReflectionObject($smarty_content);
@@ -346,7 +384,7 @@ class Smarty_Internal_CacheCreate
         $source = file($file);
         for ($i = $start; $i < $end; $i++) {
             if (preg_match("!/\*%%SmartyNocache%%\*/!", $source[$i])) {
-                $code_obj->formatPHP(stripcslashes(preg_replace("!echo '/\*%%SmartyNocache%%\*/|/\*/%%SmartyNocache%%\*/';!", '', $source[$i])));
+                $code_obj->formatPHP(stripcslashes(preg_replace("!echo\s(\"|')/\*%%SmartyNocache%%\*/|/\*/%%SmartyNocache%%\*/(\"|');!", '', $source[$i])));
             } else {
                 $code_obj->buffer .= $source[$i];
             }

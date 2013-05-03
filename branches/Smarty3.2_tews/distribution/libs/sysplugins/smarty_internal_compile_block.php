@@ -5,47 +5,20 @@
  *
  * Compiles the {block}{/block} tags
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  * @author Uwe Tews
  */
 
 /**
  * Smarty Internal Plugin Compile Block Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Block extends Smarty_Internal_CompileBase
 {
 
-    /**
-     * block tag nesting level
-     *
-     * @var int
-     */
-    static public $block_nesting_level = 0;
-
-    /**
-     * current block name
-     *
-     * @var string
-     */
-    static public $current_block_name = '';
-
-    /**
-     *  route block name
-     *
-     * @var int
-     */
-    static public $root_block_name = '';
-
-    /**
-     * called {$smarty.block.child}
-     *
-     * @var bool
-     */
-    static public $called_child = false;
 
     /**
      * Attribute definition: Overwrites base class.
@@ -71,6 +44,7 @@ class Smarty_Internal_Compile_Block extends Smarty_Internal_CompileBase
      */
     public $option_flags = array('nocache', 'hide', 'append', 'prepend', 'overwrite');
 
+
     /**
      * Compiles code for the {block} tag
      *
@@ -85,22 +59,20 @@ class Smarty_Internal_Compile_Block extends Smarty_Internal_CompileBase
 
         $name = trim($_attr['name'], "'\"");
 
-        $this->openTag($compiler, 'block', array($_attr, $compiler->buffer, $compiler->indentation, $compiler->nocache, self::$current_block_name, self::$called_child, $compiler->template->has_nocache_code, $compiler->lex->taglineno));
-        if ($_attr['nocache'] == true) {
+        $this->openTag($compiler, 'block', array($_attr, $compiler->template_code, $compiler->nocache, $name, $compiler->template->has_nocache_code, $compiler->lex->taglineno));
+        if ($_attr['nocache'] == true && $compiler->template->caching) {
             $compiler->nocache = true;
         }
-        $compiler->buffer = '';
-        $compiler->indentation = 3;
+        $compiler->template_code = new Smarty_Internal_Code(3);
         // maybe nocache because of nocache variables
         $compiler->nocache = $compiler->nocache | $compiler->tag_nocache;
-        // set current block name
-        self::$current_block_name = $name;
-        // set root block name
-        if (self::$block_nesting_level == 0) {
-            self::$root_block_name = $name;
-        }
+
         //nesting level
-        self::$block_nesting_level++;
+        $compiler->block_nesting_level++;
+        $compiler->block_name_index++;
+        $int_name = $name . '_' . $compiler->block_name_index;
+        array_unshift($compiler->block_nesting_info, array('name' => $name, 'int_name' => $int_name, 'function' => '__Interitance_Block_' . $int_name . str_replace('.', '_', uniqid('', true)), 'calls_child' => false, 'calls_parent' => false, 'subblocks' => array()));
+
 
         $compiler->template->has_nocache_code = false;
         $compiler->has_code = false;
@@ -113,8 +85,8 @@ class Smarty_Internal_Compile_Block extends Smarty_Internal_CompileBase
 /**
  * Smarty Internal Plugin Compile BlockClose Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Blockclose extends Smarty_Internal_CompileBase
 {
@@ -133,9 +105,7 @@ class Smarty_Internal_Compile_Blockclose extends Smarty_Internal_CompileBase
         $_attr = $this->getAttributes($compiler, $args);
         // set inheritance flags
         $compiler->isInheritance = true;
-
-        //nesting level
-        Smarty_Internal_Compile_Block::$block_nesting_level--;
+        $block_attr = array();
 
         $saved_data = $this->closeTag($compiler, array('block'));
         $name = trim($saved_data[0]['name'], "'\"");
@@ -143,7 +113,7 @@ class Smarty_Internal_Compile_Blockclose extends Smarty_Internal_CompileBase
         if ($compiler->nocache) {
             $compiler->tag_nocache = $compiler->nocache && $compiler->template->caching;
         }
-        $compiler->nocache = $saved_data[3];
+        $compiler->nocache = $saved_data[2];
 
         // get resource info for traceback code
         if ($compiler->template->source->type == 'eval' || $compiler->template->source->type == 'string') {
@@ -157,76 +127,58 @@ class Smarty_Internal_Compile_Blockclose extends Smarty_Internal_CompileBase
                 $resource = substr($resource, $start + 1, $end - $start - 1);
             }
         }
-        $function_name = "block_{$name}_" . str_replace('.', '_', uniqid('', true));
-        $this->buffer = '';
-        $this->indentation = 2;
-        $this->no_indent = false;
+        $compiler->block_nesting_info[0]['hide'] = $saved_data[0]['hide'];
+        $compiler->block_nesting_info[0]['prepend'] = $saved_data[0]['prepend'];
+        $compiler->block_nesting_info[0]['append'] = $saved_data[0]['append'];
+        $compiler->block_nesting_info[0]['overwrite'] = $saved_data[0]['overwrite'];
 
-        $this->php("/* Line {$saved_data[7]} */")->newline();
-        $this->php("function {$function_name}(\$_smarty_tpl, \$template_stack, \$scope_tpl) {")->newline()->indent();
-        $this->php("ob_start();")->newline();
-        $this->php("array_unshift(\$_smarty_tpl->trace_call_stack, array('{$resource}', {$saved_data[7]}, '{$compiler->template->source->type}'));")->newline();
+        $block_code = new Smarty_Internal_Code(2);
+        $block_code->php("public function " . $compiler->block_nesting_info[0]['function'] . " (\$_smarty_tpl, \$current_tpl) {")->newline()->indent();
+        $block_code->php("ob_start();")->newline();
+        $block_code->php("/* Line {$saved_data[5]} */")->newline();
+        $block_code->php("array_unshift(\$_smarty_tpl->trace_call_stack, array('{$resource}', {$saved_data[5]}, '{$compiler->template->source->type}'));")->newline();
         if ($compiler->template->caching) {
-            $this->php("echo '/*%%SmartyNocache%%*/array_unshift(\$_smarty_tpl->trace_call_stack, array(\'{$resource}\', {$saved_data[7]}, \'{$compiler->template->source->type}\'));/*/%%SmartyNocache%%*/';")->newline();
+            $block_code->php("echo '/*%%SmartyNocache%%*/array_unshift(\$_smarty_tpl->trace_call_stack, array(\'{$resource}\', {$saved_data[5]}, \'{$compiler->template->source->type}\'));/*/%%SmartyNocache%%*/';")->newline();
         }
-        $compiler->inheritance_blocks_code[$name] = $this->buffer;
-
-        $this->buffer = '';
+        $block_code->buffer .= $compiler->template_code->buffer;
         if ($compiler->template->caching) {
-            $this->php("echo '/*%%SmartyNocache%%*/array_shift(\$_smarty_tpl->trace_call_stack);/*/%%SmartyNocache%%*/';")->newline();
+            $block_code->php("echo '/*%%SmartyNocache%%*/array_shift(\$_smarty_tpl->trace_call_stack);/*/%%SmartyNocache%%*/';")->newline();
         }
-        $this->php("array_shift(\$_smarty_tpl->trace_call_stack);")->newline();
-        $this->php("return ob_get_clean();")->newline();
-        $this->outdent()->php("}")->newline();
+        $block_code->php("array_shift(\$_smarty_tpl->trace_call_stack);")->newline();
+        $block_code->php("return ob_get_clean();")->newline();
 
-        $compiler->inheritance_blocks_code[$name] .= $compiler->buffer . $this->buffer;
+        $block_code->outdent()->php('}')->newline(3);
 
-        $compiler->buffer = $saved_data[1];
-        $compiler->indentation = $saved_data[2];
+
+        $compiler->inheritance_blocks_code[] .= $block_code->buffer;
+
+        $compiler->template_code = $saved_data[1];
         $this->iniTagCode($compiler);
 
-        $compiler->inheritance_blocks[$name]['function'] = $function_name;
-        if (Smarty_Internal_Compile_Block::$called_child) {
-            $compiler->inheritance_blocks[$name]['child'] = true;
-        }
-        if ($saved_data[0]['hide'] === true) {
-            $compiler->inheritance_blocks[$name]['hide'] = true;
-        }
-        if ($saved_data[0]['prepend'] === true) {
-            $compiler->inheritance_blocks[$name]['prepend'] = true;
-        }
-        if ($saved_data[0]['append'] === true) {
-            $compiler->inheritance_blocks[$name]['append'] = true;
-        }
-        if ($saved_data[0]['overwrite'] === true) {
-            $compiler->inheritance_blocks[$name]['overwrite'] = true;
-        }
-        if ($compiler->template->caching && $compiler->tag_nocache) {
-            $compiler->inheritance_blocks[$name]['nocache'] = true;
-        }
-        if (Smarty_Internal_Compile_Block::$block_nesting_level > 0) {
-            $compiler->inheritance_blocks[Smarty_Internal_Compile_Block::$root_block_name]['subblock'][] = $name;
-        }
-
-        $this->php("\$this->inheritance_blocks['$name']['valid'] = true;")->newline();
-        if ($compiler->tag_nocache) {
-            $compiler->postfix_code[] = "\$this->inheritance_blocks['$name']['valid'] = true;\n";
-        }
-        if (!$compiler->isInheritanceChild) {
-            if (!$compiler->tag_nocache) {
-                $this->php("echo \$this->_getBlock (\$_smarty_tpl, '{$name}', \$_smarty_tpl, 0);")->newline();
+        $int_name = $compiler->block_nesting_info[0]['int_name'];
+        if ($compiler->isInheritanceChild && $compiler->block_nesting_level = 1) {
+            if ($compiler->tag_nocache) {
+                $compiler->postfix_code[] = "\$this->inheritance_blocks['$int_name']['valid'] = true;\n";
             } else {
-                $compiler->postfix_code[] = "echo \$this->_getBlock (\$_smarty_tpl, '{$name}', \$_smarty_tpl, 1);\n";
+                $this->php("\$this->inheritance_blocks['$int_name']['valid'] = true;")->newline();
+            }
+        } else {
+            if ($compiler->tag_nocache) {
+                $compiler->postfix_code[] = "\$this->inheritance_blocks['$int_name']['valid'] = true;\n";
+                $compiler->postfix_code[] = "echo \$this->_getInheritanceBlock ('{$int_name}', \$_smarty_tpl, 1);\n";
+            } else {
+                $this->php("\$this->inheritance_blocks['$int_name']['valid'] = true;")->newline();
+                $this->php("echo \$this->_getInheritanceBlock ('{$int_name}', \$_smarty_tpl, 0);")->newline();
             }
         }
-        if (Smarty_Internal_Compile_Block::$block_nesting_level > 0 && $compiler->isInheritanceChild) {
-            $this->php("echo \$this->_getBlock (\$_smarty_tpl, '{$name}', \$_smarty_tpl, 0);")->newline();
+        if ($compiler->block_nesting_level > 1) {
+            $compiler->block_nesting_info[1]['subblock'][] = $int_name;
         }
-        // restore current block name
-        Smarty_Internal_Compile_Block::$current_block_name = $saved_data[4];
-        Smarty_Internal_Compile_Block::$called_child = $saved_data[5];
+        $compiler->inheritance_blocks[$int_name] = $compiler->block_nesting_info[0];
+        array_shift($compiler->block_nesting_info);
+        $compiler->block_nesting_level--;
 
-        $compiler->template->has_nocache_code = $compiler->template->has_nocache_code | $saved_data[6];
+        $compiler->template->has_nocache_code = $compiler->template->has_nocache_code | $saved_data[4];
 
         $compiler->has_code = true;
 
@@ -238,8 +190,8 @@ class Smarty_Internal_Compile_Blockclose extends Smarty_Internal_CompileBase
 /**
  * Smarty Internal Plugin Compile Block Parent Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Private_Block_Parent extends Smarty_Internal_CompileBase
 {
@@ -256,11 +208,12 @@ class Smarty_Internal_Compile_Private_Block_Parent extends Smarty_Internal_Compi
         $compiler->has_code = true;
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);
-        $name = Smarty_Internal_Compile_Block::$current_block_name;
+
+        $compiler->block_nesting_info[0]['calls_parent'] = true;
 
         $this->iniTagCode($compiler);
 
-        $this->raw("\$this->_fetch_block_parent_template ('{$name}', \$template_stack, \$scope_tpl)");
+        $this->raw("\$this->_getInheritanceParentBlock ('{$compiler->block_nesting_info[0]['int_name']}', \$_smarty_tpl)");
 
         return $this->returnTagCode($compiler);
     }
@@ -270,8 +223,8 @@ class Smarty_Internal_Compile_Private_Block_Parent extends Smarty_Internal_Compi
 /**
  * Smarty Internal Plugin Compile Block Parent Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Private_Block_Child extends Smarty_Internal_CompileBase
 {
@@ -288,12 +241,9 @@ class Smarty_Internal_Compile_Private_Block_Child extends Smarty_Internal_Compil
         $compiler->has_code = true;
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);
-        $name = Smarty_Internal_Compile_Block::$current_block_name;
-        Smarty_Internal_Compile_Block::$called_child = true;
-
         $this->iniTagCode($compiler);
 
-        $this->raw("\$this->_fetchBlockChildTemplate (\$_smarty_tpl->parent, '{$name}', \$scope_tpl)");
+        $this->raw("\$this->_getInheritanceChildBlock ('{$compiler->block_nesting_info[0]['int_name']}', \$_smarty_tpl, 0, \$current_tpl)");
 
         return $this->returnTagCode($compiler);
     }

@@ -5,16 +5,16 @@
  *
  * Compiles code for the execution of function plugin
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  * @author Uwe Tews
  */
 
 /**
  * Smarty Internal Plugin Compile Function Plugin Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Private_Function_Plugin extends Smarty_Internal_CompileBase
 {

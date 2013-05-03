@@ -3,8 +3,8 @@
 /**
  * Smarty Resource Plugin
  *
- * @package Smarty
- * @subpackage TemplateResources
+ *
+ * @package TemplateResources
  * @author Rodney Rehm
  */
 
@@ -13,8 +13,8 @@
  *
  * Base implementation for resource plugins that don't compile cache
  *
- * @package Smarty
- * @subpackage TemplateResources
+ *
+ * @package TemplateResources
  */
 abstract class Smarty_Resource_Recompiled extends Smarty_Resource
 {

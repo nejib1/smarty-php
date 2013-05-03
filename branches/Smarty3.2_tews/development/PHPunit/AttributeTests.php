@@ -31,7 +31,7 @@ class AttributeTests extends PHPUnit_Framework_TestCase
         try {
             $this->smarty->fetch('eval:{assign value=1}');
         } catch (Exception $e) {
-            $this->assertContains(htmlspecialchars('missing "var" attribute'), $e->getMessage());
+            $this->assertContains('missing "var" attribute', $e->getMessage());
             return;
         }
         $this->fail('Exception for required attribute "var" has not been raised.');
@@ -45,7 +45,7 @@ class AttributeTests extends PHPUnit_Framework_TestCase
         try {
             $this->smarty->fetch('eval:{assign var=foo value=1 bar=2}');
         } catch (Exception $e) {
-            $this->assertContains(htmlspecialchars('unexpected "bar" attribute'), $e->getMessage());
+            $this->assertContains('unexpected "bar" attribute', $e->getMessage());
             return;
         }
         $this->fail('Exception for unexpected attribute "bar" has not been raised.');

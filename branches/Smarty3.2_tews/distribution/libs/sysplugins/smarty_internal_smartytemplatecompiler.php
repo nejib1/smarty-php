@@ -5,8 +5,8 @@
  *
  * This file contains the basic classes and methods for compiling Smarty templates with lexer/parser
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  * @author Uwe Tews
  */
 /**
@@ -16,8 +16,8 @@
 /**
  * Class SmartyTemplateCompiler
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_SmartyTemplateCompiler extends Smarty_Internal_TemplateCompilerBase
 {
@@ -73,6 +73,7 @@ class Smarty_Internal_SmartyTemplateCompiler extends Smarty_Internal_TemplateCom
      */
     public function __construct($lexer_class, $parser_class, $template)
     {
+        parent::__construct();
         $this->template = $template;
         // get required plugins
         $this->lexer_class = $lexer_class;
@@ -85,20 +86,16 @@ class Smarty_Internal_SmartyTemplateCompiler extends Smarty_Internal_TemplateCom
      * @param  mixed $_content template source
      * @return bool true if compiling succeeded, false if it failed
      */
-    protected function doCompile($_content)
+    protected function doCompile($_content = null)
     {
         /* here is where the compiling takes place. Smarty
           tags in the templates are replaces with PHP code,
           then written to compiled files. */
-        // make sure that we don't run into backtrack limit errors
-        ini_set('pcre.backtrack_limit', -1);
-        // init the lexer/parser to compile the template
-        $this->lex = new $this->lexer_class($_content, $this);
-        $this->parser = new $this->parser_class($this->lex, $this);
+
         if ($this->template->_parserdebug)
             $this->parser->PrintTrace();
         // get tokens from lexer and parse them
-        while ($this->lex->yylex() && !$this->abort_and_recompile) {
+        while ($this->lex->yylex()) {
             if ($this->template->_parserdebug) {
                 echo "<pre>Line {$this->lex->line} Parsing  {$this->parser->yyTokenName[$this->lex->token]} Token " .
                     htmlentities($this->lex->value) . "</pre>";
@@ -106,10 +103,6 @@ class Smarty_Internal_SmartyTemplateCompiler extends Smarty_Internal_TemplateCom
             $this->parser->doParse($this->lex->token, $this->lex->value);
         }
 
-        if ($this->abort_and_recompile) {
-            // exit here on abort
-            return false;
-        }
         // finish parsing process
         $this->parser->doParse(0, 0);
         // check for unclosed tags

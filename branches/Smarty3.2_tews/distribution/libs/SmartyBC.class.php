@@ -29,6 +29,7 @@
  * @author Uwe Tews
  * @author Rodney Rehm
  * @package Smarty
+ * @subpackage SmartyBC
  */
 /**
  * @ignore
@@ -39,6 +40,7 @@ require(dirname(__FILE__) . '/SmartyBC31.class.php');
  * Smarty Backward Compatibility Wrapper Class for Smarty 2
  *
  * @package Smarty
+ * @subpackage SmartyBC
  */
 class SmartyBC extends SmartyBC31
 {

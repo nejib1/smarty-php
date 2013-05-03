@@ -3,15 +3,15 @@
 /**
  * Smarty Internal Plugin
  *
- * @package Smarty
- * @subpackage Cacher
+ *
+ * @package Cacher
  */
 
 /**
  * Cache Handler API
  *
- * @package Smarty
- * @subpackage Cacher
+ *
+ * @package Cacher
  * @author Rodney Rehm
  */
 abstract class Smarty_CacheResource
@@ -166,7 +166,7 @@ abstract class Smarty_CacheResource
         }
         // try plugins dir
         $cache_resource_class = 'Smarty_CacheResource_' . ucfirst($type);
-        if ($smarty->loadPlugin($cache_resource_class)) {
+        if ($smarty->_loadPlugin($cache_resource_class)) {
             return self::$resources[$type] = new $cache_resource_class();
         }
         // give up
@@ -187,6 +187,27 @@ abstract class Smarty_CacheResource
         }
     }
 
+
+    /**
+     * Empty cache for a specific template
+     *
+     * @internal
+     * @param string $template_name template name
+     * @param string $cache_id      cache id
+     * @param string $compile_id    compile id
+     * @param integer $exp_time      expiration time
+     * @param string $type          resource type
+     * @param Smarty $smarty        Smarty object
+     * @return integer number of cache files deleted
+     */
+    static function clearCache($template_name, $cache_id, $compile_id, $exp_time, $type, $smarty)
+    {
+        // load cache resource and call clear
+        $_cache_resource = Smarty_CacheResource::load($smarty, $type);
+        Smarty_CacheResource::invalidLoadedCache($smarty);
+        return $_cache_resource->clear($smarty, $template_name, $cache_id, $compile_id, $exp_time);
+    }
+
 }
 
 /**
@@ -194,8 +215,8 @@ abstract class Smarty_CacheResource
  *
  * Cache Data Container for Template Files
  *
- * @package Smarty
- * @subpackage Cacher
+ *
+ * @package Cacher
  * @author Rodney Rehm
  */
 class Smarty_Template_Cached
@@ -366,8 +387,8 @@ class Smarty_Template_Cached
             }
             // write to cache when nessecary
             if (!$_template->source->recompiled) {
-                $output = $this->newcache->createCacheFile($_template, $output, $no_output_filter);
-            }            
+                $output = $this->newcache->_createCacheFile($_template, $output, $no_output_filter);
+            }
         } else {
             if ($_template->debugging) {
                 Smarty_Internal_Debug::start_cache($_template);
@@ -400,12 +421,12 @@ class Smarty_Template_Cached
     }
 
     /**
-    * Write this cache object to handler
-    *
-    * @param Smarty_Internal_Template $_template template object
-    * @param string $content content to cache
-    * @return boolean success
-    */
+     * Write this cache object to handler
+     *
+     * @param Smarty_Internal_Template $_template template object
+     * @param string $content content to cache
+     * @return boolean success
+     */
     public function write(Smarty $_template, $content)
     {
         if (!$_template->source->recompiled) {
@@ -421,9 +442,9 @@ class Smarty_Template_Cached
         }
         return false;
     }
- 
 
-        /**
+
+    /**
      * <<magic>> Generic getter.
      * Get Smarty_Template_Cache property
      *
@@ -433,10 +454,10 @@ class Smarty_Template_Cached
      */
     public function __get($property_name)
     {
-            switch ($property_name) {
-                case 'newcache':
-                     $this->newcache = new Smarty_Internal_CacheCreate();
-                     return $this->newcache;
+        switch ($property_name) {
+            case 'newcache':
+                $this->newcache = new Smarty_Internal_CacheCreate();
+                return $this->newcache;
         }
         throw new SmartyException("Undefined property '$property_name'.");
     }
@@ -451,7 +472,7 @@ class Smarty_Template_Cached
      */
     public function __set($property_name, $value)
     {
-         switch ($property_name) {
+        switch ($property_name) {
             case 'newcache':
                 $this->$property_name = $value;
                 return;

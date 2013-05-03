@@ -5,16 +5,16 @@
  *
  * Compiles code for the execution of a registered block function
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  * @author Uwe Tews
  */
 
 /**
  * Smarty Internal Plugin Compile Registered Block Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Private_Registered_Block extends Smarty_Internal_CompileBase
 {

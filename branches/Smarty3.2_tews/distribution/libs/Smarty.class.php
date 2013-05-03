@@ -28,7 +28,7 @@
  * @author Monte Ohrt <monte at ohrt dot com>
  * @author Uwe Tews
  * @author Rodney Rehm
- * @package Smarty
+ * @subpackage Smarty
  * @version 3.2-DEV
  */
 /**
@@ -101,6 +101,7 @@ include_once SMARTY_SYSPLUGINS_DIR . 'smarty_internal_content.php';
 /**
  * This is the main Smarty class
  * @package Smarty
+ * @subpackage Smarty
  */
 class Smarty extends Smarty_Internal_Data
 {
@@ -404,6 +405,7 @@ class Smarty extends Smarty_Internal_Data
      * @link http://www.smarty.net/docs/en/variable.force.cache.tpl
      */
     public $force_cache = false;
+
 
     /**
      * Set this if you want different sets of cache files for the same
@@ -849,6 +851,7 @@ class Smarty extends Smarty_Internal_Data
      * @var array
      * @internal
      */
+
     public $_capture_stack = array(0 => array());
 
     /**
@@ -885,8 +888,8 @@ class Smarty extends Smarty_Internal_Data
     public function __construct()
     {
         // create variabale container
-        parent::__construct('Smarty root');
         $this->usage = self::IS_SMARTY;
+        parent::__construct('Smarty root');
         self::$global_tpl_vars = new stdClass;
         // PHP options
         if (is_callable('mb_internal_encoding')) {
@@ -921,6 +924,13 @@ class Smarty extends Smarty_Internal_Data
      */
     public function __clone()
     {
+        if ($this->usage == self::IS_TEMPLATE && $this->must_merge_tpl_vars) {
+            $this->tpl_vars = clone $this->tpl_vars;
+        } elseif ($this->parent == null) {
+            $this->tpl_vars = new Smarty_Variable_Container($this);
+            $this->must_merge_tpl_vars = false;
+        }
+        // Smarty::triggerCallback('trace', ' clone smarty '. $this->template_resource);
     }
 
     /**
@@ -978,7 +988,7 @@ class Smarty extends Smarty_Internal_Data
                     return $this->cached;
 
                 case 'compiler':
-                    $this->loadPlugin($this->source->compiler_class);
+                    $this->_loadPlugin($this->source->compiler_class);
                     $this->compiler = new $this->source->compiler_class($this->source->template_lexer_class, $this->source->template_parser_class, $this);
                     return $this->compiler;
 
@@ -1041,19 +1051,19 @@ class Smarty extends Smarty_Internal_Data
     /**
      * fetches a rendered Smarty template
      *
+     * @api
      * @param string $template          the resource handle of the template file or template object
      * @param mixed $cache_id          cache id to be used with this template
      * @param mixed $compile_id        compile id to be used with this template
      * @param object $parent            next higher level of Smarty variables
      * @param bool $display           true: display, false: fetch
      * @param bool $no_output_filter  if true do not run output filter
-     * @param bool $merge_tpl_vars    if true parent template variables merged in to local scope
      * @throws SmartyException
      * @throws SmartyRuntimeException
      * @return string rendered template output
      */
 
-    public function fetch($template = null, $cache_id = null, $compile_id = null, $parent = null, $display = false, $no_output_filter = false, $merge_tpl_vars = true)
+    public function fetch($template = null, $cache_id = null, $compile_id = null, $parent = null, $display = false, $no_output_filter = false)
     {
         if ($template === null && ($this->usage == self::IS_TEMPLATE || $this->usage == self::IS_CONFIG)) {
             $template = $this;
@@ -1066,22 +1076,8 @@ class Smarty extends Smarty_Internal_Data
             $parent = $this;
         }
         // create template object if necessary
-        $_template = (is_object($template)) ? $template : $this->createTemplate($template, $cache_id, $compile_id, $parent);
-        // merge all variable from scopes into template
-        if ($merge_tpl_vars && $_template->parent != null) {
-            // save local variables
-            $saved_tpl_vars = $_template->tpl_vars;
-            $_template->tpl_vars = clone $_template->parent->tpl_vars;
-            // merge local vars
-            foreach ($saved_tpl_vars as $key => $var) {
-                $_template->tpl_vars->$key = $var;
-            }
-        }
+        $_template = (is_object($template)) ? clone $template : $this->createTemplate($template, $cache_id, $compile_id, $parent);
 
-        // dummy local smarty variable
-        if (!isset($_template->tpl_vars->smarty)) {
-            $_template->tpl_vars->smarty = new Smarty_Variable ();
-        }
         if (isset($this->error_reporting)) {
             $_smarty_old_error_level = error_reporting($this->error_reporting);
         }
@@ -1196,16 +1192,9 @@ class Smarty extends Smarty_Internal_Data
             if ($this->debugging) {
                 Smarty_Internal_Debug::display_debug($this);
             }
-            if ($merge_tpl_vars && $_template->parent != null) {
-                // restore local variables
-                $_template->tpl_vars = $saved_tpl_vars;
-            }
             return;
         }
-        if ($merge_tpl_vars && $_template->parent != null) {
-            // restore local variables
-            $_template->tpl_vars = $saved_tpl_vars;
-        }
+
         if ($display) {
             return;
         } else {
@@ -1217,6 +1206,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * displays a Smarty template
      *
+     * @api
      * @param string $template   the resource handle of the template file or template object
      * @param mixed $cache_id   cache id to be used with this template
      * @param mixed $compile_id compile id to be used with this template
@@ -1231,6 +1221,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * test if cache is valid
      *
+     * @api
      * @param string|object $template   the resource handle of the template file or template object
      * @param mixed $cache_id   cache id to be used with this template
      * @param mixed $compile_id compile id to be used with this template
@@ -1255,6 +1246,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Check timestamp of browser cache against timestamp of individually cached subtemplates
      *
+     * @api
      * @param Smarty $_template template object
      * @param integer $_last_modified_timestamp browser cache timestamp
      * @return bool true if browser cache is valid
@@ -1286,6 +1278,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * creates a data object
      *
+     * @api
      * @param object $parent next higher level of Smarty variables
      * @param string $scope_name  optional name of Smarty_Data object
      * @return object Smarty_Data
@@ -1324,6 +1317,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Unregister Plugin
      *
+     * @api
      * @param string $type of plugin
      * @param string $tag name of plugin
      * @return Smarty
@@ -1339,6 +1333,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Registers a resource to fetch a template
      *
+     * @api
      * @param string $type name of resource type
      * @param Smarty_Resource|array $callback or instance of Smarty_Resource, or array of callbacks to handle resource (deprecated)
      * @return Smarty
@@ -1352,6 +1347,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Unregisters a resource
      *
+     * @api
      * @param string $type name of resource type
      * @return Smarty
      */
@@ -1366,6 +1362,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Registers a cache resource to cache a template's output
      *
+     * @api
      * @param string $type     name of cache resource type
      * @param Smarty_CacheResource $callback instance of Smarty_CacheResource to handle output caching
      * @return Smarty
@@ -1379,6 +1376,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Unregisters a cache resource
      *
+     * @api
      * @param string $type name of cache resource type
      * @return Smarty
      */
@@ -1393,6 +1391,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Registers static classes to be used in templates
      *
+     * @api
      * @param string $class_name name of class
      * @param string $class_impl the referenced PHP class to register
      * @throws SmartyException
@@ -1412,6 +1411,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Registers a default plugin handler
      *
+     * @api
      * @param callable $callback class/method name
      * @return Smarty
      * @throws SmartyException if $callback is not callable
@@ -1429,6 +1429,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Registers a default template handler
      *
+     * @api
      * @param callable $callback class/method name
      * @return Smarty
      * @throws SmartyException if $callback is not callable
@@ -1446,6 +1447,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Registers a default variable handler
      *
+     * @api
      * @param callable $callback class/method name
      * @return Smarty
      * @throws SmartyException if $callback is not callable
@@ -1463,6 +1465,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Registers a default config variable handler
      *
+     * @api
      * @param callable $callback class/method name
      * @return Smarty
      * @throws SmartyException if $callback is not callable
@@ -1480,6 +1483,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Registers a default config handler
      *
+     * @api
      * @param callable $callback class/method name
      * @return Smarty
      * @throws SmartyException if $callback is not callable
@@ -1497,6 +1501,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Registers a filter function
      *
+     * @api
      * @param string $type filter type
      * @param callback $callback
      * @throws SmartyException
@@ -1514,7 +1519,7 @@ class Smarty extends Smarty_Internal_Data
                 if (is_object($callback)) {
                     $callback = array($callback, '__invoke');
                 }
-                $this->registered_filters[$type][$this->_get_filter_name($callback)] = $callback;
+                $this->registered_filters[$type][$this->_getFilterName($callback)] = $callback;
             }
         } else {
             throw new SmartyException("registerFilter(): Invalid callback");
@@ -1525,6 +1530,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Unregisters a filter function
      *
+     * @api
      * @param string $type filter type
      * @param callback $callback
      * @return Smarty
@@ -1545,7 +1551,7 @@ class Smarty extends Smarty_Internal_Data
             if (is_object($callback)) {
                 $callback = array($callback, '__invoke');
             }
-            $name = $this->_get_filter_name($callback);
+            $name = $this->_getFilterName($callback);
             if (isset($this->registered_filters[$type][$name])) {
                 unset($this->registered_filters[$type][$name]);
             }
@@ -1556,10 +1562,11 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Return internal filter name
      *
+     * @internal
      * @param callback $function_name
      * @return string
      */
-    public function _get_filter_name($function_name)
+    public function _getFilterName($function_name)
     {
         if (is_array($function_name)) {
             $_class_name = (is_object($function_name[0]) ?
@@ -1573,6 +1580,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * load a filter of specified type and name
      *
+     * @api
      * @param string $type filter type
      * @param string $name filter name
      * @throws SmartyException
@@ -1585,7 +1593,7 @@ class Smarty extends Smarty_Internal_Data
         }
         $_plugin = "smarty_{$type}filter_{$name}";
         $_filter_name = $_plugin;
-        if ($this->loadPlugin($_plugin)) {
+        if ($this->_loadPlugin($_plugin)) {
             if (class_exists($_plugin, false)) {
                 $_plugin = array($_plugin, 'execute');
             }
@@ -1600,6 +1608,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * unload a filter of specified type and name
      *
+     * @api
      * @param string $type filter type
      * @param string $name filter name
      * @return Smarty
@@ -1616,6 +1625,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Check if a template resource exists
      *
+     * @api
      * @param string $resource_name template name
      * @return boolean status
      */
@@ -1653,6 +1663,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Empty cache folder
      *
+     * @api
      * @param integer $exp_time expiration time
      * @param string $type     resource type
      * @return integer number of cache files deleted
@@ -1668,6 +1679,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Empty cache for a specific template
      *
+     * @api
      * @param string $template_name template name
      * @param string $cache_id      cache id
      * @param string $compile_id    compile id
@@ -1677,6 +1689,8 @@ class Smarty extends Smarty_Internal_Data
      */
     public function clearCache($template_name = null, $cache_id = null, $compile_id = null, $exp_time = null, $type = null)
     {
+        return Smarty_CacheResource::clearCache($template_name, $cache_id, $compile_id, $exp_time, $type, $this);
+
         // load cache resource and call clear
         $_cache_resource = Smarty_CacheResource::load($this, $type);
         Smarty_CacheResource::invalidLoadedCache($this);
@@ -1686,6 +1700,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Delete compiled template file
      *
+     * @api
      * @param string $resource_name template name
      * @param string $compile_id compile id
      * @param integer $exp_time expiration time
@@ -1699,34 +1714,21 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Loads security class and enables security
      *
+     * @api
      * @param string|Smarty_Security $security_class if a string is used, it must be class-name
      * @return Smarty current Smarty instance for chaining
      * @throws SmartyException when an invalid class name is provided
      */
     public function enableSecurity($security_class = null)
     {
-        if ($security_class instanceof Smarty_Security) {
-            $this->security_policy = $security_class;
-            return $this;
-        } elseif (is_object($security_class)) {
-            throw new SmartyException("enableSecurity(): Class '" . get_class($security_class) . "' must extend Smarty_Security.");
-        }
-        if ($security_class == null) {
-            $security_class = $this->security_class;
-        }
-        if (!class_exists($security_class)) {
-            throw new SmartyException("enableSecurity(): Security class '$security_class' is not defined");
-        } elseif ($security_class !== 'Smarty_Security' && !is_subclass_of($security_class, 'Smarty_Security')) {
-            throw new SmartyException("enableSecurity(): Class '$security_class' must extend Smarty_Security.");
-        } else {
-            $this->security_policy = new $security_class($this);
-        }
-
+        Smarty_Security::enableSecurity($this, $security_class);
         return $this;
     }
 
     /**
      * Disable security
+     *
+     * @api
      * @return Smarty current Smarty instance for chaining
      */
     public function disableSecurity()
@@ -1739,6 +1741,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Set template directory
      *
+     * @api
      * @param string|array $template_dir directory(s) of template sources
      * @return Smarty current Smarty instance for chaining
      */
@@ -1756,6 +1759,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Add template directory(s)
      *
+     * @api
      * @param string|array $template_dir directory(s) of template sources
      * @param string $key          of the array element to assign the template dir to
      * @return Smarty current Smarty instance for chaining
@@ -1789,6 +1793,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Get template directories
      *
+     * @api
      * @param mixed $index of directory to get, null to get all
      * @return array|string list of template directories, or directory of $index
      */
@@ -1804,6 +1809,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Set config directory
      *
+     * @api
      * @param array|string $config_dir directory(s) of configuration sources
      * @return Smarty current Smarty instance for chaining
      */
@@ -1821,6 +1827,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Add config directory(s)
      *
+     * @api
      * @param string|array $config_dir directory(s) of config sources
      * @param string $key of the array element to assign the config dir to
      * @return Smarty current Smarty instance for chaining
@@ -1855,6 +1862,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Get config directory
      *
+     * @api
      * @param mixed $index of directory to get, null to get all
      * @return array|string configuration directory
      */
@@ -1870,6 +1878,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Set plugins directory
      *
+     * @api
      * Adds {@link SMARTY_PLUGINS_DIR} if not specified
      * @param string|array $plugins_dir directory(s) of plugins
      * @return Smarty current Smarty instance for chaining
@@ -1887,6 +1896,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Adds directory of plugin files
      *
+     * @api
      * @param string|array $plugins_dir plugin folder names
      * @return Smarty current Smarty instance for chaining
      */
@@ -1917,6 +1927,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Get plugin directories
      *
+     * @api
      * @return array list of plugin directories
      */
     public function getPluginsDir()
@@ -1927,6 +1938,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Set compile directory
      *
+     * @api
      * @param string $compile_dir directory to store compiled templates in
      * @return Smarty current Smarty instance for chaining
      */
@@ -1942,6 +1954,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Get compiled directory
      *
+     * @api
      * @return string path to compiled templates
      */
     public function getCompileDir()
@@ -1952,6 +1965,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Set cache directory
      *
+     * @api
      * @param string $cache_dir directory to store cached templates in
      * @return Smarty current Smarty instance for chaining
      */
@@ -1967,6 +1981,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Get cache directory
      *
+     * @api
      * @return string path of cache directory
      */
     public function getCacheDir()
@@ -1977,6 +1992,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Set default modifiers
      *
+     * @api
      * @param array|string $modifiers modifier or list of modifiers to set
      * @return Smarty current Smarty instance for chaining
      */
@@ -1989,6 +2005,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Add default modifiers
      *
+     * @api
      * @param array|string $modifiers modifier or list of modifiers to add
      * @return Smarty current Smarty instance for chaining
      */
@@ -2006,6 +2023,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Get default modifiers
      *
+     * @api
      * @return array list of default modifiers
      */
     public function getDefaultModifiers()
@@ -2034,6 +2052,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Add autoload filters
      *
+     * @api
      * @param array $filters filters to load automatically
      * @param string $type "pre", "output", … specify the filter type to set. Defaults to none treating $filters' keys as the appropriate types
      * @return Smarty current Smarty instance for chaining
@@ -2062,6 +2081,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Get autoload filters
      *
+     * @api
      * @param string $type type of filter to get autoloads for. Defaults to all autoload filters
      * @return array array( 'type1' => array( 'filter1', 'filter2', … ) ) or array( 'filter1', 'filter2', …) if $type was specified
      */
@@ -2077,6 +2097,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * return name of debugging template
      *
+     * @api
      * @return string
      */
     public function getDebugTemplate()
@@ -2087,6 +2108,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * set the debug template
      *
+     * @api
      * @param string $tpl_name
      * @return Smarty current Smarty instance for chaining
      * @throws SmartyException if file is not readable
@@ -2104,6 +2126,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * creates a template object
      *
+     * @api
      * @param string $template the resource handle of the template file
      * @param mixed $cache_id cache id to be used with this template
      * @param mixed $compile_id compile id to be used with this template
@@ -2146,7 +2169,6 @@ class Smarty extends Smarty_Internal_Data
             $tpl->template_resource = $tpl->scope_name = $template;
             $tpl->cache_id = $cache_id;
             $tpl->compile_id = $compile_id;
-            $tpl->tpl_vars = new Smarty_Variable_Container($tpl);
         }
         $tpl->parent = $parent;
 
@@ -2156,6 +2178,7 @@ class Smarty extends Smarty_Internal_Data
         } else {
             // fill data if present
             if (!empty($data) && is_array($data)) {
+                $tpl->must_merge_tpl_vars = true;
                 // set up variable values
                 foreach ($data as $varname => $value) {
                     $tpl->tpl_vars->$varname = new Smarty_Variable($value);
@@ -2170,12 +2193,13 @@ class Smarty extends Smarty_Internal_Data
      * class name format: Smarty_PluginType_PluginName
      * plugin filename format: plugintype.pluginname.php
      *
+     * @internal
      * @param string $plugin_name    class plugin name to load
      * @param bool $check          check if already loaded
      * @throws SmartyException
      * @return string |boolean filepath of loaded file or false
      */
-    public function loadPlugin($plugin_name, $check = true)
+    public function _loadPlugin($plugin_name, $check = true)
     {
         // if function or class exists, exit silently (already loaded)
         if ($check && (is_callable($plugin_name) || class_exists($plugin_name, false))) {
@@ -2242,6 +2266,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Compile all template files
      *
+     * @api
      * @param string $extension file extension
      * @param bool $force_compile true to force recompile of all template
      * @param int $time_limit time limit
@@ -2256,6 +2281,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Compile all config files
      *
+     * @api
      * @param string $extension file extension
      * @param bool $force_compile force all to recompile
      * @param int $time_limit
@@ -2270,6 +2296,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Return array of tag/attributes of all tags used by an template
      *
+     * @api
      * @param Smarty $template object
      * @return array of tag/attributes
      */
@@ -2281,6 +2308,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Run installation test
      *
+     * @api
      * @param array $errors Array to write errors into, rather than outputting them
      * @return boolean true if setup is fine, false if something is wrong
      */
@@ -2292,6 +2320,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Get Smarty Configuration Information
      *
+     * @api
      * @param boolean $html return formatted HTML, array else
      * @param integer $flags see Smarty_Internal_Info constants
      * @return string|array configuration information
@@ -2305,6 +2334,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Error Handler to mute expected messages
      *
+     * @api
      * @link http://php.net/set_error_handler
      * @param integer $errno Error level
      * @param $errstr
@@ -2363,6 +2393,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Enable error handler to mute expected messages
      *
+     * @api
      * @return void
      */
     public static function muteExpectedErrors()
@@ -2395,6 +2426,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Disable error handler muting expected messages
      *
+     * @api
      * @return void
      */
     public static function unmuteExpectedErrors()
@@ -2405,6 +2437,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Identify and get top-level template instance
      *
+     * @api
      * @return Smarty root template object
      */
     public function findRootTemplate()
@@ -2424,6 +2457,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Save value to persistent cache storage
      *
+     * @api
      * @param string|array $key   key to store data under, or array of key => values to store
      * @param mixed $value value to store for $key, ignored if key is an array
      * @return Smarty $this for chaining
@@ -2452,6 +2486,7 @@ class Smarty extends Smarty_Internal_Data
     /**
      * Get value from persistent cache storage
      *
+     * @api
      * @param string $key key of value to retrieve, null for all values (default)
      * @return mixed value or array of values
      */
@@ -2518,42 +2553,6 @@ class Smarty extends Smarty_Internal_Data
     {
         $info = new Smarty_Internal_Info($this->smarty, $this);
         return $html ? $info->getHtml($flags) : $info->getArray($flags);
-    }
-
-    /**
-     * [util function] to use either var_export or unserialize/serialize to generate code for the
-     * cachevalue optionflag of {assign} tag
-     *
-     * @param mixed $var Smarty variable value
-     * @throws SmartyException
-     * @return string PHP inline code
-     */
-    public function _export_cache_value($var)
-    {
-        if (is_int($var) || is_float($var) || is_bool($var) || is_string($var) || (is_array($var) && !is_object($var) && !array_reduce($var, array($this, '_check_array_callback')))) {
-            return var_export($var, true);
-        }
-        if (is_resource($var)) {
-            throw new SmartyException('Cannot serialize resource');
-        }
-        return 'unserialize(\'' . serialize($var) . '\')';
-    }
-
-    /**
-     * callback used by _export_cache_value to check arrays recursively
-     *
-     * @param bool $flag status of previous elements
-     * @param mixed $element array element to check
-     * @throws SmartyException
-     * @return bool status
-     */
-    private function _check_array_callback($flag, $element)
-    {
-        if (is_resource($element)) {
-            throw new SmartyException('Cannot serialize resource');
-        }
-        $flag = $flag || is_object($element) || (!is_int($element) && !is_float($element) && !is_bool($element) && !is_string($element) && (is_array($element) && array_reduce($element, array($this, '_check_array_callback'))));
-        return $flag;
     }
 
     /**
@@ -2639,7 +2638,7 @@ class Smarty extends Smarty_Internal_Data
     {
         if (isset(self::$_callbacks[$event])) {
             foreach (self::$_callbacks[$event] as $callback) {
-                call_user_func_array($callback, $data);
+                call_user_func_array($callback, (array)$data);
             }
         }
     }
@@ -2654,124 +2653,6 @@ if (Smarty::$_CHARSET !== 'UTF-8') {
     Smarty::$_UTF8_MODIFIER = '';
 }
 
-/**
- * Smarty exception class
- * @package Smarty
- */
-class SmartyException extends Exception
-{
-
-    public static $escape = true;
-
-    public function __construct($message)
-    {
-        $this->message = self::$escape ? htmlentities($message) : $message;
-    }
-
-    public function __toString()
-    {
-        return "Smarty error: {$this->message}\n";
-    }
-
-}
-
-/**
- * Smarty compiler exception class
- * @package Smarty
- */
-class SmartyCompilerException extends SmartyException
-{
-
-    public function __toString()
-    {
-        // TODO
-        // NOTE: PHP does escape \n and HTML tags on return. For this reasion we echo the message.
-        // This needs to be investigated later.
-        echo "Compiler: {$this->message}";
-        return '';
-    }
-
-}
-
-/**
- * Smarty runtime exception class
- * loads template source and displays line where error did occur
- *
- * @package Smarty
- */
-class SmartyRuntimeException extends SmartyException
-{
-
-    protected $object = null;
-    protected $line = null;
-    protected $trace_call_stack = null;
-
-    public function __construct($message, $object = null)
-    {
-        $this->message = $message;
-        $this->object = $object;
-        if ($object->enable_traceback) {
-            $this->trace_call_stack = $object->trace_call_stack;
-            $this->line = $this->trace_call_stack[0][1];
-        }
-    }
-
-    public function __toString()
-    {
-        $source = '';
-        $source_trace = $this->object->enable_traceback;
-        if ($source_trace) {
-            if ($this->trace_call_stack[0][2] == 'eval' || $this->trace_call_stack[0][2] == 'string') {
-                $this->file = $this->trace_call_stack[0][2] . ':';
-                $source_trace = false;
-            } else {
-                $ptr = Smarty_Resource::source(null, $this->object, $this->trace_call_stack[0][0]);
-                // make sure we reload source content
-                unset($ptr->content);
-                $this->file = $ptr->filepath;
-                if (!$ptr->exists) {
-                    $source_trace = false;
-                }
-            }
-        }
-        if ($source_trace == true) {
-            preg_match_all("/\n/", $ptr->content, $match, PREG_OFFSET_CAPTURE);
-            $start_line = max(1, $this->line - 2);
-            $end_line = min($this->line + 2, count($match[0]) + 1);
-            $source = "<br>";
-            for ($i = $start_line; $i <= $end_line; $i++) {
-                $from = 0;
-                $to = 99999999;
-                if (isset($match[0][$i - 2])) {
-                    $from = $match[0][$i - 2][1];
-                }
-                if (isset($match[0][$i - 1])) {
-                    $to = $match[0][$i - 1][1] - $from;
-                }
-                $substr = substr($ptr->content, $from, $to);
-                $source .= sprintf('%4d : ', $i) . htmlspecialchars(trim(preg_replace('![\t\r\n]+!', ' ', $substr))) . "<br>";
-            }
-        }
-        $msg = "<br>Smarty runtime exception: <b>{$this->message}</b> in <b>{$this->file}</b> line <b>{$this->line}</b>{$source}<br><br>";
-        array_shift($this->trace_call_stack);
-        foreach ($this->trace_call_stack as $info) {
-            $msg .= "<b>called by {$info[0]} in line {$info[1]}</b><br>";
-        }
-        $ptr = $this->object;
-        while ($ptr->parent->usage == Smarty::IS_TEMPLATE || $ptr->parent->usage == Smarty::IS_CONFIG) {
-            $ptr = $ptr->parent;
-            foreach ($ptr->trace_call_stack as $info) {
-                $msg .= "<b>called by {$info[0]} in line {$info[1]}</b><br>";
-            }
-        }
-        // TODO
-        // NOTE: PHP does escape \n and HTML tags on return. For this reasion we echo the message.
-        // This needs to be investigated later.
-        echo $msg;
-        return $this->message;
-    }
-
-}
 
 /**
  * Autoloader
@@ -2789,6 +2670,9 @@ function smartyAutoload($class)
         'smarty_resource_uncompiled' => true,
         'smarty_resource_recompiled' => true,
         'smarty_compiled' => true,
+        'smartyexception' => 'smarty_exception',
+        'smartycompilerexception' => 'smarty_exception',
+        'smartyRuntimeexception' => 'smarty_exception',
         'smarty_template_cached' => 'smarty_cacheresource'
     );
 

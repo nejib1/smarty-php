@@ -3,8 +3,8 @@
 /**
  * Smarty Internal Plugin Resource Eval
  *
- * @package Smarty
- * @subpackage TemplateResources
+ *
+ * @package TemplateResources
  * @author Uwe Tews
  * @author Rodney Rehm
  */
@@ -16,8 +16,8 @@
  *
  * {@internal unlike string-resources the compiled state of eval-resources is NOT saved for subsequent access}}
  *
- * @package Smarty
- * @subpackage TemplateResources
+ *
+ * @package TemplateResources
  */
 class Smarty_Internal_Resource_Eval extends Smarty_Resource_Recompiled
 {

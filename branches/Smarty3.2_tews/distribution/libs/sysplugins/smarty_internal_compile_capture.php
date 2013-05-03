@@ -5,16 +5,16 @@
  *
  * Compiles the {capture} tag
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  * @author Uwe Tews
  */
 
 /**
  * Smarty Internal Plugin Compile Capture Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Capture extends Smarty_Internal_CompileBase
 {
@@ -51,6 +51,11 @@ class Smarty_Internal_Compile_Capture extends Smarty_Internal_CompileBase
         $assign = isset($_attr['assign']) ? $_attr['assign'] : 'null';
         $append = isset($_attr['append']) ? $_attr['append'] : 'null';
 
+        if (isset($_attr['assign']) || isset($_attr['append'])) {
+            // set flag that variable container must be cloned
+            $compiler->must_clone_vars = true;
+        }
+
         $compiler->_capture_stack[0][] = array($buffer, $assign, $append, $compiler->nocache);
         // maybe nocache because of nocache variables
         $compiler->nocache = $compiler->nocache | $compiler->tag_nocache;
@@ -68,8 +73,8 @@ class Smarty_Internal_Compile_Capture extends Smarty_Internal_CompileBase
 /**
  * Smarty Internal Plugin Compile Captureclose Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_CaptureClose extends Smarty_Internal_CompileBase
 {

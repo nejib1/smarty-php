@@ -12,19 +12,20 @@
  * @package CacheResource-examples
  * @author Rodney Rehm
  */
-class Smarty_CacheResource_Memcache extends Smarty_CacheResource_KeyValueStore {
+class Smarty_CacheResource_Memcache extends Smarty_CacheResource_KeyValueStore
+{
     /**
      * memcache instance
      * @var Memcache
      */
     protected $memcache = null;
-    
+
     public function __construct()
     {
         $this->memcache = new Memcache();
-        $this->memcache->addServer( '127.0.0.1', 11211 );
+        $this->memcache->addServer('127.0.0.1', 11211);
     }
-    
+
     /**
      * Read values for a set of keys from cache
      *
@@ -47,7 +48,7 @@ class Smarty_CacheResource_Memcache extends Smarty_CacheResource_KeyValueStore {
         }
         return $_res;
     }
-    
+
     /**
      * Save values for a set of keys to cache
      *
@@ -55,7 +56,7 @@ class Smarty_CacheResource_Memcache extends Smarty_CacheResource_KeyValueStore {
      * @param int $expire expiration time
      * @return boolean true on success, false on failure
      */
-    protected function write(array $keys, $expire=null)
+    protected function write(array $keys, $expire = null)
     {
         foreach ($keys as $k => $v) {
             $k = sha1($k);

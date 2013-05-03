@@ -5,16 +5,16 @@
  *
  * Compiles code for modifier execution
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  * @author Uwe Tews
  */
 
 /**
  * Smarty Internal Plugin Compile Modifier Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Private_Modifier extends Smarty_Internal_CompileBase
 {
@@ -75,7 +75,7 @@ class Smarty_Internal_Compile_Private_Modifier extends Smarty_Internal_CompileBa
                         break;
                     case 3:
                         // modifiercompiler plugin
-                        if ($compiler->template->loadPlugin('smarty_modifiercompiler_' . $modifier)) {
+                        if ($compiler->template->_loadPlugin('smarty_modifiercompiler_' . $modifier)) {
                             // check if modifier allowed
                             if (!is_object($compiler->template->security_policy) || $compiler->template->security_policy->isTrustedModifier($modifier, $compiler)) {
                                 $plugin = 'smarty_modifiercompiler_' . $modifier;

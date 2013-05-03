@@ -3,16 +3,16 @@
 /**
  * Smarty write file plugin
  *
- * @package Smarty
- * @subpackage PluginsInternal
+ *
+ * @package PluginsInternal
  * @author Monte Ohrt
  */
 
 /**
  * Smarty Internal Write File Class
  *
- * @package Smarty
- * @subpackage PluginsInternal
+ *
+ * @package PluginsInternal
  */
 class Smarty_Internal_Write_File
 {

@@ -3,8 +3,8 @@
 /**
  * Smarty Compiled Resource Plugin
  *
- * @package Smarty
- * @subpackage CompiledResources
+ *
+ * @package CompiledResources
  * @author Uwe Tews
  */
 
@@ -112,8 +112,8 @@ class Smarty_Compiled
             $_template->compiled->file_dependency[$this->source->uid] = array($this->source->filepath, $this->source->timestamp, $this->source->type);
         }
         if ($_template->caching) {
-            $cached = Smarty_Internal_CacheCreate::findCachedObject($_template);
-            $cached->newcache->mergeFromCompiled($_template);
+            $cached = Smarty_Internal_CacheCreate::_getCachedObject($_template);
+            $cached->newcache->_mergeFromCompiled($_template);
         }
         if ($_template->caching == Smarty::CACHING_NOCACHE_CODE && isset($_template->parent)) {
             $_template->parent->has_nocache_code = $_template->parent->has_nocache_code || $_template->has_nocache_code;
@@ -135,16 +135,15 @@ class Smarty_Compiled
             if ($_template->debugging) {
                 Smarty_Internal_Debug::start_compile($_template);
             }
-            $code = $_template->compiler->compileTemplate();
-            unset($_template->compiler);
+            $_template->compiler->compileTemplate();
             if ($_template->debugging) {
                 Smarty_Internal_Debug::end_compile($_template);
             }
             if ($_template->debugging) {
                 Smarty_Internal_Debug::start_render($_template);
             }
-            eval('?>' . $code);
-            unset($code);
+            eval('?>' . $_template->compiler->template_code->buffer);
+            unset($_template->compiler);
         } else {
             if (!$this->exists || ($_template->force_compile && !$this->isCompiled)) {
                 $_template->compiler->compileTemplateSource();

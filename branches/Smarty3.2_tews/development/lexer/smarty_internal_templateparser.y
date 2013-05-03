@@ -29,7 +29,6 @@
     function __construct($lex, $compiler) {
         $this->lex = $lex;
         $this->compiler = $compiler;
-        $this->compiler->has_variable_string = false;
         $this->compiler->prefix_code = array();
         $this->prefix_number = 0;
         $this->block_nesting_level = 0;
@@ -104,7 +103,7 @@
 //
 start ::= template. {
    // execute end of template
-   $this->compiler->newline()->php("array_shift(\$_smarty_tpl->trace_call_stack);\n");
+   $this->compiler->template_code->newline()->php("array_shift(\$_smarty_tpl->trace_call_stack);\n");
    if ($this->compiler->template->caching) {
        $this->compiler->has_code = true;
        $this->compiler->nocache_nolog = true;
@@ -143,7 +142,7 @@ template_element ::= TEMPLATEINIT(i). {
             $this->compiler->nocache_nolog = true;
             $this->compiler->nocacheCode($code, true);
         }
-        $this->compiler->php($code)->newline();
+        $this->compiler->template_code->php($code)->newline();
     }
 }
 
@@ -162,9 +161,8 @@ template_element ::= smartytag(st). {
         }
         $this->compiler->nocacheCode(st,true,$line);
     } else { 
-        $this->compiler->raw(st);
+        $this->compiler->template_code->raw(st);
     }  
-    $this->compiler->has_variable_string = false;
     $this->block_nesting_level = count($this->compiler->_tag_stack);
 } 
 
@@ -174,15 +172,15 @@ template_element ::= LDEL COMMENT RDEL. {
 
                       // Literal
 template_element ::= literal(l). {
-    $this->compiler->php('echo ')->string(l)->raw(";\n");
+    $this->compiler->template_code->php('echo ')->string(l)->raw(";\n");
 }
 
                       // '<?php' tag
 template_element ::= PHPSTARTTAG(st). {
     if ($this->php_handling == Smarty::PHP_PASSTHRU) {
-        $this->compiler->php("echo '<?php';\n");
+        $this->compiler->template_code->php("echo '<?php';\n");
     } elseif ($this->php_handling == Smarty::PHP_QUOTE) {
-        $this->compiler->php("echo '&lt;?php';\n");
+        $this->compiler->template_code->php("echo '&lt;?php';\n");
     } elseif ($this->php_handling == Smarty::PHP_ALLOW) {
         if (!($this->compiler->template instanceof SmartyBC)) {
             $this->compiler->trigger_template_error (self::Err3);
@@ -195,11 +193,11 @@ template_element ::= PHPSTARTTAG(st). {
 template_element ::= PHPENDTAG. {
     if ($this->is_xml) {
         $this->is_xml = false;
-        $this->compiler->php("echo '?>';\n");
+        $this->compiler->template_code->php("echo '?>';\n");
     } elseif ($this->php_handling == Smarty::PHP_PASSTHRU) {
-        $this->compiler->php("echo '?>';\n");
+        $this->compiler->template_code->php("echo '?>';\n");
     } elseif ($this->php_handling == Smarty::PHP_QUOTE) {
-        $this->compiler->php("echo '?&gt;';\n");
+        $this->compiler->template_code->php("echo '?&gt;';\n");
     } elseif ($this->php_handling == Smarty::PHP_ALLOW) {
         $this->text_is_php = false;
     }
@@ -208,9 +206,9 @@ template_element ::= PHPENDTAG. {
                       // '<%' tag
 template_element ::= ASPSTARTTAG(st). {
     if ($this->php_handling == Smarty::PHP_PASSTHRU) {
-        $this->compiler->php("echo '<%';\n");
+        $this->compiler->template_code->php("echo '<%';\n");
     } elseif ($this->php_handling == Smarty::PHP_QUOTE) {
-        $this->compiler->php("echo '&lt;%';\n");
+        $this->compiler->template_code->php("echo '&lt;%';\n");
     } elseif ($this->php_handling == Smarty::PHP_ALLOW) {
         if ($this->asp_tags) {
             if (!($this->compiler->template instanceof SmartyBC)) {
@@ -218,11 +216,11 @@ template_element ::= ASPSTARTTAG(st). {
             }
             $this->text_is_php = true;
         } else {
-            $this->compiler->php("echo '<%';\n");
+            $this->compiler->template_code->php("echo '<%';\n");
         }
     } elseif ($this->php_handling == Smarty::PHP_REMOVE) {
         if (!$this->asp_tags) {
-            $this->compiler->php("echo '<%';\n");
+            $this->compiler->template_code->php("echo '<%';\n");
         }
     }
 }
@@ -230,34 +228,34 @@ template_element ::= ASPSTARTTAG(st). {
                       // '%>' tag
 template_element ::= ASPENDTAG(et). {
     if ($this->php_handling == Smarty::PHP_PASSTHRU) {
-        $this->compiler->php("echo '%>';\n");
+        $this->compiler->template_code->php("echo '%>';\n");
     } elseif ($this->php_handling == Smarty::PHP_QUOTE) {
-        $this->compiler->php("echo '%&gt;';\n");
+        $this->compiler->template_code->php("echo '%&gt;';\n");
     } elseif ($this->php_handling == Smarty::PHP_ALLOW) {
         if ($this->asp_tags) {
             $this->text_is_php = false;
         } else {
-            $this->compiler->php("echo '%>';\n");
+            $this->compiler->template_code->php("echo '%>';\n");
         }
     } elseif ($this->php_handling == Smarty::PHP_REMOVE) {
         if (!$this->asp_tags) {
-            $this->compiler->php("echo '%>';\n");
+            $this->compiler->template_code->php("echo '%>';\n");
         }
     }
 }
 
 template_element ::= FAKEPHPSTARTTAG(o). {
     if ($this->strip) {
-        $this->compiler->php('echo ')->string(preg_replace('![\t ]*[\r\n]+[\t ]*!', '', o))->raw(";\n");
+        $this->compiler->template_code->php('echo ')->string(preg_replace('![\t ]*[\r\n]+[\t ]*!', '', o))->raw(";\n");
     } else {
-        $this->compiler->php('echo ')->string(o)->raw(";\n");
+        $this->compiler->template_code->php('echo ')->string(o)->raw(";\n");
     }
 }
 
                       // XML tag
 template_element ::= XMLTAG. {
     $this->is_xml = true; 
-    $this->compiler->php("echo '<?xml';\n");
+    $this->compiler->template_code->php("echo '<?xml';\n");
 }
 
                       // template text
@@ -276,11 +274,11 @@ template_element ::= TEXT(o). {
         $this->compiler->nocacheCode('', true, $line);
     } else {
         // inheritance child templates shall not output text
-        if (!$this->compiler->isInheritanceChild || Smarty_Internal_Compile_Block::$block_nesting_level > 0) {
+        if (!$this->compiler->isInheritanceChild || $this->compiler->block_nesting_level > 0) {
             if ($this->strip) {
-                $this->compiler->php('echo ')->string(preg_replace('![\t ]*[\r\n]+[\t ]*!', '', o))->raw(";\n");
+                $this->compiler->template_code->php('echo ')->string(preg_replace('![\t ]*[\r\n]+[\t ]*!', '', o))->raw(";\n");
             } else {
-                $this->compiler->php('echo ')->string(o)->raw(";\n");
+                $this->compiler->template_code->php('echo ')->string(o)->raw(";\n");
             }
         }
     }

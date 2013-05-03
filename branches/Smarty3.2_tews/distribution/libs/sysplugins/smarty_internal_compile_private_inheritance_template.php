@@ -5,16 +5,16 @@
  *
  * Compiles code to load inheritance child and parent template
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  * @author Uwe Tews
  */
 
 /**
  * Smarty Internal Compile Call Of Inheritance Templates Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Private_Inheritance_Template extends Smarty_Internal_CompileBase
 {

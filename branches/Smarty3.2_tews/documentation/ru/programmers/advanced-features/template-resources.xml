@@ -2,32 +2,34 @@
 <!-- $Revision: 2761 $ -->
 <!-- EN-Revision: 0 Maintainer: freespace Status: ready -->
 <sect1 id="template.resources">
- <title>Ресурсы</title>
- <para>
-  Шаблоны можно получать из самых разных источников. Когда вы
-  <link linkend="api.display">отображаете</link> или
-  <link linkend="api.fetch">вызываете</link> шаблон,
-  либо когда вы подключаете один шаблон к другому, вы указываете тип ресурса,
-  вместе с соответствующим путём и названием шаблона.
-  Если тип ресурса явно не задан, используется значения свойства
-  <link linkend="variable.default.resource.type">$default_resource_type</link>.
- </para>
+    <title>Ресурсы</title>
+    <para>
+        Шаблоны можно получать из самых разных источников. Когда вы
+        <link linkend="api.display">отображаете</link>
+        или
+        <link linkend="api.fetch">вызываете</link>
+        шаблон,
+        либо когда вы подключаете один шаблон к другому, вы указываете тип ресурса,
+        вместе с соответствующим путём и названием шаблона.
+        Если тип ресурса явно не задан, используется значения свойства
+        <link linkend="variable.default.resource.type">$default_resource_type</link>.
+    </para>
 
- <sect2 id="templates.from.template.dir">
-  <title>Шаблоны из папки $template_dir</title>
-  <para>
-   Шаблоны, которые находятся в папке
-   <link linkend="variable.template.dir">$template_dir</link>,
-   не требуют при вызове указания
-   типа ресурса, хотя вы можете использовать префикс file: для сохранения
-   стиля. Для вызова просто укажите относительный от
-   <link linkend="variable.template.dir">$template_dir</link>
-   путь к шаблону.
-  </para>
-  <example>
-   <title>Вызов шаблона из папки $template_dir</title>
-   <programlisting role="php">
-<![CDATA[
+    <sect2 id="templates.from.template.dir">
+        <title>Шаблоны из папки $template_dir</title>
+        <para>
+            Шаблоны, которые находятся в папке
+            <link linkend="variable.template.dir">$template_dir</link>,
+            не требуют при вызове указания
+            типа ресурса, хотя вы можете использовать префикс file: для сохранения
+            стиля. Для вызова просто укажите относительный от
+            <link linkend="variable.template.dir">$template_dir</link>
+            путь к шаблону.
+        </para>
+        <example>
+            <title>Вызов шаблона из папки $template_dir</title>
+            <programlisting role="php">
+                <![CDATA[
 <?php
 $smarty->display('index.tpl');
 $smarty->display('admin/menu.tpl');
@@ -38,96 +40,97 @@ $smarty->display('file:admin/menu.tpl'); // тоже самое, что и ст�
 {include file="index.tpl"}
 {include file="file:index.tpl"} {* тоже самое, что и строкой выше *}
 ]]>
-   </programlisting>
-  </example>
- </sect2>
+            </programlisting>
+        </example>
+    </sect2>
 
- <sect2 id="templates.from.any.dir">
-  <title>Шаблоны из произвольной папки</title>
-  <para>
-   Для вызова шаблонов из папки вне
-   <link linkend="variable.template.dir">$template_dir</link>
-   необходимо использовать префикс file: с последующим указанием асболютного
-   пути и имени шаблона.
-  </para>
-  <example>
-   <title>Вызов шаблона из произвольной папки</title>
-   <programlisting role="php">
-<![CDATA[
+    <sect2 id="templates.from.any.dir">
+        <title>Шаблоны из произвольной папки</title>
+        <para>
+            Для вызова шаблонов из папки вне
+            <link linkend="variable.template.dir">$template_dir</link>
+            необходимо использовать префикс file: с последующим указанием асболютного
+            пути и имени шаблона.
+        </para>
+        <example>
+            <title>Вызов шаблона из произвольной папки</title>
+            <programlisting role="php">
+                <![CDATA[
 <?php
 $smarty->display('file:/export/templates/index.tpl');
 $smarty->display('file:/path/to/my/templates/menu.tpl');
 ?>
 ]]>
-   </programlisting>
-   <para>
-    А изнутри шаблона Smarty:
-   </para>
-   <programlisting>
-<![CDATA[
+            </programlisting>
+            <para>
+                А изнутри шаблона Smarty:
+            </para>
+            <programlisting>
+                <![CDATA[
 {include file="file:/usr/local/share/templates/navigation.tpl"}
 ]]>
-   </programlisting>
-  </example>
+            </programlisting>
+        </example>
 
-  <sect3 id="templates.windows.filepath">
-   <title>Файловые пути в Windows</title>
-   <para>
-    Если вы работаете под Windows, то пути к файлам, как правило,
-    начинаются с буквы логического диска (например, C:). Не забудьте
-    указать префикс "file:" в начале пути, чтобы избежать конфликтов
-    имён и достичь необходимого результата.
-   </para>
-   <example>
-    <title>использование шаблонов с файловіми путями Windows</title>
-    <programlisting role="php">
-<![CDATA[
+        <sect3 id="templates.windows.filepath">
+            <title>Файловые пути в Windows</title>
+            <para>
+                Если вы работаете под Windows, то пути к файлам, как правило,
+                начинаются с буквы логического диска (например, C:). Не забудьте
+                указать префикс "file:" в начале пути, чтобы избежать конфликтов
+                имён и достичь необходимого результата.
+            </para>
+            <example>
+                <title>использование шаблонов с файловіми путями Windows</title>
+                <programlisting role="php">
+                    <![CDATA[
 <?php
 // PHP скрипт
 $smarty->display('file:C:/export/templates/index.tpl');
 $smarty->display('file:F:/path/to/my/templates/menu.tpl');
 ?>
 ]]>
-    </programlisting>
-    <para>
-     А изнутри шаблона Smarty:
-    </para>
-    <programlisting>
-<![CDATA[
+                </programlisting>
+                <para>
+                    А изнутри шаблона Smarty:
+                </para>
+                <programlisting>
+                    <![CDATA[
 {include file="file:D:/usr/local/share/templates/navigation.tpl"}
 ]]>
-    </programlisting>
-   </example>
-  </sect3>
- </sect2>
+                </programlisting>
+            </example>
+        </sect3>
+    </sect2>
 
- <sect2 id="templates.from.elsewhere">
-  <title>Шаблоны из прочих источников</title>
-  <para>
-   Вы можете вызывать шаблоны, используя любые доступные через PHP источники:
-   базы данных, сокеты, LDAP и так далее.
-   Для этого нужно написать соответствующий плагин ресурса и зарегистрировать
-   его в Smarty.
-  </para>
+    <sect2 id="templates.from.elsewhere">
+        <title>Шаблоны из прочих источников</title>
+        <para>
+            Вы можете вызывать шаблоны, используя любые доступные через PHP источники:
+            базы данных, сокеты, LDAP и так далее.
+            Для этого нужно написать соответствующий плагин ресурса и зарегистрировать
+            его в Smarty.
+        </para>
 
-  <para>
-   Смотрите раздел <link linkend="plugins.resources">плагины ресурсов</link>
-   для более подробной информации о тех функциях, которые вы должны
-   предоставить.
-  </para>
+        <para>
+            Смотрите раздел
+            <link linkend="plugins.resources">плагины ресурсов</link>
+            для более подробной информации о тех функциях, которые вы должны
+            предоставить.
+        </para>
 
-  <note>
-   <para>
-    Обратите внимание на то, что вы не можете переопределить встроенный ресурс
-    <literal>file</literal>, но в ваших силах написать и зарегистрировать ресурс с
-    другим именем, который будет использовать другой способ вызова шаблонов из
-    файловой системы.
-   </para>
-  </note>
-  <example>
-   <title>Использование собственных ресурсов</title>
-   <programlisting role="php">
-<![CDATA[
+        <note>
+            <para>
+                Обратите внимание на то, что вы не можете переопределить встроенный ресурс
+                <literal>file</literal>, но в ваших силах написать и зарегистрировать ресурс с
+                другим именем, который будет использовать другой способ вызова шаблонов из
+                файловой системы.
+            </para>
+        </note>
+        <example>
+            <title>Использование собственных ресурсов</title>
+            <programlisting role="php">
+                <![CDATA[
 // код в вашем скрипте
 function db_get_template ($tpl_name, &$tpl_source, &$smarty_obj)
 {
@@ -181,30 +184,30 @@ $smarty->register_resource("db", array("db_get_template",
 $smarty->display("db:index.tpl");
 ?>
 ]]>
-    </programlisting>
-    <para>
-     А изнутри шаблона Smarty:
-    </para>
-    <programlisting>
-<![CDATA[
+            </programlisting>
+            <para>
+                А изнутри шаблона Smarty:
+            </para>
+            <programlisting>
+                <![CDATA[
 {include file="db:/extras/navigation.tpl"}
 ]]>
-   </programlisting>
-  </example>
- </sect2>
+            </programlisting>
+        </example>
+    </sect2>
 
- <sect2 id="default.template.handler.function">
-  <title>Функция для обработки шаблона по умолчанию</title>
-  <para>
-   Вы можете определить функцию, которая будет использована,
-   если шаблон не может быть вызван из соответствующего ресурса.
-   Это можно использовать, к примеру, для построения недостающего
-   шаблона на лету.
-  </para>
-  <example>
-   <title>использование функции для обработки шаблона по умолчанию</title>
-   <programlisting role="php">
-<![CDATA[
+    <sect2 id="default.template.handler.function">
+        <title>Функция для обработки шаблона по умолчанию</title>
+        <para>
+            Вы можете определить функцию, которая будет использована,
+            если шаблон не может быть вызван из соответствующего ресурса.
+            Это можно использовать, к примеру, для построения недостающего
+            шаблона на лету.
+        </para>
+        <example>
+            <title>использование функции для обработки шаблона по умолчанию</title>
+            <programlisting role="php">
+                <![CDATA[
 <?php
 // код в вашем скрипте
 
@@ -228,27 +231,27 @@ function make_template ($resource_type, $resource_name, &$template_source, &$tem
 $smarty->default_template_handler_func = 'make_template';
 ?>
 ]]>
-   </programlisting>
-  </example>
- </sect2>
+            </programlisting>
+        </example>
+    </sect2>
 </sect1>
-<!-- Keep this comment at the end of the file
-Local variables:
-mode: sgml
-sgml-omittag:t
-sgml-shorttag:t
-sgml-minimize-attributes:nil
-sgml-always-quote-attributes:t
-sgml-indent-step:1
-sgml-indent-data:t
-indent-tabs-mode:nil
-sgml-parent-document:nil
-sgml-default-dtd-file:"../../../../manual.ced"
-sgml-exposed-tags:nil
-sgml-local-catalogs:nil
-sgml-local-ecat-files:nil
-End:
-vim600: syn=xml fen fdm=syntax fdl=2 si
-vim: et tw=78 syn=sgml
-vi: ts=1 sw=1
--->
+        <!-- Keep this comment at the end of the file
+        Local variables:
+        mode: sgml
+        sgml-omittag:t
+        sgml-shorttag:t
+        sgml-minimize-attributes:nil
+        sgml-always-quote-attributes:t
+        sgml-indent-step:1
+        sgml-indent-data:t
+        indent-tabs-mode:nil
+        sgml-parent-document:nil
+        sgml-default-dtd-file:"../../../../manual.ced"
+        sgml-exposed-tags:nil
+        sgml-local-catalogs:nil
+        sgml-local-ecat-files:nil
+        End:
+        vim600: syn=xml fen fdm=syntax fdl=2 si
+        vim: et tw=78 syn=sgml
+        vi: ts=1 sw=1
+        -->

@@ -1,7 +1,6 @@
 <?php
- /**
+/**
  * Example Info
-
  * @package Example-application
  */
 require_once dirname(__FILE__) . '/../libs/Smarty.class.php';
@@ -26,26 +25,34 @@ $smarty->registerFilter('pre', array('InfoFoo', 'prefilterThingie'));
 
 $smarty->registerClass('Foo', 'InfoFoo');
 
-class MySecurity extends Smarty_Security {}
+class MySecurity extends Smarty_Security
+{
+}
+
 $security = new MySecurity($smarty);
 $security->streams[] = 'file2';
 $smarty->enableSecurity($security);
 
 
-class InfoFoo {
+class InfoFoo
+{
     public static function strlen($string)
     {
         return strlen($string);
     }
+
     public static function prefilterThingie()
     {
 
     }
+
     public $isAttribute = true;
+
     public function isFunction()
     {
 
     }
+
     public function isBlock()
     {
 

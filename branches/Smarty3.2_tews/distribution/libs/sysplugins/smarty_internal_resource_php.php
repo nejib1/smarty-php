@@ -5,8 +5,8 @@
  *
  * Implements the file system as resource for PHP templates
  *
- * @package Smarty
- * @subpackage TemplateResources
+ *
+ * @package TemplateResources
  * @author Uwe Tews
  * @author Rodney Rehm
  */

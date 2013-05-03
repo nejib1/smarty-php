@@ -3,15 +3,15 @@
 /**
  * Smarty Internal Plugin
  *
- * @package Smarty
- * @subpackage Cacher
+ *
+ * @package Cacher
  */
 
 /**
  * Cache Handler API
  *
- * @package Smarty
- * @subpackage Cacher
+ *
+ * @package Cacher
  * @author Rodney Rehm
  */
 abstract class Smarty_CacheResource_Custom extends Smarty_CacheResource

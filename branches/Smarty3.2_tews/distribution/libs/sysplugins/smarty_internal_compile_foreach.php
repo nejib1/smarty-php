@@ -5,16 +5,16 @@
  *
  * Compiles the {foreach} {foreachelse} {/foreach} tags
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  * @author Uwe Tews
  */
 
 /**
  * Smarty Internal Plugin Compile Foreach Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Foreach extends Smarty_Internal_CompileBase
 {
@@ -56,6 +56,9 @@ class Smarty_Internal_Compile_Foreach extends Smarty_Internal_CompileBase
         $tpl = $compiler->template;
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);
+
+        // set flag that variable container must be cloned
+        $compiler->must_clone_vars = true;
 
         $from = $_attr['from'];
         $item = trim($_attr['item'], '\'"');
@@ -178,8 +181,8 @@ class Smarty_Internal_Compile_Foreach extends Smarty_Internal_CompileBase
 /**
  * Smarty Internal Plugin Compile Foreachelse Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Foreachelse extends Smarty_Internal_CompileBase
 {
@@ -213,8 +216,8 @@ class Smarty_Internal_Compile_Foreachelse extends Smarty_Internal_CompileBase
 /**
  * Smarty Internal Plugin Compile Foreachclose Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Foreachclose extends Smarty_Internal_CompileBase
 {

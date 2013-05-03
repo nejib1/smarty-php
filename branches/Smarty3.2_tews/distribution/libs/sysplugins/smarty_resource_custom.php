@@ -3,8 +3,8 @@
 /**
  * Smarty Resource Plugin
  *
- * @package Smarty
- * @subpackage TemplateResources
+ *
+ * @package TemplateResources
  * @author Rodney Rehm
  */
 
@@ -13,8 +13,8 @@
  *
  * Wrapper Implementation for custom resource plugins
  *
- * @package Smarty
- * @subpackage TemplateResources
+ *
+ * @package TemplateResources
  */
 abstract class Smarty_Resource_Custom extends Smarty_Resource
 {

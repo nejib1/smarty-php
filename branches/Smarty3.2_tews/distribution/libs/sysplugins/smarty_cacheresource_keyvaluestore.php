@@ -3,8 +3,8 @@
 /**
  * Smarty Internal Plugin
  *
- * @package Smarty
- * @subpackage Cacher
+ *
+ * @package Cacher
  */
 
 /**
@@ -28,8 +28,8 @@
  * cache groups: if your cache groups look somewhat like »a|b|$page|$items|$whatever«
  * consider using »a|b|c|$page-$items-$whatever« instead.
  *
- * @package Smarty
- * @subpackage Cacher
+ *
+ * @package Cacher
  * @author Rodney Rehm
  */
 abstract class Smarty_CacheResource_KeyValueStore extends Smarty_CacheResource

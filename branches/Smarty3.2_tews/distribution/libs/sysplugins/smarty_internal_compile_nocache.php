@@ -5,16 +5,16 @@
  *
  * Compiles the {nocache} {/nocache} tags.
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  * @author Uwe Tews
  */
 
 /**
  * Smarty Internal Plugin Compile Nocache Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Nocache extends Smarty_Internal_CompileBase
 {
@@ -47,8 +47,8 @@ class Smarty_Internal_Compile_Nocache extends Smarty_Internal_CompileBase
 /**
  * Smarty Internal Plugin Compile Nocacheclose Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Nocacheclose extends Smarty_Internal_CompileBase
 {

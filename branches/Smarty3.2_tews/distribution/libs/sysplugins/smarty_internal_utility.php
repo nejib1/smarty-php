@@ -27,16 +27,16 @@
  * @copyright 2008 New Digital Group, Inc.
  * @author Monte Ohrt <monte at ohrt dot com>
  * @author Uwe Tews
- * @package Smarty
- * @subpackage PluginsInternal
+ *
+ * @package PluginsInternal
  * @version 3-SVN$Rev: 3286 $
  */
 
 /**
  * Utility class
  *
- * @package Smarty
- * @subpackage Security
+ *
+ * @package Security
  */
 class Smarty_Internal_Utility
 {

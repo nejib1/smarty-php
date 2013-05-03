@@ -3,8 +3,8 @@
 /**
  * Smarty Internal Plugin Resource Registered
  *
- * @package Smarty
- * @subpackage TemplateResources
+ *
+ * @package TemplateResources
  * @author Uwe Tews
  * @author Rodney Rehm
  */
@@ -14,8 +14,8 @@
  *
  * Implements the registered resource for Smarty template
  *
- * @package Smarty
- * @subpackage TemplateResources
+ *
+ * @package TemplateResources
  * @deprecated
  */
 class Smarty_Internal_Resource_Registered extends Smarty_Resource

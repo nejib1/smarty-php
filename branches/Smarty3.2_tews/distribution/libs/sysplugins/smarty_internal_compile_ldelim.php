@@ -5,16 +5,16 @@
  *
  * Compiles the {ldelim} tag
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  * @author Uwe Tews
  */
 
 /**
  * Smarty Internal Plugin Compile Ldelim Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Ldelim extends Smarty_Internal_CompileBase
 {

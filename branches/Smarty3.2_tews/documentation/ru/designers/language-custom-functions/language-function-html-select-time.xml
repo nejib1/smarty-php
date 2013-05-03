@@ -2,160 +2,160 @@
 <!-- $Revision: 2761 $ -->
 <!-- EN-Revision: 0 Maintainer: freespace Status: ready -->
 <sect1 id="language.function.html.select.time">
- <title>{html_select_time}</title>
- <para>
-  {html_select_time} является
-  <link linkend="language.custom.functions">пользовательской функцией</link>,
-  которая создает выпадающее меню для выбора времени.
-  Она может отображать поля для часа, минуты, секунды и меридиана.
- </para>
- 
- <informaltable frame="all">
-  <tgroup cols="5">
-   <colspec colname="param" align="center" />
-   <colspec colname="type" align="center" />
-   <colspec colname="required" align="center" />
-   <colspec colname="default" align="center" />
-   <colspec colname="desc" />
-   <thead>
-    <row>
-     <entry>Имя атрибута</entry>
-     <entry>Тип</entry>
-     <entry>Обязателен</entry>
-     <entry>По умолчанию</entry>
-     <entry>Описание</entry>
-    </row>
-   </thead>
-   <tbody>
-    <row>
-     <entry>prefix</entry>
-     <entry>string</entry>
-     <entry>Нет</entry>
-     <entry>Time_</entry>
-     <entry>префикс для имен переменных</entry>
-    </row>
-    <row>
-     <entry>time</entry>
-     <entry>timestamp</entry>
-     <entry>Нет</entry>
-     <entry>текущее время</entry>
-     <entry>какую дату/время использовать</entry>
-    </row>
-    <row>
-     <entry>display_hours</entry>
-     <entry>boolean</entry>
-     <entry>Нет</entry>
-     <entry>true</entry>
-     <entry>отображать ли часы</entry>
-    </row>
-    <row>
-     <entry>display_minutes</entry>
-     <entry>boolean</entry>
-     <entry>Нет</entry>
-     <entry>true</entry>
-     <entry>Отображать ли минуты</entry>
-    </row>
-    <row>
-     <entry>display_seconds</entry>
-     <entry>boolean</entry>
-     <entry>Нет</entry>
-     <entry>true</entry>
-     <entry>Отображать ли секунды</entry>
-    </row>
-    <row>
-     <entry>display_meridian</entry>
-     <entry>boolean</entry>
-     <entry>Нет</entry>
-     <entry>true</entry>
-     <entry>отображать ли меридиан (am/pm)</entry>
-    </row>
-    <row>
-     <entry>use_24_hours</entry>
-     <entry>boolean</entry>
-     <entry>Нет</entry>
-     <entry>true</entry>
-     <entry>использовать ли 24-часовой формат</entry>
-    </row>
-    <row>
-     <entry>minute_interval</entry>
-     <entry>integer</entry>
-     <entry>Нет</entry>
-     <entry>1</entry>
-     <entry>интервал пунктов выпадающего меню минут</entry>
-    </row>
-    <row>
-     <entry>second_interval</entry>
-     <entry>integer</entry>
-     <entry>Нет</entry>
-     <entry>1</entry>
-     <entry>интервал пунктов выпадающего меню секунд</entry>
-    </row>
-    <row>
-     <entry>field_array</entry>
-     <entry>string</entry>
-     <entry>Нет</entry>
-     <entry>n/a</entry>
-     <entry>присвоить значения массиву с таким именем</entry>
-    </row>
-    <row>
-     <entry>all_extra</entry>
-     <entry>string</entry>
-     <entry>Нет</entry>
-     <entry>null</entry>
-     <entry>добавляет дополнительные атрибуты к тэгам select/input</entry>
-    </row>
-    <row>
-     <entry>hour_extra</entry>
-     <entry>string</entry>
-     <entry>Нет</entry>
-     <entry>null</entry>
-     <entry>добавляет дополнительные атрибуты к тэгу select часа</entry>
-    </row>
-    <row>
-     <entry>minute_extra</entry>
-     <entry>string</entry>
-     <entry>Нет</entry>
-     <entry>null</entry>
-     <entry>добавляет дополнительные атрибуты к тэгу select минуты</entry>
-    </row>
-    <row>
-     <entry>second_extra</entry>
-     <entry>string</entry>
-     <entry>Нет</entry>
-     <entry>null</entry>
-     <entry>добавляет дополнительные атрибуты к тэгу select секунды</entry>
-    </row>
-    <row>
-     <entry>meridian_extra</entry>
-     <entry>string</entry>
-     <entry>Нет</entry>
-     <entry>null</entry>
-     <entry>добавляет дополнительные атрибуты к тэгу select меридиана</entry>
-    </row>
-   </tbody>
-  </tgroup>
- </informaltable>
+    <title>{html_select_time}</title>
+    <para>
+        {html_select_time} является
+        <link linkend="language.custom.functions">пользовательской функцией</link>,
+        которая создает выпадающее меню для выбора времени.
+        Она может отображать поля для часа, минуты, секунды и меридиана.
+    </para>
 
- <para>
-  Атрибут time может иметь разные форматы.
-  Он может быть уникальной временной меткой (Unix timestamp),
-  строкой формата YYYYMMDDHHMMSS или любой другой строкой,
-  которую может обработать функция PHP
-  <ulink url="&url.php-manual;strtotime">strtotime()</ulink>.
- </para>
- <example>
-  <title>{html_select_time}</title>
-  <para>Шаблон:</para>
-  <programlisting>
-<![CDATA[
+    <informaltable frame="all">
+        <tgroup cols="5">
+            <colspec colname="param" align="center"/>
+            <colspec colname="type" align="center"/>
+            <colspec colname="required" align="center"/>
+            <colspec colname="default" align="center"/>
+            <colspec colname="desc"/>
+            <thead>
+                <row>
+                    <entry>Имя атрибута</entry>
+                    <entry>Тип</entry>
+                    <entry>Обязателен</entry>
+                    <entry>По умолчанию</entry>
+                    <entry>Описание</entry>
+                </row>
+            </thead>
+            <tbody>
+                <row>
+                    <entry>prefix</entry>
+                    <entry>string</entry>
+                    <entry>Нет</entry>
+                    <entry>Time_</entry>
+                    <entry>префикс для имен переменных</entry>
+                </row>
+                <row>
+                    <entry>time</entry>
+                    <entry>timestamp</entry>
+                    <entry>Нет</entry>
+                    <entry>текущее время</entry>
+                    <entry>какую дату/время использовать</entry>
+                </row>
+                <row>
+                    <entry>display_hours</entry>
+                    <entry>boolean</entry>
+                    <entry>Нет</entry>
+                    <entry>true</entry>
+                    <entry>отображать ли часы</entry>
+                </row>
+                <row>
+                    <entry>display_minutes</entry>
+                    <entry>boolean</entry>
+                    <entry>Нет</entry>
+                    <entry>true</entry>
+                    <entry>Отображать ли минуты</entry>
+                </row>
+                <row>
+                    <entry>display_seconds</entry>
+                    <entry>boolean</entry>
+                    <entry>Нет</entry>
+                    <entry>true</entry>
+                    <entry>Отображать ли секунды</entry>
+                </row>
+                <row>
+                    <entry>display_meridian</entry>
+                    <entry>boolean</entry>
+                    <entry>Нет</entry>
+                    <entry>true</entry>
+                    <entry>отображать ли меридиан (am/pm)</entry>
+                </row>
+                <row>
+                    <entry>use_24_hours</entry>
+                    <entry>boolean</entry>
+                    <entry>Нет</entry>
+                    <entry>true</entry>
+                    <entry>использовать ли 24-часовой формат</entry>
+                </row>
+                <row>
+                    <entry>minute_interval</entry>
+                    <entry>integer</entry>
+                    <entry>Нет</entry>
+                    <entry>1</entry>
+                    <entry>интервал пунктов выпадающего меню минут</entry>
+                </row>
+                <row>
+                    <entry>second_interval</entry>
+                    <entry>integer</entry>
+                    <entry>Нет</entry>
+                    <entry>1</entry>
+                    <entry>интервал пунктов выпадающего меню секунд</entry>
+                </row>
+                <row>
+                    <entry>field_array</entry>
+                    <entry>string</entry>
+                    <entry>Нет</entry>
+                    <entry>n/a</entry>
+                    <entry>присвоить значения массиву с таким именем</entry>
+                </row>
+                <row>
+                    <entry>all_extra</entry>
+                    <entry>string</entry>
+                    <entry>Нет</entry>
+                    <entry>null</entry>
+                    <entry>добавляет дополнительные атрибуты к тэгам select/input</entry>
+                </row>
+                <row>
+                    <entry>hour_extra</entry>
+                    <entry>string</entry>
+                    <entry>Нет</entry>
+                    <entry>null</entry>
+                    <entry>добавляет дополнительные атрибуты к тэгу select часа</entry>
+                </row>
+                <row>
+                    <entry>minute_extra</entry>
+                    <entry>string</entry>
+                    <entry>Нет</entry>
+                    <entry>null</entry>
+                    <entry>добавляет дополнительные атрибуты к тэгу select минуты</entry>
+                </row>
+                <row>
+                    <entry>second_extra</entry>
+                    <entry>string</entry>
+                    <entry>Нет</entry>
+                    <entry>null</entry>
+                    <entry>добавляет дополнительные атрибуты к тэгу select секунды</entry>
+                </row>
+                <row>
+                    <entry>meridian_extra</entry>
+                    <entry>string</entry>
+                    <entry>Нет</entry>
+                    <entry>null</entry>
+                    <entry>добавляет дополнительные атрибуты к тэгу select меридиана</entry>
+                </row>
+            </tbody>
+        </tgroup>
+    </informaltable>
+
+    <para>
+        Атрибут time может иметь разные форматы.
+        Он может быть уникальной временной меткой (Unix timestamp),
+        строкой формата YYYYMMDDHHMMSS или любой другой строкой,
+        которую может обработать функция PHP
+        <ulink url="&url.php-manual;strtotime">strtotime()</ulink>.
+    </para>
+    <example>
+        <title>{html_select_time}</title>
+        <para>Шаблон:</para>
+        <programlisting>
+            <![CDATA[
 {html_select_time use_24_hours=true}
 ]]>
-  </programlisting>
-  <para>
-   Результат обработки шаблона:
-  </para>
-  <screen>
-<![CDATA[
+        </programlisting>
+        <para>
+            Результат обработки шаблона:
+        </para>
+        <screen>
+            <![CDATA[
 <select name="Time_Hour">
 <option value="00">00</option>
 <option value="01">01</option>
@@ -311,33 +311,33 @@
 <option value="pm">PM</option>
 </select>
 ]]>
-  </screen>
- </example>
- <para>
-  См. также
-  <link linkend="language.variables.smarty.now">$smarty.now</link>,
-  <link linkend="language.function.html.select.date">{html_select_date}</link>
-  и
-  <link linkend="tips.dates">Советы относительно дат</link>.
- </para>
+        </screen>
+    </example>
+    <para>
+        См. также
+        <link linkend="language.variables.smarty.now">$smarty.now</link>,
+        <link linkend="language.function.html.select.date">{html_select_date}</link>
+        и
+        <link linkend="tips.dates">Советы относительно дат</link>.
+    </para>
 </sect1>
-<!-- Keep this comment at the end of the file
-Local variables:
-mode: sgml
-sgml-omittag:t
-sgml-shorttag:t
-sgml-minimize-attributes:nil
-sgml-always-quote-attributes:t
-sgml-indent-step:1
-sgml-indent-data:t
-indent-tabs-mode:nil
-sgml-parent-document:nil
-sgml-default-dtd-file:"../../../../manual.ced"
-sgml-exposed-tags:nil
-sgml-local-catalogs:nil
-sgml-local-ecat-files:nil
-End:
-vim600: syn=xml fen fdm=syntax fdl=2 si
-vim: et tw=78 syn=sgml
-vi: ts=1 sw=1
--->
+        <!-- Keep this comment at the end of the file
+        Local variables:
+        mode: sgml
+        sgml-omittag:t
+        sgml-shorttag:t
+        sgml-minimize-attributes:nil
+        sgml-always-quote-attributes:t
+        sgml-indent-step:1
+        sgml-indent-data:t
+        indent-tabs-mode:nil
+        sgml-parent-document:nil
+        sgml-default-dtd-file:"../../../../manual.ced"
+        sgml-exposed-tags:nil
+        sgml-local-catalogs:nil
+        sgml-local-ecat-files:nil
+        End:
+        vim600: syn=xml fen fdm=syntax fdl=2 si
+        vim: et tw=78 syn=sgml
+        vi: ts=1 sw=1
+        -->

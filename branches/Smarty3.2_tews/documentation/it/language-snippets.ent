@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Revision: 2972 $ -->
+        <!-- $Revision: 2972 $ -->
 
-<!ENTITY note.parameter.merge '<note>
+        <!ENTITY note.parameter.merge '<note>
  <title>Nota tecnica</title>
  <para>
   Il parametro <parameter>merge</parameter> rispetta le chiavi degli array,
@@ -12,7 +12,7 @@
  </para>
 </note>'>
 
-<!ENTITY parameter.compileid '<para>
+        <!ENTITY parameter.compileid '<para>
  Come terzo parametro opzionale, potete passare un <parameter>compile_id</parameter>.
  Questo nel caso in cui vogliate compilare versioni diverse dello stesso template,
  oppure avere template diversi per lingue diverse. Un altro uso di compile_id

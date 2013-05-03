@@ -6,16 +6,16 @@
  * This is the config compiler class. It calls the lexer and parser to
  * perform the compiling.
  *
- * @package Smarty
- * @subpackage Config
+ *
+ * @package Config
  * @author Uwe Tews
  */
 
 /**
  * Main config file compiler class
  *
- * @package Smarty
- * @subpackage Config
+ *
+ * @package Config
  */
 class Smarty_Internal_ConfigCompiler extends Smarty_Internal_Code
 {
@@ -107,7 +107,7 @@ class Smarty_Internal_ConfigCompiler extends Smarty_Internal_Code
         $this->php("public \$config_data = ")->repr($this->config_data)->raw(";")->newline()->newline();
 
         $this->php("function get_template_content (\$_smarty_tpl) {")->newline()->indent();
-        $this->php("\$this->_load_config_vars(\$_smarty_tpl);")->newline();
+        $this->php("\$this->_loadConfigVars(\$_smarty_tpl);")->newline();
         $this->outdent()->php("}")->newline();
 
         $this->outdent()->php("}")->newline()->outdent()->php("}")->newline();

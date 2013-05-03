@@ -3,8 +3,8 @@
 /**
  * Smarty Resource Plugin
  *
- * @package Smarty
- * @subpackage TemplateResources
+ *
+ * @package TemplateResources
  * @author Rodney Rehm
  */
 
@@ -13,8 +13,8 @@
  *
  * Base implementation for resource plugins that don't use the compiler
  *
- * @package Smarty
- * @subpackage TemplateResources
+ *
+ * @package TemplateResources
  */
 abstract class Smarty_Resource_Uncompiled extends Smarty_Resource
 {
@@ -53,7 +53,7 @@ abstract class Smarty_Resource_Uncompiled extends Smarty_Resource
             throw $e;
         }
         if ($_template->caching) {
-            $cached = Smarty_Internal_CacheCreate::findCachedObject($_template);
+            $cached = Smarty_Internal_CacheCreate::_getCachedObject($_template);
             $cached->newcache->file_dependency[$source->uid] = array($source->filepath, $source->timestamp, $source->type);
         }
         return $output;

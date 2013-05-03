@@ -29,6 +29,7 @@
  * @author Uwe Tews
  * @author Rodney Rehm
  * @package Smarty
+ * @subpackage SmartyBC
  */
 /**
  * @ignore
@@ -39,6 +40,7 @@ require(dirname(__FILE__) . '/Smarty.class.php');
  * Dummy Template class for Smarty 3.1 BC
  *
  * @package Smarty
+ * @subpackage SmartyBC
  */
 class Smarty_Internal_Template extends Smarty
 {
@@ -49,6 +51,7 @@ class Smarty_Internal_Template extends Smarty
  * Smarty Backward Compatibility Wrapper Class for Smarty 3.1
  *
  * @package Smarty
+ * @subpackage SmartyBC
  */
 class SmartyBC31 extends Smarty_Internal_Template
 {

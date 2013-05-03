@@ -5,16 +5,16 @@
  *
  * Compiles the {while} tag
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  * @author Uwe Tews
  */
 
 /**
  * Smarty Internal Plugin Compile While Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_While extends Smarty_Internal_CompileBase
 {
@@ -43,6 +43,8 @@ class Smarty_Internal_Compile_While extends Smarty_Internal_CompileBase
         $this->iniTagCode($compiler);
 
         if (is_array($parameter['if condition'])) {
+            // set flag that variable container must be cloned
+            $compiler->must_clone_vars = true;
             if (is_array($parameter['if condition']['var'])) {
                 $var = trim($parameter['if condition']['var']['var'], "'");
             } else {
@@ -78,8 +80,8 @@ class Smarty_Internal_Compile_While extends Smarty_Internal_CompileBase
 /**
  * Smarty Internal Plugin Compile Whileclose Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Whileclose extends Smarty_Internal_CompileBase
 {

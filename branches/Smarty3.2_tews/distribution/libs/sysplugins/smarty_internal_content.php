@@ -5,16 +5,16 @@
  *
  * This file contains the basic shared methods for precessing content of compiled and cached templates
  *
- * @package Smarty
- * @subpackage Template
+ *
+ * @package Template
  * @author Uwe Tews
  */
 
 /**
  * Class with shared content processing methods
  *
- * @package Smarty
- * @subpackage Template
+ *
+ * @package Template
  */
 class Smarty_Internal_Content
 {
@@ -293,18 +293,20 @@ class Smarty_Internal_Content
         $tpl->caching = $caching;
         $tpl->cache_lifetime = $cache_lifetime;
         if ($parent_scope == Smarty::SCOPE_LOCAL) {
-            $tpl->tpl_vars = clone $template->tpl_vars;
-            $tpl->tpl_vars->___scope = $tpl;
+            $tpl->tpl_vars = $template->tpl_vars;
         } elseif ($parent_scope == Smarty::SCOPE_PARENT) {
             $tpl->tpl_vars = $template->tpl_vars;
+            $this->must_merge_tpl_vars = true;
         } elseif ($parent_scope == Smarty::SCOPE_GLOBAL) {
             $tpl->tpl_vars = Smarty::$global_tpl_vars;
+            $this->must_merge_tpl_vars = true;
         } elseif ($parent_scope == Smarty::SCOPE_ROOT) {
             if (($scope_ptr = $tpl->_getScopePointer($parent_scope)) != null) {
                 $tpl->tpl_vars = $scope_ptr->tpl_vars;
             } else {
                 $tpl->tpl_vars = new Smarty_Variable_Container($tpl);
             }
+            $this->must_merge_tpl_vars = true;
         }
         if (!empty($data)) {
             // set up variable values
@@ -316,7 +318,7 @@ class Smarty_Internal_Content
             $result = $tpl->compiled->smarty_content->get_template_content($tpl);
             unset($tpl->tpl_vars, $tpl);
         } else {
-            $result = $tpl->fetch(null, null, null, null, false, true, false);
+            $result = $tpl->fetch(null, null, null, null, false, true);
             if ($cloned) {
                 unset($tpl->tpl_vars, $tpl);
             }
@@ -325,32 +327,68 @@ class Smarty_Internal_Content
     }
 
     /**
+     * [util function] to use either var_export or unserialize/serialize to generate code for the
+     * cachevalue optionflag of {assign} tag
+     *
+     * @param mixed $var Smarty variable value
+     * @throws SmartyException
+     * @return string PHP inline code
+     */
+    public function _exportCacheValue($var)
+    {
+        if (is_int($var) || is_float($var) || is_bool($var) || is_string($var) || (is_array($var) && !is_object($var) && !array_reduce($var, array($this, '_checkAarrayCallback')))) {
+            return var_export($var, true);
+        }
+        if (is_resource($var)) {
+            throw new SmartyException('Cannot serialize resource');
+        }
+        return 'unserialize(\'' . serialize($var) . '\')';
+    }
+
+    /**
+     * callback used by _export_cache_value to check arrays recursively
+     *
+     * @param bool $flag status of previous elements
+     * @param mixed $element array element to check
+     * @throws SmartyException
+     * @return bool status
+     */
+    private function _checkAarrayCallback($flag, $element)
+    {
+        if (is_resource($element)) {
+            throw new SmartyException('Cannot serialize resource');
+        }
+        $flag = $flag || is_object($element) || (!is_int($element) && !is_float($element) && !is_bool($element) && !is_string($element) && (is_array($element) && array_reduce($element, array($this, '_checkAarrayCallback'))));
+        return $flag;
+    }
+
+    /**
      * Template code runtime function to load config varibales
      *
      * @param object $template       calling template object
      */
-    public function _load_config_vars($template)
+    public function _loadConfigVars($template)
     {
         $ptr = $template->parent;
-        $this->_load_config_values_in_scope($template, $ptr->tpl_vars);
+        $this->_loadConfigValuesInScope($template, $ptr->tpl_vars);
         $ptr = $ptr->parent;
         if ($template->tpl_vars->___config_scope == 'parent' && $ptr != null) {
-            $this->_load_config_values_in_scope($template, $ptr->tpl_vars);
+            $this->_loadConfigValuesInScope($template, $ptr->tpl_vars);
         }
         if ($template->tpl_vars->___config_scope == 'root' || $template->tpl_vars->___config_scope == 'global') {
             while ($ptr != null && $ptr->usage == Smarty::IS_TEMPLATE) {
-                $this->_load_config_values_in_scope($template, $ptr->tpl_vars);
+                $this->_loadConfigValuesInScope($template, $ptr->tpl_vars);
                 $ptr = $ptr->parent;
             }
         }
         if ($template->tpl_vars->___config_scope == 'root') {
             while ($ptr != null) {
-                $this->_load_config_values_in_scope($template, $ptr->tpl_vars);
+                $this->_loadConfigValuesInScope($template, $ptr->tpl_vars);
                 $ptr = $ptr->parent;
             }
         }
         if ($template->tpl_vars->___config_scope == 'global') {
-            $this->_load_config_values_in_scope($template, Smarty::$global_tpl_vars);
+            $this->_loadConfigValuesInScope($template, Smarty::$global_tpl_vars);
         }
     }
 
@@ -360,7 +398,7 @@ class Smarty_Internal_Content
      * @param object $template       calling template object
      * @param object $tpl_vars       variable container of scope
      */
-    public function _load_config_values_in_scope($template, $tpl_vars)
+    public function _loadConfigValuesInScope($template, $tpl_vars)
     {
         foreach ($this->config_data['vars'] as $var => $value) {
             if ($template->config_overwrite || !isset($tpl_vars->$var)) {

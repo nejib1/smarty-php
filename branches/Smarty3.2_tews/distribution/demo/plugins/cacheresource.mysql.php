@@ -24,14 +24,16 @@
  * @package CacheResource-examples
  * @author Rodney Rehm
  */
-class Smarty_CacheResource_Mysql extends Smarty_CacheResource_Custom {
+class Smarty_CacheResource_Mysql extends Smarty_CacheResource_Custom
+{
     // PDO instance
     protected $db;
     protected $fetch;
     protected $fetchTimestamp;
     protected $save;
-    
-    public function __construct() {
+
+    public function __construct()
+    {
         try {
             $this->db = new PDO("mysql:dbname=test;host=localhost", "smarty");
         } catch (PDOException $e) {
@@ -58,7 +60,7 @@ class Smarty_CacheResource_Mysql extends Smarty_CacheResource_Custom {
     {
         $this->fetch->execute(array('id' => $id));
         $row = $this->fetch->fetch();
-        $this->fetch->closeCursor();        
+        $this->fetch->closeCursor();
         if ($row) {
             $content = $row['content'];
             $mtime = strtotime($row['modified']);
@@ -67,7 +69,7 @@ class Smarty_CacheResource_Mysql extends Smarty_CacheResource_Custom {
             $mtime = null;
         }
     }
-    
+
     /**
      * Fetch cached content's modification timestamp from data source
      *
@@ -85,7 +87,7 @@ class Smarty_CacheResource_Mysql extends Smarty_CacheResource_Custom {
         $this->fetchTimestamp->closeCursor();
         return $mtime;
     }
-    
+
     /**
      * Save content to cache
      *
@@ -108,7 +110,7 @@ class Smarty_CacheResource_Mysql extends Smarty_CacheResource_Custom {
         ));
         return !!$this->save->rowCount();
     }
-    
+
     /**
      * Delete content from cache
      *
@@ -142,8 +144,8 @@ class Smarty_CacheResource_Mysql extends Smarty_CacheResource_Custom {
         }
         // equal test cache_id and match sub-groups
         if ($cache_id !== null) {
-            $where[] = '(cache_id = '. $this->db->quote($cache_id)
-                . ' OR cache_id LIKE '. $this->db->quote($cache_id .'|%') .')';
+            $where[] = '(cache_id = ' . $this->db->quote($cache_id)
+                . ' OR cache_id LIKE ' . $this->db->quote($cache_id . '|%') . ')';
         }
         // run delete query
         $query = $this->db->query('DELETE FROM output_cache WHERE ' . join(' AND ', $where));

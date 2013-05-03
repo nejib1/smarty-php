@@ -1,6 +1,6 @@
 <!-- EN-Revision: 1.5 Maintainer: fernandoc Status: ready -->
 
-<!ENTITY note.parameter.merge '<note>
+        <!ENTITY note.parameter.merge '<note>
  <title>Nota tecnica</title>
  <para>
   O parâmetro <parameter>merge</parameter> respeita as chaves de matrizes, assim se
@@ -11,7 +11,7 @@
  </para>
 </note>'>
 
-<!ENTITY parameter.compileid '<para>
+        <!ENTITY parameter.compileid '<para>
  Como o terceiro parâmetro opcional, você pode passar
  <parameter>$compile_id</parameter>.
  Isto é no caso de você querer compilar diferentes versões do mesmo

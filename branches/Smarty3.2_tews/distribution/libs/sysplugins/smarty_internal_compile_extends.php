@@ -5,16 +5,16 @@
  *
  * Compiles the {extends} tag
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  * @author Uwe Tews
  */
 
 /**
  * Smarty Internal Plugin Compile extend Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Extends extends Smarty_Internal_CompileBase
 {
@@ -74,8 +74,6 @@ class Smarty_Internal_Compile_Extends extends Smarty_Internal_CompileBase
         $this->php("ob_get_clean();")->newline();
         $this->php("\$tpl = \$this->_getInheritanceTemplate ({$_attr['file']}, \$_smarty_tpl->cache_id, \$_smarty_tpl->compile_id, {$_caching}, \$_smarty_tpl);")->newline();
         $this->php("echo \$tpl->compiled->getRenderedTemplate(\$tpl);")->newline();
-//        $this->php("\$tpl = \$this->_createInheritanceTemplate ({$_attr['file']}, \$_smarty_tpl->cache_id, \$_smarty_tpl->compile_id, {$_caching}, \$_smarty_tpl);")->newline();
-//        $this->php("echo \$tpl->fetch(null, null, null, null, false, true, false);")->newline();
 
         $compiler->compiled_footer_code[] = $this->buffer;
         $this->buffer = '';

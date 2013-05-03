@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Revision: 2972 $ -->
+        <!-- $Revision: 2972 $ -->
 
-<!ENTITY note.parameter.merge '<note>
+        <!ENTITY note.parameter.merge '<note>
  <title>Nota Tecnica</title>
  <para>
   El parametro <parameter>merge</parameter> es la llave respectiva del arreglo, asi si
@@ -11,7 +11,7 @@
  </para>
 </note>'>
 
-<!ENTITY parameter.compileid '<para>
+        <!ENTITY parameter.compileid '<para>
  Como tercer parametro opcional, usted puede pasar <parameter>compile_id</parameter>. 
  Este en el caso que usted quira compilar diferentes versiones del mismo Tempalte,
  tal como tener separadas varios Templates compilados de diferentes lenguajes.

@@ -5,16 +5,16 @@
  *
  * Compiles the {eval} tag.
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  * @author Uwe Tews
  */
 
 /**
  * Smarty Internal Plugin Compile Eval Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Eval extends Smarty_Internal_CompileBase
 {
@@ -59,6 +59,8 @@ class Smarty_Internal_Compile_Eval extends Smarty_Internal_CompileBase
         if (isset($_attr['assign'])) {
             // output will be stored in a smarty variable instead of beind displayed
             $_assign = $_attr['assign'];
+            // set flag that variable container must be cloned
+            $compiler->must_clone_vars = true;
         }
         $this->iniTagCode($compiler);
 

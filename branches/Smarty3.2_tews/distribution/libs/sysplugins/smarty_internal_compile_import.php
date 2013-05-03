@@ -5,16 +5,16 @@
  *
  * Compiles the {import} tag
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  * @author Uwe Tews
  */
 
 /**
  * Smarty Internal Plugin Compile Import Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Import extends Smarty_Internal_CompileBase
 {
@@ -65,7 +65,7 @@ class Smarty_Internal_Compile_Import extends Smarty_Internal_CompileBase
         $_attr = $this->getAttributes($compiler, $args);
 
         $include_file = $_attr['file'];
-        if ($compiler->has_variable_string && substr_count($include_file, "'") != 2) {
+        if (!(substr_count($include_file, "'") == 2 || substr_count($include_file, '"') == 2)) {
             $compiler->trigger_template_error('illegal variable template name', $compiler->lex->taglineno);
         }
 
@@ -81,11 +81,13 @@ class Smarty_Internal_Compile_Import extends Smarty_Internal_CompileBase
         $tpl->compiler->suppressTemplatePropertyHeader = true;
         $tpl->compiler->suppressPostFilter = true;
         $tpl->compiler->write_compiled_code = false;
-        $tpl->compiler->indentation = $compiler->indentation;
+        $tpl->compiler->template_code->indentation = $compiler->template_code->indentation;
         $tpl->compiler->isInheritance = $compiler->isInheritance;
         $tpl->compiler->isInheritanceChild = $compiler->isInheritanceChild;
-       // get compiled code 
-        $compiled_code = $tpl->compiler->compileTemplate();
+        // compile imported template
+        $tpl->compiler->template_code->php("/*  Imported template \"{$tpl_name}\" */")->newline();
+        $tpl->compiler->compileTemplate();
+        $tpl->compiler->template_code->php("/*  End of imported template \"{$tpl_name}\" */")->newline();
         // merge compiled code for {function} tags
         if (!empty($tpl->compiler->template_functions)) {
             $compiler->template_functions = array_merge($compiler->template_functions, $tpl->compiler->template_functions);
@@ -102,21 +104,21 @@ class Smarty_Internal_Compile_Import extends Smarty_Internal_CompileBase
         $compiler->file_dependency[$tpl->source->uid] = array($tpl->source->filepath, $tpl->source->timestamp, $tpl->source->type);
         $compiler->file_dependency = array_merge($compiler->file_dependency, $tpl->compiler->file_dependency);
         $compiler->template->has_nocache_code = $compiler->template->has_nocache_code | $tpl->has_nocache_code;
-        // release compiler object to free memory
-        unset($tpl->compiler);
+
+        // merge flag that variable container must be cloned
+        $compiler->must_clone_vars = $compiler->must_clone_vars || $tpl->compiler->must_clone_vars;
 
         $save = $compiler->nocache_nolog;
         // update nocache line number trace back
-//        $compiler->parser->updateNocacheLineTrace();
+// TODO       $compiler->parser->updateNocacheLineTrace();
         $compiler->nocache_nolog = $save;
         // output compiled code
 
         $compiler->suppressNocacheProcessing = true;
         $this->iniTagCode($compiler);
-        $this->php("/*  Imported template \"{$tpl_name}\" */")->newline();
-        $this->buffer .= $compiled_code;
-        $this->php("/*  End of imported template \"{$tpl_name}\" */")->newline();
-
+        $this->buffer .= $tpl->compiler->template_code->buffer;
+        // release compiler object to free memory
+        unset($tpl->compiler);
         return $this->returnTagCode($compiler);
     }
 

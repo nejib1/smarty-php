@@ -5,16 +5,16 @@
  *
  * Compiles the {function} {/function} tags
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  * @author Uwe Tews
  */
 
 /**
  * Smarty Internal Plugin Compile Function Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Function extends Smarty_Internal_CompileBase
 {
@@ -60,10 +60,9 @@ class Smarty_Internal_Compile_Function extends Smarty_Internal_CompileBase
             $compiler->trigger_template_error('nocache option not allowed', $compiler->lex->taglineno);
         }
         unset($_attr['nocache']);
-        $this->openTag($compiler, 'function', array($_attr, $compiler->buffer, $compiler->indentation, $compiler->template->has_nocache_code, $compiler->lex->taglineno, $compiler->required_plugins));
+        $this->openTag($compiler, 'function', array($_attr, $compiler->template_code, $compiler->template->has_nocache_code, $compiler->lex->taglineno, $compiler->required_plugins));
 
-        $compiler->buffer = '';
-        $compiler->indentation = 3;
+        $compiler->template_code = new Smarty_Internal_Code(3);
 
         $compiler->compiles_template_function = true;
         $compiler->template->has_nocache_code = false;
@@ -77,8 +76,8 @@ class Smarty_Internal_Compile_Function extends Smarty_Internal_CompileBase
 /**
  * Smarty Internal Plugin Compile Functionclose Class
  *
- * @package Smarty
- * @subpackage Compiler
+ *
+ * @package Compiler
  */
 class Smarty_Internal_Compile_Functionclose extends Smarty_Internal_CompileBase
 {
@@ -113,7 +112,7 @@ class Smarty_Internal_Compile_Functionclose extends Smarty_Internal_CompileBase
             }
             $plugins = array();
             foreach ($compiler->required_plugins['compiled'] as $plugin => $tmp) {
-                if (!isset($saved_data[5]['compiled'][$plugin])) {
+                if (!isset($saved_data[4]['compiled'][$plugin])) {
                     foreach ($tmp as $data) {
                         $plugins[$data['file']] = $data['function'];
                     }
@@ -136,12 +135,11 @@ class Smarty_Internal_Compile_Functionclose extends Smarty_Internal_CompileBase
             }
         }
 
-        $this->buffer = '';
         $this->indentation = 2;
 
-        $this->php("/* Line {$saved_data[4]} */")->newline();
+        $this->php("/* Line {$saved_data[3]} */")->newline();
         $this->php("function smarty_template_function_{$_name}(\$_smarty_tpl,\$params) {")->newline()->indent();
-        $this->php("array_unshift(\$_smarty_tpl->trace_call_stack, array('{$resource}',{$saved_data[4]} , '{$compiler->template->source->type}'));")->newline();
+        $this->php("array_unshift(\$_smarty_tpl->trace_call_stack, array('{$resource}',{$saved_data[3]} , '{$compiler->template->source->type}'));")->newline();
         $this->php("\$saved_tpl_vars = clone \$_smarty_tpl->tpl_vars;")->newline();
         $this->php("foreach (\$this->template_functions['{$_name}']['parameter'] as \$key => \$value) {")->newline()->indent();
         $this->php("\$_smarty_tpl->tpl_vars->\$key = new Smarty_Variable (\$value);")->newline();
@@ -157,16 +155,14 @@ class Smarty_Internal_Compile_Functionclose extends Smarty_Internal_CompileBase
         $this->php("array_shift(\$_smarty_tpl->trace_call_stack);")->newline();
         $this->outdent()->php("}")->newline();
 
-        $compiler->template_functions_code[$_name] .= $compiler->buffer . $this->buffer;
+        $compiler->template_functions_code[$_name] .= $compiler->template_code->buffer . $this->buffer;
 
         // reset flag that we are compiling a template function
         $compiler->compiles_template_function = false;
         // restore old compiler status
-        $compiler->buffer = $saved_data[1];
-        $compiler->indentation = $saved_data[2];
-        $this->iniTagCode($compiler);
+        $compiler->template_code = $saved_data[1];
 
-        $compiler->template->has_nocache_code = $compiler->template->has_nocache_code | $saved_data[3];
+        $compiler->template->has_nocache_code = $compiler->template->has_nocache_code | $saved_data[2];
         $compiler->has_code = false;
         return true;
     }

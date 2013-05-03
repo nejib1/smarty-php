@@ -3,8 +3,8 @@
 /**
  * Smarty plugin
  *
- * @package Smarty
- * @subpackage Security
+ *
+ * @package Security
  * @author Uwe Tews
  */
 /*
@@ -77,6 +77,35 @@ class Smarty_Security
      * @var array
      */
     public $static_classes = array();
+
+    /**
+     *   Enables security
+     *
+     * @param Smarty $smarty    Smarty object
+     * @param string|Smarty_Security $security_class if a string is used, it must be class-name
+     * @throws SmartyException when an invalid class name is provided
+     */
+    static function enableSecurity($smarty, $security_class)
+    {
+        if ($security_class instanceof Smarty_Security) {
+            $smarty->security_policy = $security_class;
+            return;
+        } elseif (is_object($security_class)) {
+            throw new SmartyException("enableSecurity(): Class '" . get_class($security_class) . "' must extend Smarty_Security.");
+        }
+        if ($security_class == null) {
+            $security_class = $smarty->security_class;
+        }
+        if (!class_exists($security_class)) {
+            throw new SmartyException("enableSecurity(): Security class '$security_class' is not defined");
+        } elseif ($security_class !== 'Smarty_Security' && !is_subclass_of($security_class, 'Smarty_Security')) {
+            throw new SmartyException("enableSecurity(): Class '$security_class' must extend Smarty_Security.");
+        } else {
+            $smarty->security_policy = new $security_class($smarty);
+        }
+        return;
+    }
+
 
     /**
      * Allowed PHP functions (as function plugins)
