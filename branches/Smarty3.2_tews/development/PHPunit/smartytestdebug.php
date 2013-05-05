@@ -6,7 +6,7 @@
     * @author Uwe Tews
     */                              
     $test = 'CompileIncludeTests';
-    $function= array();
+    $function= array('testRecursiveIncludes3');
 
     include 'smartytestdebug.inc.php';
     SmartyTests::$smarty->clearAllCache();
@@ -41,8 +41,9 @@
         $o->$func();
     }
 
-    SmartyTests::$smarty->clearAllCache();
-    SmartyTests::$smarty->clearCompiledTemplate();
+//    SmartyTests::$smarty->clearAllCache();
+//    SmartyTests::$smarty->clearCompiledTemplate();
+
     // repeat error functions
     if (!empty($o->error_functions)) {
         $error_functions = $o->error_functions;

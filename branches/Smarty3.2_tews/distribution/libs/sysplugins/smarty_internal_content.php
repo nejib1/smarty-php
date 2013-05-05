@@ -256,9 +256,8 @@ class Smarty_Internal_Content
      * @param string $content_class  optional name of inline content class
      * @returns string template content
      */
-    public function _getSubTemplate($resource, $template, $cache_id, $compile_id, $caching, $cache_lifetime, $data, $parent_scope, $content_class = null)
+    public function __getSubTemplate($resource, $template, $cache_id, $compile_id, $caching, $cache_lifetime, $data, $parent_scope, $content_class = null)
     {
-        $cloned = false;
         // already in template cache?
         if ($template->allow_ambiguous_resources) {
             $_templateId = Smarty_Resource::getUniqueTemplateName($template, $resource) . $cache_id . $compile_id;
@@ -275,7 +274,6 @@ class Smarty_Internal_Content
         if (isset(Smarty::$template_objects[$_templateId])) {
             // clone cached template object because of possible recursive call
             $tpl = clone Smarty::$template_objects[$_templateId];
-            $cloned = true;
         } else {
             // clone new template object
             $tpl = clone $template;
@@ -296,17 +294,17 @@ class Smarty_Internal_Content
             $tpl->tpl_vars = $template->tpl_vars;
         } elseif ($parent_scope == Smarty::SCOPE_PARENT) {
             $tpl->tpl_vars = $template->tpl_vars;
-            $this->must_merge_tpl_vars = true;
+            $this->dont_clone_tpl_vars = true;
         } elseif ($parent_scope == Smarty::SCOPE_GLOBAL) {
             $tpl->tpl_vars = Smarty::$global_tpl_vars;
-            $this->must_merge_tpl_vars = true;
+            $this->dont_clone_tpl_vars = true;
         } elseif ($parent_scope == Smarty::SCOPE_ROOT) {
             if (($scope_ptr = $tpl->_getScopePointer($parent_scope)) != null) {
                 $tpl->tpl_vars = $scope_ptr->tpl_vars;
             } else {
                 $tpl->tpl_vars = new Smarty_Variable_Container($tpl);
             }
-            $this->must_merge_tpl_vars = true;
+            $this->dont_clone_tpl_vars = true;
         }
         if (!empty($data)) {
             // set up variable values
@@ -318,12 +316,56 @@ class Smarty_Internal_Content
             $result = $tpl->compiled->smarty_content->get_template_content($tpl);
             unset($tpl->tpl_vars, $tpl);
         } else {
-            $result = $tpl->fetch(null, null, null, null, false, true);
+            $result = $tpl->fetch(null, null, null, null, false, true, true);
             if ($cloned) {
                 unset($tpl->tpl_vars, $tpl);
             }
         }
         return $result;
+    }
+
+    /**
+     * Template code runtime function to get subtemplate content
+     *
+     * @param string $resource       the resource handle of the template file
+     * @param object $template       calling template object
+     * @param mixed $cache_id       cache id to be used with this template
+     * @param mixed $compile_id     compile id to be used with this template
+     * @param integer $caching        cache mode
+     * @param integer $cache_lifetime life time of cache data
+     * @param array $data array with parameter template variables
+     * @param int $scope   scope in which {include} should execute
+     * @param string $content_class  optional name of inline content class
+     * @returns string template content
+     */
+    public function _getSubTemplate($resource, $template, $cache_id, $compile_id, $caching, $cache_lifetime, $data, $scope, $content_class = null)
+    {
+        if (isset($content_class)) {
+            // clone new template object
+            $tpl = clone $template;
+            unset($tpl->source, $tpl->compiled, $tpl->cached, $tpl->compiler, $tpl->mustCompile);
+            $tpl->template_resource = $resource;
+            $tpl->cache_id = $cache_id;
+            $tpl->compile_id = $compile_id;
+            $tpl->parent = $template;
+
+            // create scope
+            $tpl->_create_scope($data, $scope);
+
+            // instance content class
+            $tpl->compiled = new stdclass;
+            $tpl->compiled->smarty_content = new $content_class($tpl);
+
+            $result = $tpl->compiled->smarty_content->get_template_content($tpl);
+            unset($tpl->tpl_vars, $tpl->compiled, $tpl);
+            return $result;
+        } else {
+            if ($template->caching && $caching && $caching != Smarty::CACHING_NOCACHE_CODE) {
+                $template->cached_subtemplates[$resource] = array($resource, $cache_id, $compile_id, $caching, $cache_lifetime);
+            }
+            return $template->fetch($resource, $cache_id, $compile_id, $template, false, true, $data, $scope, $caching, $cache_lifetime);
+        }
+
     }
 
     /**

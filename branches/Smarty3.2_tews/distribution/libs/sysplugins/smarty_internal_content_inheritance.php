@@ -70,12 +70,12 @@ class Smarty_Internal_Content_Inheritance extends Smarty_Internal_Content
      *
      * @param string $name          name of block
      * @param object $scope_tpl     blocks must be processed in this variable scope
-     * @param int    $mode          mode of this call
      * @param object $current_tpl   calling template  (optional)
+     * @param int    $mode          mode of this call
      * @param boolean $in_child_chain   flag when inside child template chaim
      * @return string | false
      */
-    public function _getInheritanceBlock($name, $scope_tpl, $mode = 0, $current_tpl = null, $in_child_chain = false)
+    public function _getInheritanceBlock($name, $scope_tpl, $current_tpl = null, $mode = 0, $in_child_chain = false)
     {
         //            if ($this->is_cache) {
         //                $mode = 2;
@@ -86,9 +86,17 @@ class Smarty_Internal_Content_Inheritance extends Smarty_Internal_Content
         }
         switch ($mode) {
             case 0:
-                if (!$this->inheritance_blocks[$name]['calls_child']) {
-                    if (($result = $this->_getInheritanceChildBlock($name, $scope_tpl, $mode, $current_tpl, $in_child_chain)) != false) {
-                        return $result;
+                if (!isset($this->inheritance_blocks[$name]['calls_child'])) {
+                    if (($child_content = $this->_getInheritanceChildBlock($name, $scope_tpl, $mode, $current_tpl, $in_child_chain)) != false) {
+                        return $child_content;
+                    }
+                } else {
+                    $child_content = $this->_getInheritanceChildBlock($name, $scope_tpl, $mode, $current_tpl, $in_child_chain);
+                    if ($child_content == false && isset($this->inheritance_blocks[$name]['hide'])) {
+                        return '';
+                    } else {
+                        $this->inheritance_blocks[$name]['child_content'] = $child_content;
+                        unset ($child_content);
                     }
                 }
                 return $this->_getInheritanceRenderedBlock($name, $scope_tpl, $current_tpl);
@@ -120,35 +128,40 @@ class Smarty_Internal_Content_Inheritance extends Smarty_Internal_Content
             $current_tpl = $scope_tpl;
         }
         if ($parent_block == null) {
-            $parent_block = array($this, $current_tpl);
+            $parent_block = array($this, $current_tpl, $name);
         }
+
+        // Get real name 
+        $name = $this->inheritance_blocks[$name]['name'];
+
         $ptr = $current_tpl->parent;
         while ($ptr !== null && $ptr->usage == Smarty::IS_TEMPLATE) {
             $content_ptr = $ptr->compiled->smarty_content;
-            if (isset($content_ptr->inheritance_blocks)) {
+            if ($content_ptr->is_inheritance_child) {
                 $in_child_chain = true;
             } elseif ($in_child_chain) {
                 // we did reach start of current inhertance chain
                 return false;
             }
             if (isset($content_ptr->inheritance_blocks[$name])) {
-                if ($content_ptr->inheritance_blocks[$name]['hide'] || !$content_ptr->inheritance_blocks[$name]['valid']) {
+                if (!isset($content_ptr->inheritance_blocks[$name]['valid'])) {
                     break;
                 }
                 $content_ptr->inheritance_blocks[$name]['parent_block'] = $parent_block;
                 unset($parent_block[0]->inheritance_blocks[$name]['parent_block']);
-                if ($content_ptr->inheritance_blocks[$name]['calls_child']) {
-                    return $content_ptr->_getInheritanceBlock($name, $scope_tpl, $mode, $ptr, $in_child_chain);
+                if (isset($content_ptr->inheritance_blocks[$name]['calls_child'])) {
+                    return $content_ptr->_getInheritanceBlock($name, $scope_tpl, $ptr, $mode, $in_child_chain);
                 }
                 if (($result = $content_ptr->_getInheritanceChildBlock($name, $scope_tpl, $mode, $ptr, $in_child_chain)) != false) {
                     return $result;
                 } else {
                     if (isset($content_ptr->inheritance_blocks[$name]['parent_block'])) {
                         $parent_content_ptr = $content_ptr->inheritance_blocks[$name]['parent_block'][0];
-                        if ($content_ptr->inheritance_blocks[$name]['prepend']) {
-                            return $content_ptr->_getInheritanceRenderedBlock($name, $scope_tpl, $ptr) . $parent_content_ptr->_getInheritanceRenderedBlock($name, $scope_tpl, $ptr);
-                        } elseif ($content_ptr->inheritance_blocks[$name]['append']) {
-                            return $parent_content_ptr->_getInheritanceRenderedBlock($name, $scope_tpl, $ptr) . $content_ptr->_getInheritanceRenderedBlock($name, $scope_tpl, $ptr);
+                        $parent_name = $content_ptr->inheritance_blocks[$name]['parent_block'][2];
+                        if (isset($content_ptr->inheritance_blocks[$name]['prepend'])) {
+                            return $content_ptr->_getInheritanceRenderedBlock($name, $scope_tpl, $ptr) . $parent_content_ptr->_getInheritanceRenderedBlock($parent_name, $scope_tpl, $ptr);
+                        } elseif (isset($content_ptr->inheritance_blocks[$name]['append'])) {
+                            return $parent_content_ptr->_getInheritanceRenderedBlock($parent_name, $scope_tpl, $ptr) . $content_ptr->_getInheritanceRenderedBlock($name, $scope_tpl, $ptr);
                         }
                         unset($parent_block[0]->inheritance_blocks[$name]['parent_block']);
                     }
@@ -195,7 +208,7 @@ class Smarty_Internal_Content_Inheritance extends Smarty_Internal_Content
         if (isset($this->inheritance_blocks[$name])) {
             return $this->{$this->inheritance_blocks[$name]['function']} ($scope_tpl, $current_tpl);
         } else {
-            throw new SmartyRuntimeException ("Inheritance: Method for block '{$name}' not found", $scope_tpl);
+            throw new SmartyRuntimeException ("Inheritance: Method {$this->inheritance_blocks[$name]['function']} for block '{$name}' not found", $scope_tpl);
         }
     }
 

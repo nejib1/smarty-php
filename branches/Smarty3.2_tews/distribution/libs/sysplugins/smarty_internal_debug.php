@@ -27,6 +27,37 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data
     public static $_template_data = array();
 
     /**
+     *  URL debugging ?
+     *
+     * @param object $_template
+     */
+    public static function checkURLDebug($smarty)
+    {
+            if (isset($_SERVER['QUERY_STRING'])) {
+                $_query_string = $_SERVER['QUERY_STRING'];
+            } else {
+                $_query_string = '';
+            }
+            if (false !== strpos($_query_string, $smarty->smarty_debug_id)) {
+                if (false !== strpos($_query_string, $smarty->smarty_debug_id . '=on')) {
+                    // enable debugging for this browser session
+                    setcookie('SMARTY_DEBUG', true);
+                    $smarty->debugging = true;
+                } elseif (false !== strpos($_query_string, $smarty->smarty_debug_id . '=off')) {
+                    // disable debugging for this browser session
+                    setcookie('SMARTY_DEBUG', false);
+                    $smarty->debugging = false;
+                } else {
+                    // enable debugging for this page
+                    $smarty->debugging = true;
+                }
+            } else {
+                if (isset($_COOKIE['SMARTY_DEBUG'])) {
+                   $smarty->debugging = true;
+                }
+            }
+    }
+    /**
      * Start logging of compile time
      *
      * @param object $_template
@@ -118,6 +149,7 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data
         $_template->disableSecurity();
         $_template->cache_id = null;
         $_template->compile_id = null;
+        $_template->parent = null;
         $_assigned_vars = $ptr->tpl_vars;
         ksort($_assigned_vars);
         $_config_vars = $ptr->config_vars;
@@ -132,6 +164,7 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data
         $_template->assign('assigned_vars', $_assigned_vars);
         $_template->assign('config_vars', $_config_vars);
         $_template->assign('execution_time', microtime(true) - $_template->start_time);
+        $_template->must_merge_tpl_vars = false;
         echo $_template->fetch();
     }
 
@@ -255,11 +288,14 @@ function smarty_modifier_debug_print_var($var, $depth = 0, $length = 40, $root =
 
         case 'object' :
             $object_vars = get_object_vars($var);
-            $results = '<b>' . get_class($var) . ' Object (' . count($object_vars) . ')</b>';
+            $results = '';
+            if (!$root) {
+                $results = '<b>' . get_class($var) . ' Object (' . count($object_vars) . ')</b><br>';
+            }
             foreach ($object_vars as $curr_key => $curr_val) {
-                $results .= '<br>' . str_repeat('&nbsp;', $depth * 2)
+                $results .= str_repeat('&nbsp;', $depth * 2)
                     . '<b> -&gt;' . strtr($curr_key, $_replace) . '</b> = '
-                    . smarty_modifier_debug_print_var($curr_val, ++$depth, $length, false);
+                    . smarty_modifier_debug_print_var($curr_val, ++$depth, $length, false) . '<br>';
                 $depth--;
             }
             break;

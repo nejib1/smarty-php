@@ -25,7 +25,7 @@ class VariableCachevalueTests extends PHPUnit_Framework_TestCase
 
     public function testRegularNocaching()
     {
-        $tpl = $this->smarty->createTemplate('eval:{$vars = [1,2,3,4,5]}{foreach $vars as $var}{$v = $var}{nocache}{$v}{/nocache}{/foreach}');
+        $tpl = $this->smarty->createTemplate('string:{$vars = [1,2,3,4,5]}{foreach $vars as $var}{$v = $var}{nocache}{$v}{/nocache}{/foreach}');
         $this->assertEquals('12345', $tpl->fetch());
     }
 
@@ -33,7 +33,7 @@ class VariableCachevalueTests extends PHPUnit_Framework_TestCase
     {
         $this->smarty->clearAllCache();
         $this->smarty->caching = true;
-        $tpl = $this->smarty->createTemplate('eval:{$vars = [1,2,3,4,5]}{foreach $vars as $var}{$v = $var}{nocache}{$v}{/nocache}{/foreach}');
+        $tpl = $this->smarty->createTemplate('string:{$vars = [1,2,3,4,5]}{foreach $vars as $var}{$v = $var}{nocache}{$v}{/nocache}{/foreach}');
         $this->assertEquals('55555', $tpl->fetch());
     }
 
@@ -49,7 +49,7 @@ class VariableCachevalueTests extends PHPUnit_Framework_TestCase
         Smarty::$template_objects = array();
         Smarty_Resource::$sources = array();
         try {
-            $tpl = $this->smarty->createTemplate('eval:{$vars = [1,2,3,4,5]}{foreach $vars as $var}{$v = $var}{nocache}{$v}{/nocache}{/foreach}');
+            $tpl = $this->smarty->createTemplate('string:{$vars = [1,2,3,4,5]}{foreach $vars as $var}{$v = $var}{nocache}{$v}{/nocache}{/foreach}');
             $tpl->fetch();
         } catch (SmartyException $e) {
             $this->assertEquals("Unassigned template variable 'v'", $e->getMessage());
@@ -61,7 +61,7 @@ class VariableCachevalueTests extends PHPUnit_Framework_TestCase
 
     public function testNocaching()
     {
-        $tpl = $this->smarty->createTemplate('eval:{$vars = [1,2,3,4,5]}{foreach $vars as $var}{$v = $var cachevalue}{nocache}{$v}{/nocache}{/foreach}');
+        $tpl = $this->smarty->createTemplate('string:{$vars = [1,2,3,4,5]}{foreach $vars as $var}{$v = $var cachevalue}{nocache}{$v}{/nocache}{/foreach}');
         $this->assertEquals('12345', $tpl->fetch());
     }
 
@@ -69,7 +69,7 @@ class VariableCachevalueTests extends PHPUnit_Framework_TestCase
     {
         $this->smarty->clearAllCache();
         $this->smarty->caching = true;
-        $tpl = $this->smarty->createTemplate('eval:{$vars = [1,2,3,4,5]}{foreach $vars as $var}{$v = $var cachevalue}{nocache}{$v}{/nocache}{/foreach}');
+        $tpl = $this->smarty->createTemplate('string:{$vars = [1,2,3,4,5]}{foreach $vars as $var}{$v = $var cachevalue}{nocache}{$v}{/nocache}{/foreach}');
         $this->assertEquals('12345', $tpl->fetch());
     }
 
@@ -83,7 +83,7 @@ class VariableCachevalueTests extends PHPUnit_Framework_TestCase
         }
         Smarty::$template_objects = array();
         Smarty_Resource::$sources = array();
-        $tpl = $this->smarty->createTemplate('eval:{$vars = [1,2,3,4,5]}{foreach $vars as $var}{$v = $var cachevalue}{nocache}{$v}{/nocache}{/foreach}');
+        $tpl = $this->smarty->createTemplate('string:{$vars = [1,2,3,4,5]}{foreach $vars as $var}{$v = $var cachevalue}{nocache}{$v}{/nocache}{/foreach}');
         $this->assertEquals('12345', $tpl->fetch());
     }
 }

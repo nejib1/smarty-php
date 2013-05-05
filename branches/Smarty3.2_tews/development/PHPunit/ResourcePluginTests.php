@@ -117,9 +117,8 @@ class ResourcePluginTests extends PHPUnit_Framework_TestCase
     {
         $this->smarty->addPluginsDir(dirname(__FILE__) . "/PHPunitplugins/");
         $tpl = $this->smarty->createTemplate('mysqltest:test.tpl');
-        $expected = realpath('./templates_c/' . sha1('mysqltest:test.tpl') . '.mysqltest.test.tpl.php');
-        $this->assertTrue(!!$expected);
-        $this->assertEquals($expected, realpath($tpl->compiled->filepath));
+        $expected = './templates_c/' . sha1('mysqltest:test.tpl') . '_0.mysqltest.test.tpl.php';
+        $this->assertEquals($expected, str_replace("\\", "/",$tpl->compiled->filepath));
     }
 
     public function testResourcePluginMysqlCompiledFilepathCache()
@@ -130,9 +129,8 @@ class ResourcePluginTests extends PHPUnit_Framework_TestCase
         $this->smarty->force_compile = true;
         $this->smarty->fetch('mysqltest:test.tpl');
         $tpl = $this->smarty->createTemplate('mysqltest:test.tpl');
-        $expected = realpath('./templates_c/' . sha1('mysqltest:test.tpl') . '.mysqltest.test.tpl.cache.php');
-        $this->assertTrue(!!$expected);
-        $this->assertEquals($expected, realpath($tpl->compiled->filepath));
+        $expected = './templates_c/' . sha1('mysqltest:test.tpl') . '_0.mysqltest.test.tpl.cache.php';
+        $this->assertEquals($expected, str_replace("\\", "/",$tpl->compiled->filepath));
         $this->smarty->caching = false;
     }
 

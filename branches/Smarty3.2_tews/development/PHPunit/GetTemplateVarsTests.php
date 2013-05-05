@@ -103,9 +103,9 @@ class GetTemplateVarsTests extends PHPUnit_Framework_TestCase
         $this->smarty->assign('foo', 'bar');
         $data1->assign('blar', 'buh');
         $data2->assign('foo2', 'bar2');
-        $this->assertEquals("", $this->smarty->getTemplateVars('foo', $data2, false));
+        $this->assertEquals(null, $this->smarty->getTemplateVars('foo', $data2, false));
         $this->assertEquals("bar2", $this->smarty->getTemplateVars('foo2', $data2, false));
-        $this->assertEquals("", $this->smarty->getTemplateVars('blar', $data2, false));
+        $this->assertEquals(null, $this->smarty->getTemplateVars('blar', $data2, false));
     }
 }
 

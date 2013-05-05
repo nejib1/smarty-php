@@ -69,9 +69,13 @@ class Smarty_Internal_Compile_Block extends Smarty_Internal_CompileBase
 
         //nesting level
         $compiler->block_nesting_level++;
-        $compiler->block_name_index++;
-        $int_name = $name . '_' . $compiler->block_name_index;
-        array_unshift($compiler->block_nesting_info, array('name' => $name, 'int_name' => $int_name, 'function' => '__Interitance_Block_' . $int_name . str_replace('.', '_', uniqid('', true)), 'calls_child' => false, 'calls_parent' => false, 'subblocks' => array()));
+        if ($compiler->block_nesting_level == 1) {
+            $int_name = $name;
+        } else {
+            $compiler->block_name_index++;
+            $int_name = $name . '_' . $compiler->block_name_index;
+        }
+        array_unshift($compiler->block_nesting_info, array('name' => $name, 'int_name' => $int_name, 'function' => '_' . $int_name . '_Interitance_Block_' . str_replace('.', '_', uniqid('', true))));
 
 
         $compiler->template->has_nocache_code = false;
@@ -127,10 +131,11 @@ class Smarty_Internal_Compile_Blockclose extends Smarty_Internal_CompileBase
                 $resource = substr($resource, $start + 1, $end - $start - 1);
             }
         }
-        $compiler->block_nesting_info[0]['hide'] = $saved_data[0]['hide'];
-        $compiler->block_nesting_info[0]['prepend'] = $saved_data[0]['prepend'];
-        $compiler->block_nesting_info[0]['append'] = $saved_data[0]['append'];
-        $compiler->block_nesting_info[0]['overwrite'] = $saved_data[0]['overwrite'];
+
+        if ($saved_data[0]['hide']) $compiler->block_nesting_info[0]['hide'] = true;
+        if ($saved_data[0]['prepend']) $compiler->block_nesting_info[0]['prepend'] = true;
+        if ($saved_data[0]['append']) $compiler->block_nesting_info[0]['append'] = true;
+        if ($saved_data[0]['overwrite']) $compiler->block_nesting_info[0]['overwrite'] = true;
 
         $block_code = new Smarty_Internal_Code(2);
         $block_code->php("public function " . $compiler->block_nesting_info[0]['function'] . " (\$_smarty_tpl, \$current_tpl) {")->newline()->indent();
@@ -156,7 +161,9 @@ class Smarty_Internal_Compile_Blockclose extends Smarty_Internal_CompileBase
         $this->iniTagCode($compiler);
 
         $int_name = $compiler->block_nesting_info[0]['int_name'];
-        if ($compiler->isInheritanceChild && $compiler->block_nesting_level = 1) {
+        unset($compiler->block_nesting_info[0]['int_name']);
+
+        if ($compiler->isInheritanceChild && $compiler->block_nesting_level == 1) {
             if ($compiler->tag_nocache) {
                 $compiler->postfix_code[] = "\$this->inheritance_blocks['$int_name']['valid'] = true;\n";
             } else {
@@ -164,15 +171,15 @@ class Smarty_Internal_Compile_Blockclose extends Smarty_Internal_CompileBase
             }
         } else {
             if ($compiler->tag_nocache) {
-                $compiler->postfix_code[] = "\$this->inheritance_blocks['$int_name']['valid'] = true;\n";
+//                $compiler->postfix_code[] = "\$this->inheritance_blocks['$int_name']['valid'] = true;\n";
                 $compiler->postfix_code[] = "echo \$this->_getInheritanceBlock ('{$int_name}', \$_smarty_tpl, 1);\n";
             } else {
-                $this->php("\$this->inheritance_blocks['$int_name']['valid'] = true;")->newline();
+//                $this->php("\$this->inheritance_blocks['$int_name']['valid'] = true;")->newline();
                 $this->php("echo \$this->_getInheritanceBlock ('{$int_name}', \$_smarty_tpl, 0);")->newline();
             }
         }
         if ($compiler->block_nesting_level > 1) {
-            $compiler->block_nesting_info[1]['subblock'][] = $int_name;
+            $compiler->block_nesting_info[1]['subblocks'][] = $int_name;
         }
         $compiler->inheritance_blocks[$int_name] = $compiler->block_nesting_info[0];
         array_shift($compiler->block_nesting_info);
@@ -243,7 +250,11 @@ class Smarty_Internal_Compile_Private_Block_Child extends Smarty_Internal_Compil
         $_attr = $this->getAttributes($compiler, $args);
         $this->iniTagCode($compiler);
 
-        $this->raw("\$this->_getInheritanceChildBlock ('{$compiler->block_nesting_info[0]['int_name']}', \$_smarty_tpl, 0, \$current_tpl)");
+        $compiler->block_nesting_info[0]['calls_child'] = true;
+
+        $this->raw("\$this->inheritance_blocks['{$compiler->block_nesting_info[0]['int_name']}']['child_content']");
+// TODO  remove this
+//       $this->raw("\$this->_getInheritanceChildBlock ('{$compiler->block_nesting_info[0]['int_name']}', \$_smarty_tpl, 0, \$current_tpl)");
 
         return $this->returnTagCode($compiler);
     }

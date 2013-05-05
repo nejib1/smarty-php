@@ -126,7 +126,7 @@ class CompileIncludeTests extends PHPUnit_Framework_TestCase
     public function testRecursiveIncludes3()
     {
         // TODO  test compiled includes is diabled
-       // $this->smarty->merge_compiled_includes = true;
+//       $this->smarty->merge_compiled_includes = true;
         $this->smarty->clearCompiledTemplate();
         $this->smarty->assign('foo', 1);
         $this->smarty->assign('bar', 'bar');

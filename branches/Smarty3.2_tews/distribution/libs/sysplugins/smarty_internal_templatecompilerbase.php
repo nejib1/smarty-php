@@ -890,7 +890,6 @@ abstract class Smarty_Internal_TemplateCompilerBase
             $template_code->php("public \$called_nocache_template_functions = ")->repr($this->called_nocache_template_functions)->raw(';')->newline();
         }
         $template_code->newline()->newline()->php("function get_template_content (\$_smarty_tpl) {")->newline()->indent();
-        $template_code->php("\$_smarty_tpl->_create_new_scope ();")->newline();
         $template_code->php("ob_start();")->newline()->newline();
         $template_code->raw($this->template_code->buffer);
         if (!empty($this->compiled_footer_code)) {
@@ -906,7 +905,6 @@ abstract class Smarty_Internal_TemplateCompilerBase
         }
         $template_code->outdent()->php('}')->newline();
         if (!$noinstance) {
-            $template_code->php("\$_template->compiled->smarty_content = new {$this->content_class}(\$_template);")->newline()->newline();
             foreach (Smarty_Internal_TemplateCompilerBase::$merged_inline_templates as $key => $inline_template) {
                 $template_code->newline()->raw($inline_template['code']);
                 unset(Smarty_Internal_TemplateCompilerBase::$merged_inline_templates[$key], $inline_template);

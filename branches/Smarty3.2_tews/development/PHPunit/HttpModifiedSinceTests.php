@@ -71,7 +71,7 @@ class HttpModifiedSinceTests extends PHPUnit_Framework_TestCase
 
         $this->smarty->cache_modified_check = true;
         $this->smarty->caching = true;
-        $this->smarty->cache_lifetime = 20;
+        $this->smarty->cache_lifetime = 1000;
 
         ob_start();
         $this->smarty->display('helloworld.tpl');

@@ -77,11 +77,12 @@ class Smarty_Compiled
      * get rendered template output from compiled template
      *
      * @param Smarty $_template template object
+     * @param boolean $no_output_filter true if output filter shall nit run
      * @throws Exception
      * @throws SmartyException
      * @return
      */
-    public function getRenderedTemplate($_template)
+    public function getRenderedTemplate($_template, $no_output_filter = true)
     {
         $_template->cached_subtemplates = array();
         if (empty($this->smarty_content)) {
@@ -118,6 +119,10 @@ class Smarty_Compiled
         if ($_template->caching == Smarty::CACHING_NOCACHE_CODE && isset($_template->parent)) {
             $_template->parent->has_nocache_code = $_template->parent->has_nocache_code || $_template->has_nocache_code;
         }
+        if (!$no_output_filter && (isset($_template->autoload_filters['output']) || isset($_template->registered_filters['output']))) {
+            $output = Smarty_Internal_Filter_Handler::runFilter('output', $output, $_template);
+        }
+
         if ($_template->debugging) {
             Smarty_Internal_Debug::end_render($_template);
         }

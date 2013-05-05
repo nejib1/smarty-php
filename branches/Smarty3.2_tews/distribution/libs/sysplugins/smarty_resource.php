@@ -668,10 +668,15 @@ class Smarty_Template_Source
      * get rendered template output from compiled template
      *
      * @param Smarty $_template template object
-     */
-    public function getRenderedTemplate($_template)
-    {
-        return $this->handler->getRenderedTemplate($this, $_template);
+     * @param boolean $no_output_filter true if output filter shall nit run
+      */
+    public function getRenderedTemplate($_template, $no_output_filter = true)
+    { 
+        $output = $this->handler->getRenderedTemplate($this, $_template);       
+        if (!$no_output_filter && (isset($_template->autoload_filters['output']) || isset($_template->registered_filters['output']))) {
+            $output = Smarty_Internal_Filter_Handler::runFilter('output', $output, $_template);
+        }
+        return $output;
     }
 
     /**

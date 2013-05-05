@@ -110,7 +110,7 @@ class ConfigVarTests extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals("Welcome to Smarty!", $this->smarty->fetch('eval:{config_load file=\'test.conf\' scope=\'local\'}{#title#}'));
         // global must be empty
-        $this->assertEquals("", $this->smarty->getConfigVars('title'));
+        $this->assertEquals(null, $this->smarty->getConfigVars('title'));
     }
 
     /**
@@ -264,7 +264,7 @@ class ConfigVarTests extends PHPUnit_Framework_TestCase
     {
         $this->smarty->configLoad('test.conf');
         $this->smarty->clearConfig('title');
-        $this->assertEquals("", $this->smarty->getConfigVars('title'));
+        $this->assertEquals(null, $this->smarty->getConfigVars('title'));
     }
 
     /**
@@ -320,7 +320,7 @@ class ConfigVarTests extends PHPUnit_Framework_TestCase
         $data = $this->smarty->createData();
         $data->configLoad('test.conf');
         $data->clearConfig('title');
-        $this->assertEquals("", $data->getConfigVars('title'));
+        $this->assertEquals(null, $data->getConfigVars('title'));
         $this->assertEquals("Global Section1", $data->getConfigVars('sec1'));
     }
 
@@ -378,7 +378,7 @@ class ConfigVarTests extends PHPUnit_Framework_TestCase
         $tpl = $this->smarty->createTemplate('eval:{#text#}');
         $tpl->configLoad('test.conf');
         $tpl->clearConfig('title');
-        $this->assertEquals("", $tpl->getConfigVars('title'));
+        $this->assertEquals(null, $tpl->getConfigVars('title'));
         $this->assertEquals("Global Section1", $tpl->getConfigVars('sec1'));
     }
 
