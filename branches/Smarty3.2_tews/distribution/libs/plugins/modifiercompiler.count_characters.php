@@ -17,13 +17,13 @@
  * @link http://www.smarty.net/docs/en/language.modifier.count.characters.tpl count_characters (Smarty online manual)
  * @author Uwe Tews
  *
- * @param Smarty_Internal_TemplateCompilerBase $compiler compiler object
+ * @param Smarty_Compiler $compiler compiler object
  * @param string $input  input string
  * @param bool|string $whitespace flag count whitespaces
  * @return string with compiled code
  */
 // NOTE: The parser does pass all parameter as strings which could be directly inserted into the compiled code string
-function smarty_modifiercompiler_count_characters(Smarty_Internal_TemplateCompilerBase $compiler, $input, $whitespace = 'false')
+function smarty_modifiercompiler_count_characters(Smarty_Compiler $compiler, $input, $whitespace = 'false')
 {
     if (preg_match('/^([\'"]?)[a-zA-Z0-9_]+(\\1)$/', $whitespace)) {
         $wspace = trim($whitespace, "'\"");

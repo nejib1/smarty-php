@@ -23,7 +23,7 @@ class Smarty_Internal_Compile_Capture extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $shorttag_order = array('name');
 
@@ -31,9 +31,17 @@ class Smarty_Internal_Compile_Capture extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $optional_attributes = array('name', 'assign', 'append');
+
+
+    /**
+     * capture  stack during compilation
+     *
+     * @var array
+     */
+    public static $_capture_stack = array();
 
     /**
      * Compiles code for the {capture} tag
@@ -56,7 +64,7 @@ class Smarty_Internal_Compile_Capture extends Smarty_Internal_CompileBase
             $compiler->must_clone_vars = true;
         }
 
-        $compiler->_capture_stack[0][] = array($buffer, $assign, $append, $compiler->nocache);
+        self::$_capture_stack[] = array($buffer, $assign, $append, $compiler->nocache);
         // maybe nocache because of nocache variables
         $compiler->nocache = $compiler->nocache | $compiler->tag_nocache;
 
@@ -90,12 +98,12 @@ class Smarty_Internal_Compile_CaptureClose extends Smarty_Internal_CompileBase
     {
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);
-        // must endblock be nocache?
+        // must end block be nocache?
         if ($compiler->nocache) {
             $compiler->tag_nocache = true;
         }
 
-        list($buffer, $assign, $append, $compiler->nocache) = array_pop($compiler->_capture_stack[0]);
+        list($buffer, $assign, $append, $compiler->nocache) = array_pop(Smarty_Internal_Compile_Capture::$_capture_stack);
 
         $this->iniTagCode($compiler);
 

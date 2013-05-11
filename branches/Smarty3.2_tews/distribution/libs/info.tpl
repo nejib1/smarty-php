@@ -497,9 +497,9 @@
                             {$data.security.class|escape}
                         </td>
                     {else}
-                        <td class="not-appliccable"></td>
+                        <td class="not-applicable"></td>
                     {/if}
-                    <td class="not-appliccable"></td>
+                    <td class="not-applicable"></td>
                 </tr>
                 {foreach $data.security.properties as $prop}
                     <tr>

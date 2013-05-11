@@ -34,9 +34,11 @@
 		</p>
 		
 				
-		<pre><a href="../Cacher/Smarty_CacheResource.html">Smarty_CacheResource</a>
+		<pre><a href="../Smarty/Smarty_Internal_Magic_Error.html">Smarty_Internal_Magic_Error</a>
    |
-   --Smarty_CacheResource_KeyValueStore</pre>
+   --<a href="../Cacher/Smarty_CacheResource.html">Smarty_CacheResource</a>
+      |
+      --Smarty_CacheResource_KeyValueStore</pre>
 	
 			</div>
 </div>
@@ -116,7 +118,7 @@
 												<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#acquireLock" title="details" class="method-name">acquireLock</a>
-											(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type"><a href="../Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
+											(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type"><a href="../Cacher/Smarty_template_Cached.html">Smarty_template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
@@ -161,7 +163,7 @@
 																<div class="method-definition">
 											<span class="method-result">bool</span>
 										<a href="#hasLock" title="details" class="method-name">hasLock</a>
-											(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type"><a href="../Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
+											(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type"><a href="../Cacher/Smarty_template_Cached.html">Smarty_template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
@@ -176,17 +178,17 @@
 																<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#populate" title="details" class="method-name">populate</a>
-											(<span class="var-type"><a href="../Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>, <span class="var-type">Smarty</span>&nbsp;<span class="var-name">$_template</span>)
+											(<span class="var-type"><a href="../Cacher/Smarty_template_Cached.html">Smarty_template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>, <span class="var-type">Smarty</span>&nbsp;<span class="var-name">$tpl_obj</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#populateTimestamp" title="details" class="method-name">populateTimestamp</a>
-											(<span class="var-type"><a href="../Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
+											(<span class="var-type"><a href="../Cacher/Smarty_template_Cached.html">Smarty_template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result">bool</span>
 										<a href="#process" title="details" class="method-name">process</a>
-											(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$_template</span>, [<span class="var-type"><a href="../Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span> = <span class="var-default">null</span>])
+											(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$tpl_obj</span>, [<span class="var-type"><a href="../Cacher/Smarty_template_Cached.html">Smarty_template_Cached</a></span>&nbsp;<span class="var-name">$cached</span> = <span class="var-default">null</span>])
 									</div>
 																<div class="method-definition">
 											<span class="method-result">boolean</span>
@@ -201,7 +203,7 @@
 																<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#releaseLock" title="details" class="method-name">releaseLock</a>
-											(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type"><a href="../Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
+											(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type"><a href="../Cacher/Smarty_template_Cached.html">Smarty_template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result">string</span>
@@ -216,7 +218,7 @@
 																<div class="method-definition">
 											<span class="method-result">boolean</span>
 										<a href="#writeCachedContent" title="details" class="method-name">writeCachedContent</a>
-											(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$_template</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$content</span>)
+											(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$tpl_obj</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$content</span>)
 									</div>
 								</div>
 		</div>
@@ -326,7 +328,7 @@
 		<span class="method-name">
 			acquireLock
 		</span>
-					(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type"><a href="../Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
+					(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type"><a href="../Cacher/Smarty_template_Cached.html">Smarty_template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
 			</div>
 	
 			<ul class="parameters">
@@ -334,7 +336,7 @@
 				<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>
 				<span class="var-name">$smarty</span><span class="var-description">: Smarty object</span>			</li>
 					<li>
-				<span class="var-type"><a href="../Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>
+				<span class="var-type"><a href="../Cacher/Smarty_template_Cached.html">Smarty_template_Cached</a></span>
 				<span class="var-name">$cached</span><span class="var-description">: cached object</span>			</li>
 				</ul>
 		
@@ -688,7 +690,7 @@
 		<span class="method-name">
 			hasLock
 		</span>
-					(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type"><a href="../Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
+					(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type"><a href="../Cacher/Smarty_template_Cached.html">Smarty_template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
 			</div>
 	
 			<ul class="parameters">
@@ -696,7 +698,7 @@
 				<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>
 				<span class="var-name">$smarty</span><span class="var-description">: Smarty object</span>			</li>
 					<li>
-				<span class="var-type"><a href="../Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>
+				<span class="var-type"><a href="../Cacher/Smarty_template_Cached.html">Smarty_template_Cached</a></span>
 				<span class="var-name">$cached</span><span class="var-description">: cached object</span>			</li>
 				</ul>
 		
@@ -812,16 +814,16 @@
 		<span class="method-name">
 			populate
 		</span>
-					(<span class="var-type"><a href="../Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>, <span class="var-type">Smarty</span>&nbsp;<span class="var-name">$_template</span>)
+					(<span class="var-type"><a href="../Cacher/Smarty_template_Cached.html">Smarty_template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>, <span class="var-type">Smarty</span>&nbsp;<span class="var-name">$tpl_obj</span>)
 			</div>
 	
 			<ul class="parameters">
 					<li>
-				<span class="var-type"><a href="../Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>
+				<span class="var-type"><a href="../Cacher/Smarty_template_Cached.html">Smarty_template_Cached</a></span>
 				<span class="var-name">$cached</span><span class="var-description">: cached object</span>			</li>
 					<li>
 				<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>
-				<span class="var-name">$_template</span><span class="var-description">: template object</span>			</li>
+				<span class="var-name">$tpl_obj</span><span class="var-description">: template object</span>			</li>
 				</ul>
 		
 			<hr class="separator" />
@@ -850,12 +852,12 @@
 		<span class="method-name">
 			populateTimestamp
 		</span>
-					(<span class="var-type"><a href="../Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
+					(<span class="var-type"><a href="../Cacher/Smarty_template_Cached.html">Smarty_template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
 			</div>
 	
 			<ul class="parameters">
 					<li>
-				<span class="var-type"><a href="../Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>
+				<span class="var-type"><a href="../Cacher/Smarty_template_Cached.html">Smarty_template_Cached</a></span>
 				<span class="var-name">$cached</span><span class="var-description">: cached object</span>			</li>
 				</ul>
 		
@@ -886,15 +888,15 @@
 		<span class="method-name">
 			process
 		</span>
-					(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$_template</span>, [<span class="var-type"><a href="../Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span> = <span class="var-default">null</span>])
+					(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$tpl_obj</span>, [<span class="var-type"><a href="../Cacher/Smarty_template_Cached.html">Smarty_template_Cached</a></span>&nbsp;<span class="var-name">$cached</span> = <span class="var-default">null</span>])
 			</div>
 	
 			<ul class="parameters">
 					<li>
 				<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>
-				<span class="var-name">$_template</span><span class="var-description">: template object</span>			</li>
+				<span class="var-name">$tpl_obj</span><span class="var-description">: template object</span>			</li>
 					<li>
-				<span class="var-type"><a href="../Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>
+				<span class="var-type"><a href="../Cacher/Smarty_template_Cached.html">Smarty_template_Cached</a></span>
 				<span class="var-name">$cached</span><span class="var-description">: cached object</span>			</li>
 				</ul>
 		
@@ -1005,7 +1007,7 @@
 		<span class="method-name">
 			releaseLock
 		</span>
-					(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type"><a href="../Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
+					(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$smarty</span>, <span class="var-type"><a href="../Cacher/Smarty_template_Cached.html">Smarty_template_Cached</a></span>&nbsp;<span class="var-name">$cached</span>)
 			</div>
 	
 			<ul class="parameters">
@@ -1013,7 +1015,7 @@
 				<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>
 				<span class="var-name">$smarty</span><span class="var-description">: Smarty object</span>			</li>
 					<li>
-				<span class="var-type"><a href="../Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>
+				<span class="var-type"><a href="../Cacher/Smarty_template_Cached.html">Smarty_template_Cached</a></span>
 				<span class="var-name">$cached</span><span class="var-description">: cached object</span>			</li>
 				</ul>
 		
@@ -1119,13 +1121,13 @@
 		<span class="method-name">
 			writeCachedContent
 		</span>
-					(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$_template</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$content</span>)
+					(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$tpl_obj</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$content</span>)
 			</div>
 	
 			<ul class="parameters">
 					<li>
 				<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>
-				<span class="var-name">$_template</span><span class="var-description">: template object</span>			</li>
+				<span class="var-name">$tpl_obj</span><span class="var-description">: template object</span>			</li>
 					<li>
 				<span class="var-type">string</span>
 				<span class="var-name">$content</span><span class="var-description">: content to cache</span>			</li>
@@ -1159,13 +1161,21 @@
 													<span class="method-name"><a href="../Cacher/Smarty_CacheResource.html#methodreleaseLock">Smarty_CacheResource::releaseLock()</a></span><br>
 													<span class="method-name"><a href="../Cacher/Smarty_CacheResource.html#methodwriteCachedContent">Smarty_CacheResource::writeCachedContent()</a></span><br>
 											</blockquote>
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../Smarty/Smarty_Internal_Magic_Error.html">Smarty_Internal_Magic_Error</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../Smarty/Smarty_Internal_Magic_Error.html#method__call">Smarty_Internal_Magic_Error::__call()</a></span><br>
+													<span class="method-name"><a href="../Smarty/Smarty_Internal_Magic_Error.html#method__destruct">Smarty_Internal_Magic_Error::__destruct()</a></span><br>
+													<span class="method-name"><a href="../Smarty/Smarty_Internal_Magic_Error.html#method__get">Smarty_Internal_Magic_Error::__get()</a></span><br>
+													<span class="method-name"><a href="../Smarty/Smarty_Internal_Magic_Error.html#method__set">Smarty_Internal_Magic_Error::__set()</a></span><br>
+											</blockquote>
 										
 		</div>
 	</div>
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Fri, 03 May 2013 12:57:51 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Sat, 11 May 2013 08:18:57 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

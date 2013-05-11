@@ -44,7 +44,7 @@ function smarty_function_counter($params, $template)
     }
 
     if (isset($counter['assign'])) {
-        $template->assign($counter['assign'], $counter['count']);
+        $tpl_obj->assign($counter['assign'], $counter['count']);
     }
 
     if (isset($params['print'])) {

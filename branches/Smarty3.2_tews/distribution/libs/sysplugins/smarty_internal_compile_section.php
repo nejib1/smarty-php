@@ -23,7 +23,7 @@ class Smarty_Internal_Compile_Section extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $required_attributes = array('name', 'loop');
 
@@ -31,7 +31,7 @@ class Smarty_Internal_Compile_Section extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $shorttag_order = array('name', 'loop');
 
@@ -39,7 +39,7 @@ class Smarty_Internal_Compile_Section extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $optional_attributes = array('start', 'step', 'max', 'show');
 
@@ -65,11 +65,11 @@ class Smarty_Internal_Compile_Section extends Smarty_Internal_CompileBase
 
         $section_name = $_attr['name'];
 
-        $this->php("if (isset(\$_smarty_tpl->tpl_vars->smarty->value['section'][$section_name])) {")->newline()->indent();
-        $this->php("unset(\$_smarty_tpl->tpl_vars->smarty->value['section'][$section_name]);")->newline();
+        $this->php("if (isset(\$_scope->smarty->value['section'][$section_name])) {")->newline()->indent();
+        $this->php("unset(\$_scope->smarty->value['section'][$section_name]);")->newline();
         $this->outdent()->php("}")->newline();
 
-        $section_props = "\$_smarty_tpl->tpl_vars->smarty->value['section'][$section_name]";
+        $section_props = "\$_scope->smarty->value['section'][$section_name]";
 
         foreach ($_attr as $attr_name => $attr_value) {
             switch ($attr_name) {

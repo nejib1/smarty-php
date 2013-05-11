@@ -35,19 +35,19 @@ class Smarty_Internal_Content_Inheritance extends Smarty_Internal_Content
     {
         // already in template cache?
         if ($parent->allow_ambiguous_resources) {
-            $_templateId = Smarty_Resource::getUniqueTemplateName($parent, $resource) . $cache_id . $compile_id;
+            $tpl_objId = Smarty_Resource::getUniqueTemplateName($parent, $resource) . $cache_id . $compile_id;
         } else {
-            $_templateId = $parent->joined_template_dir . '#' . $resource . $cache_id . $compile_id;
+            $tpl_objId = $parent->joined_template_dir . '#' . $resource . $cache_id . $compile_id;
         }
 
-        if (isset($_templateId[150])) {
-            $_templateId = sha1($_templateId);
+        if (isset($tpl_objId[150])) {
+            $tpl_objId = sha1($tpl_objId);
         }
-        if (isset(Smarty::$template_objects[$_templateId])) {
-            $tpl = Smarty::$template_objects[$_templateId];
+        if (isset(Smarty::$template_objects[$tpl_objId])) {
+            $tpl = Smarty::$template_objects[$tpl_objId];
         } else {
             // clone new template object
-            Smarty::$template_objects[$_templateId] = $tpl = clone $parent;
+            Smarty::$template_objects[$tpl_objId] = $tpl = clone $parent;
             unset($tpl->source, $tpl->compiled, $tpl->cached, $tpl->compiler, $tpl->mustCompile);
             $tpl->template_resource = $resource;
             $tpl->cache_id = $cache_id;
@@ -73,7 +73,7 @@ class Smarty_Internal_Content_Inheritance extends Smarty_Internal_Content
      * @param object $current_tpl   calling template  (optional)
      * @param int    $mode          mode of this call
      * @param boolean $in_child_chain   flag when inside child template chaim
-     * @return string | false
+     * @return string | boolean false
      */
     public function _getInheritanceBlock($name, $scope_tpl, $current_tpl = null, $mode = 0, $in_child_chain = false)
     {
@@ -116,11 +116,12 @@ class Smarty_Internal_Content_Inheritance extends Smarty_Internal_Content
      * resolve inheritance for block in child  {$smarty.block.child}
      *
      * @param string $name          name of block
-     * @param object $scope_tpl     blocks must be processed in this variable scope
+     * @param Smarty_Internal_Variable_Scope $scope_tpl     blocks must be processed in this variable scope
      * @param int    $mode          mode of this call
-     * @param object $current_tpl   calling template  (optional)
+     * @param Smarty  $current_tpl   calling template  (optional)
      * @param boolean $in_child_chain   flag when inside child template chaim
-     * @return string | false
+     * @param null $parent_block
+     * @return string | boolean false
      */
     public function _getInheritanceChildBlock($name, $scope_tpl, $mode, $current_tpl = null, $in_child_chain = false, $parent_block = null)
     {
@@ -200,7 +201,9 @@ class Smarty_Internal_Content_Inheritance extends Smarty_Internal_Content
      * Fetch output of single block  by name
      *
      * @param string $name        name of block
-     * @param object $scope_tpl     blocks must be processed in this variable scope
+     * @param Smarty $scope_tpl     blocks must be processed in this variable scope
+     * @param Smarty $current_tpl
+     * @throws SmartyRuntimeException
      * @return string
      */
     public function _getInheritanceRenderedBlock($name, $scope_tpl, $current_tpl)

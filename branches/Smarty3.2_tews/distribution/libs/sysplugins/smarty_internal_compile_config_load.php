@@ -23,7 +23,7 @@ class Smarty_Internal_Compile_Config_Load extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $required_attributes = array('file');
 
@@ -31,7 +31,7 @@ class Smarty_Internal_Compile_Config_Load extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $shorttag_order = array('file', 'section');
 
@@ -39,7 +39,7 @@ class Smarty_Internal_Compile_Config_Load extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $optional_attributes = array('section', 'scope');
 
@@ -61,7 +61,7 @@ class Smarty_Internal_Compile_Config_Load extends Smarty_Internal_CompileBase
         }
 
 
-        // save posible attributes
+        // save possible attributes
         $conf_file = $_attr['file'];
         if (isset($_attr['section'])) {
             $section = $_attr['section'];

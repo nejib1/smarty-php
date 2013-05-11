@@ -149,7 +149,7 @@ function smarty_function_html_radios($params, $template)
     }
 
     if (!empty($params['assign'])) {
-        $template->assign($params['assign'], $_html_result);
+        $tpl_obj->assign($params['assign'], $_html_result);
     } else {
         return implode("\n", $_html_result);
     }

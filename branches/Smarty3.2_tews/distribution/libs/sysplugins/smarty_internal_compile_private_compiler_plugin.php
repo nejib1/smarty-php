@@ -23,7 +23,7 @@ class Smarty_Internal_Compile_Private_Compiler_Plugin extends Smarty_Internal_Co
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $required_attributes = array();
 
@@ -31,7 +31,7 @@ class Smarty_Internal_Compile_Private_Compiler_Plugin extends Smarty_Internal_Co
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $optional_attributes = array('_any');
 
@@ -66,12 +66,12 @@ class Smarty_Internal_Compile_Private_Compiler_Plugin extends Smarty_Internal_Co
         }
 
         $plugin = 'smarty_compiler_' . $tag;
-        if (isset($compiler->template->registered_plugins[Smarty::PLUGIN_COMPILER][$tag]) || isset($compiler->default_handler_plugins[Smarty::PLUGIN_COMPILER][$tag])) {
-            if (isset($compiler->template->registered_plugins[Smarty::PLUGIN_COMPILER][$tag])) {
-                if (!$compiler->template->registered_plugins[Smarty::PLUGIN_COMPILER][$tag][1]) {
+        if (isset($compiler->tpl_obj->registered_plugins[Smarty::PLUGIN_COMPILER][$tag]) || isset($compiler->default_handler_plugins[Smarty::PLUGIN_COMPILER][$tag])) {
+            if (isset($compiler->tpl_obj->registered_plugins[Smarty::PLUGIN_COMPILER][$tag])) {
+                if (!$compiler->tpl_obj->registered_plugins[Smarty::PLUGIN_COMPILER][$tag][1]) {
                     $this->tag_nocache = true;
                 }
-                $function = $compiler->template->registered_plugins[Smarty::PLUGIN_COMPILER][$tag][0];
+                $function = $compiler->tpl_obj->registered_plugins[Smarty::PLUGIN_COMPILER][$tag][0];
             } else {
                 if (!$compiler->default_handler_plugins[Smarty::PLUGIN_COMPILER][$tag][1]) {
                     $this->tag_nocache = true;
@@ -81,7 +81,7 @@ class Smarty_Internal_Compile_Private_Compiler_Plugin extends Smarty_Internal_Co
             if (!is_array($function)) {
                 $raw_code = $function($new_args, $this);
             } else if (is_object($function[0])) {
-                $raw_code = $compiler->template->registered_plugins[Smarty::PLUGIN_COMPILER][$tag][0][0]->$function[1]($new_args, $this);
+                $raw_code = $compiler->tpl_obj->registered_plugins[Smarty::PLUGIN_COMPILER][$tag][0][0]->$function[1]($new_args, $this);
             } else {
                 $raw_code = call_user_func_array($function, array($new_args, $this));
             }
@@ -98,8 +98,8 @@ class Smarty_Internal_Compile_Private_Compiler_Plugin extends Smarty_Internal_Co
 
         // check if it is a compiler plugin fpr blocks
         $closetag = $tag . 'close';
-        if (isset($compiler->template->registered_plugins[Smarty::PLUGIN_COMPILER][$closetag]) || isset($compiler->default_handler_plugins[Smarty::PLUGIN_COMPILER][$closetag])
-            || $compiler->template->_loadPlugin('smarty_compiler_' . $closetag)
+        if (isset($compiler->tpl_obj->registered_plugins[Smarty::PLUGIN_COMPILER][$closetag]) || isset($compiler->default_handler_plugins[Smarty::PLUGIN_COMPILER][$closetag])
+            || $compiler->tpl_obj->_loadPlugin('smarty_compiler_' . $closetag)
         ) {
             $this->openTag($compiler, $tag, $compiler->nocache);
             // maybe nocache because of nocache variables
@@ -129,7 +129,7 @@ class Smarty_Internal_Compile_Private_Compiler_PluginClose extends Smarty_Intern
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $required_attributes = array();
 
@@ -137,7 +137,7 @@ class Smarty_Internal_Compile_Private_Compiler_PluginClose extends Smarty_Intern
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $optional_attributes = array('_any');
 
@@ -165,16 +165,16 @@ class Smarty_Internal_Compile_Private_Compiler_PluginClose extends Smarty_Intern
         $new_args = array();
 
         $plugin = 'smarty_compiler_' . $tag;
-        if (isset($compiler->template->registered_plugins[Smarty::PLUGIN_COMPILER][$tag]) || isset($compiler->default_handler_plugins[Smarty::PLUGIN_COMPILER][$tag])) {
-            if (isset($compiler->template->registered_plugins[Smarty::PLUGIN_COMPILER][$tag])) {
-                $function = $compiler->template->registered_plugins[Smarty::PLUGIN_COMPILER][$tag][0];
+        if (isset($compiler->tpl_obj->registered_plugins[Smarty::PLUGIN_COMPILER][$tag]) || isset($compiler->default_handler_plugins[Smarty::PLUGIN_COMPILER][$tag])) {
+            if (isset($compiler->tpl_obj->registered_plugins[Smarty::PLUGIN_COMPILER][$tag])) {
+                $function = $compiler->tpl_obj->registered_plugins[Smarty::PLUGIN_COMPILER][$tag][0];
             } else {
                 $function = $compiler->default_handler_plugins[Smarty::PLUGIN_COMPILER][$tag][0];
             }
             if (!is_array($function)) {
                 $raw_code = $function($new_args, $this);
             } else if (is_object($function[0])) {
-                $raw_code = $compiler->template->registered_plugins[Smarty::PLUGIN_COMPILER][$tag][0][0]->$function[1]($new_args, $this);
+                $raw_code = $compiler->tpl_obj->registered_plugins[Smarty::PLUGIN_COMPILER][$tag][0][0]->$function[1]($new_args, $this);
             } else {
                 $raw_code = call_user_func_array($function, array($new_args, $this));
             }

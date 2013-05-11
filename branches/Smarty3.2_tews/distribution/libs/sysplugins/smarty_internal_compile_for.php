@@ -22,7 +22,7 @@ class Smarty_Internal_Compile_For extends Smarty_Internal_CompileBase
     /**
      * Compiles code for the {for} tag
      *
-     * Smarty 3 does implement two different sytaxes:
+     * Smarty 3 does implement two different syntax's:
      *
      * - {for $var in $array}
      * For looping over arrays or iterators
@@ -59,28 +59,28 @@ class Smarty_Internal_Compile_For extends Smarty_Internal_CompileBase
             $var2 = trim($_attr['var'], '\'"');
             foreach ($_attr['start'] as $_statement) {
                 $var = trim($_statement['var'], '\'"');
-                $this->php("\$_smarty_tpl->tpl_vars->{$var} = new Smarty_Variable ({$_statement['value']});")->newline();
+                $this->php("\$_scope->{$var} = new Smarty_Variable ({$_statement['value']});")->newline();
             }
             $this->php("if ({$_attr['ifexp']}){")->newline()->indent();
-            $this->php("for (\$_foo=true;{$_attr['ifexp']}; \$_smarty_tpl->tpl_vars->{$var2}->value{$_attr['step']}){")->newline()->indent();
+            $this->php("for (\$_foo=true;{$_attr['ifexp']}; \$_scope->{$var2}->value{$_attr['step']}){")->newline()->indent();
         } else {
             $_statement = $_attr['start'];
             $var = trim($_statement['var'], '\'"');
-            $this->php("\$_smarty_tpl->tpl_vars->{$var} = new Smarty_Variable (array());")->newline();
+            $this->php("\$_scope->{$var} = new Smarty_Variable (array());")->newline();
             if (isset($_attr['step'])) {
-                $this->php("\$_smarty_tpl->tpl_vars->{$var}->step = {$_attr['step']};")->newline();
+                $this->php("\$_scope->{$var}->step = {$_attr['step']};")->newline();
             } else {
-                $this->php("\$_smarty_tpl->tpl_vars->{$var}->step = 1;")->newline();
+                $this->php("\$_scope->{$var}->step = 1;")->newline();
             }
             if (isset($_attr['max'])) {
-                $this->php("\$_smarty_tpl->tpl_vars->{$var}->total = (int)min(ceil((\$_smarty_tpl->tpl_vars->{$var}->step > 0 ? {$_attr['to']}+1 - ({$_statement['value']}) : {$_statement['value']}-({$_attr['to']})+1)/abs(\$_smarty_tpl->tpl_vars->{$var}->step)),{$_attr['max']});")->newline();
+                $this->php("\$_scope->{$var}->total = (int)min(ceil((\$_scope->{$var}->step > 0 ? {$_attr['to']}+1 - ({$_statement['value']}) : {$_statement['value']}-({$_attr['to']})+1)/abs(\$_scope->{$var}->step)),{$_attr['max']});")->newline();
             } else {
-                $this->php("\$_smarty_tpl->tpl_vars->{$var}->total = (int)ceil((\$_smarty_tpl->tpl_vars->{$var}->step > 0 ? {$_attr['to']}+1 - ({$_statement['value']}) : {$_statement['value']}-({$_attr['to']})+1)/abs(\$_smarty_tpl->tpl_vars->{$var}->step));")->newline();
+                $this->php("\$_scope->{$var}->total = (int)ceil((\$_scope->{$var}->step > 0 ? {$_attr['to']}+1 - ({$_statement['value']}) : {$_statement['value']}-({$_attr['to']})+1)/abs(\$_scope->{$var}->step));")->newline();
             }
-            $this->php("if (\$_smarty_tpl->tpl_vars->{$var}->total > 0){")->newline()->indent();
-            $this->php("for (\$_smarty_tpl->tpl_vars->{$var}->value = {$_statement['value']}, \$_smarty_tpl->tpl_vars->{$var}->iteration = 1;\$_smarty_tpl->tpl_vars->{$var}->iteration <= \$_smarty_tpl->tpl_vars->{$var}->total;\$_smarty_tpl->tpl_vars->{$var}->value += \$_smarty_tpl->tpl_vars->{$var}->step, \$_smarty_tpl->tpl_vars->{$var}->iteration++){")->newline()->indent();
-            $this->php("\$_smarty_tpl->tpl_vars->{$var}->first = \$_smarty_tpl->tpl_vars->{$var}->iteration == 1;")->newline();
-            $this->php("\$_smarty_tpl->tpl_vars->{$var}->last = \$_smarty_tpl->tpl_vars->{$var}->iteration == \$_smarty_tpl->tpl_vars->{$var}->total;")->newline();
+            $this->php("if (\$_scope->{$var}->total > 0){")->newline()->indent();
+            $this->php("for (\$_scope->{$var}->value = {$_statement['value']}, \$_scope->{$var}->iteration = 1;\$_scope->{$var}->iteration <= \$_scope->{$var}->total;\$_scope->{$var}->value += \$_scope->{$var}->step, \$_scope->{$var}->iteration++){")->newline()->indent();
+            $this->php("\$_scope->{$var}->first = \$_scope->{$var}->iteration == 1;")->newline();
+            $this->php("\$_scope->{$var}->last = \$_scope->{$var}->iteration == \$_scope->{$var}->total;")->newline();
         }
         $this->openTag($compiler, 'for', array('for', $compiler->nocache));
         // maybe nocache because of nocache variables

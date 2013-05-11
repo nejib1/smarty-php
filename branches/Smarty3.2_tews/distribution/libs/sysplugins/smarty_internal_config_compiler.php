@@ -17,7 +17,7 @@
  *
  * @package Config
  */
-class Smarty_Internal_ConfigCompiler extends Smarty_Internal_Code
+class Smarty_Internal_Config_Compiler extends Smarty_Internal_Code
 {
 
     /**
@@ -74,9 +74,9 @@ class Smarty_Internal_ConfigCompiler extends Smarty_Internal_Code
         /* here is where the compiling takes place. Smarty
           tags in the templates are replaces with PHP code,
           then written to compiled files. */
-        $this->file_dependency[$this->template->source->uid] = array($this->template->source->filepath, $this->template->source->timestamp, $this->template->source->type);
+        $this->file_dependency[$this->tpl_obj->source->uid] = array($this->tpl_obj->source->filepath, $this->tpl_obj->source->timestamp, $this->tpl_obj->source->type);
         // get config file source
-        $_content = $this->template->source->content . "\n";
+        $_content = $this->tpl_obj->source->content . "\n";
         // on empty template just return
         if ($_content == '') {
             return true;
@@ -84,11 +84,11 @@ class Smarty_Internal_ConfigCompiler extends Smarty_Internal_Code
         // init the lexer/parser to compile the config file
         $this->lex = new $this->lexerclass($_content, $this);
         $this->parser = new $this->parserclass($this->lex, $this);
-        if ($this->template->_parserdebug)
-            $parser->PrintTrace();
+        if ($this->tpl_obj->_parserdebug)
+            $this->parser->PrintTrace();
         // get tokens from lexer and parse them
         while ($this->lex->yylex()) {
-            if ($this->template->_parserdebug)
+            if ($this->tpl_obj->_parserdebug)
                 echo "<br>Parsing  {$this->parser->yyTokenName[$this->lex->token]} Token {$this->lex->value} Line {$this->lex->line} \n";
             $this->parser->doParse($this->lex->token, $this->lex->value);
         }
@@ -100,7 +100,7 @@ class Smarty_Internal_ConfigCompiler extends Smarty_Internal_Code
         // content class name
         $class = '__Smarty_Content_' . str_replace('.', '_', uniqid('', true));
         $this->raw("<?php")->newline();
-        $this->raw("/* Smarty version " . Smarty::SMARTY_VERSION . ", created on " . strftime("%Y-%m-%d %H:%M:%S") . " compiled from \"" . $this->template->source->filepath . "\" */")->newline();
+        $this->raw("/* Smarty version " . Smarty::SMARTY_VERSION . ", created on " . strftime("%Y-%m-%d %H:%M:%S") . " compiled from \"" . $this->tpl_obj->source->filepath . "\" */")->newline();
         $this->php("if (!class_exists('{$class}',false)) {")->newline()->indent()->php("class {$class} extends Smarty_Internal_Content {")->newline()->indent();
         $this->php("public \$version = '" . Smarty::SMARTY_VERSION . "';")->newline();
         $this->php("public \$file_dependency = ")->repr($this->file_dependency)->raw(";")->newline()->newline();
@@ -111,18 +111,18 @@ class Smarty_Internal_ConfigCompiler extends Smarty_Internal_Code
         $this->outdent()->php("}")->newline();
 
         $this->outdent()->php("}")->newline()->outdent()->php("}")->newline();
-        $this->php("\$this->smarty_content = new $class(\$_template);")->newline()->newline();
+        $this->php("\$this->smarty_content = new $class(\$tpl_obj);")->newline()->newline();
 
-        Smarty_Internal_Write_File::writeFile($this->template->compiled->filepath, $this->buffer, $this->template);
+        Smarty_Internal_Write_File::writeFile($this->tpl_obj->compiled->filepath, $this->buffer, $this->template);
         $this->buffer = '';
         $this->config_data = array();
         $this->lex->compiler = null;
         $this->parser->compiler = null;
         $this->lex = null;
         $this->parser = null;
-        $this->template->compiled->exists = true;
-        $this->template->compiled->isCompiled = true;
-        $this->template->mustCompile = false;
+        $this->tpl_obj->compiled->exists = true;
+        $this->tpl_obj->compiled->isCompiled = true;
+        $this->tpl_obj->mustCompile = false;
     }
 
     /**
@@ -144,7 +144,7 @@ class Smarty_Internal_ConfigCompiler extends Smarty_Internal_Code
             // $line--;
         }
         $match = preg_split("/\n/", $this->lex->data);
-        $error_text = "Syntax error in config file '{$this->template->source->filepath}' on line {$line} '{$match[$line - 1]}' ";
+        $error_text = "Syntax error in config file '{$this->tpl_obj->source->filepath}' on line {$line} '{$match[$line - 1]}' ";
         if (isset($args)) {
             // individual error message
             $error_text .= $args;

@@ -23,7 +23,7 @@ class Smarty_Internal_Compile_Eval extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $required_attributes = array('var');
 
@@ -31,7 +31,7 @@ class Smarty_Internal_Compile_Eval extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $optional_attributes = array('assign');
 
@@ -39,7 +39,7 @@ class Smarty_Internal_Compile_Eval extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $shorttag_order = array('var', 'assign');
 
@@ -65,14 +65,14 @@ class Smarty_Internal_Compile_Eval extends Smarty_Internal_CompileBase
         $this->iniTagCode($compiler);
 
         // create template object
-        $this->php("\$_template = \$_smarty_tpl->createTemplate('eval:'." . $_attr['var'] . ", \$_smarty_tpl);")->newline();
+        $this->php("\$tpl_obj = \$_smarty_tpl->createTemplate('eval:'." . $_attr['var'] . ", \$_smarty_tpl);")->newline();
         //was there an assign attribute?
         if (isset($_assign)) {
-            $this->php("\$_smarty_tpl->assign($_assign,\$_template->fetch());")->newline();
+            $this->php("\$_smarty_tpl->assign($_assign,\$tpl_obj->fetch());")->newline();
         } else {
-            $this->php("echo \$_template->fetch();")->newline();
+            $this->php("echo \$tpl_obj->fetch();")->newline();
         }
-        $this->php("unset(\$_template->source, \$_template->compiled, \$_template->compiler, \$_template);")->newline();
+        $this->php("unset(\$tpl_obj->source, \$tpl_obj->compiled, \$tpl_obj->compiler, \$tpl_obj);")->newline();
 
         return $this->returnTagCode($compiler);
     }

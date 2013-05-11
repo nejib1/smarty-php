@@ -1,6 +1,6 @@
 <?php
 /**
-* Smarty Internal Plugin Configfilelexer
+* Smarty Internal Plugin Configfile Lexer
 *
 * This is the lexer to break the config file source into tokens 
 * @package Smarty
@@ -8,9 +8,9 @@
 * @author Uwe Tews 
 */
 /**
-* Smarty Internal Plugin Configfilelexer
+* Smarty Internal Plugin Configfile Lexer
 */
-class Smarty_Internal_Configfilelexer
+class Smarty_Internal_Configfile_Lexer extends Smarty_Internal_Magic_Error
 {
 
     public $data;
@@ -132,7 +132,7 @@ double_quoted_string {
     $this->yypopstate();
 }
 maybe_bool {
-    if (!$this->compiler->template->config_booleanize || !in_array(strtolower($this->value), Array("true", "false", "on", "off", "yes", "no")) ) {
+    if (!$this->compiler->tpl_obj->config_booleanize || !in_array(strtolower($this->value), Array("true", "false", "on", "off", "yes", "no")) ) {
         $this->yypopstate();
         $this->yypushstate(self::NAKED_STRING_VALUE);
         return true; //reprocess in new state

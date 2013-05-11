@@ -23,7 +23,7 @@ class Smarty_Internal_Compile_Foreach extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $required_attributes = array('from', 'item');
 
@@ -31,7 +31,7 @@ class Smarty_Internal_Compile_Foreach extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $optional_attributes = array('name', 'key');
 
@@ -39,7 +39,7 @@ class Smarty_Internal_Compile_Foreach extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $shorttag_order = array('from', 'item', 'key', 'name');
 
@@ -53,7 +53,7 @@ class Smarty_Internal_Compile_Foreach extends Smarty_Internal_CompileBase
      */
     public function compile($args, $compiler, $parameter)
     {
-        $tpl = $compiler->template;
+        $tpl = $compiler->tpl_obj;
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);
 
@@ -109,68 +109,68 @@ class Smarty_Internal_Compile_Foreach extends Smarty_Internal_CompileBase
         $usesPropShow = strpos($tpl->source->content, $ItemVarName . 'show') !== false;
         $usesPropTotal = $usesSmartyTotal || $usesSmartyShow || $usesPropShow || $usesPropLast || strpos($tpl->source->content, $ItemVarName . 'total') !== false;
         // generate output code
-        $this->php("\$_smarty_tpl->tpl_vars->$item = new Smarty_Variable;")->newline();
-        $this->php("\$_smarty_tpl->tpl_vars->{$item}->_loop = false;")->newline();
+        $this->php("\$_scope->$item = new Smarty_Variable;")->newline();
+        $this->php("\$_scope->{$item}->_loop = false;")->newline();
         if ($key != null) {
-            $this->php("\$_smarty_tpl->tpl_vars->$key = new Smarty_Variable;")->newline();
+            $this->php("\$_scope->$key = new Smarty_Variable;")->newline();
         }
         $this->php("\$_from = $from;")->newline();
         $this->php("if (!is_array(\$_from) && !is_object(\$_from)) {")->newline()->indent()->php("settype(\$_from, 'array');")->newline()->outdent()->php("}")->newline();
         if ($usesPropTotal) {
-            $this->php("\$_smarty_tpl->tpl_vars->{$item}->total = \$this->_count(\$_from);")->newline();
+            $this->php("\$_scope->{$item}->total = \$this->_count(\$_from);")->newline();
         }
         if ($usesPropIteration) {
-            $this->php("\$_smarty_tpl->tpl_vars->{$item}->iteration = 0;")->newline();
+            $this->php("\$_scope->{$item}->iteration = 0;")->newline();
         }
         if ($usesPropIndex) {
-            $this->php("\$_smarty_tpl->tpl_vars->{$item}->index = -1;")->newline();
+            $this->php("\$_scope->{$item}->index = -1;")->newline();
         }
         if ($usesPropShow) {
-            $this->php("\$_smarty_tpl->tpl_vars->{$item}->show = (\$_smarty_tpl->tpl_vars->{$item}->total > 0);")->newline();
+            $this->php("\$_scope->{$item}->show = (\$_scope->{$item}->total > 0);")->newline();
         }
         if ($has_name) {
             if ($usesSmartyTotal) {
-                $this->php("\$_smarty_tpl->tpl_vars->smarty->value['foreach'][{$name}]['total'] = \$_smarty_tpl->tpl_vars->{$item}->total;")->newline();
+                $this->php("\$_scope->smarty->value['foreach'][{$name}]['total'] = \$_scope->{$item}->total;")->newline();
             }
             if ($usesSmartyIteration) {
-                $this->php("\$_smarty_tpl->tpl_vars->smarty->value['foreach'][{$name}]['iteration'] = 0;")->newline();
+                $this->php("\$_scope->smarty->value['foreach'][{$name}]['iteration'] = 0;")->newline();
             }
             if ($usesSmartyIndex) {
-                $this->php("\$_smarty_tpl->tpl_vars->smarty->value['foreach'][{$name}]['index'] = -1;")->newline();
+                $this->php("\$_scope->smarty->value['foreach'][{$name}]['index'] = -1;")->newline();
             }
             if ($usesSmartyShow) {
-                $this->php("\$_smarty_tpl->tpl_vars->smarty->value['foreach'][{$name}]['show']=(\$_smarty_tpl->tpl_vars->{$item}->total > 0);")->newline();
+                $this->php("\$_scope->smarty->value['foreach'][{$name}]['show']=(\$_scope->{$item}->total > 0);")->newline();
             }
         }
-        $this->php("foreach (\$_from as \$_smarty_tpl->tpl_vars->{$item}->key => \$_smarty_tpl->tpl_vars->{$item}->value){")->indent()->newline();
-        $this->php("\$_smarty_tpl->tpl_vars->{$item}->_loop = true;")->newline();
+        $this->php("foreach (\$_from as \$_scope->{$item}->key => \$_scope->{$item}->value){")->indent()->newline();
+        $this->php("\$_scope->{$item}->_loop = true;")->newline();
         if ($key != null) {
-            $this->php("\$_smarty_tpl->tpl_vars->{$key}->value = \$_smarty_tpl->tpl_vars->{$item}->key;")->newline();
+            $this->php("\$_scope->{$key}->value = \$_scope->{$item}->key;")->newline();
         }
         if ($usesPropIteration) {
-            $this->php("\$_smarty_tpl->tpl_vars->{$item}->iteration++;")->newline();
+            $this->php("\$_scope->{$item}->iteration++;")->newline();
         }
         if ($usesPropIndex) {
-            $this->php("\$_smarty_tpl->tpl_vars->{$item}->index++;")->newline();
+            $this->php("\$_scope->{$item}->index++;")->newline();
         }
         if ($usesPropFirst) {
-            $this->php("\$_smarty_tpl->tpl_vars->{$item}->first = \$_smarty_tpl->tpl_vars->{$item}->index === 0;")->newline();
+            $this->php("\$_scope->{$item}->first = \$_scope->{$item}->index === 0;")->newline();
         }
         if ($usesPropLast) {
-            $this->php("\$_smarty_tpl->tpl_vars->{$item}->last = \$_smarty_tpl->tpl_vars->{$item}->iteration === \$_smarty_tpl->tpl_vars->{$item}->total;")->newline();
+            $this->php("\$_scope->{$item}->last = \$_scope->{$item}->iteration === \$_scope->{$item}->total;")->newline();
         }
         if ($has_name) {
             if ($usesSmartyFirst) {
-                $this->php("\$_smarty_tpl->tpl_vars->smarty->value['foreach'][{$name}]['first'] = \$_smarty_tpl->tpl_vars->{$item}->first;")->newline();
+                $this->php("\$_scope->smarty->value['foreach'][{$name}]['first'] = \$_scope->{$item}->first;")->newline();
             }
             if ($usesSmartyIteration) {
-                $this->php("\$_smarty_tpl->tpl_vars->smarty->value['foreach'][{$name}]['iteration']++;")->newline();
+                $this->php("\$_scope->smarty->value['foreach'][{$name}]['iteration']++;")->newline();
             }
             if ($usesSmartyIndex) {
-                $this->php("\$_smarty_tpl->tpl_vars->smarty->value['foreach'][{$name}]['index']++;")->newline();
+                $this->php("\$_scope->smarty->value['foreach'][{$name}]['index']++;")->newline();
             }
             if ($usesSmartyLast) {
-                $this->php("\$_smarty_tpl->tpl_vars->smarty->value['foreach'][{$name}]['last'] = \$_smarty_tpl->tpl_vars->{$item}->last;")->newline();
+                $this->php("\$_scope->smarty->value['foreach'][{$name}]['last'] = \$_scope->{$item}->last;")->newline();
             }
         }
         return $this->returnTagCode($compiler);
@@ -206,7 +206,7 @@ class Smarty_Internal_Compile_Foreachelse extends Smarty_Internal_CompileBase
         $this->iniTagCode($compiler);
 
         $this->outdent()->php("}")->newline();
-        $this->php("if (!\$_smarty_tpl->tpl_vars->{$item}->_loop) {")->newline()->indent();
+        $this->php("if (!\$_scope->{$item}->_loop) {")->newline()->indent();
 
         return $this->returnTagCode($compiler);
     }

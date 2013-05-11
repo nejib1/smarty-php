@@ -48,10 +48,10 @@ class Smarty_Internal_Compile_Assign extends Smarty_Internal_CompileBase
         if ($compiler->tag_nocache || $compiler->nocache) {
             $_nocache = 'true';
             // create nocache var to make it know for further compiling
-            if (isset($compiler->template->tpl_vars->$var)) {
-                $compiler->template->tpl_vars->$var->nocache = true;
+            if (isset($compiler->tpl_obj->tpl_vars->$var)) {
+                $compiler->tpl_obj->tpl_vars->$var->nocache = true;
             } else {
-                $compiler->template->tpl_vars->$var = new Smarty_Variable(null, true);
+                $compiler->tpl_obj->tpl_vars->$var = new Smarty_Variable(null, true);
             }
         }
         // scope setup
@@ -72,39 +72,39 @@ class Smarty_Internal_Compile_Assign extends Smarty_Internal_CompileBase
 
         if (isset($parameter['smarty_internal_index'])) {
             $this->php("\$this->_createLocalArrayVariable({$_attr['var']}, \$_smarty_tpl, {$_nocache});")->newline();
-            $this->php("\$_smarty_tpl->tpl_vars->{$var}->value{$parameter['smarty_internal_index']} = {$_attr['value']};")->newline();
+            $this->php("\$_scope->{$var}->value{$parameter['smarty_internal_index']} = {$_attr['value']};")->newline();
         } else {
-            if ($compiler->template instanceof SmartyBC) {
-                $this->php("if (isset(\$_smarty_tpl->tpl_vars->{$var})) {")->newline()->indent();
-                $this->php("\$_smarty_tpl->tpl_vars->{$var} = clone \$_smarty_tpl->tpl_vars->{$var};")->newline();
-                $this->php("\$_smarty_tpl->tpl_vars->{$var}->value = {$_attr['value']};")->newline();
+            if ($compiler->tpl_obj instanceof SmartyBC) {
+                $this->php("if (isset(\$_scope->{$var})) {")->newline()->indent();
+                $this->php("\$_scope->{$var} = clone \$_scope->{$var};")->newline();
+                $this->php("\$_scope->{$var}->value = {$_attr['value']};")->newline();
                 $this->outdent()->php("} else {")->newline()->indent();
-                $this->php("\$_smarty_tpl->tpl_vars->{$var} = new Smarty_Variable($_attr[value], $_nocache);")->newline();
+                $this->php("\$_scope->{$var} = new Smarty_Variable($_attr[value], $_nocache);")->newline();
                 $this->outdent()->php("}")->newline();
             } else {
-                $this->php("\$_smarty_tpl->tpl_vars->{$var} = new Smarty_Variable($_attr[value], $_nocache);")->newline();
+                $this->php("\$_scope->{$var} = new Smarty_Variable($_attr[value], $_nocache);")->newline();
             }
         }
         if ($_scope == Smarty::SCOPE_PARENT) {
             $this->php("if (\$_smarty_tpl->parent != null) {")->newline()->indent();
-            $this->php("\$_smarty_tpl->parent->tpl_vars->{$var} = clone \$_smarty_tpl->tpl_vars->{$var};")->newline();
+            $this->php("\$_smarty_tpl->parent->tpl_vars->{$var} = clone \$_scope->{$var};")->newline();
             $this->outdent()->php("}")->newline();
         } elseif ($_scope == Smarty::SCOPE_ROOT || $_scope == Smarty::SCOPE_GLOBAL) {
             $this->php("\$_ptr = \$_smarty_tpl->parent;")->newline();
             $this->php("while (\$_ptr != null) {")->newline()->indent();
-            $this->php("\$_ptr->tpl_vars->{$var} = clone \$_smarty_tpl->tpl_vars->{$var};")->newline();
+            $this->php("\$_ptr->tpl_vars->{$var} = clone \$_scope->{$var};")->newline();
             $this->php("\$_ptr = \$_ptr->parent;")->newline();
             $this->outdent()->php("}")->newline();
         }
         if ($_scope == Smarty::SCOPE_GLOBAL) {
-            $this->php("Smarty::\$global_tpl_vars->{$var} =  clone \$_smarty_tpl->tpl_vars->{$var};")->newline();
+            $this->php("Smarty::\$global_tpl_vars->{$var} =  clone \$_scope->{$var};")->newline();
         }
-        if ($_attr['cachevalue'] === true && $compiler->template->caching) {
+        if ($_attr['cachevalue'] === true && $compiler->tpl_obj->caching) {
             if (isset($parameter['smarty_internal_index'])) {
                 $compiler->trigger_template_error('cannot assign to array with "cachevalue" option', $compiler->lex->taglineno);
             } else {
                 if (!$compiler->tag_nocache && !$compiler->nocache) {
-                    $this->php("echo '/*%%SmartyNocache%%*/\$_smarty_tpl->tpl_vars->{$var} = new Smarty_Variable (' . \$this->_exportCacheValue({$_attr['value']}) . ');/*/%%SmartyNocache%%*/';")->newline();
+                    $this->php("echo '/*%%SmartyNocache%%*/\$_scope->{$var} = new Smarty_Variable (' . \$this->_exportCacheValue({$_attr['value']}) . ');/*/%%SmartyNocache%%*/';")->newline();
                 } else {
                     $compiler->trigger_template_error('cannot assign with "cachevalue" option inside nocache section', $compiler->lex->taglineno);
                 }

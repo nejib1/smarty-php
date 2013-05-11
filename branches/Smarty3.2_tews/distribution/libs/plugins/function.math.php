@@ -74,13 +74,13 @@ function smarty_function_math($params, $template)
         if (empty($params['assign'])) {
             return $smarty_math_result;
         } else {
-            $template->assign($params['assign'], $smarty_math_result);
+            $tpl_obj->assign($params['assign'], $smarty_math_result);
         }
     } else {
         if (empty($params['assign'])) {
             printf($params['format'], $smarty_math_result);
         } else {
-            $template->assign($params['assign'], sprintf($params['format'], $smarty_math_result));
+            $tpl_obj->assign($params['assign'], sprintf($params['format'], $smarty_math_result));
         }
     }
 }

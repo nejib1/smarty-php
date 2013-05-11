@@ -31,9 +31,11 @@
 		</p>
 		
 				
-		<pre><a href="../../Template/Smarty_Internal_Data.html">Smarty_Internal_Data</a>
+		<pre><a href="../../Smarty/Smarty_Internal_Magic_Error.html">Smarty_Internal_Magic_Error</a>
    |
-   --Smarty</pre>
+   --<a href="../../Template/Smarty_Internal_Data.html">Smarty_Internal_Data</a>
+      |
+      --Smarty</pre>
 	
 			</div>
 </div>
@@ -127,7 +129,7 @@
 
 				</div>
 								<div class="const-title">
-					<a href="#IS_CONFIG" title="details" class="const-name">IS_CONFIG</a> = 					<span class="var-type"> 2</span>
+					<a href="#IS_CONFIG" title="details" class="const-name">IS_CONFIG</a> = 					<span class="var-type"> 4</span>
 
 				</div>
 								<div class="const-title">
@@ -136,6 +138,10 @@
 				</div>
 								<div class="const-title">
 					<a href="#IS_SMARTY" title="details" class="const-name">IS_SMARTY</a> = 					<span class="var-type"> 0</span>
+
+				</div>
+								<div class="const-title">
+					<a href="#IS_SUBTPL" title="details" class="const-name">IS_SUBTPL</a> = 					<span class="var-type"> 2</span>
 
 				</div>
 								<div class="const-title">
@@ -229,7 +235,7 @@
 					</div>
 		<div class="info-box-body">
 			<div class="var-summary">
-																																																																																																																																																																																																																																																																																																																																												<div class="var-title">
+																																																																																																																																																																																																																																																																																																																																																				<div class="var-title">
 					static <span class="var-type">mixed</span>
 					<a href="#$global_tpl_vars" title="details" class="var-name">$global_tpl_vars</a>
 				</div>
@@ -237,7 +243,7 @@
 					static <span class="var-type">array</span>
 					<a href="#$template_objects" title="details" class="var-name">$template_objects</a>
 				</div>
-																																																																<div class="var-title">
+																																																																								<div class="var-title">
 					static <span class="var-type">mixed</span>
 					<a href="#$_callbacks" title="details" class="var-name">$_callbacks</a>
 				</div>
@@ -269,7 +275,7 @@
 					static <span class="var-type">array</span>
 					<a href="#$_smarty_vars" title="details" class="var-name">$_smarty_vars</a>
 				</div>
-																								<div class="var-title">
+																																								<div class="var-title">
 					static <span class="var-type">mixed</span>
 					<a href="#$_UTF8_MODIFIER" title="details" class="var-name">$_UTF8_MODIFIER</a>
 				</div>
@@ -279,7 +285,7 @@
 				</div>
 																<div class="var-title">
 					<span class="var-type">boolean</span>
-					<a href="#$allow_php_templates" title="details" class="var-name">$allow_php_templates</a>
+					<a href="#$allow_phptpl_objs" title="details" class="var-name">$allow_phptpl_objs</a>
 				</div>
 																<div class="var-title">
 					<span class="var-type">boolean</span>
@@ -316,6 +322,10 @@
 																<div class="var-title">
 					<span class="var-type">boolean</span>
 					<a href="#$cache_modified_check" title="details" class="var-name">$cache_modified_check</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$cache_objs" title="details" class="var-name">$cache_objs</a>
 				</div>
 																<div class="var-title">
 					<span class="var-type">mixed</span>
@@ -538,6 +548,10 @@
 					<a href="#$template_resource" title="details" class="var-name">$template_resource</a>
 				</div>
 																<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$tpl_vars" title="details" class="var-name">$tpl_vars</a>
+				</div>
+																<div class="var-title">
 					<span class="var-type">array</span>
 					<a href="#$trace_call_stack" title="details" class="var-name">$trace_call_stack</a>
 				</div>
@@ -585,6 +599,14 @@
 					<span class="var-type">array</span>
 					<a href="#$_tag_stack" title="details" class="var-name">$_tag_stack</a>
 				</div>
+																<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$_tpl_old_cache_id" title="details" class="var-name">$_tpl_old_cache_id</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$_tpl_old_compile_id" title="details" class="var-name">$_tpl_old_compile_id</a>
+				</div>
 																			</div>
 		</div>
 	</div>
@@ -629,7 +651,7 @@
 										<a href="#unmuteExpectedErrors" title="details" class="method-name">unmuteExpectedErrors</a>
 										()
 									</div>
-																																																																																																								
+																																																																																																																																
 												<div class="method-definition">
 											<span class="method-result"><a href="../../Smarty/Smarty/Smarty.html">Smarty</a></span>
 										<a href="#addAutoloadFilters" title="details" class="method-name">addAutoloadFilters</a>
@@ -659,6 +681,16 @@
 											<span class="method-result"><a href="../../Smarty/Smarty/Smarty.html">Smarty</a></span>
 										<a href="#assignCached" title="details" class="method-name">assignCached</a>
 											(<span class="var-type">string|array</span>&nbsp;<span class="var-name">$key</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$value</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Smarty</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#__destruct" title="details" class="method-name">__destruct</a>
+										()
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
@@ -691,24 +723,14 @@
 											([<span class="var-type">string</span>&nbsp;<span class="var-name">$extension</span> = <span class="var-default">'.tpl'</span>], [<span class="var-type">bool</span>&nbsp;<span class="var-name">$force_compile</span> = <span class="var-default">false</span>], [<span class="var-type">int</span>&nbsp;<span class="var-name">$time_limit</span> = <span class="var-default">0</span>], [<span class="var-type">int</span>&nbsp;<span class="var-name">$max_errors</span> = <span class="var-default">null</span>])
 									</div>
 																<div class="method-definition">
-											<span class="method-result">Smarty</span>
-										<a href="#__construct" title="details" class="method-name">__construct</a>
-										()
-									</div>
-																<div class="method-definition">
-											<span class="method-result">void</span>
-										<a href="#__destruct" title="details" class="method-name">__destruct</a>
-										()
-									</div>
-																<div class="method-definition">
 											<span class="method-result">object Smarty_Data</span>
 										<a href="#createData" title="details" class="method-name">createData</a>
-											([<span class="var-type">object</span>&nbsp;<span class="var-name">$parent</span> = <span class="var-default">null</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$scope_name</span> = <span class="var-default">'Data unnamed'</span>])
+											([<span class="var-type"><a href="../../Smarty/Smarty/Smarty.html">Smarty</a>|<a href="../../Template/Smarty_Data.html">Smarty_Data</a>|<a href="../../Template/Smarty_Variable_Scope.html">Smarty_Variable_Scope</a></span>&nbsp;<span class="var-name">$parent</span> = <span class="var-default">null</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$scope_name</span> = <span class="var-default">'Data unnamed'</span>])
 									</div>
 																<div class="method-definition">
-											<span class="method-result">object template</span>
+											<span class="method-result"><a href="../../Smarty/Smarty/Smarty.html">Smarty</a></span>
 										<a href="#createTemplate" title="details" class="method-name">createTemplate</a>
-											(<span class="var-type">string</span>&nbsp;<span class="var-name">$template</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$cache_id</span> = <span class="var-default">null</span>], [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$compile_id</span> = <span class="var-default">null</span>], [<span class="var-type">object</span>&nbsp;<span class="var-name">$parent</span> = <span class="var-default">null</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$is_config</span> = <span class="var-default">false</span>])
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$template_resource</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$cache_id</span> = <span class="var-default">null</span>], [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$compile_id</span> = <span class="var-default">null</span>], [<span class="var-type">object</span>&nbsp;<span class="var-name">$parent</span> = <span class="var-default">null</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$is_config</span> = <span class="var-default">false</span>])
 									</div>
 																<div class="method-definition">
 											<span class="method-result"><a href="../../Smarty/Smarty/Smarty.html">Smarty</a></span>
@@ -728,7 +750,7 @@
 																<div class="method-definition">
 											<span class="method-result">string</span>
 										<a href="#fetch" title="details" class="method-name">fetch</a>
-											([<span class="var-type">string</span>&nbsp;<span class="var-name">$template</span> = <span class="var-default">null</span>], [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$cache_id</span> = <span class="var-default">null</span>], [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$compile_id</span> = <span class="var-default">null</span>], [<span class="var-type">object</span>&nbsp;<span class="var-name">$parent</span> = <span class="var-default">null</span>], [<span class="var-type">bool</span>&nbsp;<span class="var-name">$display</span> = <span class="var-default">false</span>], [<span class="var-type">bool</span>&nbsp;<span class="var-name">$no_output_filter</span> = <span class="var-default">false</span>])
+											([<span class="var-type">string</span>&nbsp;<span class="var-name">$template</span> = <span class="var-default">null</span>], [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$cache_id</span> = <span class="var-default">null</span>], [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$compile_id</span> = <span class="var-default">null</span>], [<span class="var-type"><a href="../../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$parent</span> = <span class="var-default">null</span>], [<span class="var-type">bool</span>&nbsp;<span class="var-name">$display</span> = <span class="var-default">false</span>], [<span class="var-type">bool</span>&nbsp;<span class="var-name">$no_output_filter</span> = <span class="var-default">false</span>], [<span class="var-type">null</span>&nbsp;<span class="var-name">$data</span> = <span class="var-default">null</span>], [<span class="var-type">int</span>&nbsp;<span class="var-name">$scope_type</span> = <span class="var-default">Smarty::SCOPE_LOCAL</span>], [<span class="var-type">null</span>&nbsp;<span class="var-name">$caching</span> = <span class="var-default">null</span>], [<span class="var-type">null|int</span>&nbsp;<span class="var-name">$cache_lifetime</span> = <span class="var-default">null</span>], [<span class="var-type">null|</span>&nbsp;<span class="var-name">$_scope</span> = <span class="var-default">null</span>])
 									</div>
 																<div class="method-definition">
 											<span class="method-result"><a href="../../Smarty/Smarty/Smarty.html">Smarty</a></span>
@@ -797,7 +819,7 @@
 									</div>
 																<div class="method-definition">
 											<span class="method-result">string|array</span>
-										<a href="#info_TEMPLATE" title="details" class="method-name">info_TEMPLATE</a>
+										<a href="#infotpl_obj" title="details" class="method-name">infotpl_obj</a>
 											([<span class="var-type">boolean</span>&nbsp;<span class="var-name">$html</span> = <span class="var-default">true</span>], [<span class="var-type">integer</span>&nbsp;<span class="var-name">$flags</span> = <span class="var-default">0</span>])
 									</div>
 																<div class="method-definition">
@@ -942,13 +964,28 @@
 									</div>
 																<div class="method-definition">
 											<span class="method-result">string</span>
+										<a href="#_computeTemplateId" title="details" class="method-name">_computeTemplateId</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$template</span>, <span class="var-type">boolean</span>&nbsp;<span class="var-name">$is_config</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#_deleteTemplateObj" title="details" class="method-name">_deleteTemplateObj</a>
+											([<span class="var-type"></span>&nbsp;<span class="var-name">$tpl_obj</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
 										<a href="#_getFilterName" title="details" class="method-name">_getFilterName</a>
 											(<span class="var-type">callback</span>&nbsp;<span class="var-name">$function_name</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result">mixed</span>
 										<a href="#_getScopePointer" title="details" class="method-name">_getScopePointer</a>
-											(<span class="var-type">int</span>&nbsp;<span class="var-name">$scope</span>)
+											(<span class="var-type">int</span>&nbsp;<span class="var-name">$scope_type</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../../Smarty/Smarty/Smarty.html">Smarty</a></span>
+										<a href="#_getTemplateObj" title="details" class="method-name">_getTemplateObj</a>
+											(<span class="var-type">string|<a href="../../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$tpl_mixed</span>, <span class="var-type"><a href="../../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$parent</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$cache_id</span> = <span class="var-default">null</span>], [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$compile_id</span> = <span class="var-default">null</span>], [<span class="var-type">null|int</span>&nbsp;<span class="var-name">$cache_lifetime</span> = <span class="var-default">null</span>], [<span class="var-type">null|bool</span>&nbsp;<span class="var-name">$cache_objs</span> = <span class="var-default">null</span>])
 									</div>
 																<div class="method-definition">
 											<span class="method-result">string</span>
@@ -956,7 +993,7 @@
 											(<span class="var-type">string</span>&nbsp;<span class="var-name">$plugin_name</span>, [<span class="var-type">bool</span>&nbsp;<span class="var-name">$check</span> = <span class="var-default">true</span>])
 									</div>
 																<div class="method-definition">
-											<span class="method-result">$this|bool|\Smarty_Compiled|\Smarty_Template_Cached|\Smarty_Template_Source</span>
+											<span class="method-result">$this|bool|\Smarty_Compiled|\Smarty_template_Cached|\Smarty_Template_Source</span>
 										<a href="#__call" title="details" class="method-name">__call</a>
 											(<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">$args</span>)
 									</div>
@@ -966,7 +1003,7 @@
 										()
 									</div>
 																<div class="method-definition">
-											<span class="method-result">$this|bool|\Smarty_Compiled|\Smarty_Template_Cached|\Smarty_Template_Source</span>
+											<span class="method-result">$this|bool|\Smarty_Compiled|\Smarty_template_Cached|\Smarty_Template_Source</span>
 										<a href="#__get" title="details" class="method-name">__get</a>
 											(<span class="var-type">string</span>&nbsp;<span class="var-name">$property_name</span>)
 									</div>
@@ -1002,7 +1039,7 @@
 		<span class="var-title">
 			static <span class="var-type">mixed</span>
 			<span class="var-name">$global_tpl_vars</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number">179</span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number">188</span>)
 		</span>
 	</div>
 
@@ -1024,7 +1061,7 @@
 		<span class="var-title">
 			static <span class="var-type">array</span>
 			<span class="var-name">$template_objects</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">639</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">667</span>)
 		</span>
 	</div>
 
@@ -1046,7 +1083,7 @@
 		<span class="var-title">
 			static <span class="var-type">mixed</span>
 			<span class="var-name">$_callbacks</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">197</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">206</span>)
 		</span>
 	</div>
 
@@ -1068,7 +1105,7 @@
 		<span class="var-title">
 			static <span class="var-type">mixed</span>
 			<span class="var-name">$_CHARSET</span>
-			 = <span class="var-default"> SMARTY_RESOURCE_CHAR_SET</span>			(line <span class="line-number">207</span>)
+			 = <span class="var-default"> SMARTY_RESOURCE_CHAR_SET</span>			(line <span class="line-number">216</span>)
 		</span>
 	</div>
 
@@ -1090,7 +1127,7 @@
 		<span class="var-title">
 			static <span class="var-type">mixed</span>
 			<span class="var-name">$_DATE_FORMAT</span>
-			 = <span class="var-default"> SMARTY_RESOURCE_DATE_FORMAT</span>			(line <span class="line-number">213</span>)
+			 = <span class="var-default"> SMARTY_RESOURCE_DATE_FORMAT</span>			(line <span class="line-number">222</span>)
 		</span>
 	</div>
 
@@ -1113,7 +1150,7 @@
 		<span class="var-title">
 			static <span class="var-type">mixed</span>
 			<span class="var-name">$_IS_WINDOWS</span>
-			 = <span class="var-default"> false</span>			(line <span class="line-number">223</span>)
+			 = <span class="var-default"> false</span>			(line <span class="line-number">232</span>)
 		</span>
 	</div>
 
@@ -1135,7 +1172,7 @@
 		<span class="var-title">
 			static <span class="var-type">mixed</span>
 			<span class="var-name">$_MBSTRING</span>
-			 = <span class="var-default"> SMARTY_MBSTRING</span>			(line <span class="line-number">202</span>)
+			 = <span class="var-default"> SMARTY_MBSTRING</span>			(line <span class="line-number">211</span>)
 		</span>
 	</div>
 
@@ -1157,7 +1194,7 @@
 		<span class="var-title">
 			static <span class="var-type">mixed</span>
 			<span class="var-name">$_muted_directories</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">191</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">200</span>)
 		</span>
 	</div>
 
@@ -1179,7 +1216,7 @@
 		<span class="var-title">
 			static <span class="var-type">mixed</span>
 			<span class="var-name">$_previous_error_handler</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number">185</span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number">194</span>)
 		</span>
 	</div>
 
@@ -1201,7 +1238,7 @@
 		<span class="var-title">
 			static <span class="var-type">array</span>
 			<span class="var-name">$_smarty_vars</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">729</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">757</span>)
 		</span>
 	</div>
 
@@ -1223,7 +1260,7 @@
 		<span class="var-title">
 			static <span class="var-type">mixed</span>
 			<span class="var-name">$_UTF8_MODIFIER</span>
-			 = <span class="var-default"> 'u'</span>			(line <span class="line-number">218</span>)
+			 = <span class="var-default"> 'u'</span>			(line <span class="line-number">227</span>)
 		</span>
 	</div>
 
@@ -1245,7 +1282,7 @@
 		<span class="var-title">
 			<span class="var-type">boolean</span>
 			<span class="var-name">$allow_ambiguous_resources</span>
-			 = <span class="var-default"> false</span>			(line <span class="line-number">377</span>)
+			 = <span class="var-default"> false</span>			(line <span class="line-number">392</span>)
 		</span>
 	</div>
 
@@ -1260,14 +1297,14 @@
 		
 
 </div>
-<a name="var$allow_php_templates" id="$allow_php_templates"><!-- --></A>
+<a name="var$allow_phptpl_objs" id="$allow_phptpl_objs"><!-- --></A>
 <div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">boolean</span>
-			<span class="var-name">$allow_php_templates</span>
-			 = <span class="var-default"> false</span>			(line <span class="line-number">477</span>)
+			<span class="var-name">$allow_phptpl_objs</span>
+			 = <span class="var-default"> false</span>			(line <span class="line-number">505</span>)
 		</span>
 	</div>
 
@@ -1290,7 +1327,7 @@
 		<span class="var-title">
 			<span class="var-type">boolean</span>
 			<span class="var-name">$allow_relative_path</span>
-			 = <span class="var-default"> false</span>			(line <span class="line-number">840</span>)
+			 = <span class="var-default"> false</span>			(line <span class="line-number">868</span>)
 		</span>
 	</div>
 
@@ -1312,7 +1349,7 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$autoload_filters</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">709</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">737</span>)
 		</span>
 	</div>
 
@@ -1335,7 +1372,7 @@
 		<span class="var-title">
 			<span class="var-type">boolean</span>
 			<span class="var-name">$auto_literal</span>
-			 = <span class="var-default"> true</span>			(line <span class="line-number">233</span>)
+			 = <span class="var-default"> true</span>			(line <span class="line-number">242</span>)
 		</span>
 	</div>
 
@@ -1358,7 +1395,7 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$block</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">819</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">847</span>)
 		</span>
 	</div>
 
@@ -1380,7 +1417,7 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$cached_subtemplates</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">783</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">811</span>)
 		</span>
 	</div>
 
@@ -1402,7 +1439,7 @@
 		<span class="var-title">
 			<span class="var-type">string</span>
 			<span class="var-name">$cache_id</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number">416</span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number">432</span>)
 		</span>
 	</div>
 
@@ -1425,7 +1462,7 @@
 		<span class="var-title">
 			<span class="var-type">integer</span>
 			<span class="var-name">$cache_lifetime</span>
-			 = <span class="var-default"> 3600</span>			(line <span class="line-number">400</span>)
+			 = <span class="var-default"> 3600</span>			(line <span class="line-number">416</span>)
 		</span>
 	</div>
 
@@ -1448,7 +1485,7 @@
 		<span class="var-title">
 			<span class="var-type">boolean</span>
 			<span class="var-name">$cache_locking</span>
-			 = <span class="var-default"> false</span>			(line <span class="line-number">586</span>)
+			 = <span class="var-default"> false</span>			(line <span class="line-number">614</span>)
 		</span>
 	</div>
 
@@ -1471,7 +1508,7 @@
 		<span class="var-title">
 			<span class="var-type">boolean</span>
 			<span class="var-name">$cache_modified_check</span>
-			 = <span class="var-default"> false</span>			(line <span class="line-number">646</span>)
+			 = <span class="var-default"> false</span>			(line <span class="line-number">674</span>)
 		</span>
 	</div>
 
@@ -1487,14 +1524,36 @@
 		
 
 </div>
-<a name="var$caching" id="$caching"><!-- --></A>
+<a name="var$cache_objs" id="$cache_objs"><!-- --></A>
 <div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">mixed</span>
+			<span class="var-name">$cache_objs</span>
+			 = <span class="var-default"> true</span>			(line <span class="line-number">248</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">flag if template specific objs shall be cached during processing</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$caching" id="$caching"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
 			<span class="var-name">$caching</span>
-			 = <span class="var-default"> self::CACHING_OFF</span>			(line <span class="line-number">386</span>)
+			 = <span class="var-default"> self::CACHING_OFF</span>			(line <span class="line-number">402</span>)
 		</span>
 	</div>
 
@@ -1509,13 +1568,13 @@
 
 </div>
 <a name="var$caching_type" id="$caching_type"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">string</span>
 			<span class="var-name">$caching_type</span>
-			 = <span class="var-default"> 'file'</span>			(line <span class="line-number">618</span>)
+			 = <span class="var-default"> 'file'</span>			(line <span class="line-number">646</span>)
 		</span>
 	</div>
 
@@ -1532,13 +1591,13 @@
 
 </div>
 <a name="var$compiletime_options" id="$compiletime_options"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">int</span>
 			<span class="var-name">$compiletime_options</span>
-			 = <span class="var-default"> 0</span>			(line <span class="line-number">880</span>)
+			 = <span class="var-default"> 0</span>			(line <span class="line-number">908</span>)
 		</span>
 	</div>
 
@@ -1555,13 +1614,13 @@
 
 </div>
 <a name="var$compile_check" id="$compile_check"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">int</span>
 			<span class="var-name">$compile_check</span>
-			 = <span class="var-default"> self::COMPILECHECK_ON</span>			(line <span class="line-number">364</span>)
+			 = <span class="var-default"> self::COMPILECHECK_ON</span>			(line <span class="line-number">379</span>)
 		</span>
 	</div>
 
@@ -1581,13 +1640,13 @@
 
 </div>
 <a name="var$compile_id" id="$compile_id"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">string</span>
 			<span class="var-name">$compile_id</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number">424</span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number">446</span>)
 		</span>
 	</div>
 
@@ -1604,13 +1663,13 @@
 
 </div>
 <a name="var$compile_locking" id="$compile_locking"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">boolean</span>
 			<span class="var-name">$compile_locking</span>
-			 = <span class="var-default"> true</span>			(line <span class="line-number">579</span>)
+			 = <span class="var-default"> true</span>			(line <span class="line-number">607</span>)
 		</span>
 	</div>
 
@@ -1627,13 +1686,13 @@
 
 </div>
 <a name="var$config_booleanize" id="$config_booleanize"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">boolean</span>
 			<span class="var-name">$config_booleanize</span>
-			 = <span class="var-default"> true</span>			(line <span class="line-number">559</span>)
+			 = <span class="var-default"> true</span>			(line <span class="line-number">587</span>)
 		</span>
 	</div>
 
@@ -1650,13 +1709,13 @@
 
 </div>
 <a name="var$config_overwrite" id="$config_overwrite"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">boolean</span>
 			<span class="var-name">$config_overwrite</span>
-			 = <span class="var-default"> true</span>			(line <span class="line-number">552</span>)
+			 = <span class="var-default"> true</span>			(line <span class="line-number">580</span>)
 		</span>
 	</div>
 
@@ -1673,13 +1732,13 @@
 
 </div>
 <a name="var$config_read_hidden" id="$config_read_hidden"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">boolean</span>
 			<span class="var-name">$config_read_hidden</span>
-			 = <span class="var-default"> false</span>			(line <span class="line-number">566</span>)
+			 = <span class="var-default"> false</span>			(line <span class="line-number">594</span>)
 		</span>
 	</div>
 
@@ -1696,13 +1755,13 @@
 
 </div>
 <a name="var$debugging" id="$debugging"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">boolean</span>
 			<span class="var-name">$debugging</span>
-			 = <span class="var-default"> false</span>			(line <span class="line-number">500</span>)
+			 = <span class="var-default"> false</span>			(line <span class="line-number">528</span>)
 		</span>
 	</div>
 
@@ -1720,13 +1779,13 @@
 
 </div>
 <a name="var$debugging_ctrl" id="$debugging_ctrl"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">string</span>
 			<span class="var-name">$debugging_ctrl</span>
-			 = <span class="var-default"> 'NONE'</span>			(line <span class="line-number">511</span>)
+			 = <span class="var-default"> 'NONE'</span>			(line <span class="line-number">539</span>)
 		</span>
 	</div>
 
@@ -1744,20 +1803,20 @@
 
 </div>
 <a name="var$debug_tpl" id="$debug_tpl"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">string</span>
 			<span class="var-name">$debug_tpl</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number">527</span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number">555</span>)
 		</span>
 	</div>
 
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Path of debug template.</p>
 	<ul class="tags">
-				<li><span class="field">link:</span> <a href="http://www.smarty.net/docs/en/variable.debug_template.tpl">http://www.smarty.net/docs/en/variable.debug_template.tpl</a></li>
+				<li><span class="field">link:</span> <a href="http://www.smarty.net/docs/en/variable.debugtpl_obj.tpl">http://www.smarty.net/docs/en/variable.debugtpl_obj.tpl</a></li>
 				<li><span class="field">access:</span> public</li>
 			</ul>
 	
@@ -1767,13 +1826,13 @@
 
 </div>
 <a name="var$default_config_handler_func" id="$default_config_handler_func"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">callable</span>
 			<span class="var-name">$default_config_handler_func</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number">291</span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number">306</span>)
 		</span>
 	</div>
 
@@ -1790,13 +1849,13 @@
 
 </div>
 <a name="var$default_config_type" id="$default_config_type"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">string</span>
 			<span class="var-name">$default_config_type</span>
-			 = <span class="var-default"> 'file'</span>			(line <span class="line-number">632</span>)
+			 = <span class="var-default"> 'file'</span>			(line <span class="line-number">660</span>)
 		</span>
 	</div>
 
@@ -1813,13 +1872,13 @@
 
 </div>
 <a name="var$default_config_variable_handler_func" id="$default_config_variable_handler_func"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">callable</span>
 			<span class="var-name">$default_config_variable_handler_func</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number">312</span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number">327</span>)
 		</span>
 	</div>
 
@@ -1836,13 +1895,13 @@
 
 </div>
 <a name="var$default_modifiers" id="$default_modifiers"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$default_modifiers</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">716</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">744</span>)
 		</span>
 	</div>
 
@@ -1859,13 +1918,13 @@
 
 </div>
 <a name="var$default_plugin_handler_func" id="$default_plugin_handler_func"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">callable</span>
 			<span class="var-name">$default_plugin_handler_func</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number">298</span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number">313</span>)
 		</span>
 	</div>
 
@@ -1882,13 +1941,13 @@
 
 </div>
 <a name="var$default_resource_type" id="$default_resource_type"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">string</span>
 			<span class="var-name">$default_resource_type</span>
-			 = <span class="var-default"> 'file'</span>			(line <span class="line-number">610</span>)
+			 = <span class="var-default"> 'file'</span>			(line <span class="line-number">638</span>)
 		</span>
 	</div>
 
@@ -1905,13 +1964,13 @@
 
 </div>
 <a name="var$default_template_handler_func" id="$default_template_handler_func"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">callable</span>
 			<span class="var-name">$default_template_handler_func</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number">284</span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number">299</span>)
 		</span>
 	</div>
 
@@ -1928,13 +1987,13 @@
 
 </div>
 <a name="var$default_variable_handler_func" id="$default_variable_handler_func"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">callable</span>
 			<span class="var-name">$default_variable_handler_func</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number">305</span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number">320</span>)
 		</span>
 	</div>
 
@@ -1951,13 +2010,13 @@
 
 </div>
 <a name="var$direct_access_security" id="$direct_access_security"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">boolean</span>
 			<span class="var-name">$direct_access_security</span>
-			 = <span class="var-default"> true</span>			(line <span class="line-number">489</span>)
+			 = <span class="var-default"> true</span>			(line <span class="line-number">517</span>)
 		</span>
 	</div>
 
@@ -1975,13 +2034,13 @@
 
 </div>
 <a name="var$disable_core_plugins" id="$disable_core_plugins"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">boolean</span>
 			<span class="var-name">$disable_core_plugins</span>
-			 = <span class="var-default"> false</span>			(line <span class="line-number">347</span>)
+			 = <span class="var-default"> false</span>			(line <span class="line-number">362</span>)
 		</span>
 	</div>
 
@@ -1998,13 +2057,13 @@
 
 </div>
 <a name="var$enable_traceback" id="$enable_traceback"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">boolean</span>
 			<span class="var-name">$enable_traceback</span>
-			 = <span class="var-default"> true</span>			(line <span class="line-number">256</span>)
+			 = <span class="var-default"> true</span>			(line <span class="line-number">271</span>)
 		</span>
 	</div>
 
@@ -2020,13 +2079,13 @@
 
 </div>
 <a name="var$error_reporting" id="$error_reporting"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">integer</span>
 			<span class="var-name">$error_reporting</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number">534</span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number">562</span>)
 		</span>
 	</div>
 
@@ -2043,13 +2102,13 @@
 
 </div>
 <a name="var$error_unassigned" id="$error_unassigned"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">integer</span>
 			<span class="var-name">$error_unassigned</span>
-			 = <span class="var-default"> self::UNASSIGNED_IGNORE</span>			(line <span class="line-number">243</span>)
+			 = <span class="var-default"> self::UNASSIGNED_IGNORE</span>			(line <span class="line-number">258</span>)
 		</span>
 	</div>
 
@@ -2069,13 +2128,13 @@
 
 </div>
 <a name="var$escape_html" id="$escape_html"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">boolean</span>
 			<span class="var-name">$escape_html</span>
-			 = <span class="var-default"> false</span>			(line <span class="line-number">723</span>)
+			 = <span class="var-default"> false</span>			(line <span class="line-number">751</span>)
 		</span>
 	</div>
 
@@ -2092,13 +2151,13 @@
 
 </div>
 <a name="var$force_cache" id="$force_cache"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">boolean</span>
 			<span class="var-name">$force_cache</span>
-			 = <span class="var-default"> false</span>			(line <span class="line-number">407</span>)
+			 = <span class="var-default"> false</span>			(line <span class="line-number">423</span>)
 		</span>
 	</div>
 
@@ -2115,13 +2174,13 @@
 
 </div>
 <a name="var$force_compile" id="$force_compile"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">boolean</span>
 			<span class="var-name">$force_compile</span>
-			 = <span class="var-default"> false</span>			(line <span class="line-number">354</span>)
+			 = <span class="var-default"> false</span>			(line <span class="line-number">369</span>)
 		</span>
 	</div>
 
@@ -2138,13 +2197,13 @@
 
 </div>
 <a name="var$get_used_tags" id="$get_used_tags"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">boolean</span>
 			<span class="var-name">$get_used_tags</span>
-			 = <span class="var-default"> false</span>			(line <span class="line-number">541</span>)
+			 = <span class="var-default"> false</span>			(line <span class="line-number">569</span>)
 		</span>
 	</div>
 
@@ -2160,13 +2219,13 @@
 
 </div>
 <a name="var$has_nocache_code" id="$has_nocache_code"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">boolean</span>
 			<span class="var-name">$has_nocache_code</span>
-			 = <span class="var-default"> false</span>			(line <span class="line-number">797</span>)
+			 = <span class="var-default"> false</span>			(line <span class="line-number">825</span>)
 		</span>
 	</div>
 
@@ -2182,13 +2241,13 @@
 
 </div>
 <a name="var$is_inheritance_child" id="$is_inheritance_child"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">bool</span>
 			<span class="var-name">$is_inheritance_child</span>
-			 = <span class="var-default"> false</span>			(line <span class="line-number">847</span>)
+			 = <span class="var-default"> false</span>			(line <span class="line-number">875</span>)
 		</span>
 	</div>
 
@@ -2204,13 +2263,13 @@
 
 </div>
 <a name="var$is_nocache" id="$is_nocache"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">boolean</span>
 			<span class="var-name">$is_nocache</span>
-			 = <span class="var-default"> false</span>			(line <span class="line-number">804</span>)
+			 = <span class="var-default"> false</span>			(line <span class="line-number">832</span>)
 		</span>
 	</div>
 
@@ -2226,13 +2285,13 @@
 
 </div>
 <a name="var$joined_config_dir" id="$joined_config_dir"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">string</span>
 			<span class="var-name">$joined_config_dir</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number">277</span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number">292</span>)
 		</span>
 	</div>
 
@@ -2248,13 +2307,13 @@
 
 </div>
 <a name="var$joined_template_dir" id="$joined_template_dir"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">string</span>
 			<span class="var-name">$joined_template_dir</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number">270</span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number">285</span>)
 		</span>
 	</div>
 
@@ -2270,13 +2329,13 @@
 
 </div>
 <a name="var$left_delimiter" id="$left_delimiter"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">string</span>
 			<span class="var-name">$left_delimiter</span>
-			 = <span class="var-default"> &quot;{&quot;</span>			(line <span class="line-number">431</span>)
+			 = <span class="var-default"> &quot;{&quot;</span>			(line <span class="line-number">459</span>)
 		</span>
 	</div>
 
@@ -2293,13 +2352,13 @@
 
 </div>
 <a name="var$locking_timeout" id="$locking_timeout"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">float</span>
 			<span class="var-name">$locking_timeout</span>
-			 = <span class="var-default"> 10</span>			(line <span class="line-number">593</span>)
+			 = <span class="var-default"> 10</span>			(line <span class="line-number">621</span>)
 		</span>
 	</div>
 
@@ -2316,13 +2375,13 @@
 
 </div>
 <a name="var$merge_compiled_includes" id="$merge_compiled_includes"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">boolean</span>
 			<span class="var-name">$merge_compiled_includes</span>
-			 = <span class="var-default"> false</span>			(line <span class="line-number">393</span>)
+			 = <span class="var-default"> false</span>			(line <span class="line-number">409</span>)
 		</span>
 	</div>
 
@@ -2339,13 +2398,13 @@
 
 </div>
 <a name="var$php_handling" id="$php_handling"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">integer</span>
 			<span class="var-name">$php_handling</span>
-			 = <span class="var-default"> self::PHP_PASSTHRU</span>			(line <span class="line-number">470</span>)
+			 = <span class="var-default"> self::PHP_PASSTHRU</span>			(line <span class="line-number">498</span>)
 		</span>
 	</div>
 
@@ -2366,13 +2425,13 @@
 
 </div>
 <a name="var$plugin_search_order" id="$plugin_search_order"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$plugin_search_order</span>
-			 = <span class="var-default">array('function', 'block', 'compiler', 'class')</span>			(line <span class="line-number">660</span>)
+			 = <span class="var-default">array('function', 'block', 'compiler', 'class')</span>			(line <span class="line-number">688</span>)
 		</span>
 	</div>
 
@@ -2389,13 +2448,13 @@
 
 </div>
 <a name="var$properties" id="$properties"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$properties</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">625</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">653</span>)
 		</span>
 	</div>
 
@@ -2411,13 +2470,13 @@
 
 </div>
 <a name="var$registered_cache_resources" id="$registered_cache_resources"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$registered_cache_resources</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">702</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">730</span>)
 		</span>
 	</div>
 
@@ -2433,13 +2492,13 @@
 
 </div>
 <a name="var$registered_classes" id="$registered_classes"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$registered_classes</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">674</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">702</span>)
 		</span>
 	</div>
 
@@ -2455,13 +2514,13 @@
 
 </div>
 <a name="var$registered_filters" id="$registered_filters"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$registered_filters</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">681</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">709</span>)
 		</span>
 	</div>
 
@@ -2477,13 +2536,13 @@
 
 </div>
 <a name="var$registered_objects" id="$registered_objects"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$registered_objects</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">667</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">695</span>)
 		</span>
 	</div>
 
@@ -2499,13 +2558,13 @@
 
 </div>
 <a name="var$registered_plugins" id="$registered_plugins"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$registered_plugins</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">653</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">681</span>)
 		</span>
 	</div>
 
@@ -2521,13 +2580,13 @@
 
 </div>
 <a name="var$registered_resources" id="$registered_resources"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$registered_resources</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">688</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">716</span>)
 		</span>
 	</div>
 
@@ -2543,13 +2602,13 @@
 
 </div>
 <a name="var$right_delimiter" id="$right_delimiter"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">string</span>
 			<span class="var-name">$right_delimiter</span>
-			 = <span class="var-default"> &quot;}&quot;</span>			(line <span class="line-number">438</span>)
+			 = <span class="var-default"> &quot;}&quot;</span>			(line <span class="line-number">466</span>)
 		</span>
 	</div>
 
@@ -2566,13 +2625,13 @@
 
 </div>
 <a name="var$rootTemplate" id="$rootTemplate"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type"><a href="../../Smarty/Smarty/Smarty.html">Smarty</a></span>
 			<span class="var-name">$rootTemplate</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number">811</span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number">839</span>)
 		</span>
 	</div>
 
@@ -2588,13 +2647,13 @@
 
 </div>
 <a name="var$security_class" id="$security_class"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">string</span>
 			<span class="var-name">$security_class</span>
-			 = <span class="var-default"> 'Smarty_Security'</span>			(line <span class="line-number">451</span>)
+			 = <span class="var-default"> 'Smarty_Security'</span>			(line <span class="line-number">479</span>)
 		</span>
 	</div>
 
@@ -2613,13 +2672,13 @@
 
 </div>
 <a name="var$security_policy" id="$security_policy"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type"><a href="../../Security/Smarty_Security.html">Smarty_Security</a></span>
 			<span class="var-name">$security_policy</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number">459</span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number">487</span>)
 		</span>
 	</div>
 
@@ -2637,13 +2696,13 @@
 
 </div>
 <a name="var$smarty_debug_id" id="$smarty_debug_id"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">string</span>
 			<span class="var-name">$smarty_debug_id</span>
-			 = <span class="var-default"> 'SMARTY_DEBUG'</span>			(line <span class="line-number">520</span>)
+			 = <span class="var-default"> 'SMARTY_DEBUG'</span>			(line <span class="line-number">548</span>)
 		</span>
 	</div>
 
@@ -2661,13 +2720,13 @@
 
 </div>
 <a name="var$start_time" id="$start_time"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">integer</span>
 			<span class="var-name">$start_time</span>
-			 = <span class="var-default"> 0</span>			(line <span class="line-number">736</span>)
+			 = <span class="var-default"> 0</span>			(line <span class="line-number">764</span>)
 		</span>
 	</div>
 
@@ -2683,13 +2742,13 @@
 
 </div>
 <a name="var$template_functions" id="$template_functions"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$template_functions</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">602</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">630</span>)
 		</span>
 	</div>
 
@@ -2705,13 +2764,13 @@
 
 </div>
 <a name="var$template_function_chain" id="$template_function_chain"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">object Smarty_Internal_Content</span>
 			<span class="var-name">$template_function_chain</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number">869</span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number">897</span>)
 		</span>
 	</div>
 
@@ -2727,13 +2786,13 @@
 
 </div>
 <a name="var$template_resource" id="$template_resource"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">string</span>
 			<span class="var-name">$template_resource</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number">790</span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number">818</span>)
 		</span>
 	</div>
 
@@ -2748,6 +2807,34 @@
 		
 
 </div>
+<a name="var$tpl_vars" id="$tpl_vars"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$tpl_vars</span>
+			 = <span class="var-default"> null</span>			(line <span class="line-number">182</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">assigned tpl vars</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../../Template/Smarty_Internal_Data.html#var$tpl_vars">Smarty_Internal_Data::$tpl_vars</a></dt>
+						<dd>template variables</dd>
+					</dl>
+		
+		
+
+</div>
 <a name="var$trace_call_stack" id="$trace_call_stack"><!-- --></A>
 <div class="evenrow">
 
@@ -2755,7 +2842,7 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$trace_call_stack</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">862</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">890</span>)
 		</span>
 	</div>
 
@@ -2777,7 +2864,7 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$used_tags</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">833</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">861</span>)
 		</span>
 	</div>
 
@@ -2799,7 +2886,7 @@
 		<span class="var-title">
 			<span class="var-type">boolean</span>
 			<span class="var-name">$use_include_path</span>
-			 = <span class="var-default"> false</span>			(line <span class="line-number">250</span>)
+			 = <span class="var-default"> false</span>			(line <span class="line-number">265</span>)
 		</span>
 	</div>
 
@@ -2822,7 +2909,7 @@
 		<span class="var-title">
 			<span class="var-type">boolean</span>
 			<span class="var-name">$use_sub_dirs</span>
-			 = <span class="var-default"> false</span>			(line <span class="line-number">371</span>)
+			 = <span class="var-default"> false</span>			(line <span class="line-number">386</span>)
 		</span>
 	</div>
 
@@ -2845,7 +2932,7 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$variable_filters</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">826</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">854</span>)
 		</span>
 	</div>
 
@@ -2867,7 +2954,7 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$_capture_stack</span>
-			 = <span class="var-default">array(0 =&gt; array())</span>			(line <span class="line-number">855</span>)
+			 = <span class="var-default">array(0 =&gt; array())</span>			(line <span class="line-number">883</span>)
 		</span>
 	</div>
 
@@ -2889,7 +2976,7 @@
 		<span class="var-title">
 			<span class="var-type">string</span>
 			<span class="var-name">$_current_file</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number">764</span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number">792</span>)
 		</span>
 	</div>
 
@@ -2911,7 +2998,7 @@
 		<span class="var-title">
 			<span class="var-type">integer</span>
 			<span class="var-name">$_dir_perms</span>
-			 = <span class="var-default"> 0771</span>			(line <span class="line-number">750</span>)
+			 = <span class="var-default"> 0771</span>			(line <span class="line-number">778</span>)
 		</span>
 	</div>
 
@@ -2933,7 +3020,7 @@
 		<span class="var-title">
 			<span class="var-type">integer</span>
 			<span class="var-name">$_file_perms</span>
-			 = <span class="var-default"> 0644</span>			(line <span class="line-number">743</span>)
+			 = <span class="var-default"> 0644</span>			(line <span class="line-number">771</span>)
 		</span>
 	</div>
 
@@ -2955,7 +3042,7 @@
 		<span class="var-title">
 			<span class="var-type">boolean</span>
 			<span class="var-name">$_parserdebug</span>
-			 = <span class="var-default"> false</span>			(line <span class="line-number">771</span>)
+			 = <span class="var-default"> false</span>			(line <span class="line-number">799</span>)
 		</span>
 	</div>
 
@@ -2977,7 +3064,7 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$_resource_handlers</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">695</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">723</span>)
 		</span>
 	</div>
 
@@ -2999,7 +3086,7 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$_tag_stack</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">757</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">785</span>)
 		</span>
 	</div>
 
@@ -3014,24 +3101,56 @@
 		
 
 </div>
+<a name="var$_tpl_old_cache_id" id="$_tpl_old_cache_id"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$_tpl_old_cache_id</span>
+			 = <span class="var-default"> null</span>			(line <span class="line-number">438</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Save last setting of cache_id</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$_tpl_old_compile_id" id="$_tpl_old_compile_id"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$_tpl_old_compile_id</span>
+			 = <span class="var-default"> null</span>			(line <span class="line-number">452</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Save last setting of compile_id</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
 							<h4>Inherited Variables</h4>
 				<A NAME='inherited_vars'><!-- --></A>
 									<p>Inherited from <span class="classname"><a href="../../Template/Smarty_Internal_Data.html">Smarty_Internal_Data</a></span></p>
 					<blockquote>
 													<span class="var-title">
-								<span class="var-name"><a href="../../Template/Smarty_Internal_Data.html#var$force_var_clone">Smarty_Internal_Data::$force_var_clone</a></span><br>
-							</span>
-													<span class="var-title">
-								<span class="var-name"><a href="../../Template/Smarty_Internal_Data.html#var$must_merge_tpl_vars">Smarty_Internal_Data::$must_merge_tpl_vars</a></span><br>
-							</span>
-													<span class="var-title">
 								<span class="var-name"><a href="../../Template/Smarty_Internal_Data.html#var$parent">Smarty_Internal_Data::$parent</a></span><br>
-							</span>
-													<span class="var-title">
-								<span class="var-name"><a href="../../Template/Smarty_Internal_Data.html#var$scope_name">Smarty_Internal_Data::$scope_name</a></span><br>
-							</span>
-													<span class="var-title">
-								<span class="var-name"><a href="../../Template/Smarty_Internal_Data.html#var$tpl_vars">Smarty_Internal_Data::$tpl_vars</a></span><br>
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../../Template/Smarty_Internal_Data.html#var$usage">Smarty_Internal_Data::$usage</a></span><br>
@@ -3059,7 +3178,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">static method muteExpectedErrors</span> (line <span class="line-number">2399</span>)
+		<span class="method-title">static method muteExpectedErrors</span> (line <span class="line-number">2286</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -3084,7 +3203,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">static method mutingErrorHandler</span> (line <span class="line-number">2346</span>)
+		<span class="method-title">static method mutingErrorHandler</span> (line <span class="line-number">2233</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -3127,7 +3246,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">static method registerCallback</span> (line <span class="line-number">2619</span>)
+		<span class="method-title">static method registerCallback</span> (line <span class="line-number">2502</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -3159,7 +3278,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">static method triggerCallback</span> (line <span class="line-number">2637</span>)
+		<span class="method-title">static method triggerCallback</span> (line <span class="line-number">2520</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -3191,7 +3310,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">static method unmuteExpectedErrors</span> (line <span class="line-number">2432</span>)
+		<span class="method-title">static method unmuteExpectedErrors</span> (line <span class="line-number">2319</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -3217,7 +3336,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">addAutoloadFilters</span> (line <span class="line-number">2060</span>)
+		<span class="method-title">addAutoloadFilters</span> (line <span class="line-number">2011</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -3250,7 +3369,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">addConfigDir</span> (line <span class="line-number">1835</span>)
+		<span class="method-title">addConfigDir</span> (line <span class="line-number">1786</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -3283,7 +3402,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">addDefaultModifiers</span> (line <span class="line-number">2012</span>)
+		<span class="method-title">addDefaultModifiers</span> (line <span class="line-number">1963</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -3313,7 +3432,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">addPluginsDir</span> (line <span class="line-number">1903</span>)
+		<span class="method-title">addPluginsDir</span> (line <span class="line-number">1854</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -3343,7 +3462,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">addTemplateDir</span> (line <span class="line-number">1767</span>)
+		<span class="method-title">addTemplateDir</span> (line <span class="line-number">1718</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -3376,7 +3495,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">assignCached</span> (line <span class="line-number">2465</span>)
+		<span class="method-title">assignCached</span> (line <span class="line-number">2352</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -3405,11 +3524,73 @@
 		
 			
 	</div>
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">916</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Initialize new Smarty object</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Smarty</span>
+		<span class="method-name">
+			__construct
+		</span>
+				()
+			</div>
+	
+		
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../../Smarty/SmartyBC/SmartyBC.html#method__construct">SmartyBC::__construct()</a>
+								: Initialize new SmartyBC object
+							</li>
+				</ul>
+	</div>
+<a name="method__destruct" id="__destruct"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">Destructor __destruct</span> (line <span class="line-number">2532</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Class destructor</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			__destruct
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../../Smarty/Smarty_Internal_Magic_Error.html#method__destruct">Smarty_Internal_Magic_Error::__destruct()</a></dt>
+						<dd>&lt;&lt;magic&gt;&gt; Generic Methods.</dd>
+					</dl>
+			
+	</div>
 <a name="methodcleanPointer" id="cleanPointer"><!-- --></a>
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">cleanPointer</span> (line <span class="line-number">2510</span>)
+		<span class="method-title">cleanPointer</span> (line <span class="line-number">2397</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -3433,7 +3614,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">clearAllCache</span> (line <span class="line-number">1671</span>)
+		<span class="method-title">clearAllCache</span> (line <span class="line-number">1622</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -3465,7 +3646,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">clearCache</span> (line <span class="line-number">1690</span>)
+		<span class="method-title">clearCache</span> (line <span class="line-number">1641</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -3507,7 +3688,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">clearCompiledTemplate</span> (line <span class="line-number">1709</span>)
+		<span class="method-title">clearCompiledTemplate</span> (line <span class="line-number">1660</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -3543,7 +3724,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">compileAllConfig</span> (line <span class="line-number">2291</span>)
+		<span class="method-title">compileAllConfig</span> (line <span class="line-number">2178</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -3582,7 +3763,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">compileAllTemplates</span> (line <span class="line-number">2276</span>)
+		<span class="method-title">compileAllTemplates</span> (line <span class="line-number">2163</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -3617,73 +3798,11 @@
 		
 			
 	</div>
-<a name="method__construct" id="__construct"><!-- --></a>
-<div class="oddrow">
-	
-	<div class="method-header">
-		<span class="method-title">Constructor __construct</span> (line <span class="line-number">888</span>)
-	</div> 
-	
-	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Initialize new Smarty object</p>
-	<ul class="tags">
-				<li><span class="field">access:</span> public</li>
-			</ul>
-	
-	<div class="method-signature">
-		<span class="method-result">Smarty</span>
-		<span class="method-name">
-			__construct
-		</span>
-				()
-			</div>
-	
-		
-			<hr class="separator" />
-		<div class="notes">Redefinition of:</div>
-		<dl>
-			<dt><a href="../../Template/Smarty_Internal_Data.html#method__construct">Smarty_Internal_Data::__construct()</a></dt>
-						<dd>set up variable containers</dd>
-					</dl>
-			
-			<hr class="separator" />
-		<div class="notes">Redefined in descendants as:</div>
-		<ul class="redefinitions">
-					<li>
-				<a href="../../Smarty/SmartyBC/SmartyBC.html#method__construct">SmartyBC::__construct()</a>
-								: Initialize new SmartyBC object
-							</li>
-				</ul>
-	</div>
-<a name="method__destruct" id="__destruct"><!-- --></a>
-<div class="evenrow">
-	
-	<div class="method-header">
-		<span class="method-title">Destructor __destruct</span> (line <span class="line-number">915</span>)
-	</div> 
-	
-	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Class destructor</p>
-	<ul class="tags">
-				<li><span class="field">access:</span> public</li>
-			</ul>
-	
-	<div class="method-signature">
-		<span class="method-result">void</span>
-		<span class="method-name">
-			__destruct
-		</span>
-				()
-			</div>
-	
-		
-			
-	</div>
 <a name="methodcreateData" id="createData"><!-- --></a>
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">createData</span> (line <span class="line-number">1286</span>)
+		<span class="method-title">createData</span> (line <span class="line-number">1237</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -3697,12 +3816,12 @@
 		<span class="method-name">
 			createData
 		</span>
-					([<span class="var-type">object</span>&nbsp;<span class="var-name">$parent</span> = <span class="var-default">null</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$scope_name</span> = <span class="var-default">'Data unnamed'</span>])
+					([<span class="var-type"><a href="../../Smarty/Smarty/Smarty.html">Smarty</a>|<a href="../../Template/Smarty_Data.html">Smarty_Data</a>|<a href="../../Template/Smarty_Variable_Scope.html">Smarty_Variable_Scope</a></span>&nbsp;<span class="var-name">$parent</span> = <span class="var-default">null</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$scope_name</span> = <span class="var-default">'Data unnamed'</span>])
 			</div>
 	
 			<ul class="parameters">
 					<li>
-				<span class="var-type">object</span>
+				<span class="var-type"><a href="../../Smarty/Smarty/Smarty.html">Smarty</a>|<a href="../../Template/Smarty_Data.html">Smarty_Data</a>|<a href="../../Template/Smarty_Variable_Scope.html">Smarty_Variable_Scope</a></span>
 				<span class="var-name">$parent</span><span class="var-description">: next higher level of Smarty variables</span>			</li>
 					<li>
 				<span class="var-type">string</span>
@@ -3715,28 +3834,29 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">createTemplate</span> (line <span class="line-number">2137</span>)
+		<span class="method-title">createTemplate</span> (line <span class="line-number">1102</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">creates a template object</p>
 	<ul class="tags">
-				<li><span class="field">return:</span> object</li>
+				<li><span class="field">return:</span> template object</li>
+				<li><span class="field">throws:</span> SmartyException</li>
 				<li><span class="field">access:</span> public</li>
 			</ul>
 	
 	<div class="method-signature">
-		<span class="method-result">object template</span>
+		<span class="method-result"><a href="../../Smarty/Smarty/Smarty.html">Smarty</a></span>
 		<span class="method-name">
 			createTemplate
 		</span>
-					(<span class="var-type">string</span>&nbsp;<span class="var-name">$template</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$cache_id</span> = <span class="var-default">null</span>], [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$compile_id</span> = <span class="var-default">null</span>], [<span class="var-type">object</span>&nbsp;<span class="var-name">$parent</span> = <span class="var-default">null</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$is_config</span> = <span class="var-default">false</span>])
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$template_resource</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$cache_id</span> = <span class="var-default">null</span>], [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$compile_id</span> = <span class="var-default">null</span>], [<span class="var-type">object</span>&nbsp;<span class="var-name">$parent</span> = <span class="var-default">null</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$is_config</span> = <span class="var-default">false</span>])
 			</div>
 	
 			<ul class="parameters">
 					<li>
 				<span class="var-type">string</span>
-				<span class="var-name">$template</span><span class="var-description">: the resource handle of the template file</span>			</li>
+				<span class="var-name">$template_resource</span><span class="var-description">: the resource handle of the template file</span>			</li>
 					<li>
 				<span class="var-type">mixed</span>
 				<span class="var-name">$cache_id</span><span class="var-description">: cache id to be used with this template</span>			</li>
@@ -3757,7 +3877,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">disableSecurity</span> (line <span class="line-number">1734</span>)
+		<span class="method-title">disableSecurity</span> (line <span class="line-number">1685</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -3782,7 +3902,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">display</span> (line <span class="line-number">1215</span>)
+		<span class="method-title">display</span> (line <span class="line-number">1062</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -3820,7 +3940,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">enableSecurity</span> (line <span class="line-number">1722</span>)
+		<span class="method-title">enableSecurity</span> (line <span class="line-number">1673</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -3851,14 +3971,14 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">fetch</span> (line <span class="line-number">1066</span>)
+		<span class="method-title">fetch</span> (line <span class="line-number">961</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">fetches a rendered Smarty template</p>
 	<ul class="tags">
 				<li><span class="field">return:</span> rendered template output</li>
-				<li><span class="field">throws:</span> SmartyRuntimeException</li>
+				<li><span class="field">throws:</span> SmartyRunTimeException</li>
 				<li><span class="field">throws:</span> SmartyException</li>
 				<li><span class="field">access:</span> public</li>
 			</ul>
@@ -3868,7 +3988,7 @@
 		<span class="method-name">
 			fetch
 		</span>
-					([<span class="var-type">string</span>&nbsp;<span class="var-name">$template</span> = <span class="var-default">null</span>], [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$cache_id</span> = <span class="var-default">null</span>], [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$compile_id</span> = <span class="var-default">null</span>], [<span class="var-type">object</span>&nbsp;<span class="var-name">$parent</span> = <span class="var-default">null</span>], [<span class="var-type">bool</span>&nbsp;<span class="var-name">$display</span> = <span class="var-default">false</span>], [<span class="var-type">bool</span>&nbsp;<span class="var-name">$no_output_filter</span> = <span class="var-default">false</span>])
+					([<span class="var-type">string</span>&nbsp;<span class="var-name">$template</span> = <span class="var-default">null</span>], [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$cache_id</span> = <span class="var-default">null</span>], [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$compile_id</span> = <span class="var-default">null</span>], [<span class="var-type"><a href="../../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$parent</span> = <span class="var-default">null</span>], [<span class="var-type">bool</span>&nbsp;<span class="var-name">$display</span> = <span class="var-default">false</span>], [<span class="var-type">bool</span>&nbsp;<span class="var-name">$no_output_filter</span> = <span class="var-default">false</span>], [<span class="var-type">null</span>&nbsp;<span class="var-name">$data</span> = <span class="var-default">null</span>], [<span class="var-type">int</span>&nbsp;<span class="var-name">$scope_type</span> = <span class="var-default">Smarty::SCOPE_LOCAL</span>], [<span class="var-type">null</span>&nbsp;<span class="var-name">$caching</span> = <span class="var-default">null</span>], [<span class="var-type">null|int</span>&nbsp;<span class="var-name">$cache_lifetime</span> = <span class="var-default">null</span>], [<span class="var-type">null|</span>&nbsp;<span class="var-name">$_scope</span> = <span class="var-default">null</span>])
 			</div>
 	
 			<ul class="parameters">
@@ -3882,7 +4002,7 @@
 				<span class="var-type">mixed</span>
 				<span class="var-name">$compile_id</span><span class="var-description">: compile id to be used with this template</span>			</li>
 					<li>
-				<span class="var-type">object</span>
+				<span class="var-type"><a href="../../Smarty/Smarty/Smarty.html">Smarty</a></span>
 				<span class="var-name">$parent</span><span class="var-description">: next higher level of Smarty variables</span>			</li>
 					<li>
 				<span class="var-type">bool</span>
@@ -3890,6 +4010,21 @@
 					<li>
 				<span class="var-type">bool</span>
 				<span class="var-name">$no_output_filter</span><span class="var-description">: if true do not run output filter</span>			</li>
+					<li>
+				<span class="var-type">null</span>
+				<span class="var-name">$data</span>			</li>
+					<li>
+				<span class="var-type">int</span>
+				<span class="var-name">$scope_type</span>			</li>
+					<li>
+				<span class="var-type">null</span>
+				<span class="var-name">$caching</span>			</li>
+					<li>
+				<span class="var-type">null|int</span>
+				<span class="var-name">$cache_lifetime</span>			</li>
+					<li>
+				<span class="var-type">null|</span>
+				<span class="var-name">$_scope</span><span class="var-description">: Smarty_Variable_Scope $_scope</span>			</li>
 				</ul>
 		
 			
@@ -3898,7 +4033,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">findRootTemplate</span> (line <span class="line-number">2443</span>)
+		<span class="method-title">findRootTemplate</span> (line <span class="line-number">2330</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -3923,7 +4058,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">getAutoloadFilters</span> (line <span class="line-number">2088</span>)
+		<span class="method-title">getAutoloadFilters</span> (line <span class="line-number">2039</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -3953,7 +4088,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">getCacheDir</span> (line <span class="line-number">1987</span>)
+		<span class="method-title">getCacheDir</span> (line <span class="line-number">1938</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -3978,7 +4113,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">getCachedVars</span> (line <span class="line-number">2493</span>)
+		<span class="method-title">getCachedVars</span> (line <span class="line-number">2380</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4008,7 +4143,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">getCompileDir</span> (line <span class="line-number">1960</span>)
+		<span class="method-title">getCompileDir</span> (line <span class="line-number">1911</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4033,7 +4168,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">getConfigDir</span> (line <span class="line-number">1869</span>)
+		<span class="method-title">getConfigDir</span> (line <span class="line-number">1820</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4063,7 +4198,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">getDebugTemplate</span> (line <span class="line-number">2103</span>)
+		<span class="method-title">getDebugTemplate</span> (line <span class="line-number">2054</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4087,7 +4222,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">getDefaultModifiers</span> (line <span class="line-number">2029</span>)
+		<span class="method-title">getDefaultModifiers</span> (line <span class="line-number">1980</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4112,7 +4247,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">getGlobal</span> (line <span class="line-number">1644</span>)
+		<span class="method-title">getGlobal</span> (line <span class="line-number">1595</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4142,7 +4277,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">getPluginsDir</span> (line <span class="line-number">1933</span>)
+		<span class="method-title">getPluginsDir</span> (line <span class="line-number">1884</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4167,7 +4302,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">getTags</span> (line <span class="line-number">2303</span>)
+		<span class="method-title">getTags</span> (line <span class="line-number">2190</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4197,7 +4332,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">getTemplateDir</span> (line <span class="line-number">1800</span>)
+		<span class="method-title">getTemplateDir</span> (line <span class="line-number">1751</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4227,7 +4362,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">info</span> (line <span class="line-number">2328</span>)
+		<span class="method-title">info</span> (line <span class="line-number">2215</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4256,11 +4391,11 @@
 		
 			
 	</div>
-<a name="methodinfo_TEMPLATE" id="info_TEMPLATE"><!-- --></a>
+<a name="methodinfotpl_obj" id="infotpl_obj"><!-- --></a>
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">info_TEMPLATE</span> (line <span class="line-number">2552</span>)
+		<span class="method-title">infotpl_obj</span> (line <span class="line-number">2439</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4273,7 +4408,7 @@
 	<div class="method-signature">
 		<span class="method-result">string|array</span>
 		<span class="method-name">
-			info_TEMPLATE
+			infotpl_obj
 		</span>
 					([<span class="var-type">boolean</span>&nbsp;<span class="var-name">$html</span> = <span class="var-default">true</span>], [<span class="var-type">integer</span>&nbsp;<span class="var-name">$flags</span> = <span class="var-default">0</span>])
 			</div>
@@ -4293,7 +4428,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">isCached</span> (line <span class="line-number">1231</span>)
+		<span class="method-title">isCached</span> (line <span class="line-number">1078</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4332,7 +4467,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">loadFilter</span> (line <span class="line-number">1589</span>)
+		<span class="method-title">loadFilter</span> (line <span class="line-number">1540</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4365,7 +4500,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">registerCacheResource</span> (line <span class="line-number">1370</span>)
+		<span class="method-title">registerCacheResource</span> (line <span class="line-number">1321</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4397,7 +4532,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">registerClass</span> (line <span class="line-number">1400</span>)
+		<span class="method-title">registerClass</span> (line <span class="line-number">1351</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4430,7 +4565,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">registerDefaultConfigHandler</span> (line <span class="line-number">1491</span>)
+		<span class="method-title">registerDefaultConfigHandler</span> (line <span class="line-number">1442</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4460,7 +4595,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">registerDefaultConfigVariableHandler</span> (line <span class="line-number">1473</span>)
+		<span class="method-title">registerDefaultConfigVariableHandler</span> (line <span class="line-number">1424</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4490,7 +4625,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">registerDefaultPluginHandler</span> (line <span class="line-number">1419</span>)
+		<span class="method-title">registerDefaultPluginHandler</span> (line <span class="line-number">1370</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4520,7 +4655,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">registerDefaultTemplateHandler</span> (line <span class="line-number">1437</span>)
+		<span class="method-title">registerDefaultTemplateHandler</span> (line <span class="line-number">1388</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4550,7 +4685,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">registerDefaultVariableHandler</span> (line <span class="line-number">1455</span>)
+		<span class="method-title">registerDefaultVariableHandler</span> (line <span class="line-number">1406</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4580,7 +4715,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">registerFilter</span> (line <span class="line-number">1510</span>)
+		<span class="method-title">registerFilter</span> (line <span class="line-number">1461</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4613,7 +4748,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">registerPlugin</span> (line <span class="line-number">1302</span>)
+		<span class="method-title">registerPlugin</span> (line <span class="line-number">1253</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4655,7 +4790,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">registerResource</span> (line <span class="line-number">1341</span>)
+		<span class="method-title">registerResource</span> (line <span class="line-number">1292</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4687,7 +4822,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">setAutoloadFilters</span> (line <span class="line-number">2041</span>)
+		<span class="method-title">setAutoloadFilters</span> (line <span class="line-number">1992</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4720,7 +4855,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">setCacheDir</span> (line <span class="line-number">1972</span>)
+		<span class="method-title">setCacheDir</span> (line <span class="line-number">1923</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4750,7 +4885,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">setCompileDir</span> (line <span class="line-number">1945</span>)
+		<span class="method-title">setCompileDir</span> (line <span class="line-number">1896</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4780,7 +4915,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">setConfigDir</span> (line <span class="line-number">1816</span>)
+		<span class="method-title">setConfigDir</span> (line <span class="line-number">1767</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4810,7 +4945,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">setDebugTemplate</span> (line <span class="line-number">2116</span>)
+		<span class="method-title">setDebugTemplate</span> (line <span class="line-number">2067</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4841,7 +4976,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">setDefaultModifiers</span> (line <span class="line-number">1999</span>)
+		<span class="method-title">setDefaultModifiers</span> (line <span class="line-number">1950</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4871,7 +5006,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">setPluginsDir</span> (line <span class="line-number">1886</span>)
+		<span class="method-title">setPluginsDir</span> (line <span class="line-number">1837</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4901,7 +5036,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">setTemplateDir</span> (line <span class="line-number">1748</span>)
+		<span class="method-title">setTemplateDir</span> (line <span class="line-number">1699</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4931,7 +5066,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">templateExists</span> (line <span class="line-number">1632</span>)
+		<span class="method-title">templateExists</span> (line <span class="line-number">1583</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4961,7 +5096,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">testInstall</span> (line <span class="line-number">2315</span>)
+		<span class="method-title">testInstall</span> (line <span class="line-number">2202</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -4994,7 +5129,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">unloadFilter</span> (line <span class="line-number">1616</span>)
+		<span class="method-title">unloadFilter</span> (line <span class="line-number">1567</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -5026,7 +5161,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">unregisterCacheResource</span> (line <span class="line-number">1383</span>)
+		<span class="method-title">unregisterCacheResource</span> (line <span class="line-number">1334</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -5055,7 +5190,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">unregisterFilter</span> (line <span class="line-number">1538</span>)
+		<span class="method-title">unregisterFilter</span> (line <span class="line-number">1489</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -5087,7 +5222,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">unregisterPlugin</span> (line <span class="line-number">1325</span>)
+		<span class="method-title">unregisterPlugin</span> (line <span class="line-number">1276</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -5119,7 +5254,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">unregisterResource</span> (line <span class="line-number">1354</span>)
+		<span class="method-title">unregisterResource</span> (line <span class="line-number">1305</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -5148,7 +5283,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">_capture_error</span> (line <span class="line-number">2520</span>)
+		<span class="method-title">_capture_error</span> (line <span class="line-number">2407</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -5168,11 +5303,72 @@
 		
 			
 	</div>
+<a name="method_computeTemplateId" id="_computeTemplateId"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_computeTemplateId</span> (line <span class="line-number">1215</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">compute unique template id</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> unique template id</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			_computeTemplateId
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$template</span>, <span class="var-type">boolean</span>&nbsp;<span class="var-name">$is_config</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$template</span><span class="var-description">: the resource handle of the template file</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$is_config</span><span class="var-description">: flag that template will be for config files</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_deleteTemplateObj" id="_deleteTemplateObj"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_deleteTemplateObj</span> (line <span class="line-number">1191</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			_deleteTemplateObj
+		</span>
+					([<span class="var-type"></span>&nbsp;<span class="var-name">$tpl_obj</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$tpl_obj</span>			</li>
+				</ul>
+		
+			
+	</div>
 <a name="method_getFilterName" id="_getFilterName"><!-- --></a>
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">_getFilterName</span> (line <span class="line-number">1569</span>)
+		<span class="method-title">_getFilterName</span> (line <span class="line-number">1520</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -5201,7 +5397,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">_getScopePointer</span> (line <span class="line-number">2531</span>)
+		<span class="method-title">_getScopePointer</span> (line <span class="line-number">2418</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -5216,22 +5412,67 @@
 		<span class="method-name">
 			_getScopePointer
 		</span>
-					(<span class="var-type">int</span>&nbsp;<span class="var-name">$scope</span>)
+					(<span class="var-type">int</span>&nbsp;<span class="var-name">$scope_type</span>)
 			</div>
 	
 			<ul class="parameters">
 					<li>
 				<span class="var-type">int</span>
-				<span class="var-name">$scope</span><span class="var-description">: parent or root scope</span>			</li>
+				<span class="var-name">$scope_type</span><span class="var-description">: parent or root scope</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_getTemplateObj" id="_getTemplateObj"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_getTemplateObj</span> (line <span class="line-number">1139</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">returns cached template object, or creates a new one</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> template object</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../../Smarty/Smarty/Smarty.html">Smarty</a></span>
+		<span class="method-name">
+			_getTemplateObj
+		</span>
+					(<span class="var-type">string|<a href="../../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$tpl_mixed</span>, <span class="var-type"><a href="../../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$parent</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$cache_id</span> = <span class="var-default">null</span>], [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$compile_id</span> = <span class="var-default">null</span>], [<span class="var-type">null|int</span>&nbsp;<span class="var-name">$cache_lifetime</span> = <span class="var-default">null</span>], [<span class="var-type">null|bool</span>&nbsp;<span class="var-name">$cache_objs</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string|<a href="../../Smarty/Smarty/Smarty.html">Smarty</a></span>
+				<span class="var-name">$tpl_mixed</span><span class="var-description">: resource and template name string or Smarty object</span>			</li>
+					<li>
+				<span class="var-type"><a href="../../Smarty/Smarty/Smarty.html">Smarty</a></span>
+				<span class="var-name">$parent</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$cache_id</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$compile_id</span>			</li>
+					<li>
+				<span class="var-type">null|int</span>
+				<span class="var-name">$cache_lifetime</span>			</li>
+					<li>
+				<span class="var-type">null|bool</span>
+				<span class="var-name">$cache_objs</span>			</li>
 				</ul>
 		
 			
 	</div>
 <a name="method_loadPlugin" id="_loadPlugin"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">_loadPlugin</span> (line <span class="line-number">2202</span>)
+		<span class="method-title">_loadPlugin</span> (line <span class="line-number">2089</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -5262,10 +5503,10 @@
 			
 	</div>
 <a name="method__call" id="__call"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">__call</span> (line <span class="line-number">2566</span>)
+		<span class="method-title">__call</span> (line <span class="line-number">2453</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -5276,7 +5517,7 @@
 			</ul>
 	
 	<div class="method-signature">
-		<span class="method-result">$this|bool|\Smarty_Compiled|\Smarty_Template_Cached|\Smarty_Template_Source</span>
+		<span class="method-result">$this|bool|\Smarty_Compiled|\Smarty_template_Cached|\Smarty_Template_Source</span>
 		<span class="method-name">
 			__call
 		</span>
@@ -5292,17 +5533,24 @@
 				<span class="var-name">$args</span><span class="var-description">: argument array</span>			</li>
 				</ul>
 		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../../Smarty/Smarty_Internal_Magic_Error.html#method__call">Smarty_Internal_Magic_Error::__call()</a></dt>
+						<dd>&lt;&lt;magic&gt;&gt; Generic Methods.</dd>
+					</dl>
 			
 	</div>
 <a name="method__clone" id="__clone"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">__clone</span> (line <span class="line-number">925</span>)
+		<span class="method-title">__clone</span> (line <span class="line-number">2544</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">&lt;&lt;magic&gt;&gt; method</p>
+<p class="description"><p>remove resource objs</p></p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
@@ -5319,10 +5567,10 @@
 			
 	</div>
 <a name="method__get" id="__get"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">__get</span> (line <span class="line-number">944</span>)
+		<span class="method-title">__get</span> (line <span class="line-number">2557</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -5334,7 +5582,7 @@
 			</ul>
 	
 	<div class="method-signature">
-		<span class="method-result">$this|bool|\Smarty_Compiled|\Smarty_Template_Cached|\Smarty_Template_Source</span>
+		<span class="method-result">$this|bool|\Smarty_Compiled|\Smarty_template_Cached|\Smarty_Template_Source</span>
 		<span class="method-name">
 			__get
 		</span>
@@ -5347,6 +5595,12 @@
 				<span class="var-name">$property_name</span><span class="var-description">: property name</span>			</li>
 				</ul>
 		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../../Smarty/Smarty_Internal_Magic_Error.html#method__get">Smarty_Internal_Magic_Error::__get()</a></dt>
+						<dd>&lt;&lt;magic&gt;&gt; Generic getter.</dd>
+					</dl>
 			
 			<hr class="separator" />
 		<div class="notes">Redefined in descendants as:</div>
@@ -5358,10 +5612,10 @@
 				</ul>
 	</div>
 <a name="method__set" id="__set"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">__set</span> (line <span class="line-number">1019</span>)
+		<span class="method-title">__set</span> (line <span class="line-number">2605</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -5389,6 +5643,12 @@
 				<span class="var-name">$value</span><span class="var-description">: value</span>			</li>
 				</ul>
 		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../../Smarty/Smarty_Internal_Magic_Error.html#method__set">Smarty_Internal_Magic_Error::__set()</a></dt>
+						<dd>&lt;&lt;magic&gt;&gt; Generic Setter.</dd>
+					</dl>
 			
 	</div>
 							<h4>Inherited Methods</h4>
@@ -5396,7 +5656,6 @@
 									<!-- =========== Summary =========== -->
 					<p>Inherited From <span class="classname"><a href="../../Template/Smarty_Internal_Data.html">Smarty_Internal_Data</a></span></p>
 					<blockquote>
-													<span class="method-name"><a href="../../Template/Smarty_Internal_Data.html#method__construct">Smarty_Internal_Data::__construct()</a></span><br>
 													<span class="method-name"><a href="../../Template/Smarty_Internal_Data.html#methodappend">Smarty_Internal_Data::append()</a></span><br>
 													<span class="method-name"><a href="../../Template/Smarty_Internal_Data.html#methodassign">Smarty_Internal_Data::assign()</a></span><br>
 													<span class="method-name"><a href="../../Template/Smarty_Internal_Data.html#methodassignGlobal">Smarty_Internal_Data::assignGlobal()</a></span><br>
@@ -5409,8 +5668,16 @@
 													<span class="method-name"><a href="../../Template/Smarty_Internal_Data.html#methodgetStreamVariable">Smarty_Internal_Data::getStreamVariable()</a></span><br>
 													<span class="method-name"><a href="../../Template/Smarty_Internal_Data.html#methodgetTemplateVars">Smarty_Internal_Data::getTemplateVars()</a></span><br>
 													<span class="method-name"><a href="../../Template/Smarty_Internal_Data.html#methodgetVariable">Smarty_Internal_Data::getVariable()</a></span><br>
-													<span class="method-name"><a href="../../Template/Smarty_Internal_Data.html#method_create_new_scope">Smarty_Internal_Data::_create_new_scope()</a></span><br>
-													<span class="method-name"><a href="../../Template/Smarty_Internal_Data.html#method_merge_tpl_vars">Smarty_Internal_Data::_merge_tpl_vars()</a></span><br>
+													<span class="method-name"><a href="../../Template/Smarty_Internal_Data.html#method_buildScope">Smarty_Internal_Data::_buildScope()</a></span><br>
+													<span class="method-name"><a href="../../Template/Smarty_Internal_Data.html#method_mergeScopes">Smarty_Internal_Data::_mergeScopes()</a></span><br>
+											</blockquote>
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../../Smarty/Smarty_Internal_Magic_Error.html">Smarty_Internal_Magic_Error</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../../Smarty/Smarty_Internal_Magic_Error.html#method__call">Smarty_Internal_Magic_Error::__call()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Smarty_Internal_Magic_Error.html#method__destruct">Smarty_Internal_Magic_Error::__destruct()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Smarty_Internal_Magic_Error.html#method__get">Smarty_Internal_Magic_Error::__get()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Smarty_Internal_Magic_Error.html#method__set">Smarty_Internal_Magic_Error::__set()</a></span><br>
 											</blockquote>
 										
 		</div>
@@ -5432,13 +5699,13 @@
 					</div>
 		<div class="info-box-body">
 			<a name="constCACHING_LIFETIME_CURRENT" id="CACHING_LIFETIME_CURRENT"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="const-header">
 		<span class="const-title">
 			<span class="const-name">CACHING_LIFETIME_CURRENT</span>
 			 = <span class="const-default"> 1</span>
-			(line <span class="line-number">135</span>)
+			(line <span class="line-number">138</span>)
 		</span>
 	</div>
 
@@ -5447,13 +5714,13 @@
 	
 </div>
 <a name="constCACHING_LIFETIME_SAVED" id="CACHING_LIFETIME_SAVED"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="const-header">
 		<span class="const-title">
 			<span class="const-name">CACHING_LIFETIME_SAVED</span>
 			 = <span class="const-default"> 2</span>
-			(line <span class="line-number">136</span>)
+			(line <span class="line-number">139</span>)
 		</span>
 	</div>
 
@@ -5462,13 +5729,13 @@
 	
 </div>
 <a name="constCACHING_NOCACHE_CODE" id="CACHING_NOCACHE_CODE"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="const-header">
 		<span class="const-title">
 			<span class="const-name">CACHING_NOCACHE_CODE</span>
 			 = <span class="const-default"> 3</span>
-			(line <span class="line-number">137</span>)
+			(line <span class="line-number">140</span>)
 		</span>
 	</div>
 
@@ -5477,13 +5744,13 @@
 	
 </div>
 <a name="constCACHING_OFF" id="CACHING_OFF"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="const-header">
 		<span class="const-title">
 			<span class="const-name">CACHING_OFF</span>
 			 = <span class="const-default"> 0</span>
-			(line <span class="line-number">134</span>)
+			(line <span class="line-number">137</span>)
 		</span>
 	</div>
 
@@ -5493,13 +5760,13 @@
 	
 </div>
 <a name="constCOMPILECHECK_CACHEMISS" id="COMPILECHECK_CACHEMISS"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="const-header">
 		<span class="const-title">
 			<span class="const-name">COMPILECHECK_CACHEMISS</span>
 			 = <span class="const-default"> 2</span>
-			(line <span class="line-number">143</span>)
+			(line <span class="line-number">146</span>)
 		</span>
 	</div>
 
@@ -5511,13 +5778,13 @@
 	
 </div>
 <a name="constCOMPILECHECK_OFF" id="COMPILECHECK_OFF"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="const-header">
 		<span class="const-title">
 			<span class="const-name">COMPILECHECK_OFF</span>
 			 = <span class="const-default"> 0</span>
-			(line <span class="line-number">141</span>)
+			(line <span class="line-number">144</span>)
 		</span>
 	</div>
 
@@ -5530,13 +5797,13 @@
 	
 </div>
 <a name="constCOMPILECHECK_ON" id="COMPILECHECK_ON"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="const-header">
 		<span class="const-title">
 			<span class="const-name">COMPILECHECK_ON</span>
 			 = <span class="const-default"> 1</span>
-			(line <span class="line-number">142</span>)
+			(line <span class="line-number">145</span>)
 		</span>
 	</div>
 
@@ -5548,13 +5815,13 @@
 	
 </div>
 <a name="constFILTER_OUTPUT" id="FILTER_OUTPUT"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="const-header">
 		<span class="const-title">
 			<span class="const-name">FILTER_OUTPUT</span>
 			 = <span class="const-default"> 'output'</span>
-			(line <span class="line-number">156</span>)
+			(line <span class="line-number">159</span>)
 		</span>
 	</div>
 
@@ -5563,13 +5830,13 @@
 	
 </div>
 <a name="constFILTER_POST" id="FILTER_POST"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="const-header">
 		<span class="const-title">
 			<span class="const-name">FILTER_POST</span>
 			 = <span class="const-default"> 'post'</span>
-			(line <span class="line-number">154</span>)
+			(line <span class="line-number">157</span>)
 		</span>
 	</div>
 
@@ -5579,13 +5846,13 @@
 	
 </div>
 <a name="constFILTER_PRE" id="FILTER_PRE"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="const-header">
 		<span class="const-title">
 			<span class="const-name">FILTER_PRE</span>
 			 = <span class="const-default"> 'pre'</span>
-			(line <span class="line-number">155</span>)
+			(line <span class="line-number">158</span>)
 		</span>
 	</div>
 
@@ -5594,13 +5861,13 @@
 	
 </div>
 <a name="constFILTER_VARIABLE" id="FILTER_VARIABLE"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="const-header">
 		<span class="const-title">
 			<span class="const-name">FILTER_VARIABLE</span>
 			 = <span class="const-default"> 'variable'</span>
-			(line <span class="line-number">157</span>)
+			(line <span class="line-number">160</span>)
 		</span>
 	</div>
 
@@ -5609,13 +5876,13 @@
 	
 </div>
 <a name="constIS_CONFIG" id="IS_CONFIG"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="const-header">
 		<span class="const-title">
 			<span class="const-name">IS_CONFIG</span>
-			 = <span class="const-default"> 2</span>
-			(line <span class="line-number">129</span>)
+			 = <span class="const-default"> 4</span>
+			(line <span class="line-number">132</span>)
 		</span>
 	</div>
 
@@ -5624,13 +5891,13 @@
 	
 </div>
 <a name="constIS_DATA" id="IS_DATA"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="const-header">
 		<span class="const-title">
 			<span class="const-name">IS_DATA</span>
 			 = <span class="const-default"> 3</span>
-			(line <span class="line-number">130</span>)
+			(line <span class="line-number">131</span>)
 		</span>
 	</div>
 
@@ -5639,18 +5906,33 @@
 	
 </div>
 <a name="constIS_SMARTY" id="IS_SMARTY"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="const-header">
 		<span class="const-title">
 			<span class="const-name">IS_SMARTY</span>
 			 = <span class="const-default"> 0</span>
-			(line <span class="line-number">127</span>)
+			(line <span class="line-number">128</span>)
 		</span>
 	</div>
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">define data object types</p>
+<p class="short-description">define object and variable scope type</p>
+	
+	
+</div>
+<a name="constIS_SUBTPL" id="IS_SUBTPL"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">IS_SUBTPL</span>
+			 = <span class="const-default"> 2</span>
+			(line <span class="line-number">130</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
 	
 	
 </div>
@@ -5661,7 +5943,7 @@
 		<span class="const-title">
 			<span class="const-name">IS_TEMPLATE</span>
 			 = <span class="const-default"> 1</span>
-			(line <span class="line-number">128</span>)
+			(line <span class="line-number">129</span>)
 		</span>
 	</div>
 
@@ -5676,7 +5958,7 @@
 		<span class="const-title">
 			<span class="const-name">PHP_ALLOW</span>
 			 = <span class="const-default"> 3</span>
-			(line <span class="line-number">150</span>)
+			(line <span class="line-number">153</span>)
 		</span>
 	</div>
 
@@ -5694,7 +5976,7 @@
 		<span class="const-title">
 			<span class="const-name">PHP_PASSTHRU</span>
 			 = <span class="const-default"> 0</span>
-			(line <span class="line-number">147</span>)
+			(line <span class="line-number">150</span>)
 		</span>
 	</div>
 
@@ -5713,7 +5995,7 @@
 		<span class="const-title">
 			<span class="const-name">PHP_QUOTE</span>
 			 = <span class="const-default"> 1</span>
-			(line <span class="line-number">148</span>)
+			(line <span class="line-number">151</span>)
 		</span>
 	</div>
 
@@ -5731,7 +6013,7 @@
 		<span class="const-title">
 			<span class="const-name">PHP_REMOVE</span>
 			 = <span class="const-default"> 2</span>
-			(line <span class="line-number">149</span>)
+			(line <span class="line-number">152</span>)
 		</span>
 	</div>
 
@@ -5749,7 +6031,7 @@
 		<span class="const-title">
 			<span class="const-name">PLUGIN_BLOCK</span>
 			 = <span class="const-default"> 'block'</span>
-			(line <span class="line-number">162</span>)
+			(line <span class="line-number">165</span>)
 		</span>
 	</div>
 
@@ -5764,7 +6046,7 @@
 		<span class="const-title">
 			<span class="const-name">PLUGIN_COMPILER</span>
 			 = <span class="const-default"> 'compiler'</span>
-			(line <span class="line-number">163</span>)
+			(line <span class="line-number">166</span>)
 		</span>
 	</div>
 
@@ -5779,7 +6061,7 @@
 		<span class="const-title">
 			<span class="const-name">PLUGIN_FUNCTION</span>
 			 = <span class="const-default"> 'function'</span>
-			(line <span class="line-number">161</span>)
+			(line <span class="line-number">164</span>)
 		</span>
 	</div>
 
@@ -5795,7 +6077,7 @@
 		<span class="const-title">
 			<span class="const-name">PLUGIN_MODIFIER</span>
 			 = <span class="const-default"> 'modifier'</span>
-			(line <span class="line-number">164</span>)
+			(line <span class="line-number">167</span>)
 		</span>
 	</div>
 
@@ -5810,7 +6092,7 @@
 		<span class="const-title">
 			<span class="const-name">PLUGIN_MODIFIERCOMPILER</span>
 			 = <span class="const-default"> 'modifiercompiler'</span>
-			(line <span class="line-number">165</span>)
+			(line <span class="line-number">168</span>)
 		</span>
 	</div>
 
@@ -5902,7 +6184,7 @@
 		<span class="const-title">
 			<span class="const-name">UNASSIGNED_EXCEPTION</span>
 			 = <span class="const-default"> 2</span>
-			(line <span class="line-number">171</span>)
+			(line <span class="line-number">174</span>)
 		</span>
 	</div>
 
@@ -5920,7 +6202,7 @@
 		<span class="const-title">
 			<span class="const-name">UNASSIGNED_IGNORE</span>
 			 = <span class="const-default"> 0</span>
-			(line <span class="line-number">169</span>)
+			(line <span class="line-number">172</span>)
 		</span>
 	</div>
 
@@ -5939,7 +6221,7 @@
 		<span class="const-title">
 			<span class="const-name">UNASSIGNED_NOTICE</span>
 			 = <span class="const-default"> 1</span>
-			(line <span class="line-number">170</span>)
+			(line <span class="line-number">173</span>)
 		</span>
 	</div>
 
@@ -5955,7 +6237,7 @@
 	</div>
 
 	<p class="notes" id="credit">
-		Documentation generated on Fri, 03 May 2013 12:57:47 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Sat, 11 May 2013 08:18:52 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

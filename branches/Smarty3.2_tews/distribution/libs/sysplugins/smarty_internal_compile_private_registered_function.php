@@ -23,7 +23,7 @@ class Smarty_Internal_Compile_Private_Registered_Function extends Smarty_Interna
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $optional_attributes = array('_any');
 
@@ -46,8 +46,8 @@ class Smarty_Internal_Compile_Private_Registered_Function extends Smarty_Interna
             $compiler->tag_nocache = true;
         }
         unset($_attr['nocache']);
-        if (isset($compiler->template->registered_plugins[Smarty::PLUGIN_FUNCTION][$tag])) {
-            $tag_info = $compiler->template->registered_plugins[Smarty::PLUGIN_FUNCTION][$tag];
+        if (isset($compiler->tpl_obj->registered_plugins[Smarty::PLUGIN_FUNCTION][$tag])) {
+            $tag_info = $compiler->tpl_obj->registered_plugins[Smarty::PLUGIN_FUNCTION][$tag];
         } else {
             $tag_info = $compiler->default_handler_plugins[Smarty::PLUGIN_FUNCTION][$tag];
         }

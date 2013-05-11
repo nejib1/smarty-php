@@ -18,8 +18,8 @@
 					<li><a href="elementindex_Resource-examples.html">Resource-examples</a></li>
 					<li><a href="elementindex_Cacher.html">Cacher</a></li>
 					<li><a href="elementindex_CompiledResources.html">CompiledResources</a></li>
-					<li><a href="elementindex_Exception.html">Exception</a></li>
 					<li><a href="elementindex_Compiler.html">Compiler</a></li>
+					<li><a href="elementindex_Exception.html">Exception</a></li>
 					<li><a href="elementindex_Config.html">Config</a></li>
 							<li><a href="elementindex_Debug.html">Debug</a></li>
 					<li><a href="elementindex_PluginsInternal.html">PluginsInternal</a></li>
@@ -35,7 +35,6 @@
 	<a class="index-letter" href="elementindex_Template.html#g">g</a>
 	<a class="index-letter" href="elementindex_Template.html#h">h</a>
 	<a class="index-letter" href="elementindex_Template.html#i">i</a>
-	<a class="index-letter" href="elementindex_Template.html#m">m</a>
 	<a class="index-letter" href="elementindex_Template.html#n">n</a>
 	<a class="index-letter" href="elementindex_Template.html#p">p</a>
 	<a class="index-letter" href="elementindex_Template.html#r">r</a>
@@ -54,10 +53,11 @@
 	</div>
 	<dl>
 			<dt class="field">
-						<span class="var-title">$___scope</span>
+						<span class="method-title">_buildScope</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Template/Smarty_Variable_Container.html#var$___scope">Smarty_Variable_Container::$___scope</a> in smarty_internal_data.php</div>
+			<div class="index-item-details"><a href="Template/Smarty_Internal_Data.html#method_buildScope">Smarty_Internal_Data::_buildScope()</a> in smarty_internal_data.php</div>
+							<div class="index-item-description">runtime routine to create a new variable scope</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">_callTemplateFunction</span>
@@ -79,13 +79,6 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Template/Smarty_Internal_Content.html#method_createLocalArrayVariable">Smarty_Internal_Content::_createLocalArrayVariable()</a> in smarty_internal_content.php</div>
 							<div class="index-item-description">Template code runtime function to create a local Smarty variable for array assignments</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">_create_new_scope</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Template/Smarty_Internal_Data.html#method_create_new_scope">Smarty_Internal_Data::_create_new_scope()</a> in smarty_internal_data.php</div>
-							<div class="index-item-description">runtime routine to create a new variable scope</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">_exportCacheValue</span>
@@ -151,38 +144,31 @@
 							<div class="index-item-description">Template code runtime function to load config varibales</div>
 					</dd>
 			<dt class="field">
-						<span class="method-title">_merge_tpl_vars</span>
+						<span class="method-title">_mergeScopes</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Template/Smarty_Internal_Data.html#method_merge_tpl_vars">Smarty_Internal_Data::_merge_tpl_vars()</a> in smarty_internal_data.php</div>
+			<div class="index-item-details"><a href="Template/Smarty_Internal_Data.html#method_mergeScopes">Smarty_Internal_Data::_mergeScopes()</a> in smarty_internal_data.php</div>
 							<div class="index-item-description">merge tpl vars</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">__clone</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Template/Smarty_Variable_Container.html#method__clone">Smarty_Variable_Container::__clone()</a> in smarty_internal_data.php</div>
+			<div class="index-item-details"><a href="Template/Smarty_Variable_Scope.html#method__clone">Smarty_Variable_Scope::__clone()</a> in smarty_internal_data.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">__construct</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Template/Smarty_Variable_Container.html#method__construct">Smarty_Variable_Container::__construct()</a> in smarty_internal_data.php</div>
+			<div class="index-item-details"><a href="Template/Smarty_Variable_Scope.html#method__construct">Smarty_Variable_Scope::__construct()</a> in smarty_internal_data.php</div>
 							<div class="index-item-description">constructor to create backlink to Smarty|Smarty_Data</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">__construct</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Template/Smarty_Internal_Data.html#method__construct">Smarty_Internal_Data::__construct()</a> in smarty_internal_data.php</div>
-							<div class="index-item-description">set up variable containers</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">__construct</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Template/Smarty_Internal_Content.html#method__construct">Smarty_Internal_Content::__construct()</a> in smarty_internal_content.php</div>
-							<div class="index-item-description">constructor</div>
+			<div class="index-item-details"><a href="Template/Smarty_Data.html#method__construct">Smarty_Data::__construct()</a> in smarty_internal_data.php</div>
+							<div class="index-item-description">create Smarty data object</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">__construct</span>
@@ -195,28 +181,15 @@
 						<span class="method-title">__construct</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Template/Smarty_Data.html#method__construct">Smarty_Data::__construct()</a> in smarty_internal_data.php</div>
-							<div class="index-item-description">create Smarty data object</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">__destruct</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Template/Smarty_Variable_Container.html#method__destruct">Smarty_Variable_Container::__destruct()</a> in smarty_internal_data.php</div>
+			<div class="index-item-details"><a href="Template/Smarty_Internal_Content.html#method__construct">Smarty_Internal_Content::__construct()</a> in smarty_internal_content.php</div>
+							<div class="index-item-description">constructor</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">__get</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Template/Smarty_Variable_Container.html#method__get">Smarty_Variable_Container::__get()</a> in smarty_internal_data.php</div>
+			<div class="index-item-details"><a href="Template/Smarty_Variable_Scope.html#method__get">Smarty_Variable_Scope::__get()</a> in smarty_internal_data.php</div>
 							<div class="index-item-description">magic __get function called at access of unknown variable</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">__toString</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Template/Smarty_Variable.html#method__toString">Smarty_Variable::__toString()</a> in smarty_internal_data.php</div>
-							<div class="index-item-description">&lt;&lt;magic&gt;&gt; String conversion</div>
 					</dd>
 		</dl>
 	<a name="a"></a>
@@ -326,13 +299,6 @@
 			<div class="index-item-details"><a href="Template/Smarty_Internal_Content.html#var$file_dependency">Smarty_Internal_Content::$file_dependency</a> in smarty_internal_content.php</div>
 							<div class="index-item-description">file dependencies</div>
 					</dd>
-			<dt class="field">
-						<span class="var-title">$force_var_clone</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Template/Smarty_Internal_Data.html#var$force_var_clone">Smarty_Internal_Data::$force_var_clone</a> in smarty_internal_data.php</div>
-							<div class="index-item-description">force cloning of template vars</div>
-					</dd>
 		</dl>
 	<a name="g"></a>
 	<div class="index-letter-section">
@@ -414,21 +380,6 @@
 							<div class="index-item-description">flag if class is valid</div>
 					</dd>
 		</dl>
-	<a name="m"></a>
-	<div class="index-letter-section">
-		<div style="float: left" class="index-letter-title">m</div>
-		<div style="float: right"><a href="#top">top</a></div>
-		<div style="clear: both"></div>
-	</div>
-	<dl>
-			<dt class="field">
-						<span class="var-title">$must_merge_tpl_vars</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Template/Smarty_Internal_Data.html#var$must_merge_tpl_vars">Smarty_Internal_Data::$must_merge_tpl_vars</a> in smarty_internal_data.php</div>
-							<div class="index-item-description">flag that tpl vars must be merged when new scope is created</div>
-					</dd>
-		</dl>
 	<a name="n"></a>
 	<div class="index-letter-section">
 		<div style="float: left" class="index-letter-title">n</div>
@@ -492,28 +443,8 @@
 						<span class="var-title">$scope</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Template/Smarty_Variable.html#var$scope">Smarty_Variable::$scope</a> in smarty_internal_data.php</div>
-							<div class="index-item-description">the scope the variable will have  (local,parent or root)</div>
-					</dd>
-			<dt class="field">
-						<span class="var-title">$scope_name</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Template/Smarty_Internal_Data.html#var$scope_name">Smarty_Internal_Data::$scope_name</a> in smarty_internal_data.php</div>
-							<div class="index-item-description">scope name of Smarty_Internal_Data</div>
-					</dd>
-			<dt class="field">
-						<span class="var-title">$smarty</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Template/Smarty_Variable_Container.html#var$smarty">Smarty_Variable_Container::$smarty</a> in smarty_internal_data.php</div>
-					</dd>
-			<dt class="field">
-						<span class="var-title">$smarty</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Template/Smarty_Data.html#var$smarty">Smarty_Data::$smarty</a> in smarty_internal_data.php</div>
-							<div class="index-item-description">Smarty object</div>
+			<div class="index-item-details"><a href="Template/Smarty_Internal_Content.html#var$scope">Smarty_Internal_Content::$scope</a> in smarty_internal_content.php</div>
+							<div class="index-item-description">Template variable of this scope</div>
 					</dd>
 			<dt class="field">
 						<span class="include-title">smarty_internal_content.php</span>
@@ -569,11 +500,11 @@
 							<div class="index-item-description">class for the Smarty variable object</div>
 					</dd>
 			<dt class="field">
-						Smarty_Variable_Container
+						Smarty_Variable_Scope
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Template/Smarty_Variable_Container.html">Smarty_Variable_Container</a> in smarty_internal_data.php</div>
-							<div class="index-item-description">class for the Smarty variable container</div>
+			<div class="index-item-details"><a href="Template/Smarty_Variable_Scope.html">Smarty_Variable_Scope</a> in smarty_internal_data.php</div>
+							<div class="index-item-description">class for a variable scope</div>
 					</dd>
 		</dl>
 	<a name="t"></a>
@@ -596,6 +527,12 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Template/Smarty_Internal_Data.html#var$tpl_vars">Smarty_Internal_Data::$tpl_vars</a> in smarty_internal_data.php</div>
 							<div class="index-item-description">template variables</div>
+					</dd>
+			<dt class="field">
+						<span class="var-title">$tpl_vars</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Template/Smarty_Data.html#var$tpl_vars">Smarty_Data::$tpl_vars</a> in smarty_internal_data.php</div>
 					</dd>
 		</dl>
 	<a name="u"></a>
@@ -643,7 +580,6 @@
 	<a class="index-letter" href="elementindex_Template.html#g">g</a>
 	<a class="index-letter" href="elementindex_Template.html#h">h</a>
 	<a class="index-letter" href="elementindex_Template.html#i">i</a>
-	<a class="index-letter" href="elementindex_Template.html#m">m</a>
 	<a class="index-letter" href="elementindex_Template.html#n">n</a>
 	<a class="index-letter" href="elementindex_Template.html#p">p</a>
 	<a class="index-letter" href="elementindex_Template.html#r">r</a>

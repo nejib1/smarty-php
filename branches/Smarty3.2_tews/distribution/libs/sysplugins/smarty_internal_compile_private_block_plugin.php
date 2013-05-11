@@ -23,7 +23,7 @@ class Smarty_Internal_Compile_Private_Block_Plugin extends Smarty_Internal_Compi
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $optional_attributes = array('_any');
 
@@ -48,7 +48,7 @@ class Smarty_Internal_Compile_Private_Block_Plugin extends Smarty_Internal_Compi
             }
             unset($_attr['nocache']);
             $cache_attr = null;
-            if ($compiler->template->caching) {
+            if ($compiler->tpl_obj->caching) {
                 $result = $this->getAnnotation($function, 'smarty_nocache');
                 if ($result) {
                     $compiler->tag_nocache = $compiler->tag_nocache || $result;
@@ -84,7 +84,7 @@ class Smarty_Internal_Compile_Private_Block_Plugin extends Smarty_Internal_Compi
                 $this->php("ob_start();")->newline();
             }
         } else {
-            // must endblock be nocache?
+            // must end block be nocache?
             if ($compiler->nocache) {
                 $compiler->tag_nocache = true;
             }

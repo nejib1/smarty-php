@@ -23,7 +23,7 @@ class Smarty_Internal_Compile_Include_Php extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $required_attributes = array('file');
 
@@ -31,7 +31,7 @@ class Smarty_Internal_Compile_Include_Php extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $shorttag_order = array('file');
 
@@ -39,7 +39,7 @@ class Smarty_Internal_Compile_Include_Php extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $optional_attributes = array('once', 'assign');
 
@@ -53,21 +53,21 @@ class Smarty_Internal_Compile_Include_Php extends Smarty_Internal_CompileBase
      */
     public function compile($args, $compiler)
     {
-        if (!($compiler->template instanceof SmartyBC)) {
+        if (!($compiler->tpl_obj instanceof SmartyBC)) {
             throw new SmartyException("{include_php} is deprecated, use SmartyBC class to enable");
         }
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);
-        $_smarty_tpl = $compiler->template;
+        $_smarty_tpl = $compiler->tpl_obj;
         $_filepath = false;
         eval('$_file = ' . $_attr['file'] . ';');
-        if (!isset($compiler->template->security_policy) && file_exists($_file)) {
+        if (!isset($compiler->tpl_obj->security_policy) && file_exists($_file)) {
             $_filepath = $_file;
         } else {
-            if (isset($compiler->template->security_policy)) {
-                $_dir = $compiler->template->security_policy->trusted_dir;
+            if (isset($compiler->tpl_obj->security_policy)) {
+                $_dir = $compiler->tpl_obj->security_policy->trusted_dir;
             } else {
-                $_dir = $compiler->template->trusted_dir;
+                $_dir = $compiler->tpl_obj->trusted_dir;
             }
             if (!empty($_dir)) {
                 foreach ((array)$_dir as $_script_dir) {
@@ -83,8 +83,8 @@ class Smarty_Internal_Compile_Include_Php extends Smarty_Internal_CompileBase
             $compiler->trigger_template_error("{include_php} file '{$_file}' is not readable", $compiler->lex->taglineno);
         }
 
-        if (isset($compiler->template->security_policy)) {
-            $compiler->template->security_policy->isTrustedPHPDir($_filepath);
+        if (isset($compiler->tpl_obj->security_policy)) {
+            $compiler->tpl_obj->security_policy->isTrustedPHPDir($_filepath);
         }
 
         if (isset($_attr['assign'])) {

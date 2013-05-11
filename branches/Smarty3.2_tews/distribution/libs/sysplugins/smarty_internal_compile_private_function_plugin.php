@@ -23,7 +23,7 @@ class Smarty_Internal_Compile_Private_Function_Plugin extends Smarty_Internal_Co
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $required_attributes = array();
 
@@ -31,7 +31,7 @@ class Smarty_Internal_Compile_Private_Function_Plugin extends Smarty_Internal_Co
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $optional_attributes = array('_any');
 
@@ -57,7 +57,7 @@ class Smarty_Internal_Compile_Private_Function_Plugin extends Smarty_Internal_Co
         }
         unset($_attr['nocache']);
         $cache_attr = null;
-        if ($compiler->template->caching) {
+        if ($compiler->tpl_obj->caching) {
             $result = $this->getAnnotation($function, 'smarty_nocache');
             if ($result) {
                 $compiler->tag_nocache = $compiler->tag_nocache || $result;

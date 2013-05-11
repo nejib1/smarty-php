@@ -247,7 +247,7 @@ or it has expired
   Automatic recompilation on Smarty version change
 
 Templates will now be automatically recompiled on Smarty version
-changes to avoide incompatibillities in the compiled code. Compiled
+changes to avoid incompatibilities in the compiled code. Compiled
 template checked against the current setting of the SMARTY_VERSION
 constant.
 

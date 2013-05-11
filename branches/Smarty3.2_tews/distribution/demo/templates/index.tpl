@@ -42,12 +42,16 @@ An example of a section loop:
         <br>
 
 
-                        fax: {$contacts[sec1].fax}
+
+                                    fax: {$contacts[sec1].fax}
+
 
         <br>
 
 
-                        cell: {$contacts[sec1].cell}
+
+                                    cell: {$contacts[sec1].cell}
+
 
         <br>
     {/section}

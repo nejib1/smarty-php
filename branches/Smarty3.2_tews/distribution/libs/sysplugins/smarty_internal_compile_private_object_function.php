@@ -23,7 +23,7 @@ class Smarty_Internal_Compile_Private_Object_Function extends Smarty_Internal_Co
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $optional_attributes = array('_any');
 
@@ -51,7 +51,7 @@ class Smarty_Internal_Compile_Private_Object_Function extends Smarty_Internal_Co
             unset($_attr['assign']);
         }
         // convert attributes into parameter array string
-        if ($compiler->template->registered_objects[$tag][2]) {
+        if ($compiler->tpl_obj->registered_objects[$tag][2]) {
             $_paramsArray = array();
             foreach ($_attr as $_key => $_value) {
                 if (is_int($_key)) {

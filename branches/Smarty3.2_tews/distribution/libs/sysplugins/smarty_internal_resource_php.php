@@ -32,12 +32,12 @@ class Smarty_Internal_Resource_PHP extends Smarty_Resource_Uncompiled
      * populate Source Object with meta data from Resource
      *
      * @param Smarty_Template_Source $source source object
-     * @param Smarty $_template template object
+     * @param Smarty $tpl_obj template object
      * @return void
      */
-    public function populate(Smarty_Template_Source $source, Smarty $_template = null)
+    public function populate(Smarty_Template_Source $source, Smarty $tpl_obj = null)
     {
-        $source->filepath = $this->buildFilepath($source, $_template);
+        $source->filepath = $this->buildFilepath($source, $tpl_obj);
 
         if ($source->filepath !== false) {
             if (is_object($source->smarty->security_policy)) {
@@ -83,20 +83,20 @@ class Smarty_Internal_Resource_PHP extends Smarty_Resource_Uncompiled
      * Render and output the template (without using the compiler)
      *
      * @param Smarty_Template_Source $source source object
-     * @param Smarty $_template template object
+     * @param Smarty $tpl_obj template object
      * @return void
-     * @throws SmartyException if template cannot be loaded or allow_php_templates is disabled
+     * @throws SmartyException if template cannot be loaded or allow_phptpl_objs is disabled
      */
-    public function renderUncompiled(Smarty_Template_Source $source, Smarty $_template)
+    public function renderUncompiled(Smarty_Template_Source $source, Smarty $tpl_obj)
     {
-        $_smarty_template = $_template;
+        $_smartytpl_obj = $tpl_obj;
 
-        if (!$source->smarty->allow_php_templates) {
+        if (!$source->smarty->allow_phptpl_objs) {
             throw new SmartyException("PHP templates are disabled");
         }
         if (!$source->exists) {
-            if ($_template->parent instanceof Smarty) {
-                $parent_resource = " in '{$_template->parent->template_resource}'";
+            if ($tpl_obj->parent instanceof Smarty) {
+                $parent_resource = " in '{$tpl_obj->parent->template_resource}'";
             } else {
                 $parent_resource = '';
             }
@@ -104,7 +104,7 @@ class Smarty_Internal_Resource_PHP extends Smarty_Resource_Uncompiled
         }
 
         // prepare variables
-        extract($_template->getTemplateVars());
+        extract($tpl_obj->getTemplateVars());
 
         // include PHP template with short open tags enabled
         ini_set('short_open_tag', '1');

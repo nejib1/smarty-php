@@ -84,7 +84,7 @@ function smarty_function_cycle($params, $template)
 
     if (isset($params['assign'])) {
         $print = false;
-        $template->assign($params['assign'], $cycle_array[$cycle_vars[$name]['index']]);
+        $tpl_obj->assign($params['assign'], $cycle_array[$cycle_vars[$name]['index']]);
     }
 
     if ($print) {

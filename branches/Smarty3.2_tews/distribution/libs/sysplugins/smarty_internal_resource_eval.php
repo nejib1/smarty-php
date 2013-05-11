@@ -26,10 +26,10 @@ class Smarty_Internal_Resource_Eval extends Smarty_Resource_Recompiled
      * populate Source Object with meta data from Resource
      *
      * @param Smarty_Template_Source $source    source object
-     * @param Smarty $_template template object
+     * @param Smarty $tpl_obj template object
      * @return void
      */
-    public function populate(Smarty_Template_Source $source, Smarty $_template = null)
+    public function populate(Smarty_Template_Source $source, Smarty $tpl_obj = null)
     {
         $source->uid = $source->filepath = sha1($source->name);
         $source->timestamp = false;

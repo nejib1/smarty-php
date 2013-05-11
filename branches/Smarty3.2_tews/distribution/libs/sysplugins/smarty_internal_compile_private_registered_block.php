@@ -23,7 +23,7 @@ class Smarty_Internal_Compile_Private_Registered_Block extends Smarty_Internal_C
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $optional_attributes = array('_any');
 
@@ -46,8 +46,8 @@ class Smarty_Internal_Compile_Private_Registered_Block extends Smarty_Internal_C
                 $compiler->tag_nocache = true;
             }
             unset($_attr['nocache']);
-            if (isset($compiler->template->registered_plugins[Smarty::PLUGIN_BLOCK][$tag])) {
-                $tag_info = $compiler->template->registered_plugins[Smarty::PLUGIN_BLOCK][$tag];
+            if (isset($compiler->tpl_obj->registered_plugins[Smarty::PLUGIN_BLOCK][$tag])) {
+                $tag_info = $compiler->tpl_obj->registered_plugins[Smarty::PLUGIN_BLOCK][$tag];
             } else {
                 $tag_info = $compiler->default_handler_plugins[Smarty::PLUGIN_BLOCK][$tag];
             }
@@ -101,8 +101,8 @@ class Smarty_Internal_Compile_Private_Registered_Block extends Smarty_Internal_C
             list($par_string, $compiler->nocache) = $this->closeTag($compiler, $base_tag);
             // This tag does create output
             $compiler->has_output = true;
-            if (isset($compiler->template->registered_plugins[Smarty::PLUGIN_BLOCK][$base_tag])) {
-                $function = $compiler->template->registered_plugins[Smarty::PLUGIN_BLOCK][$base_tag][0];
+            if (isset($compiler->tpl_obj->registered_plugins[Smarty::PLUGIN_BLOCK][$base_tag])) {
+                $function = $compiler->tpl_obj->registered_plugins[Smarty::PLUGIN_BLOCK][$base_tag][0];
             } else {
                 $function = $compiler->default_handler_plugins[Smarty::PLUGIN_BLOCK][$base_tag][0];
             }

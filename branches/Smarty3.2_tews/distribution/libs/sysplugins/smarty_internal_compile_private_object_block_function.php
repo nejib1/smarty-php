@@ -23,7 +23,7 @@ class Smarty_Internal_Compile_Private_Object_Block_Function extends Smarty_Inter
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $optional_attributes = array('_any');
 

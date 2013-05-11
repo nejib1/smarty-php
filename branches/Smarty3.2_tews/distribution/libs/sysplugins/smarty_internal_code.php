@@ -18,7 +18,7 @@ ini_set('pcre.backtrack_limit', -1);
  *
  * @package Compiler
  */
-class Smarty_Internal_Code
+class Smarty_Internal_Code extends Smarty_Internal_Magic_Error
 {
 
     public $buffer = '';
@@ -38,7 +38,7 @@ class Smarty_Internal_Code
     }
 
     /**
-     * inits tag code block.
+     * init tag code block.
      *
      * @param object $compiler compiler object
      * @return object  the current  instance
@@ -47,7 +47,7 @@ class Smarty_Internal_Code
     {
         $this->buffer = '';
         $this->indentation = $this->saved_indentation = $compiler->template_code->indentation;
-        $this->no_indent = !$compiler->suppressNocacheProcessing && $compiler->template->caching && ($compiler->nocache || $compiler->tag_nocache || $compiler->forceNocache);
+        $this->no_indent = !$compiler->suppressNocacheProcessing && $compiler->tpl_obj->caching && ($compiler->nocache || $compiler->tag_nocache || $compiler->forceNocache);
         return $this;
     }
 
@@ -260,7 +260,7 @@ class Smarty_Internal_Code
      * preg_replace callback function to process PHP output
      *
      * @param string $match match string
-     * @return string  replacemant
+     * @return string  replacement
      */
     function _processPHPoutput($match)
     {

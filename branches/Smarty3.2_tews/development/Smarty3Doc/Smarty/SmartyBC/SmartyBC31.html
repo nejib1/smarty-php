@@ -31,13 +31,15 @@
 		</p>
 		
 				
-		<pre><a href="../../Template/Smarty_Internal_Data.html">Smarty_Internal_Data</a>
+		<pre><a href="../../Smarty/Smarty_Internal_Magic_Error.html">Smarty_Internal_Magic_Error</a>
    |
-   --<a href="../../Smarty/Smarty/Smarty.html">Smarty</a>
+   --<a href="../../Template/Smarty_Internal_Data.html">Smarty_Internal_Data</a>
       |
-      --<a href="../../Smarty/SmartyBC/Smarty_Internal_Template.html">Smarty_Internal_Template</a>
+      --<a href="../../Smarty/Smarty/Smarty.html">Smarty</a>
          |
-         --SmartyBC31</pre>
+         --<a href="../../Smarty/SmartyBC/Smarty_Internal_Template.html">Smarty_Internal_Template</a>
+            |
+            --SmartyBC31</pre>
 	
 			</div>
 </div>
@@ -131,7 +133,7 @@
 								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$allow_ambiguous_resources">Smarty::$allow_ambiguous_resources</a></span><br>
 							</span>
 													<span class="var-title">
-								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$allow_php_templates">Smarty::$allow_php_templates</a></span><br>
+								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$allow_phptpl_objs">Smarty::$allow_phptpl_objs</a></span><br>
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$allow_relative_path">Smarty::$allow_relative_path</a></span><br>
@@ -159,6 +161,9 @@
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$cache_modified_check">Smarty::$cache_modified_check</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$cache_objs">Smarty::$cache_objs</a></span><br>
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$caching">Smarty::$caching</a></span><br>
@@ -332,6 +337,9 @@
 								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$template_resource">Smarty::$template_resource</a></span><br>
 							</span>
 													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$tpl_vars">Smarty::$tpl_vars</a></span><br>
+							</span>
+													<span class="var-title">
 								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$trace_call_stack">Smarty::$trace_call_stack</a></span><br>
 							</span>
 													<span class="var-title">
@@ -392,25 +400,19 @@
 								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$_tag_stack">Smarty::$_tag_stack</a></span><br>
 							</span>
 													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$_tpl_old_cache_id">Smarty::$_tpl_old_cache_id</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$_tpl_old_compile_id">Smarty::$_tpl_old_compile_id</a></span><br>
+							</span>
+													<span class="var-title">
 								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$_UTF8_MODIFIER">Smarty::$_UTF8_MODIFIER</a></span><br>
 							</span>
 											</blockquote> 
 									<p>Inherited from <span class="classname"><a href="../../Template/Smarty_Internal_Data.html">Smarty_Internal_Data</a></span></p>
 					<blockquote>
 													<span class="var-title">
-								<span class="var-name"><a href="../../Template/Smarty_Internal_Data.html#var$force_var_clone">Smarty_Internal_Data::$force_var_clone</a></span><br>
-							</span>
-													<span class="var-title">
-								<span class="var-name"><a href="../../Template/Smarty_Internal_Data.html#var$must_merge_tpl_vars">Smarty_Internal_Data::$must_merge_tpl_vars</a></span><br>
-							</span>
-													<span class="var-title">
 								<span class="var-name"><a href="../../Template/Smarty_Internal_Data.html#var$parent">Smarty_Internal_Data::$parent</a></span><br>
-							</span>
-													<span class="var-title">
-								<span class="var-name"><a href="../../Template/Smarty_Internal_Data.html#var$scope_name">Smarty_Internal_Data::$scope_name</a></span><br>
-							</span>
-													<span class="var-title">
-								<span class="var-name"><a href="../../Template/Smarty_Internal_Data.html#var$tpl_vars">Smarty_Internal_Data::$tpl_vars</a></span><br>
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../../Template/Smarty_Internal_Data.html#var$usage">Smarty_Internal_Data::$usage</a></span><br>
@@ -445,7 +447,7 @@
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">DEPRECATED FUNCTION  appends values to template variables by reference</p>
 	<ul class="tags">
-				<li><span class="field">return:</span> current Smarty_Internal_Data (or Smarty or Smarty_Internal_Template) instance for chaining</li>
+				<li><span class="field">return:</span> current Smarty_Internal_Data (or Smarty or Smarty_Internal_Template_) instance for chaining</li>
 				<li><span class="field">access:</span> public</li>
 			</ul>
 	
@@ -481,7 +483,7 @@
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">DEPRECATED FUNCTION  assigns values to template variables by reference</p>
 	<ul class="tags">
-				<li><span class="field">return:</span> current Smarty_Internal_Data (or Smarty or Smarty_Internal_Template) instance for chaining</li>
+				<li><span class="field">return:</span> current Smarty_Internal_Data (or Smarty or Smarty_Internal_Template_) instance for chaining</li>
 				<li><span class="field">access:</span> public</li>
 			</ul>
 	
@@ -581,7 +583,7 @@
 													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#methodgetTags">Smarty::getTags()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#methodgetTemplateDir">Smarty::getTemplateDir()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#methodinfo">Smarty::info()</a></span><br>
-													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#methodinfo_TEMPLATE">Smarty::info_TEMPLATE()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#methodinfotpl_obj">Smarty::infotpl_obj()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#methodisCached">Smarty::isCached()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#methodloadFilter">Smarty::loadFilter()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#methodmuteExpectedErrors">Smarty::muteExpectedErrors()</a></span><br>
@@ -615,8 +617,11 @@
 													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#methodunregisterPlugin">Smarty::unregisterPlugin()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#methodunregisterResource">Smarty::unregisterResource()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#method_capture_error">Smarty::_capture_error()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#method_computeTemplateId">Smarty::_computeTemplateId()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#method_deleteTemplateObj">Smarty::_deleteTemplateObj()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#method_getFilterName">Smarty::_getFilterName()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#method_getScopePointer">Smarty::_getScopePointer()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#method_getTemplateObj">Smarty::_getTemplateObj()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#method_loadPlugin">Smarty::_loadPlugin()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#method__call">Smarty::__call()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#method__clone">Smarty::__clone()</a></span><br>
@@ -627,7 +632,6 @@
 									<!-- =========== Summary =========== -->
 					<p>Inherited From <span class="classname"><a href="../../Template/Smarty_Internal_Data.html">Smarty_Internal_Data</a></span></p>
 					<blockquote>
-													<span class="method-name"><a href="../../Template/Smarty_Internal_Data.html#method__construct">Smarty_Internal_Data::__construct()</a></span><br>
 													<span class="method-name"><a href="../../Template/Smarty_Internal_Data.html#methodappend">Smarty_Internal_Data::append()</a></span><br>
 													<span class="method-name"><a href="../../Template/Smarty_Internal_Data.html#methodassign">Smarty_Internal_Data::assign()</a></span><br>
 													<span class="method-name"><a href="../../Template/Smarty_Internal_Data.html#methodassignGlobal">Smarty_Internal_Data::assignGlobal()</a></span><br>
@@ -640,8 +644,16 @@
 													<span class="method-name"><a href="../../Template/Smarty_Internal_Data.html#methodgetStreamVariable">Smarty_Internal_Data::getStreamVariable()</a></span><br>
 													<span class="method-name"><a href="../../Template/Smarty_Internal_Data.html#methodgetTemplateVars">Smarty_Internal_Data::getTemplateVars()</a></span><br>
 													<span class="method-name"><a href="../../Template/Smarty_Internal_Data.html#methodgetVariable">Smarty_Internal_Data::getVariable()</a></span><br>
-													<span class="method-name"><a href="../../Template/Smarty_Internal_Data.html#method_create_new_scope">Smarty_Internal_Data::_create_new_scope()</a></span><br>
-													<span class="method-name"><a href="../../Template/Smarty_Internal_Data.html#method_merge_tpl_vars">Smarty_Internal_Data::_merge_tpl_vars()</a></span><br>
+													<span class="method-name"><a href="../../Template/Smarty_Internal_Data.html#method_buildScope">Smarty_Internal_Data::_buildScope()</a></span><br>
+													<span class="method-name"><a href="../../Template/Smarty_Internal_Data.html#method_mergeScopes">Smarty_Internal_Data::_mergeScopes()</a></span><br>
+											</blockquote>
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../../Smarty/Smarty_Internal_Magic_Error.html">Smarty_Internal_Magic_Error</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../../Smarty/Smarty_Internal_Magic_Error.html#method__call">Smarty_Internal_Magic_Error::__call()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Smarty_Internal_Magic_Error.html#method__destruct">Smarty_Internal_Magic_Error::__destruct()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Smarty_Internal_Magic_Error.html#method__get">Smarty_Internal_Magic_Error::__get()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Smarty_Internal_Magic_Error.html#method__set">Smarty_Internal_Magic_Error::__set()</a></span><br>
 											</blockquote>
 										
 		</div>
@@ -709,6 +721,9 @@
 								<span class="const-name"><a href="../../Smarty/Smarty/Smarty.html#constIS_SMARTY">Smarty::IS_SMARTY</a></span><br>
 							</span>
 													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Smarty/Smarty.html#constIS_SUBTPL">Smarty::IS_SUBTPL</a></span><br>
+							</span>
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Smarty/Smarty.html#constIS_TEMPLATE">Smarty::IS_TEMPLATE</a></span><br>
 							</span>
 													<span class="const-title">
@@ -768,7 +783,7 @@
 	</div>
 
 	<p class="notes" id="credit">
-		Documentation generated on Fri, 03 May 2013 12:57:49 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Sat, 11 May 2013 08:18:55 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

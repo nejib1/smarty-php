@@ -20,7 +20,7 @@
  * @link http://www.smarty.net/docs/en/language.modifier.escape.tpl (Smarty online manual)
  * @author Rodney Rehm
  *
- * @param Smarty_Internal_TemplateCompilerBase $compiler compiler object
+ * @param Smarty_Compiler $compiler compiler object
  * @param string $input         input string
  * @param string $esc_type      escape type
  * @param string $char_set      character set, used for htmlspecialchars() or htmlentities()
@@ -28,7 +28,7 @@
  * @return string with compiled code
  */
 // NOTE: The parser does pass all parameter as strings which could be directly inserted into the compiled code string
-function smarty_modifiercompiler_escape(Smarty_Internal_TemplateCompilerBase $compiler, $input, $esc_type = 'html', $char_set = 'null', $double_encode = 'true')
+function smarty_modifiercompiler_escape(Smarty_Compiler $compiler, $input, $esc_type = 'html', $char_set = 'null', $double_encode = 'true')
 {
     static $_double_encode = null;
     if ($_double_encode === null) {

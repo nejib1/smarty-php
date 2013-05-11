@@ -16,7 +16,7 @@
  *
  * @package Template
  */
-class Smarty_Internal_Data
+class Smarty_Internal_Data extends Smarty_Internal_Magic_Error
 {
 
     /**
@@ -43,40 +43,6 @@ class Smarty_Internal_Data
      */
     public $usage = null;
 
-    /**
-     * scope name of Smarty_Internal_Data
-     * @var string
-     */
-    public $scope_name = '';
-
-
-    /**
-     * force cloning of template vars
-     * @var boolean
-     */
-    public $force_var_clone = false;
-
-    /**
-     * flag that tpl vars must be merged when new scope is created
-     * @var boolean
-     */
-    public $must_merge_tpl_vars = false;
-
-    /**
-     * flag that tpl vars must not be cloned when new scope is created
-     * @var boolean
-     */
-    public $dont_clone_tpl_vars = false;
-
-    /**
-     * set up variable containers
-     * @param string $scope_name  name of variable scope
-     */
-    function __construct($scope_name = 'unknown')
-    {
-        $this->scope_name = $scope_name;
-        $this->tpl_vars = new Smarty_Variable_Container($this);
-    }
 
     /**
      * assigns a Smarty variable
@@ -88,9 +54,6 @@ class Smarty_Internal_Data
      */
     public function assign($tpl_var, $value = null, $nocache = false)
     {
-        if ($this->usage == Smarty::IS_TEMPLATE) {
-            $this->must_merge_tpl_vars = true;
-        }
         if (is_array($tpl_var)) {
             foreach ($tpl_var as $varname => $value) {
                 if ($varname != '') {
@@ -140,7 +103,7 @@ class Smarty_Internal_Data
         }
         // TODO check behavior
         //        $ptr = $this;
-        //        while (isset($ptr->is_template) && $ptr->is_template) {
+        //        while (isset($ptr->IS_TEMPLATE) && $ptr->IS_TEMPLATE) {
         //            $ptr->assign($tpl_var, $value, $nocache);
         //            $ptr = $ptr->parent;
         //        }
@@ -160,9 +123,6 @@ class Smarty_Internal_Data
      */
     public function append($tpl_var, $value = null, $merge = false, $nocache = false)
     {
-        if ($this->usage == Smarty::IS_TEMPLATE) {
-            $this->must_merge_tpl_vars = true;
-        }
         if (is_array($tpl_var)) {
             // $tpl_var is an array, ignore $value
             foreach ($tpl_var as $varname => $_val) {
@@ -222,9 +182,6 @@ class Smarty_Internal_Data
      */
     public function clearAssign($tpl_var)
     {
-        if ($this->usage == Smarty::IS_TEMPLATE) {
-            $this->must_merge_tpl_vars = true;
-        }
         if (is_array($tpl_var)) {
             foreach ($tpl_var as $curr_var) {
                 unset($this->tpl_vars->$curr_var);
@@ -242,10 +199,9 @@ class Smarty_Internal_Data
      */
     public function clearAllAssign()
     {
-        if ($this->usage == Smarty::IS_TEMPLATE) {
-            $this->must_merge_tpl_vars = false;
-        }
-        $this->tpl_vars = new Smarty_Variable_Container($this);
+        $old_attributes = $this->tpl_vars->___attributes;
+        $this->tpl_vars = new Smarty_Variable_Scope();
+        $this->tpl_vars->___attributes = $old_attributes;
         return $this;
     }
 
@@ -406,7 +362,7 @@ class Smarty_Internal_Data
         $_ptr = $this;
         if (isset($varname)) {
             $result = $this->getVariable('___config_var_' . $varname, $_ptr, $search_parents, false);
-                 return $result;
+            return $result;
         } else {
             $_result = array();
             while ($_ptr !== null) {
@@ -452,15 +408,15 @@ class Smarty_Internal_Data
      *
      * @param string $config_file filename
      * @param mixed $sections    array of section names, single section or null
-     * @param string $scope template scope into which config file shall be loaded
+     * @param string $scope_type template scope into which config file shall be loaded
      * @return Smarty_Internal_Data current Smarty_Internal_Data (or Smarty) instance for chaining
      */
-    public function configLoad($config_file, $sections = null, $scope = 'local')
+    public function configLoad($config_file, $sections = null, $scope_type = 'local')
     {
         $ptr = $this->usage == Smarty::IS_DATA ? $this->smarty : $this;
-        $tpl = $ptr->_getTemplateObj($config_file,null ,null ,$this, true);
+        $tpl = $ptr->_getTemplateObj($config_file, null, null, $this, true);
         $tpl->tpl_vars->___config_sections = $sections;
-        $tpl->tpl_vars->___config_scope = $scope;
+        $tpl->tpl_vars->___config_scope = $scope_type;
         $tpl->compiled->getRenderedTemplate($tpl);
         return $this;
     }
@@ -495,105 +451,82 @@ class Smarty_Internal_Data
      *
      *  runtime routine to create a new variable scope
      *
-     * @param boolean  $must_clone_vars clone the tpl vars
+     * @param Smarty $parent
+     * @param int $scope_type
+     * @param null $data
+     * @return array|null|\Smarty_Variable_Scope|\stdClass
      */
-    public function _create_scope($data = null, $scope = Smarty::SCOPE_LOCAL)
+    public function _buildScope($parent, $scope_type = Smarty::SCOPE_LOCAL, $data = null)
     {
-        if ($scope == Smarty::SCOPE_LOCAL) {
-            if ($this->parent != null && !$this->must_merge_tpl_vars && ($this->parent->usage == Smarty::IS_TEMPLATE || $this->parent->usage == Smarty::IS_SMARTY)) {
-                $this->tpl_vars = clone $this->parent->tpl_vars;
-            } elseif ($this->parent != null) {
-                $this->_merge_tpl_vars();
-            }
-//                $this->must_merge_tpl_vars = false;
-            $this->tpl_vars->___scope = $this;
-        } elseif ($scope == Smarty::SCOPE_PARENT) {
-            $this->tpl_vars = $this->parent->tpl_vars;
-        } elseif ($scope == Smarty::SCOPE_GLOBAL) {
-            $this->tpl_vars = Smarty::$global_tpl_vars;
-        } elseif ($scope == Smarty::SCOPE_ROOT) {
-            if (($scope_ptr = $this->_getScopePointer($scope)) != null) {
-                $this->tpl_vars = $scope_ptr->tpl_vars;
-            } else {
-                $this->tpl_vars = new Smarty_Variable_Container($tpl);
-            }
-        } else {
+        if (!isset($parent)) {
+            $parent = $this->tpl_vars;
+        } elseif (!($parent instanceof Smarty_Variable_Scope)) {
+            $parent = $parent->tpl_vars;
         }
+        switch ($scope_type) {
+            case Smarty::SCOPE_LOCAL:
+                if ($parent->___attributes->usage == Smarty::IS_SMARTY || $parent->___attributes->usage == Smarty::IS_TEMPLATE) {
+                    // we can just  clone it
+                    $scope = clone $parent;
+                } else {
+                    $scope = $this->_mergeScopes($parent);
+                }
+                $scope->___attributes->parent_scope = $parent;
+                $scope->___attributes->usage = Smarty::IS_TEMPLATE;
+                $scope->___attributes->name = $this->template_resource;
+                break;
+            case Smarty::SCOPE_PARENT:
+                $scope = $parent;
+                break;
+            case Smarty::SCOPE_GLOBAL:
+                $scope = Smarty::$global_tpl_vars;
+                break;
+            case Smarty::SCOPE_ROOT:
+                $scope = $parent;
+                while (isset($scope->___attributes->parent_scope)) {
+                    $scope = $scope->___attributes->parent_scope;
+                }
+                break;
+        }
+
         // create special smarty variable
-        if (!isset($this->tpl_vars->smarty)) {
-            $this->tpl_vars->smarty = new Smarty_Variable();
+        if (!isset($scope->smarty)) {
+            $scope->smarty = new Smarty_Variable();
         }
         // fill data if present
         if ($data != null) {
             // set up variable values
             foreach ($data as $varname => $value) {
-                $this->tpl_vars->$varname = new Smarty_Variable($value);
+                $scope->$varname = new Smarty_Variable($value);
             }
         }
-
+        return $scope;
     }
+
 
     /**
      *
      *  merge tpl vars
      *
-     * @param Smarty $target
-     * @param null|Smarty $ptr
+     * @param Smarty_Variable_Scope $ptr current scope
+     * @return Smarty_Variable_Scope  merged tpl vars
      */
-    public function __merge_tpl_vars($target, $ptr = null)
+    public function _mergeScopes($ptr)
     {
         // Smarty::triggerCallback('trace', ' merge tpl ');
 
-        if ($ptr == null) {
-            $ptr = $target;
-        }
-        if ($ptr->parent !== null) {
-            $ptr = $ptr->parent;
-            $tpl_vars = $this->_merge_tpl_vars($target, $ptr);
-            foreach ($ptr->tpl_vars as $var => $data) {
-                $tpl_vars->$var = $data;
+        if (isset($ptr->___attributes->parent_scope)) {
+            $scope = $this->_mergeScopes($ptr->___attributes->parent_scope);
+            foreach ($ptr as $var => $data) {
+                $scope->$var = $data;
             }
+            return $scope;
         } else {
-            return clone $ptr->tpl_vars;
-        }
-        if ($ptr === $target) {
-            foreach ($target->tpl_vars as $var => $data) {
-                $tpl_vars->$var = $data;
-            }
-            $target->tpl_vars = $tpl_vars;
-            return;
-        } else {
-            return $tpl_vars;
-        }
-    }
-
-    /**
-     *
-     *  merge tpl vars
-     *
-     * @param Smarty $target
-     * @param null|Smarty $ptr
-     */
-    public function _merge_tpl_vars($ptr = null)
-    {
-        // Smarty::triggerCallback('trace', ' merge tpl ');
-
-        if ($ptr == null) {
-            $ptr = $this;
-        }
-        if ($ptr->parent !== null) {
-            $ptr = $ptr->parent;
-            foreach ($ptr->tpl_vars as $var => $data) {
-                if (!isset($this->tpl_vars->$var)) {
-                    $this->tpl_vars->$var = $data;
-                }
-            }
-            $this->_merge_tpl_vars($ptr);
-        } else {
-            return;
+            return clone $ptr;
         }
     }
 }
+
 
 /**
  * class for the Smarty data object
@@ -605,62 +538,79 @@ class Smarty_Internal_Data
  */
 class Smarty_Data extends Smarty_Internal_Data
 {
-    /**
-     * Smarty object
-     *
-     * @var Smarty
-     */
-    public $smarty = null;
+
+    public $tpl_vars = null;
 
     /**
      * create Smarty data object
      *
-     * @param Smarty_Internal_Data|array $_parent  parent object or variable array
-     * @param Smarty $smarty  object
+     * @param Smarty $smarty  object of Smarty instance
+     * @param Smarty_Internal_Data|array $parent  parent object or variable array
      * @param string $scope_name name of variable scope
      * @throws SmartyException
      */
-    public function __construct($_parent = null, $smarty, $scope_name = 'Data unnamed')
+    public function __construct(Smarty $smarty, $parent = null, $scope_name = 'Data unnamed')
     {
-        parent::__construct($scope_name);
-        $this->smarty = $smarty;
         $this->usage = Smarty::IS_DATA;
-        if ($_parent === null) {
-            return;
-        } elseif (is_array($_parent)) {
-            // set up variable values
-            foreach ($_parent as $_key => $_val) {
+
+        // variables passed as array?
+        if (is_array($parent)) {
+            $data = $parent;
+            $parent = null;
+        } else {
+            $data = null;
+        }
+
+        // create variabale container
+        $this->tpl_vars = new Smarty_Variable_Scope($smarty, $parent, Smarty::IS_DATA, $scope_name);
+
+        //load optional variable array
+        if (isset($data)) {
+            foreach ($data as $_key => $_val) {
                 $this->tpl_vars->$_key = new Smarty_Variable($_val);
             }
-        } elseif ($_parent instanceof Smarty_Internal_Data) {
-            // set up link to parent scope
-            $this->parent = $_parent;
-        } else {
-            throw new SmartyException("Wrong type of parent parameter for Smarty_Data");
         }
     }
 
 }
 
 /**
- * class for the Smarty variable container
+ * class for a variable scope
  *
  * This class holds all assigned variables
+ * The special property ___attributes is used to store control information
+ *
  */
-class Smarty_Variable_Container
+class Smarty_Variable_Scope
 {
-
-    public $___scope = null;
 
     /**
      * constructor to create backlink to Smarty|Smarty_Data
      *
-     * @param  Smarty|Smarty_Data $object  object this instance belongs to
+     * @param  Smarty $tpl_obj  object this instance belongs to
+     * @param  null|Smarty|Smarty_Data|Smarty_Variable_Scope $parent parent scope of tpl vars
+     * @param int $scope_type type of scope
+     * @param  string $name  name of scope
+     * @throws SmartyException
      */
-    public function __construct($object = null)
+    public function __construct($tpl_obj = null, $parent = null, $scope_type = Smarty::IS_TEMPLATE, $name = '')
     {
         // Smarty::triggerCallback('trace', ' construct varcontainer');
-        $this->___scope = $object;
+
+        // determine type of parent object
+        if ($parent == null || $parent instanceof Smarty_Variable_Scope) {
+            $parent_ptr = $parent;
+        } elseif ($parent instanceof Smarty || $parent instanceof Smarty_Data) {
+            $parent_ptr = $parent->tpl_vars;
+        } else {
+            throw new SmartyException("Wrong type of parent parameter at Smarty_Variable_Scope");
+        }
+
+        $this->___attributes = new stdClass();
+        $this->___attributes->tpl_ptr = $tpl_obj;
+        $this->___attributes->parent_scope = $parent_ptr;
+        $this->___attributes->usage = $scope_type;
+        $this->___attributes->name = $name;
     }
 
     /**
@@ -671,42 +621,22 @@ class Smarty_Variable_Container
      */
     public function __get($varname)
     {
-        return $this->$varname = $this->___scope->getVariable($varname, $this->___scope->parent);
+        return $this->$varname = $this->___attributes->tpl_ptr->getVariable($varname, $this->___attributes->tpl_ptr->parent);
     }
 
-    /**
-     * magic __get function called at access of unknown variable
-     *
-     * @param string $varname  name of variable
-     * @return mixed Smarty_Variable object | null
-     */
-    /**
-    public function __set($varname, $value)
-    {
-    if ($this->___scope->usage == Smarty::IS_TEMPLATE && !$this->___scope->must_merge_tpl_vars) {
-    Smarty::triggerCallback('trace', ' clone varcontainer by '.$varname);
-    $this->___scope->tpl_vars = clone $this;
-    $this->___scope->must_merge_tpl_vars = true;
-    $this->___scope->tpl_vars->$varname = $value;
-    return;
-    }
-    $this->$varname = $value;
-    }
-     */
 
-    /**
     public function __clone()
     {
         //Smarty::triggerCallback('trace', ' clone varcontainer');
+        $this->___attributes = clone $this->___attributes;
     }
-    */
 
     /**
     public function __destruct()
     {
-        //Smarty::triggerCallback('trace', ' destruct varcontainer');
+    //Smarty::triggerCallback('trace', ' destruct varcontainer');
     }
-    */
+     */
 
 }
 
@@ -753,10 +683,12 @@ class Smarty_Variable
      *
      * @return string
      */
+    /**
     public function __toString()
     {
-        return (string)$this->value;
+    return (string)$this->value;
     }
+     */
 
 }
 

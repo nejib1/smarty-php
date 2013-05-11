@@ -14,7 +14,7 @@
  *
  * @property string $content compiled content
  */
-class Smarty_Compiled
+class Smarty_Compiled extends Smarty_Internal_Magic_Error
 {
 
     /**
@@ -36,10 +36,16 @@ class Smarty_Compiled
     public $exists = false;
 
     /**
-     * Template was compiled
+     * Template was recompiled
      * @var boolean
      */
     public $isCompiled = false;
+
+    /**
+     * Compiled template is valid
+     * @var boolean
+     */
+    public $isValid = false;
 
     /**
      * Source Object
@@ -48,145 +54,211 @@ class Smarty_Compiled
     public $source = null;
 
     /**
+     * file dependencies
+     *
+     * @var array
+     */
+    public $file_dependency = array();
+
+    /**
      * instance of smarty content from compiled file
-     * @var Smarty_Content
+     * @var Smarty_Internal_Content
      * @internal
      */
     public $smarty_content = null;
 
-    /**
-     * cache for Smarty_Compiled instances
-     * @var array
-     */
-    public static $compileds = array();
+
+    public static function getObject($tpl_obj)
+    {
+        // check runtime cache
+        $source_key = $tpl_obj->source->unique_resource;
+        $compiled_key = $tpl_obj->compile_id ? $tpl_obj->compile_id : '#undefined#';
+        if ($tpl_obj->cache_objs) {
+            if (isset(Smarty::$template_objects[$source_key]['compiled'][$compiled_key])) {
+                return Smarty::$template_objects[$source_key]['compiled'][$compiled_key];
+            } else {
+                return Smarty::$template_objects[$source_key]['compiled'][$compiled_key] = new Smarty_Compiled($tpl_obj);
+            }
+        } else {
+            return new Smarty_Compiled($tpl_obj);
+        }
+    }
+
 
     /**
      * create Compiled Object container
      *
-     * @param Smarty $_object
+     * @param Smarty $tpl_obj
      */
-    public function __construct($_object)
+    public function __construct($tpl_obj)
     {
-        $this->source = $_object->source;
-        $this->source->handler->populateCompiledFilepath($this, $_object);
+        $this->source = $tpl_obj->source;
+        $this->filepath = $this->buildFilepath($tpl_obj);
         $this->timestamp = @filemtime($this->filepath);
         $this->exists = !!$this->timestamp;
     }
 
+
     /**
      * get rendered template output from compiled template
      *
-     * @param Smarty $_template template object
+     * @param Smarty $tpl_obj template object
+     * @param Smarty_Variable_Scope $_scope template variables
+     * @param int $scope_type
+     * @param null|array $data
      * @param boolean $no_output_filter true if output filter shall nit run
      * @throws Exception
-     * @throws SmartyException
-     * @return
+     * @return string
      */
-    public function getRenderedTemplate($_template, $no_output_filter = true)
+    public function getRenderedTemplate($tpl_obj, $_scope = null, $scope_type = Smarty::SCOPE_LOCAL, $data = null, $no_output_filter = true)
     {
-        $_template->cached_subtemplates = array();
+        $_scope = $tpl_obj->_buildScope($_scope, $scope_type, $data);
+        $tpl_obj->cached_subtemplates = array();
         if (empty($this->smarty_content)) {
-            $this->loadContent($_template);
+            $this->loadContent($tpl_obj);
         }
         try {
             $level = ob_get_level();
             if (empty($this->smarty_content)) {
-                throw new SmartyException("Invalid compiled template for '{$_template->template_resource}'");
+                throw new SmartyException("Invalid compiled template for '{$this->source->template_resource}'");
             }
-            array_unshift($_template->_capture_stack, array());
+            array_unshift($tpl_obj->_capture_stack, array());
             //
             // render compiled template
             //
-            $output = $this->smarty_content->get_template_content($_template);
+            $output = $this->smarty_content->get_template_content($tpl_obj, $_scope);
             // any unclosed {capture} tags ?
-            if (isset($_template->_capture_stack[0][0])) {
-                $_template->_capture_error();
+            if (isset($tpl_obj->_capture_stack[0][0])) {
+                $tpl_obj->_capture_error();
             }
-            array_shift($_template->_capture_stack);
+            array_shift($tpl_obj->_capture_stack);
         } catch (Exception $e) {
             while (ob_get_level() > $level) {
                 ob_end_clean();
             }
             throw $e;
         }
-        if (!$this->source->recompiled && empty($_template->compiled->file_dependency[$this->source->uid])) {
-            $_template->compiled->file_dependency[$this->source->uid] = array($this->source->filepath, $this->source->timestamp, $this->source->type);
+        if ($tpl_obj->source->recompiled && empty($this->file_dependency[$this->source->uid])) {
+            $this->file_dependency[$tpl_obj->source->uid] = array($tpl_obj->source->filepath, $tpl_obj->source->timestamp, $tpl_obj->source->type);
         }
-        if ($_template->caching) {
-            $cached = Smarty_Internal_CacheCreate::_getCachedObject($_template);
-            $cached->newcache->_mergeFromCompiled($_template);
+        if ($tpl_obj->caching) {
+            $cached = Smarty_Internal_CacheCreate::_getCachedObject($tpl_obj);
+            $cached->newcache->_mergeFromCompiled($tpl_obj);
         }
-        if ($_template->caching == Smarty::CACHING_NOCACHE_CODE && isset($_template->parent)) {
-            $_template->parent->has_nocache_code = $_template->parent->has_nocache_code || $_template->has_nocache_code;
+        if ($tpl_obj->caching == Smarty::CACHING_NOCACHE_CODE && isset($tpl_obj->parent)) {
+            $tpl_obj->parent->has_nocache_code = $tpl_obj->parent->has_nocache_code || $tpl_obj->has_nocache_code;
         }
-        if (!$no_output_filter && (isset($_template->autoload_filters['output']) || isset($_template->registered_filters['output']))) {
-            $output = Smarty_Internal_Filter_Handler::runFilter('output', $output, $_template);
+        if (!$no_output_filter && (isset($tpl_obj->autoload_filters['output']) || isset($tpl_obj->registered_filters['output']))) {
+            $output = Smarty_Internal_Filter_Handler::runFilter('output', $output, $tpl_obj);
         }
 
-        if ($_template->debugging) {
-            Smarty_Internal_Debug::end_render($_template);
+        if ($tpl_obj->debugging) {
+            Smarty_Internal_Debug::end_render($tpl_obj);
         }
         return $output;
     }
 
+
     /**
      * Load compiled template content
      *
-     * @param Smarty $_template template object
+     * @param Smarty $tpl_obj template object
+     * @throws SmartyException
      */
-    public function loadContent($_template)
+    public function loadContent($tpl_obj)
     {
-        if ($this->source->recompiled) {
-            if ($_template->debugging) {
-                Smarty_Internal_Debug::start_compile($_template);
+        if ($tpl_obj->source->recompiled) {
+            if ($tpl_obj->debugging) {
+                Smarty_Internal_Debug::start_compile($tpl_obj);
             }
-            $_template->compiler->compileTemplate();
-            if ($_template->debugging) {
-                Smarty_Internal_Debug::end_compile($_template);
+
+            $tpl_obj->compiler->compileTemplate();
+            if ($tpl_obj->debugging) {
+                Smarty_Internal_Debug::end_compile($tpl_obj);
+                Smarty_Internal_Debug::start_render($tpl_obj);
             }
-            if ($_template->debugging) {
-                Smarty_Internal_Debug::start_render($_template);
-            }
-            eval('?>' . $_template->compiler->template_code->buffer);
-            unset($_template->compiler);
+            eval('?>' . $tpl_obj->compiler->template_code->buffer);
+            unset($tpl_obj->compiler);
         } else {
-            if (!$this->exists || ($_template->force_compile && !$this->isCompiled)) {
-                $_template->compiler->compileTemplateSource();
-                unset($_template->compiler);
-            }
-            if ($_template->debugging) {
-                Smarty_Internal_Debug::start_render($_template);
-            }
-            if (empty($this->smarty_content)) {
+            $this->isValid = true;
+            if (!$this->exists || ($tpl_obj->force_compile && !$this->isCompiled)) {
+                $this->isValid = false;
+            } else {
                 include($this->filepath);
-                if ($_template->mustCompile) {
-                    // recompile and load again
-                    $_template->compiler->compileTemplateSource();
-                    unset($_template->compiler);
-                    include($this->filepath);
-                }
+            }
+            if ($this->isValid && !empty($this->smarty_content)) {
+                return;
+            } else {
+                $tpl_obj->compiler->compileTemplateSource();
+                unset($tpl_obj->compiler);
+            }
+            include($this->filepath);
+            if (!$this->isValid || empty($this->smarty_content)) {
+                throw new SmartyException('err4', $this);
             }
         }
+    }
+
+    /**
+     * populate Compiled Object with compiled filepath
+     *
+     * @param Smarty|Smarty_Internal_Cached $mixed_obj template or cache object object
+     * @return string
+     */
+    public function buildFilepath($mixed_obj)
+    {
+        $_compile_id = isset($mixed_obj->compile_id) ? preg_replace('![^\w\|]+!', '_', $mixed_obj->compile_id) : null;
+        $_filepath = $this->source->uid . '_' . $mixed_obj->compiletime_options;
+        // if use_sub_dirs, break file into directories
+        if ($mixed_obj->use_sub_dirs) {
+            $_filepath = substr($_filepath, 0, 2) . DS
+                . substr($_filepath, 2, 2) . DS
+                . substr($_filepath, 4, 2) . DS
+                . $_filepath;
+        }
+        $_compile_dir_sep = $mixed_obj->use_sub_dirs ? DS : '^';
+        if (isset($_compile_id)) {
+            $_filepath = $_compile_id . $_compile_dir_sep . $_filepath;
+        }
+        // subtype
+        if ($mixed_obj->usage == Smarty::IS_CONFIG) {
+            $_subtype = '.config';
+        } elseif ($mixed_obj->caching) {
+            $_subtype = '.cache';
+        } else {
+            $_subtype = '';
+        }
+        $_compile_dir = $mixed_obj->getCompileDir();
+        // set basename if not specified
+        $_basename = $this->source->handler->getBasename($this->source);
+        if ($_basename === null) {
+            $_basename = basename(preg_replace('![^\w\/]+!', '_', $this->source->name));
+        }
+        // separate (optional) basename by dot
+        if ($_basename) {
+            $_basename = '.' . $_basename;
+        }
+        return $_compile_dir . $_filepath . '.' . $this->source->type . $_basename . $_subtype . '.php';
     }
 
 
     /**
      * Delete compiled template file
      *
-     * @param string $resource_name template name
+     * @param string $template_resource template name
      * @param string $compile_id    compile id
      * @param integer $exp_time      expiration time
      * @param Smarty $smarty        Smarty instance
      * @return integer number of template files deleted
      */
-    public static function clearCompiledTemplate($resource_name, $compile_id, $exp_time, Smarty $smarty)
+    public static function clearCompiledTemplate($template_resource, $compile_id, $exp_time, Smarty $smarty)
     {
         $_compile_dir = $smarty->getCompileDir();
         $_compile_id = isset($compile_id) ? preg_replace('![^\w\|]+!', '_', $compile_id) : null;
         $compiletime_options = 0;
         $_dir_sep = $smarty->use_sub_dirs ? DS : '^';
-        if (isset($resource_name)) {
-            $source = Smarty_Resource::source(null, $smarty, $resource_name);
+        if (isset($template_resource)) {
+            $source = Smarty_Resource::source($smarty, $template_resource);
 
             if ($source->exists) {
                 // set basename if not specified
@@ -236,7 +308,7 @@ class Smarty_Compiled
             } else {
                 $unlink = false;
                 if ((!isset($_compile_id) || strpos($_filepath, $_compile_id_part) === 0)
-                    && (!isset($resource_name)
+                    && (!isset($template_resource)
                         || (isset($_filepath[$_resource_part_1_length])
                             && substr_compare($_filepath, $_resource_part_1, -$_resource_part_1_length, $_resource_part_1_length) == 0)
                         || (isset($_filepath[$_resource_part_2_length])
@@ -259,7 +331,9 @@ class Smarty_Compiled
             }
         }
         // clear compiled cache
-        Smarty_Compiled::$compileds = array();
+        foreach (Smarty::$template_objects as $key => $foo) {
+            unset(Smarty::$template_objects[$key]['compiled']);
+        }
         return $_count;
     }
 

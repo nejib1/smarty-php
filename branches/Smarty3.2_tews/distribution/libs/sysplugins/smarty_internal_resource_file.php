@@ -24,19 +24,19 @@ class Smarty_Internal_Resource_File extends Smarty_Resource
      * populate Source Object with meta data from Resource
      *
      * @param Smarty_Template_Source $source    source object
-     * @param Smarty $_template template object
+     * @param Smarty $tpl_obj template object
      */
-    public function populate(Smarty_Template_Source $source, Smarty $_template = null)
+    public function populate(Smarty_Template_Source $source, Smarty $tpl_obj = null)
     {
-        $source->filepath = $this->buildFilepath($source, $_template);
+        $source->filepath = $this->buildFilepath($source, $tpl_obj);
 
         if ($source->filepath !== false) {
-            if (is_object($_template->security_policy)) {
-                $_template->security_policy->isTrustedResourceDir($source->filepath);
+            if (is_object($tpl_obj->security_policy)) {
+                $tpl_obj->security_policy->isTrustedResourceDir($source->filepath);
             }
 
             $source->uid = sha1($source->filepath);
-            if ($_template->compile_check && !isset($source->timestamp)) {
+            if ($tpl_obj->compile_check && !isset($source->timestamp)) {
                 $source->timestamp = @filemtime($source->filepath);
                 $source->exists = !!$source->timestamp;
             }

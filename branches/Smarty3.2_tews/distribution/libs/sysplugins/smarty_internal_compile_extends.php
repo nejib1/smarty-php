@@ -23,7 +23,7 @@ class Smarty_Internal_Compile_Extends extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $required_attributes = array('file');
 
@@ -31,7 +31,7 @@ class Smarty_Internal_Compile_Extends extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $shorttag_order = array('file');
 
@@ -65,7 +65,7 @@ class Smarty_Internal_Compile_Extends extends Smarty_Internal_CompileBase
         }
         $_caching = Smarty::CACHING_OFF;
         // parents must not create cache files
-        if ($compiler->template->caching) {
+        if ($compiler->tpl_obj->caching) {
             $_caching = Smarty::CACHING_NOCACHE_CODE;
         }
 

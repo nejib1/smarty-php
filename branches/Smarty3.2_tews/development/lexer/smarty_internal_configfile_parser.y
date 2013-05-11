@@ -1,5 +1,5 @@
 /**
-* Smarty Internal Plugin Configfileparser
+* Smarty Internal Plugin Configfile Parser
 *
 * This is the config file parser
 * 
@@ -9,7 +9,7 @@
 * @author Uwe Tews
 */
 %name TPC_
-%declare_class {class Smarty_Internal_Configfileparser}
+%declare_class {class Smarty_Internal_Configfile_Parser extends Smarty_Internal_Magic_Error}
 %include_class
 {
     // states whether the parse was successful or not
@@ -67,7 +67,7 @@
         $key = $var["key"];
         $value = $var["value"];
 
-        if ($this->compiler->template->config_overwrite || !isset($target_array['vars'][$key])) {
+        if ($this->compiler->tpl_obj->config_overwrite || !isset($target_array['vars'][$key])) {
             $target_array['vars'][$key] = $value;
         } else {
             settype($target_array['vars'][$key], 'array');
@@ -143,7 +143,7 @@ section(res) ::= OPENB SECTION(i) CLOSEB newline var_list(vars). {
 }
 
 section(res) ::= OPENB DOT SECTION(i) CLOSEB newline var_list(vars). {
-    if ($this->compiler->template->config_read_hidden) {
+    if ($this->compiler->tpl_obj->config_read_hidden) {
         $this->add_section_vars(i, vars);
     }
     res = null;

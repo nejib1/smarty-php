@@ -1,5 +1,5 @@
 /**
-* Smarty Internal Plugin Templateparser
+* Smarty Internal Plugin Template Parser
 *
 * This is the template parser
 * 
@@ -9,7 +9,7 @@
 * @author Uwe Tews
 */
 %name TP_
-%declare_class {class Smarty_Internal_Templateparser}
+%declare_class {class Smarty_Internal_Template_Parser extends Smarty_Internal_Magic_Error}
 %include_class
 {
     const Err1 = "Security error: Call to private object member not allowed";
@@ -18,27 +18,33 @@
     // states whether the parse was successful or not
     public $successful = true;
     public $retvalue = 0;
-    private $lex;
+    public  $lex = null;
+    public  $compiler = null;
+    public  $prefix_number = 0;
+    public  $block_nesting_level = 0;
     private $internalError = false;
     private $last_taglineno = 0;
     private $last_taglineno_nocache = 0;
     private $strip = false;
     private $text_is_php = false;
+    private $is_xml = false;
     private $db_quote_code_buffer = '';
+    private $asp_tags = null;
+    private $php_handling = null;
+    private $security = null;
+    private $last_variable = null;
+    private $last_index = null;
 
     function __construct($lex, $compiler) {
         $this->lex = $lex;
         $this->compiler = $compiler;
         $this->compiler->prefix_code = array();
-        $this->prefix_number = 0;
-        $this->block_nesting_level = 0;
-        if ($this->security = isset($this->compiler->template->security_policy)) {
-            $this->php_handling = $this->compiler->template->security_policy->php_handling;
+        if ($this->security = isset($this->compiler->tpl_obj->security_policy)) {
+            $this->php_handling = $this->compiler->tpl_obj->security_policy->php_handling;
         } else {
-            $this->php_handling = $this->compiler->template->php_handling;
+            $this->php_handling = $this->compiler->tpl_obj->php_handling;
         }
-        $this->is_xml = false;
-        $this->asp_tags = (ini_get('asp_tags') != '0');
+       $this->asp_tags = (ini_get('asp_tags') != '0');
     }
 
 
@@ -46,18 +52,18 @@
     	 if (strpos($variable,'(') === false) {
     	 		// not a variable variable
     	 		$var = trim($variable,'\'"');
-			    $this->compiler->tag_nocache=$this->compiler->tag_nocache|$this->compiler->template->getVariable($var, null, true, false, 'nocache');
-//			    $this->compiler->template->properties['variables'][$var] = $this->compiler->tag_nocache|$this->compiler->nocache;
+			    $this->compiler->tag_nocache=$this->compiler->tag_nocache|$this->compiler->tpl_obj->getVariable($var, null, true, false, 'nocache');
+//			    $this->compiler->tpl_obj->properties['variables'][$var] = $this->compiler->tag_nocache|$this->compiler->nocache;
 			 } else {
 			    $var = '{'.$variable.'}';
 			 }
-			 return '$_smarty_tpl->tpl_vars->'. $var . '->value';
+			 return '$_scope->'. $var . '->value';
     }
     
     public function updateNocacheLineTrace($allways = false) {
-       if ($this->compiler->template->enable_traceback) {
+       if ($this->compiler->tpl_obj->enable_traceback) {
            $line = $this->lex->taglineno;
-           if ($this->compiler->template->caching && $this->last_taglineno_nocache != $this->lex->taglineno) {
+           if ($this->compiler->tpl_obj->caching && $this->last_taglineno_nocache != $this->lex->taglineno) {
                $this->compiler->has_code = true;
                $this->compiler->nocache_nolog = true;
                $this->compiler->nocacheCode('', true, $line);
@@ -104,7 +110,7 @@
 start ::= template. {
    // execute end of template
    $this->compiler->template_code->newline()->php("array_shift(\$_smarty_tpl->trace_call_stack);\n");
-   if ($this->compiler->template->caching) {
+   if ($this->compiler->tpl_obj->caching) {
        $this->compiler->has_code = true;
        $this->compiler->nocache_nolog = true;
        $this->compiler->nocacheCode("array_shift(\$_smarty_tpl->trace_call_stack);", true);
@@ -130,14 +136,14 @@ template       ::= .
 //
                       // Template init
 template_element ::= TEMPLATEINIT(i). {
-    if ($this->compiler->template->source->type == 'eval' || $this->compiler->template->source->type == 'string') {
-        $resource = $this->compiler->template->source->type;
+    if ($this->compiler->tpl_obj->source->type == 'eval' || $this->compiler->tpl_obj->source->type == 'string') {
+        $resource = $this->compiler->tpl_obj->source->type;
     } else {
-        $resource = $this->compiler->template->source->filepath;
+        $resource = $this->compiler->tpl_obj->source->filepath;
     }
-    if (strpos($this->compiler->template->template_resource,'extends:') ===false) {
-        $code = "array_unshift(\$_smarty_tpl->trace_call_stack, array('{$resource}',{$this->lex->taglineno} , '{$this->compiler->template->source->type}'));";
-        if ($this->compiler->template->caching) {
+    if (strpos($this->compiler->tpl_obj->template_resource,'extends:') ===false) {
+        $code = "array_unshift(\$_smarty_tpl->trace_call_stack, array('{$resource}',{$this->lex->taglineno} , '{$this->compiler->tpl_obj->source->type}'));";
+        if ($this->compiler->tpl_obj->caching) {
             $this->compiler->has_code = true;
             $this->compiler->nocache_nolog = true;
             $this->compiler->nocacheCode($code, true);
@@ -151,11 +157,11 @@ template_element ::= TEMPLATEINIT(i). {
 template_element ::= smartytag(st). {
     if ($this->compiler->has_code) {
         $line = 0;
-        if ($this->compiler->template->enable_traceback) {
-            if ($this->compiler->template->caching && $this->last_taglineno_nocache != $this->lex->taglineno && ($this->compiler->nocache || $this->compiler->tag_nocache)) { 
+        if ($this->compiler->tpl_obj->enable_traceback) {
+            if ($this->compiler->tpl_obj->caching && $this->last_taglineno_nocache != $this->lex->taglineno && ($this->compiler->nocache || $this->compiler->tag_nocache)) { 
                 $line = $this->last_taglineno_nocache = $this->lex->taglineno;
             }
-            if ($this->last_taglineno != $this->lex->taglineno && (!$this->compiler->template->caching || (!$this->compiler->nocache && !$this->compiler->tag_nocache))) { 
+            if ($this->last_taglineno != $this->lex->taglineno && (!$this->compiler->tpl_obj->caching || (!$this->compiler->nocache && !$this->compiler->tag_nocache))) { 
                 $line = $this->last_taglineno = $this->lex->taglineno;
             }
         }
@@ -262,11 +268,11 @@ template_element ::= XMLTAG. {
 template_element ::= TEXT(o). {
     if ($this->text_is_php) {
         $line = 0;
-        if ($this->compiler->template->enable_traceback) {
-            if ($this->compiler->template->caching && $this->last_taglineno_nocache != $this->lex->taglineno && ($this->compiler->nocache || $this->compiler->tag_nocache)) { 
+        if ($this->compiler->tpl_obj->enable_traceback) {
+            if ($this->compiler->tpl_obj->caching && $this->last_taglineno_nocache != $this->lex->taglineno && ($this->compiler->nocache || $this->compiler->tag_nocache)) { 
                 $line = $this->last_taglineno_nocache = $this->lex->taglineno;
             }
-            if ($this->last_taglineno != $this->lex->taglineno && (!$this->compiler->template->caching || (!$this->compiler->nocache && !$this->compiler->tag_nocache))) { 
+            if ($this->last_taglineno != $this->lex->taglineno && (!$this->compiler->tpl_obj->caching || (!$this->compiler->nocache && !$this->compiler->tag_nocache))) { 
                 $line = $this->last_taglineno = $this->lex->taglineno;
             }
         }
@@ -784,14 +790,14 @@ value(res)       ::= doublequoted_with_quotes(s). {
 
 value(res)    ::= IDINCDEC(v). {
     $len = strlen(v);
-    res = '$_smarty_tpl->tpl_vars->' . substr(v,1,$len-3) . '->value' . substr(v,$len-2);
+    res = '$_scope->' . substr(v,1,$len-3) . '->value' . substr(v,$len-2);
 }
 
                   // static class access
 value(res)       ::= ID(c) DOUBLECOLON static_class_access(r). {
-    if (!$this->security || isset($this->compiler->template->registered_classes[c]) || $this->compiler->template->security_policy->isTrustedStaticClass(c, $this->compiler)) {
-        if (isset($this->compiler->template->registered_classes[c])) {
-            res = $this->compiler->template->registered_classes[c].'::'.r;
+    if (!$this->security || isset($this->compiler->tpl_obj->registered_classes[c]) || $this->compiler->tpl_obj->security_policy->isTrustedStaticClass(c, $this->compiler)) {
+        if (isset($this->compiler->tpl_obj->registered_classes[c])) {
+            res = $this->compiler->tpl_obj->registered_classes[c].'::'.r;
         } else {
             res = c.'::'.r;
         } 
@@ -848,7 +854,7 @@ variable(res)    ::= varindexed(vi). {
 
                   // variable with property
 variable(res)    ::= DOLLAR varvar(v) AT ID(p). {
-    res = '$_smarty_tpl->tpl_vars->' . trim(v,"'") . '->' . p;
+    res = '$_scope->' . trim(v,"'") . '->' . p;
 }
 
                   // object
@@ -859,20 +865,20 @@ variable(res)    ::= object(o). {
                   // config variable
 variable(res)    ::= HATCH ID(i) HATCH. {
     $var = trim(i,'\'');
-    res = "\$_smarty_tpl->tpl_vars->___config_var_{$var}";
+    res = "\$_scope->___config_var_{$var}";
 }
 
 variable(res)    ::= HATCH ID(i) HATCH arrayindex(a). {
     $var = trim(i,'\'');
-    res = "\$_smarty_tpl->tpl_vars->___config_var_{$var}".a;
+    res = "\$_scope->___config_var_{$var}".a;
 }
 
 variable(res)    ::= HATCH variable(v) HATCH. {
-    res = "\$_smarty_tpl->tpl_vars->___config_var_{{v}}";
+    res = "\$_scope->___config_var_{{v}}";
 }
 
 variable(res)    ::= HATCH variable(v) HATCH arrayindex(a). {
-    res = "\$_smarty_tpl->tpl_vars->___config_var_{{v}}".a;
+    res = "\$_scope->___config_var_{{v}}".a;
 }
 
 varindexed(res)  ::= DOLLAR varvar(v) arrayindex(a). {
@@ -928,7 +934,7 @@ indexdef(res)   ::= OPENB expr(e) CLOSEB. {
     res = "[". e ."]";
 }
 
-                    // für assign append array
+                    // fÃ¼r assign append array
 indexdef(res)  ::= OPENB CLOSEB. {
     res = '[]';
 }
@@ -1016,7 +1022,7 @@ objectelement(res)::= PTR method(f).  {
 // function
 //
 function(res)     ::= ID(f) OPENP params(p) CLOSEP. {
-    if (!$this->security || $this->compiler->template->security_policy->isTrustedPhpFunction(f, $this->compiler)) {
+    if (!$this->security || $this->compiler->tpl_obj->security_policy->isTrustedPhpFunction(f, $this->compiler)) {
         if (strcasecmp(f,'isset') === 0 || strcasecmp(f,'empty') === 0 || strcasecmp(f,'array') === 0 || is_callable(f)) {
             $func_name = strtolower(f);
             if ($func_name == 'isset') {
@@ -1024,9 +1030,9 @@ function(res)     ::= ID(f) OPENP params(p) CLOSEP. {
                     $this->compiler->trigger_template_error ('Illegal number of paramer in "isset()"');
                 }
                 $par = implode(',',p);
-                preg_match('/\$_smarty_tpl->tpl_vars->([0-9]*[a-zA-Z_]\w*)(.*)/',$par,$match);
+                preg_match('/\$_scope->([0-9]*[a-zA-Z_]\w*)(.*)/',$par,$match);
                 if (isset($match[1])) {
-                    $search = array('/\$_smarty_tpl->tpl_vars->([0-9]*[a-zA-Z_]\w*)/','/->value.*/');
+                    $search = array('/\$_scope->([0-9]*[a-zA-Z_]\w*)/','/->value.*/');
                     $replace = array('$_smarty_tpl->getVariable(\'\1\', null, true, false)','');
                     $this->prefix_number++;
                     $this->compiler->prefix_code[] = '$_tmp'.$this->prefix_number.'='.preg_replace($search, $replace, $par).';';
@@ -1055,7 +1061,7 @@ function(res)     ::= ID(f) OPENP params(p) CLOSEP. {
 // namespace function
 //
 function(res)     ::= NAMESPACE(f) OPENP params(p) CLOSEP. {
-    if (!$this->security || $this->compiler->template->security_policy->isTrustedPhpFunction(f, $this->compiler)) {
+    if (!$this->security || $this->compiler->tpl_obj->security_policy->isTrustedPhpFunction(f, $this->compiler)) {
         if (is_callable(f)) {
             res = f . "(". implode(',',p) .")";
         } else {
@@ -1295,9 +1301,9 @@ doublequotedcontent(res)           ::=  BACKTICK expr(e) BACKTICK. {
 
 doublequotedcontent(res)           ::=  DOLLARID(i). {
     if (empty($this->db_quote_code_buffer)) {
-        res = '(string)$_smarty_tpl->tpl_vars->'. substr(i,1) . '->value';
+        res = '(string)$_scope->'. substr(i,1) . '->value';
     } else {
-        $this->db_quote_code_buffer .= 'echo (string)$_smarty_tpl->tpl_vars->'. substr(i,1) . '->value;';
+        $this->db_quote_code_buffer .= 'echo (string)$_scope->'. substr(i,1) . '->value;';
         res = false;
     }
 }

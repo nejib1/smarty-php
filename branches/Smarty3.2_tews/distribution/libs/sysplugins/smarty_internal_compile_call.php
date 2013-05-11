@@ -23,7 +23,7 @@ class Smarty_Internal_Compile_Call extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $required_attributes = array('name');
 
@@ -31,7 +31,7 @@ class Smarty_Internal_Compile_Call extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $shorttag_order = array('name');
 
@@ -39,7 +39,7 @@ class Smarty_Internal_Compile_Call extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $optional_attributes = array('_any');
 
@@ -56,7 +56,7 @@ class Smarty_Internal_Compile_Call extends Smarty_Internal_CompileBase
         $_attr = $this->getAttributes($compiler, $args);
         // save possible attributes
         if (isset($_attr['assign'])) {
-            // output will be stored in a smarty variable instead of beind displayed
+            // output will be stored in a smarty variable instead of being displayed
             $_assign = $_attr['assign'];
             // set flag that variable container must be cloned
             $compiler->must_clone_vars = true;
@@ -71,7 +71,7 @@ class Smarty_Internal_Compile_Call extends Smarty_Internal_CompileBase
         if ($_attr['nocache'] === true) {
             $compiler->tag_nocache = true;
         }
-        if ($compiler->template->caching && ($compiler->tag_nocache || $compiler->nocache)) {
+        if ($compiler->tpl_obj->caching && ($compiler->tag_nocache || $compiler->nocache)) {
             $compiler->called_nocache_template_functions[trim($_name, "'\"")] = true;
         }
         unset($_attr['name'], $_attr['assign'], $_attr['nocache']);
@@ -88,7 +88,7 @@ class Smarty_Internal_Compile_Call extends Smarty_Internal_CompileBase
 
         $_params = 'array(' . implode(",", $_paramsArray) . ')';
 
-        $this->php("\$this->_callTemplateFunction ($_name,\$_smarty_tpl,{$_params},{$_assign});")->newline();
+        $this->php("\$this->_callTemplateFunction ($_name,\$_smarty_tpl, \$_scope, {$_params},{$_assign});")->newline();
 
         $compiler->has_code = true;
         return $this->returnTagCode($compiler);

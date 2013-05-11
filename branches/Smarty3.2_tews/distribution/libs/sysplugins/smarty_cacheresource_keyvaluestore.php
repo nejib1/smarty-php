@@ -50,13 +50,13 @@ abstract class Smarty_CacheResource_KeyValueStore extends Smarty_CacheResource
     /**
      * populate Cached Object with meta data from Resource
      *
-     * @param Smarty_Template_Cached $cached    cached object
-     * @param Smarty $_template template object
+     * @param Smarty_template_Cached $cached    cached object
+     * @param Smarty $tpl_obj template object
      * @return void
      */
-    public function populate(Smarty_Template_Cached $cached, Smarty $_template)
+    public function populate(Smarty_template_Cached $cached, Smarty $tpl_obj)
     {
-        $cached->filepath = $_template->source->uid
+        $cached->filepath = $tpl_obj->source->uid
             . '#' . $this->sanitize($cached->source->name)
             . '#' . $this->sanitize($cached->cache_id)
             . '#' . $this->sanitize($cached->compile_id);
@@ -67,10 +67,10 @@ abstract class Smarty_CacheResource_KeyValueStore extends Smarty_CacheResource
     /**
      * populate Cached Object with timestamp and exists from Resource
      *
-     * @param Smarty_Template_Cached $cached cached object
+     * @param Smarty_template_Cached $cached cached object
      * @return void
      */
-    public function populateTimestamp(Smarty_Template_Cached $cached)
+    public function populateTimestamp(Smarty_template_Cached $cached)
     {
         if (!$this->fetch($cached->filepath, $cached->source->name, $cached->cache_id, $cached->compile_id, $content, $timestamp, $cached->source->uid)) {
             return;
@@ -83,19 +83,19 @@ abstract class Smarty_CacheResource_KeyValueStore extends Smarty_CacheResource
     /**
      * Read the cached template and process the header
      *
-     * @param Smarty $_template template object
-     * @param Smarty_Template_Cached $cached cached object
+     * @param Smarty $tpl_obj template object
+     * @param Smarty_template_Cached $cached cached object
      * @return bool true or false if the cached content does not exist
      */
-    public function process(Smarty $_template, Smarty_Template_Cached $cached = null)
+    public function process(Smarty $tpl_obj, Smarty_template_Cached $cached = null)
     {
         if (!$cached) {
-            $cached = $_template->cached;
+            $cached = $tpl_obj->cached;
         }
         $content = $cached->content ? $cached->content : null;
         $timestamp = $cached->timestamp ? $cached->timestamp : null;
         if ($content === null || !$timestamp) {
-            if (!$this->fetch($_template->cached->filepath, $_template->source->name, $_template->cache_id, $_template->compile_id, $content, $timestamp, $_template->source->uid)) {
+            if (!$this->fetch($tpl_obj->cached->filepath, $tpl_obj->source->name, $tpl_obj->cache_id, $tpl_obj->compile_id, $content, $timestamp, $tpl_obj->source->uid)) {
                 return false;
             }
         }
@@ -109,14 +109,14 @@ abstract class Smarty_CacheResource_KeyValueStore extends Smarty_CacheResource
     /**
      * Write the rendered template output to cache
      *
-     * @param Smarty $_template template object
+     * @param Smarty $tpl_obj template object
      * @param string $content content to cache
      * @return boolean success
      */
-    public function writeCachedContent(Smarty $_template, $content)
+    public function writeCachedContent(Smarty $tpl_obj, $content)
     {
         $this->addMetaTimestamp($content);
-        return $this->write(array($_template->cached->filepath => $content), $_template->cached->smarty_content->cache_lifetime);
+        return $this->write(array($tpl_obj->cached->filepath => $content), $tpl_obj->cached->smarty_content->cache_lifetime);
     }
 
     /**
@@ -189,7 +189,7 @@ abstract class Smarty_CacheResource_KeyValueStore extends Smarty_CacheResource
      */
     protected function sanitize($string)
     {
-        // some poeple smoke bad weed
+        // some people smoke bad weed
         $string = trim($string, '|');
         if (!$string) {
             return null;
@@ -373,10 +373,10 @@ abstract class Smarty_CacheResource_KeyValueStore extends Smarty_CacheResource
      * Check is cache is locked for this template
      *
      * @param Smarty $smarty Smarty object
-     * @param Smarty_Template_Cached $cached cached object
+     * @param Smarty_template_Cached $cached cached object
      * @return bool true or false if cache is locked
      */
-    public function hasLock(Smarty $smarty, Smarty_Template_Cached $cached)
+    public function hasLock(Smarty $smarty, Smarty_template_Cached $cached)
     {
         $key = 'LOCK#' . $cached->filepath;
         $data = $this->read(array($key));
@@ -387,10 +387,10 @@ abstract class Smarty_CacheResource_KeyValueStore extends Smarty_CacheResource
      * Lock cache for this template
      *
      * @param Smarty $smarty Smarty object
-     * @param Smarty_Template_Cached $cached cached object
+     * @param Smarty_template_Cached $cached cached object
      * @return void
      */
-    public function acquireLock(Smarty $smarty, Smarty_Template_Cached $cached)
+    public function acquireLock(Smarty $smarty, Smarty_template_Cached $cached)
     {
         $cached->is_locked = true;
         $key = 'LOCK#' . $cached->filepath;
@@ -401,10 +401,10 @@ abstract class Smarty_CacheResource_KeyValueStore extends Smarty_CacheResource
      * Unlock cache for this template
      *
      * @param Smarty $smarty Smarty object
-     * @param Smarty_Template_Cached $cached cached object
+     * @param Smarty_template_Cached $cached cached object
      * @return void
      */
-    public function releaseLock(Smarty $smarty, Smarty_Template_Cached $cached)
+    public function releaseLock(Smarty $smarty, Smarty_template_Cached $cached)
     {
         $cached->is_locked = false;
         $key = 'LOCK#' . $cached->filepath;

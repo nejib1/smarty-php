@@ -246,10 +246,12 @@ class CompileBlockExtendsTests extends PHPUnit_Framework_TestCase
         $this->assertFalse($tpl->isCached());
         $result = $this->smarty->fetch($tpl);
         $this->assertContains('Grandchild Page Title', $result);
+       /*
         foreach (Smarty::$template_objects as $tpl) {
             $tpl->cleanPointer();
             unset($tpl);
         }
+        */
         Smarty::$template_objects = array();
         $tpl2 = $this->smarty->createTemplate('test_block_grandchild.tpl');
         $this->assertTrue($tpl2->isCached());
@@ -269,10 +271,12 @@ class CompileBlockExtendsTests extends PHPUnit_Framework_TestCase
         $this->assertFalse($tpl->isCached());
         $result = $this->smarty->fetch($tpl);
         $this->assertContains('Grandchild Page Title', $result);
+        /*
         foreach (Smarty::$template_objects as $tpl) {
             $tpl->cleanPointer();
             unset($tpl);
         }
+        */
         Smarty::$template_objects = array();
         $tpl2 = $this->smarty->createTemplate('test_block_grandchild.tpl');
         $this->assertTrue($tpl2->isCached());
@@ -292,12 +296,14 @@ class CompileBlockExtendsTests extends PHPUnit_Framework_TestCase
         $this->assertFalse($tpl->isCached());
         $result = $this->smarty->fetch($tpl);
         $this->assertContains('Grandchild Page Title', $result);
+       /*
         foreach (Smarty::$template_objects as $tpl) {
             $tpl->cleanPointer();
             unset($tpl);
         }
+        */
         Smarty::$template_objects = array();
-        $tpl2 = $this->smarty->createTemplate('test_block_grandchild.tpl');
+       $tpl2 = $this->smarty->createTemplate('test_block_grandchild.tpl');
         $this->assertTrue($tpl2->isCached());
         $result = $this->smarty->fetch($tpl2);
         $this->assertContains('Grandchild Page Title', $result);
@@ -315,10 +321,12 @@ class CompileBlockExtendsTests extends PHPUnit_Framework_TestCase
         $this->assertFalse($tpl->isCached());
         $result = $this->smarty->fetch($tpl);
         $this->assertContains('Grandchild Page Title', $result);
+       /*
         foreach (Smarty::$template_objects as $tpl) {
             $tpl->cleanPointer();
             unset($tpl);
         }
+        */
         Smarty::$template_objects = array();
         $tpl2 = $this->smarty->createTemplate('test_block_grandchild.tpl');
         $this->assertTrue($tpl2->isCached());

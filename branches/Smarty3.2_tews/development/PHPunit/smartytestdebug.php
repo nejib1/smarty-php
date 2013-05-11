@@ -5,8 +5,8 @@
     * @package PHPunit
     * @author Uwe Tews
     */                              
-    $test = 'CompileIncludeTests';
-    $function= array('testRecursiveIncludes3');
+    $test = 'DoubleQuotedStringTests';
+    $function= array();
 
     include 'smartytestdebug.inc.php';
     SmartyTests::$smarty->clearAllCache();

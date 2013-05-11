@@ -85,7 +85,7 @@ function smarty_function_html_select_date($params, $template)
       "birthday[Month]" & "birthday[Year]". Can be combined with prefix */
     $field_array = null;
     /* <select size>'s of the different <select> tags.
-      If not set, uses default dropdown. */
+      If not set, uses default drop down. */
     $day_size = null;
     $month_size = null;
     $year_size = null;

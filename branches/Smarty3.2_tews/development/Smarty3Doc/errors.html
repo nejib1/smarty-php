@@ -20,12 +20,12 @@
 <a href="#Smarty.class.php">Smarty.class.php</a><br>
 <a href="#smarty_cacheresource.php">smarty_cacheresource.php</a><br>
 <a href="#smarty_compiled.php">smarty_compiled.php</a><br>
-<a href="#smarty_internal_cachecreate.php">smarty_internal_cachecreate.php</a><br>
-<a href="#smarty_internal_configfilelexer.php">smarty_internal_configfilelexer.php</a><br>
-<a href="#smarty_internal_configfileparser.php">smarty_internal_configfileparser.php</a><br>
+<a href="#smarty_exception.php">smarty_exception.php</a><br>
+<a href="#smarty_internal_configfile_lexer.php">smarty_internal_configfile_lexer.php</a><br>
+<a href="#smarty_internal_configfile_parser.php">smarty_internal_configfile_parser.php</a><br>
 <a href="#smarty_internal_data.php">smarty_internal_data.php</a><br>
-<a href="#smarty_internal_templatelexer.php">smarty_internal_templatelexer.php</a><br>
-<a href="#smarty_internal_templateparser.php">smarty_internal_templateparser.php</a><br>
+<a href="#smarty_internal_template_lexer.php">smarty_internal_template_lexer.php</a><br>
+<a href="#smarty_internal_template_parser.php">smarty_internal_template_parser.php</a><br>
 <a href="#smarty_resource.php">smarty_resource.php</a><br>
 <a href="#smarty_security.php">smarty_security.php</a><br>
 <a name="cacheresource.apc.php"></a>
@@ -78,110 +78,109 @@ Use an @ignore tag on the original if you want this case to be documented.<br>
 <h1>Smarty.class.php</h1>
 <h2>Warnings:</h2><br>
 <b>Warning on line 36</b> - no @package tag was used in a DocBlock for file C:\wamp\www\Smarty3.2.cm\distribution\libs\Smarty.class.php<br>
-<b>Warning on line 1065</b> - Unknown tag "@api" used<br>
+<b>Warning on line 960</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1061</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1077</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1101</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1138</b> - Unknown tag "@api" used<br>
 <b>Warning on line 1214</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1230</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1253</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1285</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1324</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1340</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1353</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1236</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1275</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1291</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1304</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1320</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1333</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1350</b> - Unknown tag "@api" used<br>
 <b>Warning on line 1369</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1382</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1399</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1418</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1436</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1454</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1472</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1490</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1509</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1537</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1588</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1615</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1631</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1670</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1689</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1708</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1721</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1733</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1747</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1387</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1405</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1423</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1441</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1460</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1488</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1539</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1566</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1582</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1621</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1640</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1659</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1672</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1684</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1698</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1717</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1750</b> - Unknown tag "@api" used<br>
 <b>Warning on line 1766</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1799</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1815</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1834</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1868</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1885</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1902</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1932</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1944</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1959</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1971</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1986</b> - Unknown tag "@api" used<br>
-<b>Warning on line 1998</b> - Unknown tag "@api" used<br>
-<b>Warning on line 2011</b> - Unknown tag "@api" used<br>
-<b>Warning on line 2028</b> - Unknown tag "@api" used<br>
-<b>Warning on line 2059</b> - Unknown tag "@api" used<br>
-<b>Warning on line 2087</b> - Unknown tag "@api" used<br>
-<b>Warning on line 2102</b> - Unknown tag "@api" used<br>
-<b>Warning on line 2115</b> - Unknown tag "@api" used<br>
-<b>Warning on line 2136</b> - Unknown tag "@api" used<br>
-<b>Warning on line 2275</b> - Unknown tag "@api" used<br>
-<b>Warning on line 2290</b> - Unknown tag "@api" used<br>
-<b>Warning on line 2302</b> - Unknown tag "@api" used<br>
-<b>Warning on line 2314</b> - Unknown tag "@api" used<br>
-<b>Warning on line 2327</b> - Unknown tag "@api" used<br>
-<b>Warning on line 2345</b> - Unknown tag "@api" used<br>
-<b>Warning on line 2398</b> - Unknown tag "@api" used<br>
-<b>Warning on line 2431</b> - Unknown tag "@api" used<br>
-<b>Warning on line 2442</b> - Unknown tag "@api" used<br>
-<b>Warning on line 2464</b> - Unknown tag "@api" used<br>
-<b>Warning on line 2492</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1785</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1819</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1836</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1853</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1883</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1895</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1910</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1922</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1937</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1949</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1962</b> - Unknown tag "@api" used<br>
+<b>Warning on line 1979</b> - Unknown tag "@api" used<br>
+<b>Warning on line 2010</b> - Unknown tag "@api" used<br>
+<b>Warning on line 2038</b> - Unknown tag "@api" used<br>
+<b>Warning on line 2053</b> - Unknown tag "@api" used<br>
+<b>Warning on line 2066</b> - Unknown tag "@api" used<br>
+<b>Warning on line 2162</b> - Unknown tag "@api" used<br>
+<b>Warning on line 2177</b> - Unknown tag "@api" used<br>
+<b>Warning on line 2189</b> - Unknown tag "@api" used<br>
+<b>Warning on line 2201</b> - Unknown tag "@api" used<br>
+<b>Warning on line 2214</b> - Unknown tag "@api" used<br>
+<b>Warning on line 2232</b> - Unknown tag "@api" used<br>
+<b>Warning on line 2285</b> - Unknown tag "@api" used<br>
+<b>Warning on line 2318</b> - Unknown tag "@api" used<br>
+<b>Warning on line 2329</b> - Unknown tag "@api" used<br>
+<b>Warning on line 2351</b> - Unknown tag "@api" used<br>
+<b>Warning on line 2379</b> - Unknown tag "@api" used<br>
+<a name="smarty_cacheresource.php"></a>
+<h1>smarty_cacheresource.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 471</b> - Unknown tag "@api" used<br>
 <a name="smarty_compiled.php"></a>
 <h1>smarty_compiled.php</h1>
 <h2>Warnings:</h2><br>
 <b>Warning on line 17</b> - no @package tag was used in a DocBlock for class Smarty_Compiled<br>
-<h2>Errors:</h2><br>
-<b>Error on line 83</b> - "@return" tag was used without any parameters, illegal<br>
-<a name="smarty_internal_configfilelexer.php"></a>
-<h1>smarty_internal_configfilelexer.php</h1>
+<a name="smarty_exception.php"></a>
+<h1>smarty_exception.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 13</b> - no @package tag was used in a DocBlock for class Smarty_Internal_Configfilelexer<br>
-<a name="smarty_internal_configfileparser.php"></a>
-<h1>smarty_internal_configfileparser.php</h1>
+<b>Warning on line 135</b> - no @package tag was used in a DocBlock for class SmartyException<br>
+<a name="smarty_internal_configfile_lexer.php"></a>
+<h1>smarty_internal_configfile_lexer.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 13</b> - no @package tag was used in a DocBlock for class Smarty_Internal_Configfile_Lexer<br>
+<a name="smarty_internal_configfile_parser.php"></a>
+<h1>smarty_internal_configfile_parser.php</h1>
 <h2>Warnings:</h2><br>
 <b>Warning on line 76</b> - no @package tag was used in a DocBlock for class TPC_yyStackEntry<br>
-<b>Warning on line 89</b> - no @package tag was used in a DocBlock for class Smarty_Internal_Configfileparser<br>
+<b>Warning on line 89</b> - no @package tag was used in a DocBlock for class Smarty_Internal_Configfile_Parser<br>
 <a name="smarty_internal_data.php"></a>
 <h1>smarty_internal_data.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 589</b> - no @package tag was used in a DocBlock for class Smarty_Variable_Container<br>
-<a name="smarty_internal_templatelexer.php"></a>
-<h1>smarty_internal_templatelexer.php</h1>
+<b>Warning on line 584</b> - no @package tag was used in a DocBlock for class Smarty_Variable_Scope<br>
+<a name="smarty_internal_template_lexer.php"></a>
+<h1>smarty_internal_template_lexer.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 13</b> - no @package tag was used in a DocBlock for class Smarty_Internal_Templatelexer<br>
-<a name="smarty_internal_templateparser.php"></a>
-<h1>smarty_internal_templateparser.php</h1>
+<b>Warning on line 13</b> - no @package tag was used in a DocBlock for class Smarty_Internal_Template_Lexer<br>
+<a name="smarty_internal_template_parser.php"></a>
+<h1>smarty_internal_template_parser.php</h1>
 <h2>Warnings:</h2><br>
 <b>Warning on line 76</b> - no @package tag was used in a DocBlock for class TP_yyStackEntry<br>
-<b>Warning on line 89</b> - no @package tag was used in a DocBlock for class Smarty_Internal_Templateparser<br>
+<b>Warning on line 89</b> - no @package tag was used in a DocBlock for class Smarty_Internal_Template_Parser<br>
 <a name="smarty_resource.php"></a>
 <h1>smarty_resource.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 452</b> - Unknown tag "@note" used<br>
+<b>Warning on line 410</b> - Unknown tag "@note" used<br>
 <a name="smarty_security.php"></a>
 <h1>smarty_security.php</h1>
 <h2>Warnings:</h2><br>
 <b>Warning on line 22</b> - no @package tag was used in a DocBlock for class Smarty_Security<br>
-<a name="smarty_cacheresource.php"></a>
-<h1>smarty_cacheresource.php</h1>
-<h2>Errors:</h2><br>
-<b>Error on line 379</b> - "@return" tag was used without any parameters, illegal<br>
-<a name="smarty_internal_cachecreate.php"></a>
-<h1>smarty_internal_cachecreate.php</h1>
-<h2>Errors:</h2><br>
-<b>Error on line 94</b> - "@return" tag was used without any parameters, illegal<br>
 	<p class="notes" id="credit">
-		Documentation generated on Fri, 03 May 2013 12:58:01 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Sat, 11 May 2013 08:19:09 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</body>
 </html>

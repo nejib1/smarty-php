@@ -16,20 +16,20 @@
  *
  * @package Compiler
  */
-class Smarty_Internal_Compile_Private_Inheritance_Template extends Smarty_Internal_CompileBase
+class Smarty_Internal_Compile_Private_Inheritancetpl_obj extends Smarty_Internal_CompileBase
 {
 
     /**
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $required_attributes = array('file');
     public $option_flags = array('child');
 
     /**
-     * Compiles code for callind interitance templaes
+     * Compiles code for calling inheritance templates
      *
      * @param array $args      array with attributes from parser
      * @param object $compiler  compiler object
@@ -46,7 +46,7 @@ class Smarty_Internal_Compile_Private_Inheritance_Template extends Smarty_Intern
         // set inheritance flags
         $compiler->isInheritance = $compiler->isInheritanceChild = true;
         // parents must not create cache files
-        if ($compiler->template->caching) {
+        if ($compiler->tpl_obj->caching) {
             $_caching = Smarty::CACHING_NOCACHE_CODE;
         }
         $file = realpath(trim($_attr['file'], "'"));

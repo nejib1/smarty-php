@@ -191,10 +191,10 @@ class Smarty_Internal_Utility
      */
     public static function getTags(Smarty $template)
     {
-        $template->get_used_tags = true;
-        $template->compiler->compileTemplateSource();
-        unset($template->compiler);
-        return $template->used_tags;
+        $tpl_obj->get_used_tags = true;
+        $tpl_obj->compiler->compileTemplateSource();
+        unset($tpl_obj->compiler);
+        return $tpl_obj->used_tags;
     }
 
     /**
@@ -581,8 +581,8 @@ class Smarty_Internal_Utility
                 "smarty_internal_compile_section.php" => true,
                 "smarty_internal_compile_setfilter.php" => true,
                 "smarty_internal_compile_while.php" => true,
-                "smarty_internal_compilebase.php" => true,
-                "smarty_internal_configcompiler.php" => true,
+                "$tpl_obj.php" => true,
+                "Smarty_Internal_Config_Compiler.php" => true,
                 "smarty_internal_configfilelexer.php" => true,
                 "smarty_internal_configfileparser.php" => true,
                 "smarty_internal_data.php" => true,
@@ -597,11 +597,11 @@ class Smarty_Internal_Utility
                 "smarty_internal_resource_stream.php" => true,
                 "smarty_internal_resource_string.php" => true,
                 "smarty_internal_smartytemplatecompiler.php" => true,
-                "smarty_internal_template.php" => true,
-                "smarty_internal_templatebase.php" => true,
-                "smarty_internal_templatecompilerbase.php" => true,
-                "smarty_internal_templatelexer.php" => true,
-                "smarty_internal_templateparser.php" => true,
+                "smarty_Internal_Template_.php" => true,
+                "smarty_Internal_Template_base.php" => true,
+                "Smarty_Compiler.php" => true,
+                "smarty_Internal_Template_lexer.php" => true,
+                "smarty_Internal_Template_parser.php" => true,
                 "smarty_internal_utility.php" => true,
                 "smarty_internal_write_file.php" => true,
                 "smarty_resource.php" => true,

@@ -23,7 +23,7 @@ class Smarty_Internal_Compile_Function extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $required_attributes = array('name');
 
@@ -31,7 +31,7 @@ class Smarty_Internal_Compile_Function extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $shorttag_order = array('name');
 
@@ -39,7 +39,7 @@ class Smarty_Internal_Compile_Function extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $optional_attributes = array('_any');
 
@@ -60,12 +60,12 @@ class Smarty_Internal_Compile_Function extends Smarty_Internal_CompileBase
             $compiler->trigger_template_error('nocache option not allowed', $compiler->lex->taglineno);
         }
         unset($_attr['nocache']);
-        $this->openTag($compiler, 'function', array($_attr, $compiler->template_code, $compiler->template->has_nocache_code, $compiler->lex->taglineno, $compiler->required_plugins));
+        $this->openTag($compiler, 'function', array($_attr, $compiler->template_code, $compiler->tpl_obj->has_nocache_code, $compiler->lex->taglineno, $compiler->required_plugins));
 
         $compiler->template_code = new Smarty_Internal_Code(3);
 
         $compiler->compiles_template_function = true;
-        $compiler->template->has_nocache_code = false;
+        $compiler->tpl_obj->has_nocache_code = false;
         $compiler->has_code = false;
 
         return true;
@@ -98,16 +98,16 @@ class Smarty_Internal_Compile_Functionclose extends Smarty_Internal_CompileBase
         $_name = trim($saved_data[0]['name'], "'\"");
         unset($saved_data[0]['name']);
         // set flag that we are compiling a template function
-        $compiler->template_functions[$_name]['parameter'] = array();
-        $_smarty_tpl = $compiler->template;
+        $compiler->tpl_obj_functions[$_name]['parameter'] = array();
+        $_smarty_tpl = $compiler->tpl_obj;
         foreach ($saved_data[0] as $_key => $_data) {
             eval('$tmp=' . $_data . ';');
-            $compiler->template_functions[$_name]['parameter'][$_key] = $tmp;
+            $compiler->tpl_obj_functions[$_name]['parameter'][$_key] = $tmp;
         }
         // if caching save template function for possible nocache call
-        if ($compiler->template->caching) {
+        if ($compiler->tpl_obj->caching) {
             if (!empty($compiler->called_template_functions)) {
-                $compiler->template_functions[$_name]['called_functions'] = $compiler->called_template_functions;
+                $compiler->tpl_obj_functions[$_name]['called_functions'] = $compiler->called_template_functions;
                 $compiler->called_template_functions = array();
             }
             $plugins = array();
@@ -119,14 +119,14 @@ class Smarty_Internal_Compile_Functionclose extends Smarty_Internal_CompileBase
                 }
             }
             if (!empty($plugins)) {
-                $compiler->template_functions[$_name]['used_plugins'] = $plugins;
+                $compiler->tpl_obj_functions[$_name]['used_plugins'] = $plugins;
             }
         }
 
-        if ($compiler->template->source->type == 'eval' || $compiler->template->source->type == 'string') {
-            $resource = $compiler->template->source->type;
+        if ($compiler->tpl_obj->source->type == 'eval' || $compiler->tpl_obj->source->type == 'string') {
+            $resource = $compiler->tpl_obj->source->type;
         } else {
-            $resource = $compiler->template->template_resource;
+            $resource = $compiler->tpl_obj->template_resource;
             // santitize extends resource
             if (strpos($resource, 'extends:') !== false) {
                 $start = strpos($resource, ':');
@@ -138,31 +138,30 @@ class Smarty_Internal_Compile_Functionclose extends Smarty_Internal_CompileBase
         $this->indentation = 2;
 
         $this->php("/* Line {$saved_data[3]} */")->newline();
-        $this->php("function smarty_template_function_{$_name}(\$_smarty_tpl,\$params) {")->newline()->indent();
-        $this->php("array_unshift(\$_smarty_tpl->trace_call_stack, array('{$resource}',{$saved_data[3]} , '{$compiler->template->source->type}'));")->newline();
-        $this->php("\$saved_tpl_vars = clone \$_smarty_tpl->tpl_vars;")->newline();
+        $this->php("function smarty_template_function_{$_name}(\$_smarty_tpl, \$_scope, \$params) {")->newline()->indent();
+        $this->php("array_unshift(\$_smarty_tpl->trace_call_stack, array('{$resource}',{$saved_data[3]} , '{$compiler->tpl_obj->source->type}'));")->newline();
+        $this->php("\$_scope = clone \$_scope;")->newline();
         $this->php("foreach (\$this->template_functions['{$_name}']['parameter'] as \$key => \$value) {")->newline()->indent();
-        $this->php("\$_smarty_tpl->tpl_vars->\$key = new Smarty_Variable (\$value);")->newline();
+        $this->php("\$_scope->\$key = new Smarty_Variable (\$value);")->newline();
         $this->outdent()->php("}")->newline();
         $this->php("foreach (\$params as \$key => \$value) {")->newline()->indent();
-        $this->php("\$_smarty_tpl->tpl_vars->\$key = new Smarty_Variable (\$value);")->newline();
+        $this->php("\$_scope->\$key = new Smarty_Variable (\$value);")->newline();
         $this->outdent()->php("}")->newline();
 
-        $compiler->template_functions_code[$_name] = $this->buffer;
+        $compiler->tpl_obj_functions_code[$_name] = $this->buffer;
         $this->buffer = '';
 
-        $this->php("\$_smarty_tpl->tpl_vars = \$saved_tpl_vars;")->newline();
         $this->php("array_shift(\$_smarty_tpl->trace_call_stack);")->newline();
         $this->outdent()->php("}")->newline();
 
-        $compiler->template_functions_code[$_name] .= $compiler->template_code->buffer . $this->buffer;
+        $compiler->tpl_obj_functions_code[$_name] .= $compiler->template_code->buffer . $this->buffer;
 
         // reset flag that we are compiling a template function
         $compiler->compiles_template_function = false;
         // restore old compiler status
         $compiler->template_code = $saved_data[1];
 
-        $compiler->template->has_nocache_code = $compiler->template->has_nocache_code | $saved_data[2];
+        $compiler->tpl_obj->has_nocache_code = $compiler->tpl_obj->has_nocache_code | $saved_data[2];
         $compiler->has_code = false;
         return true;
     }

@@ -29,7 +29,9 @@
 		</p>
 		
 				
-		<pre></pre>
+		<pre><a href="../Smarty/Smarty_Internal_Magic_Error.html">Smarty_Internal_Magic_Error</a>
+   |
+   --Smarty_Internal_Data</pre>
 	
 			</div>
 </div>
@@ -86,21 +88,9 @@
 								</div>
 		<div class="info-box-body">
 			<div class="var-summary">
-																																																																<div class="var-title">
-					<span class="var-type">boolean</span>
-					<a href="#$force_var_clone" title="details" class="var-name">$force_var_clone</a>
-				</div>
-																<div class="var-title">
-					<span class="var-type">boolean</span>
-					<a href="#$must_merge_tpl_vars" title="details" class="var-name">$must_merge_tpl_vars</a>
-				</div>
-																<div class="var-title">
+																																								<div class="var-title">
 					<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>
 					<a href="#$parent" title="details" class="var-name">$parent</a>
-				</div>
-																<div class="var-title">
-					<span class="var-type">string</span>
-					<a href="#$scope_name" title="details" class="var-name">$scope_name</a>
 				</div>
 																<div class="var-title">
 					<span class="var-type">array</span>
@@ -127,13 +117,8 @@
 		</div>
 		<div class="info-box-body">			
 			<div class="method-summary">
-																																																																																																																												
+																																																																																																																				
 												<div class="method-definition">
-											<span class="method-result">Smarty_Internal_Data</span>
-										<a href="#__construct" title="details" class="method-name">__construct</a>
-											([<span class="var-type">string</span>&nbsp;<span class="var-name">$scope_name</span> = <span class="var-default">'unknown'</span>])
-									</div>
-																<div class="method-definition">
 											<span class="method-result"><a href="../Template/Smarty_Internal_Data.html">Smarty_Internal_Data</a></span>
 										<a href="#append" title="details" class="method-name">append</a>
 											(<span class="var-type">array|string</span>&nbsp;<span class="var-name">$tpl_var</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$value</span> = <span class="var-default">null</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$merge</span> = <span class="var-default">false</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$nocache</span> = <span class="var-default">false</span>])
@@ -171,7 +156,7 @@
 																<div class="method-definition">
 											<span class="method-result"><a href="../Template/Smarty_Internal_Data.html">Smarty_Internal_Data</a></span>
 										<a href="#configLoad" title="details" class="method-name">configLoad</a>
-											(<span class="var-type">string</span>&nbsp;<span class="var-name">$config_file</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$sections</span> = <span class="var-default">null</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$scope</span> = <span class="var-default">'local'</span>])
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$config_file</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$sections</span> = <span class="var-default">null</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$scope_type</span> = <span class="var-default">'local'</span>])
 									</div>
 																<div class="method-definition">
 											<span class="method-result">string</span>
@@ -194,14 +179,14 @@
 											(<span class="var-type">string</span>&nbsp;<span class="var-name">$varname</span>, [<span class="var-type">object</span>&nbsp;<span class="var-name">$_ptr</span> = <span class="var-default">null</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$search_parents</span> = <span class="var-default">true</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$error_enable</span> = <span class="var-default">true</span>], [<span class="var-type">null</span>&nbsp;<span class="var-name">$property</span> = <span class="var-default">null</span>])
 									</div>
 																<div class="method-definition">
-											<span class="method-result">void</span>
-										<a href="#_create_new_scope" title="details" class="method-name">_create_new_scope</a>
-											(<span class="var-type">boolean</span>&nbsp;<span class="var-name">$must_clone_vars</span>)
+											<span class="method-result">array|null|\Smarty_Variable_Scope|\stdClass</span>
+										<a href="#_buildScope" title="details" class="method-name">_buildScope</a>
+											(<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$parent</span>, [<span class="var-type">int</span>&nbsp;<span class="var-name">$scope_type</span> = <span class="var-default">Smarty::SCOPE_LOCAL</span>], [<span class="var-type">null</span>&nbsp;<span class="var-name">$data</span> = <span class="var-default">null</span>])
 									</div>
 																<div class="method-definition">
-											<span class="method-result">void</span>
-										<a href="#_merge_tpl_vars" title="details" class="method-name">_merge_tpl_vars</a>
-											(<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$target</span>, [<span class="var-type">null|<a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$ptr</span> = <span class="var-default">null</span>])
+											<span class="method-result"><a href="../Template/Smarty_Variable_Scope.html">Smarty_Variable_Scope</a></span>
+										<a href="#_mergeScopes" title="details" class="method-name">_mergeScopes</a>
+											(<span class="var-type"><a href="../Template/Smarty_Variable_Scope.html">Smarty_Variable_Scope</a></span>&nbsp;<span class="var-name">$ptr</span>)
 									</div>
 								</div>
 		</div>
@@ -221,52 +206,8 @@
 							
 					</div>
 		<div class="info-box-body">
-			<a name="var$force_var_clone" id="$force_var_clone"><!-- --></A>
-<div class="oddrow">
-
-	<div class="var-header">
-		<span class="var-title">
-			<span class="var-type">boolean</span>
-			<span class="var-name">$force_var_clone</span>
-			 = <span class="var-default"> false</span>			(line <span class="line-number">57</span>)
-		</span>
-	</div>
-
-	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">force cloning of template vars</p>
-	<ul class="tags">
-				<li><span class="field">access:</span> public</li>
-			</ul>
-	
-	
-		
-		
-
-</div>
-<a name="var$must_merge_tpl_vars" id="$must_merge_tpl_vars"><!-- --></A>
+			<a name="var$parent" id="$parent"><!-- --></A>
 <div class="evenrow">
-
-	<div class="var-header">
-		<span class="var-title">
-			<span class="var-type">boolean</span>
-			<span class="var-name">$must_merge_tpl_vars</span>
-			 = <span class="var-default"> false</span>			(line <span class="line-number">63</span>)
-		</span>
-	</div>
-
-	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">flag that tpl vars must be merged when new scope is created</p>
-	<ul class="tags">
-				<li><span class="field">access:</span> public</li>
-			</ul>
-	
-	
-		
-		
-
-</div>
-<a name="var$parent" id="$parent"><!-- --></A>
-<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
@@ -278,28 +219,6 @@
 
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">parent template (if any)</p>
-	<ul class="tags">
-				<li><span class="field">access:</span> public</li>
-			</ul>
-	
-	
-		
-		
-
-</div>
-<a name="var$scope_name" id="$scope_name"><!-- --></A>
-<div class="evenrow">
-
-	<div class="var-header">
-		<span class="var-title">
-			<span class="var-type">string</span>
-			<span class="var-name">$scope_name</span>
-			 = <span class="var-default"> ''</span>			(line <span class="line-number">50</span>)
-		</span>
-	</div>
-
-	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">scope name of Smarty_Internal_Data</p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
@@ -328,6 +247,17 @@
 	
 	
 		
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../Smarty/Smarty/Smarty.html#var$tpl_vars">Smarty::$tpl_vars</a>
+								: assigned tpl vars
+							</li>
+					<li>
+				<a href="../Template/Smarty_Data.html#var$tpl_vars">Smarty_Data::$tpl_vars</a>
+							</li>
+				</ul>
 		
 
 </div>
@@ -374,53 +304,11 @@
 		<div class="info-box-body">
 			<A NAME='method_detail'></A>
 
-<a name="method__construct" id="__construct"><!-- --></a>
+<a name="methodappend" id="append"><!-- --></a>
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">Constructor __construct</span> (line <span class="line-number">69</span>)
-	</div> 
-	
-	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">set up variable containers</p>
-	
-	<div class="method-signature">
-		<span class="method-result">Smarty_Internal_Data</span>
-		<span class="method-name">
-			__construct
-		</span>
-					([<span class="var-type">string</span>&nbsp;<span class="var-name">$scope_name</span> = <span class="var-default">'unknown'</span>])
-			</div>
-	
-			<ul class="parameters">
-					<li>
-				<span class="var-type">string</span>
-				<span class="var-name">$scope_name</span><span class="var-description">: name of variable scope</span>			</li>
-				</ul>
-		
-			
-			<hr class="separator" />
-		<div class="notes">Redefined in descendants as:</div>
-		<ul class="redefinitions">
-					<li>
-				<a href="../Smarty/Smarty/Smarty.html#method__construct">Smarty::__construct()</a>
-								: Initialize new Smarty object
-							</li>
-					<li>
-				<a href="../Smarty/SmartyBC/SmartyBC.html#method__construct">SmartyBC::__construct()</a>
-								: Initialize new SmartyBC object
-							</li>
-					<li>
-				<a href="../Template/Smarty_Data.html#method__construct">Smarty_Data::__construct()</a>
-								: create Smarty data object
-							</li>
-				</ul>
-	</div>
-<a name="methodappend" id="append"><!-- --></a>
-<div class="evenrow">
-	
-	<div class="method-header">
-		<span class="method-title">append</span> (line <span class="line-number">155</span>)
+		<span class="method-title">append</span> (line <span class="line-number">124</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -456,10 +344,10 @@
 			
 	</div>
 <a name="methodassign" id="assign"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">assign</span> (line <span class="line-number">83</span>)
+		<span class="method-title">assign</span> (line <span class="line-number">55</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -492,10 +380,10 @@
 			
 	</div>
 <a name="methodassignGlobal" id="assignGlobal"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">assignGlobal</span> (line <span class="line-number">130</span>)
+		<span class="method-title">assignGlobal</span> (line <span class="line-number">99</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -528,10 +416,10 @@
 			
 	</div>
 <a name="methodassignParents" id="assignParents"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">assignParents</span> (line <span class="line-number">110</span>)
+		<span class="method-title">assignParents</span> (line <span class="line-number">79</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -564,10 +452,10 @@
 			
 	</div>
 <a name="methodclearAllAssign" id="clearAllAssign"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">clearAllAssign</span> (line <span class="line-number">237</span>)
+		<span class="method-title">clearAllAssign</span> (line <span class="line-number">200</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -589,10 +477,10 @@
 			
 	</div>
 <a name="methodclearAssign" id="clearAssign"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">clearAssign</span> (line <span class="line-number">217</span>)
+		<span class="method-title">clearAssign</span> (line <span class="line-number">183</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -619,10 +507,10 @@
 			
 	</div>
 <a name="methodclearConfig" id="clearConfig"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">clearConfig</span> (line <span class="line-number">434</span>)
+		<span class="method-title">clearConfig</span> (line <span class="line-number">392</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -649,10 +537,10 @@
 			
 	</div>
 <a name="methodconfigLoad" id="configLoad"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">configLoad</span> (line <span class="line-number">456</span>)
+		<span class="method-title">configLoad</span> (line <span class="line-number">414</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -667,7 +555,7 @@
 		<span class="method-name">
 			configLoad
 		</span>
-					(<span class="var-type">string</span>&nbsp;<span class="var-name">$config_file</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$sections</span> = <span class="var-default">null</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$scope</span> = <span class="var-default">'local'</span>])
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$config_file</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$sections</span> = <span class="var-default">null</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$scope_type</span> = <span class="var-default">'local'</span>])
 			</div>
 	
 			<ul class="parameters">
@@ -679,16 +567,16 @@
 				<span class="var-name">$sections</span><span class="var-description">: array of section names, single section or null</span>			</li>
 					<li>
 				<span class="var-type">string</span>
-				<span class="var-name">$scope</span><span class="var-description">: template scope into which config file shall be loaded</span>			</li>
+				<span class="var-name">$scope_type</span><span class="var-description">: template scope into which config file shall be loaded</span>			</li>
 				</ul>
 		
 			
 	</div>
 <a name="methodgetConfigVars" id="getConfigVars"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">getConfigVars</span> (line <span class="line-number">398</span>)
+		<span class="method-title">getConfigVars</span> (line <span class="line-number">360</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -718,10 +606,10 @@
 			
 	</div>
 <a name="methodgetStreamVariable" id="getStreamVariable"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">getStreamVariable</span> (line <span class="line-number">473</span>)
+		<span class="method-title">getStreamVariable</span> (line <span class="line-number">431</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -749,10 +637,10 @@
 			
 	</div>
 <a name="methodgetTemplateVars" id="getTemplateVars"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">getTemplateVars</span> (line <span class="line-number">254</span>)
+		<span class="method-title">getTemplateVars</span> (line <span class="line-number">216</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -785,10 +673,10 @@
 			
 	</div>
 <a name="methodgetVariable" id="getVariable"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">getVariable</span> (line <span class="line-number">303</span>)
+		<span class="method-title">getVariable</span> (line <span class="line-number">265</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -827,11 +715,11 @@
 		
 			
 	</div>
-<a name="method_create_new_scope" id="_create_new_scope"><!-- --></a>
-<div class="evenrow">
+<a name="method_buildScope" id="_buildScope"><!-- --></a>
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">_create_new_scope</span> (line <span class="line-number">498</span>)
+		<span class="method-title">_buildScope</span> (line <span class="line-number">459</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -841,60 +729,74 @@
 			</ul>
 	
 	<div class="method-signature">
-		<span class="method-result">void</span>
+		<span class="method-result">array|null|\Smarty_Variable_Scope|\stdClass</span>
 		<span class="method-name">
-			_create_new_scope
+			_buildScope
 		</span>
-					(<span class="var-type">boolean</span>&nbsp;<span class="var-name">$must_clone_vars</span>)
-			</div>
-	
-			<ul class="parameters">
-					<li>
-				<span class="var-type">boolean</span>
-				<span class="var-name">$must_clone_vars</span><span class="var-description">: clone the tpl vars</span>			</li>
-				</ul>
-		
-			
-	</div>
-<a name="method_merge_tpl_vars" id="_merge_tpl_vars"><!-- --></a>
-<div class="oddrow">
-	
-	<div class="method-header">
-		<span class="method-title">_merge_tpl_vars</span> (line <span class="line-number">515</span>)
-	</div> 
-	
-	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">merge tpl vars</p>
-	<ul class="tags">
-				<li><span class="field">access:</span> public</li>
-			</ul>
-	
-	<div class="method-signature">
-		<span class="method-result">void</span>
-		<span class="method-name">
-			_merge_tpl_vars
-		</span>
-					(<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$target</span>, [<span class="var-type">null|<a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$ptr</span> = <span class="var-default">null</span>])
+					(<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$parent</span>, [<span class="var-type">int</span>&nbsp;<span class="var-name">$scope_type</span> = <span class="var-default">Smarty::SCOPE_LOCAL</span>], [<span class="var-type">null</span>&nbsp;<span class="var-name">$data</span> = <span class="var-default">null</span>])
 			</div>
 	
 			<ul class="parameters">
 					<li>
 				<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>
-				<span class="var-name">$target</span>			</li>
+				<span class="var-name">$parent</span>			</li>
 					<li>
-				<span class="var-type">null|<a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>
-				<span class="var-name">$ptr</span>			</li>
+				<span class="var-type">int</span>
+				<span class="var-name">$scope_type</span>			</li>
+					<li>
+				<span class="var-type">null</span>
+				<span class="var-name">$data</span>			</li>
 				</ul>
 		
 			
 	</div>
-						
+<a name="method_mergeScopes" id="_mergeScopes"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_mergeScopes</span> (line <span class="line-number">514</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">merge tpl vars</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> merged tpl vars</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Template/Smarty_Variable_Scope.html">Smarty_Variable_Scope</a></span>
+		<span class="method-name">
+			_mergeScopes
+		</span>
+					(<span class="var-type"><a href="../Template/Smarty_Variable_Scope.html">Smarty_Variable_Scope</a></span>&nbsp;<span class="var-name">$ptr</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Template/Smarty_Variable_Scope.html">Smarty_Variable_Scope</a></span>
+				<span class="var-name">$ptr</span><span class="var-description">: current scope</span>			</li>
+				</ul>
+		
+			
+	</div>
+							<h4>Inherited Methods</h4>
+				<a name='inherited_methods'><!-- --></a>	
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../Smarty/Smarty_Internal_Magic_Error.html">Smarty_Internal_Magic_Error</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../Smarty/Smarty_Internal_Magic_Error.html#method__call">Smarty_Internal_Magic_Error::__call()</a></span><br>
+													<span class="method-name"><a href="../Smarty/Smarty_Internal_Magic_Error.html#method__destruct">Smarty_Internal_Magic_Error::__destruct()</a></span><br>
+													<span class="method-name"><a href="../Smarty/Smarty_Internal_Magic_Error.html#method__get">Smarty_Internal_Magic_Error::__get()</a></span><br>
+													<span class="method-name"><a href="../Smarty/Smarty_Internal_Magic_Error.html#method__set">Smarty_Internal_Magic_Error::__set()</a></span><br>
+											</blockquote>
+										
 		</div>
 	</div>
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Fri, 03 May 2013 12:57:58 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Sat, 11 May 2013 08:19:06 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

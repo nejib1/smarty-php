@@ -39,15 +39,15 @@ function smarty_function_fetch($params, $template)
         $protocol = strtolower(substr($params['file'], 0, $protocol));
     }
 
-    if (isset($template->security_policy)) {
+    if (isset($tpl_obj->security_policy)) {
         if ($protocol) {
             // remote resource (or php stream, �)
-            if (!$template->security_policy->isTrustedUri($params['file'])) {
+            if (!$tpl_obj->security_policy->isTrustedUri($params['file'])) {
                 return;
             }
         } else {
             // local file
-            if (!$template->security_policy->isTrustedResourceDir($params['file'])) {
+            if (!$tpl_obj->security_policy->isTrustedResourceDir($params['file'])) {
                 return;
             }
         }
@@ -192,7 +192,7 @@ function smarty_function_fetch($params, $template)
                 $content = $csplit[1];
 
                 if (!empty($params['assign_headers'])) {
-                    $template->assign($params['assign_headers'], preg_split("!\r\n!", $csplit[0]));
+                    $tpl_obj->assign($params['assign_headers'], preg_split("!\r\n!", $csplit[0]));
                 }
             }
         } else {
@@ -207,7 +207,7 @@ function smarty_function_fetch($params, $template)
     }
 
     if (!empty($params['assign'])) {
-        $template->assign($params['assign'], $content);
+        $tpl_obj->assign($params['assign'], $content);
     } else {
         return $content;
     }

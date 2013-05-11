@@ -25,13 +25,15 @@
 <p class="short-description">class for the Smarty data object</p>
 <p class="description"><p>The Smarty data object will hold Smarty variables in the current scope</p></p>
 		<p class="notes">
-			Located in <a class="field" href="_libs---sysplugins---smarty_internal_data.php.html">/libs/sysplugins/smarty_internal_data.php</a> (line <span class="field">545</span>)
+			Located in <a class="field" href="_libs---sysplugins---smarty_internal_data.php.html">/libs/sysplugins/smarty_internal_data.php</a> (line <span class="field">539</span>)
 		</p>
 		
 				
-		<pre><a href="../Template/Smarty_Internal_Data.html">Smarty_Internal_Data</a>
+		<pre><a href="../Smarty/Smarty_Internal_Magic_Error.html">Smarty_Internal_Magic_Error</a>
    |
-   --Smarty_Data</pre>
+   --<a href="../Template/Smarty_Internal_Data.html">Smarty_Internal_Data</a>
+      |
+      --Smarty_Data</pre>
 	
 			</div>
 </div>
@@ -51,8 +53,8 @@
 		<div class="info-box-body">
 			<div class="var-summary">
 																								<div class="var-title">
-					<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>
-					<a href="#$smarty" title="details" class="var-name">$smarty</a>
+					<span class="var-type">mixed</span>
+					<a href="#$tpl_vars" title="details" class="var-name">$tpl_vars</a>
 				</div>
 											</div>
 		</div>
@@ -74,7 +76,7 @@
 												<div class="method-definition">
 											<span class="method-result">Smarty_Data</span>
 										<a href="#__construct" title="details" class="method-name">__construct</a>
-											([<span class="var-type"><a href="../Template/Smarty_Internal_Data.html">Smarty_Internal_Data</a>|array</span>&nbsp;<span class="var-name">$_parent</span> = <span class="var-default">null</span>], <span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$smarty</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$scope_name</span> = <span class="var-default">'Data unnamed'</span>])
+											(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$smarty</span>, [<span class="var-type"><a href="../Template/Smarty_Internal_Data.html">Smarty_Internal_Data</a>|array</span>&nbsp;<span class="var-name">$parent</span> = <span class="var-default">null</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$scope_name</span> = <span class="var-default">'Data unnamed'</span>])
 									</div>
 								</div>
 		</div>
@@ -93,24 +95,29 @@
 							
 					</div>
 		<div class="info-box-body">
-			<a name="var$smarty" id="$smarty"><!-- --></A>
-<div class="oddrow">
+			<a name="var$tpl_vars" id="$tpl_vars"><!-- --></A>
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
-			<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>
-			<span class="var-name">$smarty</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number">552</span>)
+			<span class="var-type">mixed</span>
+			<span class="var-name">$tpl_vars</span>
+			 = <span class="var-default"> null</span>			(line <span class="line-number">542</span>)
 		</span>
 	</div>
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Smarty object</p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
 	
 	
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Template/Smarty_Internal_Data.html#var$tpl_vars">Smarty_Internal_Data::$tpl_vars</a></dt>
+						<dd>template variables</dd>
+					</dl>
 		
 		
 
@@ -120,19 +127,7 @@
 									<p>Inherited from <span class="classname"><a href="../Template/Smarty_Internal_Data.html">Smarty_Internal_Data</a></span></p>
 					<blockquote>
 													<span class="var-title">
-								<span class="var-name"><a href="../Template/Smarty_Internal_Data.html#var$force_var_clone">Smarty_Internal_Data::$force_var_clone</a></span><br>
-							</span>
-													<span class="var-title">
-								<span class="var-name"><a href="../Template/Smarty_Internal_Data.html#var$must_merge_tpl_vars">Smarty_Internal_Data::$must_merge_tpl_vars</a></span><br>
-							</span>
-													<span class="var-title">
 								<span class="var-name"><a href="../Template/Smarty_Internal_Data.html#var$parent">Smarty_Internal_Data::$parent</a></span><br>
-							</span>
-													<span class="var-title">
-								<span class="var-name"><a href="../Template/Smarty_Internal_Data.html#var$scope_name">Smarty_Internal_Data::$scope_name</a></span><br>
-							</span>
-													<span class="var-title">
-								<span class="var-name"><a href="../Template/Smarty_Internal_Data.html#var$tpl_vars">Smarty_Internal_Data::$tpl_vars</a></span><br>
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../Template/Smarty_Internal_Data.html#var$usage">Smarty_Internal_Data::$usage</a></span><br>
@@ -155,10 +150,10 @@
 			<A NAME='method_detail'></A>
 
 <a name="method__construct" id="__construct"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">Constructor __construct</span> (line <span class="line-number">562</span>)
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">552</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -173,27 +168,21 @@
 		<span class="method-name">
 			__construct
 		</span>
-					([<span class="var-type"><a href="../Template/Smarty_Internal_Data.html">Smarty_Internal_Data</a>|array</span>&nbsp;<span class="var-name">$_parent</span> = <span class="var-default">null</span>], <span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$smarty</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$scope_name</span> = <span class="var-default">'Data unnamed'</span>])
+					(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$smarty</span>, [<span class="var-type"><a href="../Template/Smarty_Internal_Data.html">Smarty_Internal_Data</a>|array</span>&nbsp;<span class="var-name">$parent</span> = <span class="var-default">null</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$scope_name</span> = <span class="var-default">'Data unnamed'</span>])
 			</div>
 	
 			<ul class="parameters">
 					<li>
-				<span class="var-type"><a href="../Template/Smarty_Internal_Data.html">Smarty_Internal_Data</a>|array</span>
-				<span class="var-name">$_parent</span><span class="var-description">: parent object or variable array</span>			</li>
-					<li>
 				<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>
-				<span class="var-name">$smarty</span><span class="var-description">: object</span>			</li>
+				<span class="var-name">$smarty</span><span class="var-description">: object of Smarty instance</span>			</li>
+					<li>
+				<span class="var-type"><a href="../Template/Smarty_Internal_Data.html">Smarty_Internal_Data</a>|array</span>
+				<span class="var-name">$parent</span><span class="var-description">: parent object or variable array</span>			</li>
 					<li>
 				<span class="var-type">string</span>
 				<span class="var-name">$scope_name</span><span class="var-description">: name of variable scope</span>			</li>
 				</ul>
 		
-			<hr class="separator" />
-		<div class="notes">Redefinition of:</div>
-		<dl>
-			<dt><a href="../Template/Smarty_Internal_Data.html#method__construct">Smarty_Internal_Data::__construct()</a></dt>
-						<dd>set up variable containers</dd>
-					</dl>
 			
 	</div>
 							<h4>Inherited Methods</h4>
@@ -201,7 +190,6 @@
 									<!-- =========== Summary =========== -->
 					<p>Inherited From <span class="classname"><a href="../Template/Smarty_Internal_Data.html">Smarty_Internal_Data</a></span></p>
 					<blockquote>
-													<span class="method-name"><a href="../Template/Smarty_Internal_Data.html#method__construct">Smarty_Internal_Data::__construct()</a></span><br>
 													<span class="method-name"><a href="../Template/Smarty_Internal_Data.html#methodappend">Smarty_Internal_Data::append()</a></span><br>
 													<span class="method-name"><a href="../Template/Smarty_Internal_Data.html#methodassign">Smarty_Internal_Data::assign()</a></span><br>
 													<span class="method-name"><a href="../Template/Smarty_Internal_Data.html#methodassignGlobal">Smarty_Internal_Data::assignGlobal()</a></span><br>
@@ -214,8 +202,16 @@
 													<span class="method-name"><a href="../Template/Smarty_Internal_Data.html#methodgetStreamVariable">Smarty_Internal_Data::getStreamVariable()</a></span><br>
 													<span class="method-name"><a href="../Template/Smarty_Internal_Data.html#methodgetTemplateVars">Smarty_Internal_Data::getTemplateVars()</a></span><br>
 													<span class="method-name"><a href="../Template/Smarty_Internal_Data.html#methodgetVariable">Smarty_Internal_Data::getVariable()</a></span><br>
-													<span class="method-name"><a href="../Template/Smarty_Internal_Data.html#method_create_new_scope">Smarty_Internal_Data::_create_new_scope()</a></span><br>
-													<span class="method-name"><a href="../Template/Smarty_Internal_Data.html#method_merge_tpl_vars">Smarty_Internal_Data::_merge_tpl_vars()</a></span><br>
+													<span class="method-name"><a href="../Template/Smarty_Internal_Data.html#method_buildScope">Smarty_Internal_Data::_buildScope()</a></span><br>
+													<span class="method-name"><a href="../Template/Smarty_Internal_Data.html#method_mergeScopes">Smarty_Internal_Data::_mergeScopes()</a></span><br>
+											</blockquote>
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../Smarty/Smarty_Internal_Magic_Error.html">Smarty_Internal_Magic_Error</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../Smarty/Smarty_Internal_Magic_Error.html#method__call">Smarty_Internal_Magic_Error::__call()</a></span><br>
+													<span class="method-name"><a href="../Smarty/Smarty_Internal_Magic_Error.html#method__destruct">Smarty_Internal_Magic_Error::__destruct()</a></span><br>
+													<span class="method-name"><a href="../Smarty/Smarty_Internal_Magic_Error.html#method__get">Smarty_Internal_Magic_Error::__get()</a></span><br>
+													<span class="method-name"><a href="../Smarty/Smarty_Internal_Magic_Error.html#method__set">Smarty_Internal_Magic_Error::__set()</a></span><br>
 											</blockquote>
 										
 		</div>
@@ -223,7 +219,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Fri, 03 May 2013 12:57:58 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Sat, 11 May 2013 08:19:06 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

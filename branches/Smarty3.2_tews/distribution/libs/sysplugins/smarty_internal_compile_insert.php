@@ -23,7 +23,7 @@ class Smarty_Internal_Compile_Insert extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $required_attributes = array('name');
 
@@ -31,7 +31,7 @@ class Smarty_Internal_Compile_Insert extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $shorttag_order = array('name');
 
@@ -39,7 +39,7 @@ class Smarty_Internal_Compile_Insert extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $optional_attributes = array('_any');
 
@@ -57,35 +57,35 @@ class Smarty_Internal_Compile_Insert extends Smarty_Internal_CompileBase
         // never compile as nocache code
         $compiler->suppressNocacheProcessing = true;
         $compiler->tag_nocache = true;
-        $_smarty_tpl = $compiler->template;
+        $_smarty_tpl = $compiler->tpl_obj;
         $_name = null;
         $_script = null;
 
         $this->iniTagCode($compiler);
 
-        // save posible attributes
+        // save possible attributes
         eval('$_name = ' . $_attr['name'] . ';');
         if (isset($_attr['assign'])) {
             // output will be stored in a smarty variable instead of being displayed
             $_assign = $_attr['assign'];
             // set flag that variable container must be cloned
             $compiler->must_clone_vars = true;
-            // create variable to make shure that the compiler knows about its nocache status
-            $compiler->template->tpl_vars->{trim($_attr['assign'], "'")} = new Smarty_Variable(null, true);
+            // create variable to make sure that the compiler knows about its nocache status
+            $compiler->tpl_obj->tpl_vars->{trim($_attr['assign'], "'")} = new Smarty_Variable(null, true);
         }
         if (isset($_attr['script'])) {
             // script which must be included
             $_function = "smarty_insert_{$_name}";
-            $_smarty_tpl = $compiler->template;
+            $_smarty_tpl = $compiler->tpl_obj;
             $_filepath = false;
             eval('$_script = ' . $_attr['script'] . ';');
-            if (!isset($compiler->template->security_policy) && file_exists($_script)) {
+            if (!isset($compiler->tpl_obj->security_policy) && file_exists($_script)) {
                 $_filepath = $_script;
             } else {
-                if (isset($compiler->template->security_policy)) {
-                    $_dir = $compiler->template->security_policy->trusted_dir;
+                if (isset($compiler->tpl_obj->security_policy)) {
+                    $_dir = $compiler->tpl_obj->security_policy->trusted_dir;
                 } else {
-                    $_dir = $compiler->template->trusted_dir;
+                    $_dir = $compiler->tpl_obj->trusted_dir;
                 }
                 if (!empty($_dir)) {
                     foreach ((array)$_dir as $_script_dir) {

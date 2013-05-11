@@ -37,10 +37,10 @@ class Smarty_Internal_Filter_Handler
     {
         $output = $content;
         // loop over autoload filters of specified type
-        if (!empty($template->autoload_filters[$type])) {
-            foreach ((array)$template->autoload_filters[$type] as $name) {
+        if (!empty($tpl_obj->autoload_filters[$type])) {
+            foreach ((array)$tpl_obj->autoload_filters[$type] as $name) {
                 $plugin_name = "Smarty_{$type}filter_{$name}";
-                if ($template->_loadPlugin($plugin_name)) {
+                if ($tpl_obj->_loadPlugin($plugin_name)) {
                     if (function_exists($plugin_name)) {
                         // use loaded Smarty2 style plugin
                         $output = $plugin_name($output, $template);
@@ -55,12 +55,12 @@ class Smarty_Internal_Filter_Handler
             }
         }
         // loop over registerd filters of specified type
-        if (!empty($template->registered_filters[$type])) {
-            foreach ($template->registered_filters[$type] as $key => $name) {
-                if (is_array($template->registered_filters[$type][$key])) {
-                    $output = call_user_func($template->registered_filters[$type][$key], $output, $template);
+        if (!empty($tpl_obj->registered_filters[$type])) {
+            foreach ($tpl_obj->registered_filters[$type] as $key => $name) {
+                if (is_array($tpl_obj->registered_filters[$type][$key])) {
+                    $output = call_user_func($tpl_obj->registered_filters[$type][$key], $output, $template);
                 } else {
-                    $output = $template->registered_filters[$type][$key]($output, $template);
+                    $output = $tpl_obj->registered_filters[$type][$key]($output, $template);
                 }
             }
         }

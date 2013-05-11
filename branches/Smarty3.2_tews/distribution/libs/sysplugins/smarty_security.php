@@ -316,7 +316,7 @@ class Smarty_Security
         // check for internal always required tags
         if (in_array($tag_name, array('assign', 'call', 'private_filter', 'private_block_plugin', 'private_function_plugin', 'private_object_block_function',
             'private_object_function', 'private_registered_function', 'private_registered_block', 'private_special_variable', 'private_print_expression',
-            'private_modifier', 'private_compiler_plugin', 'private_inheritance_template'))
+            'private_modifier', 'private_compiler_plugin', 'private_inheritancetpl_obj'))
         ) {
             return true;
         }
@@ -389,7 +389,7 @@ class Smarty_Security
      */
     public function isTrustedResourceDir($filepath)
     {
-        $_template = false;
+        $tpl_obj = false;
         $_config = false;
         $_secure = false;
 
@@ -402,13 +402,13 @@ class Smarty_Security
             || (!empty($this->secure_dir) && (!$this->_secure_dir || $this->_secure_dir !== $this->secure_dir))
         ) {
             $this->_resource_dir = array();
-            $_template = true;
+            $tpl_obj = true;
             $_config = true;
             $_secure = !empty($this->secure_dir);
         }
 
         // rebuild template dir index
-        if ($_template) {
+        if ($tpl_obj) {
             $this->_template_dir = $_template_dir;
             foreach ($_template_dir as $directory) {
                 $directory = realpath($directory);

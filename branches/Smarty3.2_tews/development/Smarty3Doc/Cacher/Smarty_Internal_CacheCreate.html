@@ -22,7 +22,7 @@
 					</div>
 	<div class="info-box-body">
         		<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Cache Support Routines To Creacte Cache</p>
+<p class="short-description">Cache Support Routines To Create Cache</p>
 	<ul class="tags">
 				<li><span class="field">author:</span> Uwe Tews</li>
 			</ul>
@@ -95,15 +95,15 @@
 		<div class="info-box-body">			
 			<div class="method-summary">
 																																												<div class="method-definition">
-					static 						<span class="method-result"><a href="../Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>
+					static 						<span class="method-result"><a href="../Cacher/Smarty_template_Cached.html">Smarty_template_Cached</a></span>
 										<a href="#_getCachedObject" title="details" class="method-name">_getCachedObject</a>
-											(<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$_template</span>)
+											(<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$tpl_obj</span>)
 									</div>
 																																
 												<div class="method-definition">
-											<span class="method-result">void</span>
+											<span class="method-result">string</span>
 										<a href="#_createCacheFile" title="details" class="method-name">_createCacheFile</a>
-											(<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$_template</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$output</span>, <span class="var-type">boolean</span>&nbsp;<span class="var-name">$no_output_filter</span>)
+											(<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$tpl_obj</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$output</span>, <span class="var-type"><a href="../Template/Smarty_Variable_Scope.html">Smarty_Variable_Scope</a></span>&nbsp;<span class="var-name">$_scope</span>, <span class="var-type">boolean</span>&nbsp;<span class="var-name">$no_output_filter</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result">string</span>
@@ -118,7 +118,7 @@
 																<div class="method-definition">
 											<span class="method-result">string</span>
 										<a href="#_createSmartyContentClass" title="details" class="method-name">_createSmartyContentClass</a>
-											(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$_template</span>)
+											(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$tpl_obj</span>)
 									</div>
 																								<div class="method-definition">
 											<span class="method-result">string</span>
@@ -128,7 +128,7 @@
 																<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#_mergeFromCompiled" title="details" class="method-name">_mergeFromCompiled</a>
-											(<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$_template</span>)
+											(<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$tpl_obj</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
@@ -153,7 +153,7 @@
 					</div>
 		<div class="info-box-body">
 			<a name="var$code_obj" id="$code_obj"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
@@ -175,7 +175,7 @@
 
 </div>
 <a name="var$file_dependency" id="$file_dependency"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
@@ -197,7 +197,7 @@
 
 </div>
 <a name="var$inheritance_blocks" id="$inheritance_blocks"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
@@ -219,7 +219,7 @@
 
 </div>
 <a name="var$inheritance_blocks_code" id="$inheritance_blocks_code"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
@@ -241,7 +241,7 @@
 
 </div>
 <a name="var$required_plugins" id="$required_plugins"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
@@ -263,7 +263,7 @@
 
 </div>
 <a name="var$template_functions" id="$template_functions"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
@@ -285,7 +285,7 @@
 
 </div>
 <a name="var$template_functions_code" id="$template_functions_code"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
@@ -322,38 +322,38 @@
 		<div class="info-box-body">
 			<A NAME='method_detail'></A>
 <a name="method_getCachedObject" id="_getCachedObject"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<span class="method-title">static method _getCachedObject</span> (line <span class="line-number">74</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Find template object of cache file and return Smarty_Template_Cached</p>
+<p class="short-description">Find template object of cache file and return Smarty_template_Cached</p>
 	
 	<div class="method-signature">
 	    static
-		<span class="method-result"><a href="../Cacher/Smarty_Template_Cached.html">Smarty_Template_Cached</a></span>
+		<span class="method-result"><a href="../Cacher/Smarty_template_Cached.html">Smarty_template_Cached</a></span>
 		<span class="method-name">
 			_getCachedObject
 		</span>
-					(<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$_template</span>)
+					(<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$tpl_obj</span>)
 			</div>
 	
 			<ul class="parameters">
 					<li>
 				<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>
-				<span class="var-name">$_template</span><span class="var-description">: current template</span>			</li>
+				<span class="var-name">$tpl_obj</span><span class="var-description">: current template</span>			</li>
 				</ul>
 		
 			
 	</div>
 
 <a name="method_createCacheFile" id="_createCacheFile"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">_createCacheFile</span> (line <span class="line-number">95</span>)
+		<span class="method-title">_createCacheFile</span> (line <span class="line-number">96</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -364,32 +364,35 @@
 			</ul>
 	
 	<div class="method-signature">
-		<span class="method-result">void</span>
+		<span class="method-result">string</span>
 		<span class="method-name">
 			_createCacheFile
 		</span>
-					(<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$_template</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$output</span>, <span class="var-type">boolean</span>&nbsp;<span class="var-name">$no_output_filter</span>)
+					(<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$tpl_obj</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$output</span>, <span class="var-type"><a href="../Template/Smarty_Variable_Scope.html">Smarty_Variable_Scope</a></span>&nbsp;<span class="var-name">$_scope</span>, <span class="var-type">boolean</span>&nbsp;<span class="var-name">$no_output_filter</span>)
 			</div>
 	
 			<ul class="parameters">
 					<li>
 				<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>
-				<span class="var-name">$_template</span><span class="var-description">: current template</span>			</li>
+				<span class="var-name">$tpl_obj</span><span class="var-description">: current template</span>			</li>
 					<li>
 				<span class="var-type">string</span>
 				<span class="var-name">$output</span><span class="var-description">: cache file content</span>			</li>
 					<li>
+				<span class="var-type"><a href="../Template/Smarty_Variable_Scope.html">Smarty_Variable_Scope</a></span>
+				<span class="var-name">$_scope</span>			</li>
+					<li>
 				<span class="var-type">boolean</span>
-				<span class="var-name">$no_output_filter</span><span class="var-description">: flag that output shall not run throug filter</span>			</li>
+				<span class="var-name">$no_output_filter</span><span class="var-description">: flag that output shall not run through filter</span>			</li>
 				</ul>
 		
 			
 	</div>
 <a name="method_createNocacheBlockChild" id="_createNocacheBlockChild"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">_createNocacheBlockChild</span> (line <span class="line-number">273</span>)
+		<span class="method-title">_createNocacheBlockChild</span> (line <span class="line-number">274</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -421,7 +424,7 @@
 			
 	</div>
 <a name="method_createNocacheInheritanceBlock" id="_createNocacheInheritanceBlock"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<span class="method-title">_createNocacheInheritanceBlock</span> (line <span class="line-number">310</span>)
@@ -456,10 +459,10 @@
 			
 	</div>
 <a name="method_createSmartyContentClass" id="_createSmartyContentClass"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">_createSmartyContentClass</span> (line <span class="line-number">152</span>)
+		<span class="method-title">_createSmartyContentClass</span> (line <span class="line-number">153</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -473,19 +476,19 @@
 		<span class="method-name">
 			_createSmartyContentClass
 		</span>
-					(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$_template</span>)
+					(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$tpl_obj</span>)
 			</div>
 	
 			<ul class="parameters">
 					<li>
 				<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>
-				<span class="var-name">$_template</span><span class="var-description">: template object</span>			</li>
+				<span class="var-name">$tpl_obj</span><span class="var-description">: template object</span>			</li>
 				</ul>
 		
 			
 	</div>
 <a name="method_getInheritanceBlockMethodSource" id="_getInheritanceBlockMethodSource"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<span class="method-title">_getInheritanceBlockMethodSource</span> (line <span class="line-number">376</span>)
@@ -509,7 +512,7 @@
 			<ul class="parameters">
 					<li>
 				<span class="var-type">object</span>
-				<span class="var-name">$smarty_content</span><span class="var-description">: Smarty content obbject</span>			</li>
+				<span class="var-name">$smarty_content</span><span class="var-description">: Smarty content object</span>			</li>
 					<li>
 				<span class="var-type">string</span>
 				<span class="var-name">$function</span><span class="var-description">: method name of block</span>			</li>
@@ -518,10 +521,10 @@
 			
 	</div>
 <a name="method_mergeFromCompiled" id="_mergeFromCompiled"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">_mergeFromCompiled</span> (line <span class="line-number">203</span>)
+		<span class="method-title">_mergeFromCompiled</span> (line <span class="line-number">204</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -535,22 +538,22 @@
 		<span class="method-name">
 			_mergeFromCompiled
 		</span>
-					(<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$_template</span>)
+					(<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$tpl_obj</span>)
 			</div>
 	
 			<ul class="parameters">
 					<li>
 				<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>
-				<span class="var-name">$_template</span><span class="var-description">: current template</span>			</li>
+				<span class="var-name">$tpl_obj</span><span class="var-description">: current template</span>			</li>
 				</ul>
 		
 			
 	</div>
 <a name="method_mergeNocacheTemplateFunction" id="_mergeNocacheTemplateFunction"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">_mergeNocacheTemplateFunction</span> (line <span class="line-number">221</span>)
+		<span class="method-title">_mergeNocacheTemplateFunction</span> (line <span class="line-number">222</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -584,7 +587,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Fri, 03 May 2013 12:57:52 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Sat, 11 May 2013 08:18:58 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

@@ -105,15 +105,15 @@ function smarty_function_html_image($params, $template)
         $protocol = strtolower(substr($params['file'], 0, $protocol));
     }
 
-    if (isset($template->security_policy)) {
+    if (isset($tpl_obj->security_policy)) {
         if ($protocol) {
             // remote resource (or php stream, �)
-            if (!$template->security_policy->isTrustedUri($params['file'])) {
+            if (!$tpl_obj->security_policy->isTrustedUri($params['file'])) {
                 return;
             }
         } else {
             // local file
-            if (!$template->security_policy->isTrustedResourceDir($params['file'])) {
+            if (!$tpl_obj->security_policy->isTrustedResourceDir($params['file'])) {
                 return;
             }
         }

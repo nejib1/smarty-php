@@ -31,23 +31,23 @@ class Smarty_Internal_Resource_Extends extends Smarty_Resource
      * populate Source Object with meta data from Resource
      *
      * @param Smarty_Template_Source $source    source object
-     * @param Smarty $_template template object
+     * @param Smarty $tpl_obj template object
      * @throws SmartyException
      */
-    public function populate(Smarty_Template_Source $source, Smarty $_template = null)
+    public function populate(Smarty_Template_Source $source, Smarty $tpl_obj = null)
     {
         $uid = '';
         $sources = array();
         $components = explode('|', $source->name);
         $exists = true;
         foreach ($components as $component) {
-            $s = Smarty_Resource::source(null, $_template, $component);
+            $s = Smarty_Resource::source(null, $tpl_obj, $component);
             if ($s->type == 'php') {
                 throw new SmartyException("Resource type {$s->type} cannot be used with the extends resource type");
             }
             $sources[$s->uid] = $s;
             $uid .= $s->filepath;
-            if ($_template && $_template->compile_check) {
+            if ($tpl_obj && $tpl_obj->compile_check) {
                 $exists = $exists && $s->exists;
             }
         }
@@ -55,12 +55,12 @@ class Smarty_Internal_Resource_Extends extends Smarty_Resource
         $source->filepath = $s->filepath;
         $source->uid = sha1($uid);
         $source->filepath = 'extends_resource_' . $source->uid . '.tpl';
-        if ($_template && $_template->compile_check) {
+        if ($tpl_obj && $tpl_obj->compile_check) {
             $source->timestamp = 1;
             $source->exists = $exists;
         }
         // need the template at getContent()
-        $source->template = $_template;
+        $source->template = $tpl_obj;
     }
 
     /**
@@ -89,9 +89,9 @@ class Smarty_Internal_Resource_Extends extends Smarty_Resource
 
         foreach ($_components as $_component) {
             if ($_component != $_last) {
-                $source_code .= "{$source->template->left_delimiter}private_inheritance_template file='$_component->filepath' child--{$source->template->right_delimiter}\n";
+                $source_code .= "{$source->tpl_obj->left_delimiter}private_inheritancetpl_obj file='$_component->filepath' child--{$source->tpl_obj->right_delimiter}\n";
             } else {
-                $source_code .= "{$source->template->left_delimiter}private_inheritance_template file='$_component->filepath'--{$source->template->right_delimiter}\n";
+                $source_code .= "{$source->tpl_obj->left_delimiter}private_inheritancetpl_obj file='$_component->filepath'--{$source->tpl_obj->right_delimiter}\n";
             }
         }
         return $source_code;

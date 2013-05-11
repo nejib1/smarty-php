@@ -23,7 +23,7 @@ class Smarty_Internal_Compile_Import extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $required_attributes = array('file');
 
@@ -31,7 +31,7 @@ class Smarty_Internal_Compile_Import extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $shorttag_order = array('file');
 
@@ -39,7 +39,7 @@ class Smarty_Internal_Compile_Import extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $option_flags = array();
 
@@ -47,7 +47,7 @@ class Smarty_Internal_Compile_Import extends Smarty_Internal_CompileBase
      * Attribute definition: Overwrites base class.
      *
      * @var array
-     * @see Smarty_Internal_CompileBase
+     * @see $tpl_obj
      */
     public $optional_attributes = array();
 
@@ -70,11 +70,11 @@ class Smarty_Internal_Compile_Import extends Smarty_Internal_CompileBase
         }
 
         eval("\$tpl_name = $include_file;");
-        $tpl = clone $compiler->template;
+        $tpl = clone $compiler->tpl_obj;
         unset($tpl->source, $tpl->compiled, $tpl->cached, $tpl->compiler, $tpl->mustCompile);
         $tpl->template_resource = $tpl_name;
-        $tpl->parent = $compiler->template;
-        $tpl->caching = $compiler->template->caching;
+        $tpl->parent = $compiler->tpl_obj;
+        $tpl->caching = $compiler->tpl_obj->caching;
         $tpl->compiler->nocache = $compiler->nocache;
         // set up parameter
         $tpl->compiler->suppressHeader = true;
@@ -89,9 +89,9 @@ class Smarty_Internal_Compile_Import extends Smarty_Internal_CompileBase
         $tpl->compiler->compileTemplate();
         $tpl->compiler->template_code->php("/*  End of imported template \"{$tpl_name}\" */")->newline();
         // merge compiled code for {function} tags
-        if (!empty($tpl->compiler->template_functions)) {
-            $compiler->template_functions = array_merge($compiler->template_functions, $tpl->compiler->template_functions);
-            $compiler->template_functions_code = array_merge($compiler->template_functions_code, $tpl->compiler->template_functions_code);
+        if (!empty($tpl->compiler->tpl_obj_functions)) {
+            $compiler->tpl_obj_functions = array_merge($compiler->tpl_obj_functions, $tpl->compiler->tpl_obj_functions);
+            $compiler->tpl_obj_functions_code = array_merge($compiler->tpl_obj_functions_code, $tpl->compiler->tpl_obj_functions_code);
         }
         // merge compiled code for {block} tags
         if (!empty($tpl->compiler->inheritance_blocks)) {
@@ -103,7 +103,7 @@ class Smarty_Internal_Compile_Import extends Smarty_Internal_CompileBase
         // merge filedependency
         $compiler->file_dependency[$tpl->source->uid] = array($tpl->source->filepath, $tpl->source->timestamp, $tpl->source->type);
         $compiler->file_dependency = array_merge($compiler->file_dependency, $tpl->compiler->file_dependency);
-        $compiler->template->has_nocache_code = $compiler->template->has_nocache_code | $tpl->has_nocache_code;
+        $compiler->tpl_obj->has_nocache_code = $compiler->tpl_obj->has_nocache_code | $tpl->has_nocache_code;
 
         // merge flag that variable container must be cloned
         $compiler->must_clone_vars = $compiler->must_clone_vars || $tpl->compiler->must_clone_vars;
