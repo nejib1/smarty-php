@@ -98,16 +98,16 @@ class Smarty_Internal_Compile_Functionclose extends Smarty_Internal_CompileBase
         $_name = trim($saved_data[0]['name'], "'\"");
         unset($saved_data[0]['name']);
         // set flag that we are compiling a template function
-        $compiler->tpl_obj_functions[$_name]['parameter'] = array();
+        $compiler->template_functions[$_name]['parameter'] = array();
         $_smarty_tpl = $compiler->tpl_obj;
         foreach ($saved_data[0] as $_key => $_data) {
             eval('$tmp=' . $_data . ';');
-            $compiler->tpl_obj_functions[$_name]['parameter'][$_key] = $tmp;
+            $compiler->template_functions[$_name]['parameter'][$_key] = $tmp;
         }
         // if caching save template function for possible nocache call
         if ($compiler->tpl_obj->caching) {
             if (!empty($compiler->called_template_functions)) {
-                $compiler->tpl_obj_functions[$_name]['called_functions'] = $compiler->called_template_functions;
+                $compiler->template_functions[$_name]['called_functions'] = $compiler->called_template_functions;
                 $compiler->called_template_functions = array();
             }
             $plugins = array();
@@ -119,7 +119,7 @@ class Smarty_Internal_Compile_Functionclose extends Smarty_Internal_CompileBase
                 }
             }
             if (!empty($plugins)) {
-                $compiler->tpl_obj_functions[$_name]['used_plugins'] = $plugins;
+                $compiler->template_functions[$_name]['used_plugins'] = $plugins;
             }
         }
 
@@ -148,13 +148,13 @@ class Smarty_Internal_Compile_Functionclose extends Smarty_Internal_CompileBase
         $this->php("\$_scope->\$key = new Smarty_Variable (\$value);")->newline();
         $this->outdent()->php("}")->newline();
 
-        $compiler->tpl_obj_functions_code[$_name] = $this->buffer;
+        $compiler->template_functions_code[$_name] = $this->buffer;
         $this->buffer = '';
 
         $this->php("array_shift(\$_smarty_tpl->trace_call_stack);")->newline();
         $this->outdent()->php("}")->newline();
 
-        $compiler->tpl_obj_functions_code[$_name] .= $compiler->template_code->buffer . $this->buffer;
+        $compiler->template_functions_code[$_name] .= $compiler->template_code->buffer . $this->buffer;
 
         // reset flag that we are compiling a template function
         $compiler->compiles_template_function = false;

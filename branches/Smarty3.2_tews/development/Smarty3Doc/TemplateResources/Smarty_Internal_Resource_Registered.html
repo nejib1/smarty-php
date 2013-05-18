@@ -32,9 +32,11 @@
 		</p>
 		
 				
-		<pre><a href="../TemplateResources/Smarty_Resource.html">Smarty_Resource</a>
+		<pre><a href="../Smarty/Smarty_Internal_Magic_Error.html">Smarty_Internal_Magic_Error</a>
    |
-   --Smarty_Internal_Resource_Registered</pre>
+   --<a href="../Resources/Smarty_Resource.html">Smarty_Resource</a>
+      |
+      --Smarty_Internal_Resource_Registered</pre>
 	
 			</div>
 </div>
@@ -58,27 +60,27 @@
 												<div class="method-definition">
 											<span class="method-result">string</span>
 										<a href="#getBasename" title="details" class="method-name">getBasename</a>
-											(<span class="var-type"><a href="../TemplateResources/Smarty_Template_Source.html">Smarty_Template_Source</a></span>&nbsp;<span class="var-name">$source</span>)
+										()
 									</div>
 																<div class="method-definition">
 											<span class="method-result">string</span>
 										<a href="#getContent" title="details" class="method-name">getContent</a>
-											(<span class="var-type"><a href="../TemplateResources/Smarty_Template_Source.html">Smarty_Template_Source</a></span>&nbsp;<span class="var-name">$source</span>)
+										()
 									</div>
 																<div class="method-definition">
 											<span class="method-result">integer|boolean</span>
 										<a href="#getTemplateTimestamp" title="details" class="method-name">getTemplateTimestamp</a>
-											(<span class="var-type"><a href="../TemplateResources/Smarty_Template_Source.html">Smarty_Template_Source</a></span>&nbsp;<span class="var-name">$source</span>)
+										()
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#populate" title="details" class="method-name">populate</a>
-											(<span class="var-type"><a href="../TemplateResources/Smarty_Template_Source.html">Smarty_Template_Source</a></span>&nbsp;<span class="var-name">$source</span>, [<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$tpl_obj</span> = <span class="var-default">null</span>])
+											(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$tpl_obj</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#populateTimestamp" title="details" class="method-name">populateTimestamp</a>
-											(<span class="var-type"><a href="../TemplateResources/Smarty_Template_Source.html">Smarty_Template_Source</a></span>&nbsp;<span class="var-name">$source</span>)
+										()
 									</div>
 								</div>
 		</div>
@@ -99,25 +101,31 @@
 		<div class="info-box-body">
 										<h4>Inherited Variables</h4>
 				<A NAME='inherited_vars'><!-- --></A>
-									<p>Inherited from <span class="classname"><a href="../TemplateResources/Smarty_Resource.html">Smarty_Resource</a></span></p>
+									<p>Inherited from <span class="classname"><a href="../Resources/Smarty_Resource.html">Smarty_Resource</a></span></p>
 					<blockquote>
 													<span class="var-title">
-								<span class="var-name"><a href="../TemplateResources/Smarty_Resource.html#var$compiler_class">Smarty_Resource::$compiler_class</a></span><br>
+								<span class="var-name"><a href="../Resources/Smarty_Resource.html#var$components">Smarty_Resource::$components</a></span><br>
 							</span>
 													<span class="var-title">
-								<span class="var-name"><a href="../TemplateResources/Smarty_Resource.html#var$resources">Smarty_Resource::$resources</a></span><br>
+								<span class="var-name"><a href="../Resources/Smarty_Resource.html#var$filepath">Smarty_Resource::$filepath</a></span><br>
 							</span>
 													<span class="var-title">
-								<span class="var-name"><a href="../TemplateResources/Smarty_Resource.html#var$sources">Smarty_Resource::$sources</a></span><br>
+								<span class="var-name"><a href="../Resources/Smarty_Resource.html#var$name">Smarty_Resource::$name</a></span><br>
 							</span>
 													<span class="var-title">
-								<span class="var-name"><a href="../TemplateResources/Smarty_Resource.html#var$sysplugins">Smarty_Resource::$sysplugins</a></span><br>
+								<span class="var-name"><a href="../Resources/Smarty_Resource.html#var$recompiled">Smarty_Resource::$recompiled</a></span><br>
 							</span>
 													<span class="var-title">
-								<span class="var-name"><a href="../TemplateResources/Smarty_Resource.html#var$template_lexer_class">Smarty_Resource::$template_lexer_class</a></span><br>
+								<span class="var-name"><a href="../Resources/Smarty_Resource.html#var$type">Smarty_Resource::$type</a></span><br>
 							</span>
 													<span class="var-title">
-								<span class="var-name"><a href="../TemplateResources/Smarty_Resource.html#var$template_parser_class">Smarty_Resource::$template_parser_class</a></span><br>
+								<span class="var-name"><a href="../Resources/Smarty_Resource.html#var$uid">Smarty_Resource::$uid</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../Resources/Smarty_Resource.html#var$uncompiled">Smarty_Resource::$uncompiled</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../Resources/Smarty_Resource.html#var$usage">Smarty_Resource::$usage</a></span><br>
 							</span>
 											</blockquote> 
 										
@@ -140,7 +148,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">getBasename</span> (line <span class="line-number">90</span>)
+		<span class="method-title">getBasename</span> (line <span class="line-number">86</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -155,19 +163,14 @@
 		<span class="method-name">
 			getBasename
 		</span>
-					(<span class="var-type"><a href="../TemplateResources/Smarty_Template_Source.html">Smarty_Template_Source</a></span>&nbsp;<span class="var-name">$source</span>)
+				()
 			</div>
 	
-			<ul class="parameters">
-					<li>
-				<span class="var-type"><a href="../TemplateResources/Smarty_Template_Source.html">Smarty_Template_Source</a></span>
-				<span class="var-name">$source</span><span class="var-description">: source object</span>			</li>
-				</ul>
 		
 			<hr class="separator" />
 		<div class="notes">Redefinition of:</div>
 		<dl>
-			<dt><a href="../TemplateResources/Smarty_Resource.html#methodgetBasename">Smarty_Resource::getBasename()</a></dt>
+			<dt><a href="../Resources/Smarty_Resource.html#methodgetBasename">Smarty_Resource::getBasename()</a></dt>
 						<dd>Determine basename for compiled filename</dd>
 					</dl>
 			
@@ -176,7 +179,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">getContent</span> (line <span class="line-number">74</span>)
+		<span class="method-title">getContent</span> (line <span class="line-number">71</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -192,19 +195,14 @@
 		<span class="method-name">
 			getContent
 		</span>
-					(<span class="var-type"><a href="../TemplateResources/Smarty_Template_Source.html">Smarty_Template_Source</a></span>&nbsp;<span class="var-name">$source</span>)
+				()
 			</div>
 	
-			<ul class="parameters">
-					<li>
-				<span class="var-type"><a href="../TemplateResources/Smarty_Template_Source.html">Smarty_Template_Source</a></span>
-				<span class="var-name">$source</span><span class="var-description">: source object</span>			</li>
-				</ul>
 		
 			<hr class="separator" />
 		<div class="notes">Redefinition of:</div>
 		<dl>
-			<dt><a href="../TemplateResources/Smarty_Resource.html#methodgetContent">Smarty_Resource::getContent()</a></dt>
+			<dt><a href="../Resources/Smarty_Resource.html#methodgetContent">Smarty_Resource::getContent()</a></dt>
 						<dd>Load template's source into current template object</dd>
 					</dl>
 			
@@ -213,13 +211,14 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">getTemplateTimestamp</span> (line <span class="line-number">59</span>)
+		<span class="method-title">getTemplateTimestamp</span> (line <span class="line-number">57</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Get timestamp (epoch) the template source was modified</p>
 	<ul class="tags">
 				<li><span class="field">return:</span> timestamp (epoch) the template was modified, false if resources has no timestamp</li>
+				<li><span class="field">todo:</span> must rethink registered resources</li>
 				<li><span class="field">access:</span> public</li>
 			</ul>
 	
@@ -228,14 +227,9 @@
 		<span class="method-name">
 			getTemplateTimestamp
 		</span>
-					(<span class="var-type"><a href="../TemplateResources/Smarty_Template_Source.html">Smarty_Template_Source</a></span>&nbsp;<span class="var-name">$source</span>)
+				()
 			</div>
 	
-			<ul class="parameters">
-					<li>
-				<span class="var-type"><a href="../TemplateResources/Smarty_Template_Source.html">Smarty_Template_Source</a></span>
-				<span class="var-name">$source</span><span class="var-description">: source object</span>			</li>
-				</ul>
 		
 			
 	</div>
@@ -243,7 +237,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">populate</span> (line <span class="line-number">31</span>)
+		<span class="method-title">populate</span> (line <span class="line-number">30</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -257,13 +251,10 @@
 		<span class="method-name">
 			populate
 		</span>
-					(<span class="var-type"><a href="../TemplateResources/Smarty_Template_Source.html">Smarty_Template_Source</a></span>&nbsp;<span class="var-name">$source</span>, [<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$tpl_obj</span> = <span class="var-default">null</span>])
+					(<span class="var-type">Smarty</span>&nbsp;<span class="var-name">$tpl_obj</span>)
 			</div>
 	
 			<ul class="parameters">
-					<li>
-				<span class="var-type"><a href="../TemplateResources/Smarty_Template_Source.html">Smarty_Template_Source</a></span>
-				<span class="var-name">$source</span><span class="var-description">: source object</span>			</li>
 					<li>
 				<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>
 				<span class="var-name">$tpl_obj</span><span class="var-description">: template object</span>			</li>
@@ -272,7 +263,7 @@
 			<hr class="separator" />
 		<div class="notes">Redefinition of:</div>
 		<dl>
-			<dt><a href="../TemplateResources/Smarty_Resource.html#methodpopulate">Smarty_Resource::populate()</a></dt>
+			<dt><a href="../Resources/Smarty_Resource.html#methodpopulate">Smarty_Resource::populate()</a></dt>
 						<dd>populate Source Object with meta data from Resource</dd>
 					</dl>
 			
@@ -281,7 +272,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">populateTimestamp</span> (line <span class="line-number">47</span>)
+		<span class="method-title">populateTimestamp</span> (line <span class="line-number">45</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -295,19 +286,14 @@
 		<span class="method-name">
 			populateTimestamp
 		</span>
-					(<span class="var-type"><a href="../TemplateResources/Smarty_Template_Source.html">Smarty_Template_Source</a></span>&nbsp;<span class="var-name">$source</span>)
+				()
 			</div>
 	
-			<ul class="parameters">
-					<li>
-				<span class="var-type"><a href="../TemplateResources/Smarty_Template_Source.html">Smarty_Template_Source</a></span>
-				<span class="var-name">$source</span><span class="var-description">: source object</span>			</li>
-				</ul>
 		
 			<hr class="separator" />
 		<div class="notes">Redefinition of:</div>
 		<dl>
-			<dt><a href="../TemplateResources/Smarty_Resource.html#methodpopulateTimestamp">Smarty_Resource::populateTimestamp()</a></dt>
+			<dt><a href="../Resources/Smarty_Resource.html#methodpopulateTimestamp">Smarty_Resource::populateTimestamp()</a></dt>
 						<dd>populate Source Object with timestamp and exists from Resource</dd>
 					</dl>
 			
@@ -315,20 +301,25 @@
 							<h4>Inherited Methods</h4>
 				<a name='inherited_methods'><!-- --></a>	
 									<!-- =========== Summary =========== -->
-					<p>Inherited From <span class="classname"><a href="../TemplateResources/Smarty_Resource.html">Smarty_Resource</a></span></p>
+					<p>Inherited From <span class="classname"><a href="../Resources/Smarty_Resource.html">Smarty_Resource</a></span></p>
 					<blockquote>
-													<span class="method-name"><a href="../TemplateResources/Smarty_Resource.html#methodbuildFilepath">Smarty_Resource::buildFilepath()</a></span><br>
-													<span class="method-name"><a href="../TemplateResources/Smarty_Resource.html#methodbuildUniqueResourceName">Smarty_Resource::buildUniqueResourceName()</a></span><br>
-													<span class="method-name"><a href="../TemplateResources/Smarty_Resource.html#methodfileExists">Smarty_Resource::fileExists()</a></span><br>
-													<span class="method-name"><a href="../TemplateResources/Smarty_Resource.html#methodgetBasename">Smarty_Resource::getBasename()</a></span><br>
-													<span class="method-name"><a href="../TemplateResources/Smarty_Resource.html#methodgetContent">Smarty_Resource::getContent()</a></span><br>
-													<span class="method-name"><a href="../TemplateResources/Smarty_Resource.html#methodgetUniqueTemplateName">Smarty_Resource::getUniqueTemplateName()</a></span><br>
-													<span class="method-name"><a href="../TemplateResources/Smarty_Resource.html#methodload">Smarty_Resource::load()</a></span><br>
-													<span class="method-name"><a href="../TemplateResources/Smarty_Resource.html#methodnormalizePath">Smarty_Resource::normalizePath()</a></span><br>
-													<span class="method-name"><a href="../TemplateResources/Smarty_Resource.html#methodparseResourceName">Smarty_Resource::parseResourceName()</a></span><br>
-													<span class="method-name"><a href="../TemplateResources/Smarty_Resource.html#methodpopulate">Smarty_Resource::populate()</a></span><br>
-													<span class="method-name"><a href="../TemplateResources/Smarty_Resource.html#methodpopulateTimestamp">Smarty_Resource::populateTimestamp()</a></span><br>
-													<span class="method-name"><a href="../TemplateResources/Smarty_Resource.html#methodsource">Smarty_Resource::source()</a></span><br>
+													<span class="method-name"><a href="../Resources/Smarty_Resource.html#methodbuildUniqueResourceName">Smarty_Resource::buildUniqueResourceName()</a></span><br>
+													<span class="method-name"><a href="../Resources/Smarty_Resource.html#methodfileExists">Smarty_Resource::fileExists()</a></span><br>
+													<span class="method-name"><a href="../Resources/Smarty_Resource.html#methodgetBasename">Smarty_Resource::getBasename()</a></span><br>
+													<span class="method-name"><a href="../Resources/Smarty_Resource.html#methodgetContent">Smarty_Resource::getContent()</a></span><br>
+													<span class="method-name"><a href="../Resources/Smarty_Resource.html#methodgetRenderedTemplate">Smarty_Resource::getRenderedTemplate()</a></span><br>
+													<span class="method-name"><a href="../Resources/Smarty_Resource.html#methodpopulate">Smarty_Resource::populate()</a></span><br>
+													<span class="method-name"><a href="../Resources/Smarty_Resource.html#methodpopulateTimestamp">Smarty_Resource::populateTimestamp()</a></span><br>
+													<span class="method-name"><a href="../Resources/Smarty_Resource.html#method__get">Smarty_Resource::__get()</a></span><br>
+													<span class="method-name"><a href="../Resources/Smarty_Resource.html#method__set">Smarty_Resource::__set()</a></span><br>
+											</blockquote>
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../Smarty/Smarty_Internal_Magic_Error.html">Smarty_Internal_Magic_Error</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../Smarty/Smarty_Internal_Magic_Error.html#method__call">Smarty_Internal_Magic_Error::__call()</a></span><br>
+													<span class="method-name"><a href="../Smarty/Smarty_Internal_Magic_Error.html#method__destruct">Smarty_Internal_Magic_Error::__destruct()</a></span><br>
+													<span class="method-name"><a href="../Smarty/Smarty_Internal_Magic_Error.html#method__get">Smarty_Internal_Magic_Error::__get()</a></span><br>
+													<span class="method-name"><a href="../Smarty/Smarty_Internal_Magic_Error.html#method__set">Smarty_Internal_Magic_Error::__set()</a></span><br>
 											</blockquote>
 										
 		</div>
@@ -336,7 +327,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Sat, 11 May 2013 08:19:07 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Sat, 18 May 2013 20:35:26 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

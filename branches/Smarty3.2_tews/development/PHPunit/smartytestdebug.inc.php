@@ -28,7 +28,6 @@ class SmartyTests
         $smarty->setPluginsDir(SMARTY_PLUGINS_DIR);
         $smarty->setCacheDir('.' . DS . 'cache' . DS);
         $smarty->setConfigDir('.' . DS . 'configs' . DS);
-        Smarty::$template_objects = array();
         $smarty->tpl_vars = new Smarty_Variable_Scope($smarty, null,  Smarty::IS_SMARTY, 'Smarty root');
         $smarty->template_functions = array();
         $smarty->force_compile = false;
@@ -54,12 +53,13 @@ class SmartyTests
         $smarty->enableSecurity();
         $smarty->error_reporting = null;
         $smarty->error_unassigned = Smarty::UNASSIGNED_NOTICE;
-        $smarty->caching_type = 'file';
         $smarty->cache_locking = false;
         $smarty->cache_id = null;
         $smarty->compile_id = null;
+        $smarty->caching_type = 'file';
+        $smarty->compiled_type = 'file';
         $smarty->default_resource_type = 'file';
-        Smarty_CacheResource::$resources = array();
+
     }
 
     public static function init()
@@ -68,10 +68,10 @@ class SmartyTests
         self::_init(SmartyTests::$smarty);
         self::_init(SmartyTests::$smartyBC);
         self::_init(SmartyTests::$smartyBC31);
-        Smarty_Resource::$sources = array();
+        Smarty::$template_objects = array();
+        Smarty::$resource_cache = array();
         Smarty::$global_tpl_vars = new stdClass;
         Smarty::$_smarty_vars = array();
-        Smarty_CacheResource::$resources = array();
         SmartyTests::$smartyBC->registerPlugin('block', 'php', 'smarty_php_tag');
     }
 }
@@ -94,8 +94,8 @@ class  PHPUnit_Framework_TestCase
     {
         if (strpos($b,$a) === false) {
             $this->error();
-            echo '<br><br>result:<br>'.$b;
-            echo '<br><br>should conctain:<br>'.$a;           
+            echo '<br><br>result: '.$b;
+            echo '<br>should contain: '.$a;
         }
     }
 
@@ -103,8 +103,8 @@ class  PHPUnit_Framework_TestCase
     {
         if (strpos($b,$a) !== false) {
             $this->error();
-            echo '<br><br>result:<br>'.$b;
-            echo '<br><br>should not conctain:<br>'.$a;           
+            echo '<br>result: '.$b;
+            echo '<br>should not contain: '.$a;
         }
     }
 
@@ -112,8 +112,8 @@ class  PHPUnit_Framework_TestCase
     {
         if ($a !== $b) {
             $this->error();
-            echo '<br><br>expected:<br>'.$a;
-            echo '<br><br>is:<br>'.$b;           
+            echo '<br>expected '.$a;
+            echo '<br>is: '.$b;
         }
     }
 
@@ -121,17 +121,24 @@ class  PHPUnit_Framework_TestCase
     {
         if ($a !== false) {
             $this->error();
-            echo '<br><br>result was not false';
+            echo '<br>result was not false';
         }
     }
-   public function assertTrue($a)
+    public function assertTrue($a)
     {
         if ($a !== true) {
             $this->error();
-            echo '<br><br>result was not true';
+            echo '<br>result was not true';
         }
     }
-    
+    public function assertNull($a)
+    {
+        if ($a !== null) {
+            $this->error();
+            echo '<br>result was not "null"';
+        }
+    }
+
     public function error(){
         echo '<br><br><br>ERROR in test:  '.$this->current_function;
         $this->error_functions[] = $this->current_function; 

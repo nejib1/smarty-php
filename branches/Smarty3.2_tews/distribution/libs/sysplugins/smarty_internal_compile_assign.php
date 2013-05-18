@@ -71,7 +71,7 @@ class Smarty_Internal_Compile_Assign extends Smarty_Internal_CompileBase
         $this->iniTagCode($compiler);
 
         if (isset($parameter['smarty_internal_index'])) {
-            $this->php("\$this->_createLocalArrayVariable({$_attr['var']}, \$_smarty_tpl, {$_nocache});")->newline();
+            $this->php("\$this->_createLocalArrayVariable({$_attr['var']}, \$_scope, {$_nocache});")->newline();
             $this->php("\$_scope->{$var}->value{$parameter['smarty_internal_index']} = {$_attr['value']};")->newline();
         } else {
             if ($compiler->tpl_obj instanceof SmartyBC) {
@@ -86,14 +86,14 @@ class Smarty_Internal_Compile_Assign extends Smarty_Internal_CompileBase
             }
         }
         if ($_scope == Smarty::SCOPE_PARENT) {
-            $this->php("if (\$_smarty_tpl->parent != null) {")->newline()->indent();
-            $this->php("\$_smarty_tpl->parent->tpl_vars->{$var} = clone \$_scope->{$var};")->newline();
+            $this->php("if (\$_scope->___attributes->parent_scope != null) {")->newline()->indent();
+            $this->php("\$_scope->___attributes->parent_scope->{$var} = clone \$_scope->{$var};")->newline();
             $this->outdent()->php("}")->newline();
         } elseif ($_scope == Smarty::SCOPE_ROOT || $_scope == Smarty::SCOPE_GLOBAL) {
-            $this->php("\$_ptr = \$_smarty_tpl->parent;")->newline();
+            $this->php("\$_ptr = \$_scope->___attributes->parent_scope;")->newline();
             $this->php("while (\$_ptr != null) {")->newline()->indent();
-            $this->php("\$_ptr->tpl_vars->{$var} = clone \$_scope->{$var};")->newline();
-            $this->php("\$_ptr = \$_ptr->parent;")->newline();
+            $this->php("\$_ptr->{$var} = clone \$_scope->{$var};")->newline();
+            $this->php("\$_ptr = \$_ptr->___attributes->parent_scope;")->newline();
             $this->outdent()->php("}")->newline();
         }
         if ($_scope == Smarty::SCOPE_GLOBAL) {

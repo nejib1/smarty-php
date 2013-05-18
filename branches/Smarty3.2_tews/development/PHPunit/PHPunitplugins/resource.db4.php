@@ -10,19 +10,21 @@
  */
 class Smarty_Resource_Db4 extends Smarty_Resource
 {
-    public function populate(Smarty_Template_Source $source, Smarty $_template = null)
+    public function populate(Smarty $tpl_obj = null)
     {
-        $source->filepath = 'db4:';
-        $source->uid = sha1($source->resource);
-        $source->timestamp = 0;
-        $source->exists = true;
+        $this->filepath = 'db4:';
+        $this->uid = sha1($this->resource);
+        $this->timestamp = 0;
+        $this->exists = true;
     }
 
-    public function getContent(Smarty_Template_Source $source)
+    public function getContent()
     {
-        if ($source->smarty->usage == Smarty::IS_CONFIG) {
+        /** TODO Cofig return
+        if ($this->smarty->usage == Smarty::IS_CONFIG) {
             return "foo = 'bar'\n";
         }
+         */
         return '{$x="hello world"}{$x}';
     }
 }

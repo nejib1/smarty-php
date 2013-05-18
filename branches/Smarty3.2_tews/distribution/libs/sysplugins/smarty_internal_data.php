@@ -414,7 +414,7 @@ class Smarty_Internal_Data extends Smarty_Internal_Magic_Error
     public function configLoad($config_file, $sections = null, $scope_type = 'local')
     {
         $ptr = $this->usage == Smarty::IS_DATA ? $this->smarty : $this;
-        $tpl = $ptr->_getTemplateObj($config_file, null, null, $this, true);
+        $tpl = $ptr->_getTemplateObj($config_file, $this, null, null, null, null, true);
         $tpl->tpl_vars->___config_sections = $sections;
         $tpl->tpl_vars->___config_scope = $scope_type;
         $tpl->compiled->getRenderedTemplate($tpl);
@@ -518,7 +518,9 @@ class Smarty_Internal_Data extends Smarty_Internal_Magic_Error
         if (isset($ptr->___attributes->parent_scope)) {
             $scope = $this->_mergeScopes($ptr->___attributes->parent_scope);
             foreach ($ptr as $var => $data) {
-                $scope->$var = $data;
+                if ($var != '___attributes') {
+                    $scope->$var = $data;
+               }
             }
             return $scope;
         } else {

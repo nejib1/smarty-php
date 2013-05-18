@@ -27,11 +27,11 @@ require_once(SMARTY_PLUGINS_DIR . 'shared.make_timestamp.php');
  * @author Roberto Berto <roberto@berto.net>
  * @author Monte Ohrt <monte AT ohrt DOT com>
  * @param array $params   parameters
- * @param Smarty $template template object
+ * @param Smarty $tpl_obj template object
  * @return string
  * @uses smarty_make_timestamp()
  */
-function smarty_function_html_select_time($params, $template)
+function smarty_function_html_select_time($params, $tpl_obj)
 {
     $prefix = "Time_";
     $field_array = null;
@@ -196,8 +196,8 @@ function smarty_function_html_select_time($params, $template)
         $_html_hours = '<select name="' . $_name . '"';
         if ($hour_id !== null || $all_id !== null) {
             $_html_hours .= ' id="' . smarty_function_escape_special_chars(
-                $hour_id !== null ? ($hour_id ? $hour_id : $_name) : ($all_id ? ($all_id . $_name) : $_name)
-            ) . '"';
+                    $hour_id !== null ? ($hour_id ? $hour_id : $_name) : ($all_id ? ($all_id . $_name) : $_name)
+                ) . '"';
         }
         if ($hour_size) {
             $_html_hours .= ' size="' . $hour_size . '"';
@@ -243,8 +243,8 @@ function smarty_function_html_select_time($params, $template)
         $_html_minutes = '<select name="' . $_name . '"';
         if ($minute_id !== null || $all_id !== null) {
             $_html_minutes .= ' id="' . smarty_function_escape_special_chars(
-                $minute_id !== null ? ($minute_id ? $minute_id : $_name) : ($all_id ? ($all_id . $_name) : $_name)
-            ) . '"';
+                    $minute_id !== null ? ($minute_id ? $minute_id : $_name) : ($all_id ? ($all_id . $_name) : $_name)
+                ) . '"';
         }
         if ($minute_size) {
             $_html_minutes .= ' size="' . $minute_size . '"';
@@ -283,8 +283,8 @@ function smarty_function_html_select_time($params, $template)
         $_html_seconds = '<select name="' . $_name . '"';
         if ($second_id !== null || $all_id !== null) {
             $_html_seconds .= ' id="' . smarty_function_escape_special_chars(
-                $second_id !== null ? ($second_id ? $second_id : $_name) : ($all_id ? ($all_id . $_name) : $_name)
-            ) . '"';
+                    $second_id !== null ? ($second_id ? $second_id : $_name) : ($all_id ? ($all_id . $_name) : $_name)
+                ) . '"';
         }
         if ($second_size) {
             $_html_seconds .= ' size="' . $second_size . '"';
@@ -323,8 +323,8 @@ function smarty_function_html_select_time($params, $template)
         $_html_meridian = '<select name="' . $_name . '"';
         if ($meridian_id !== null || $all_id !== null) {
             $_html_meridian .= ' id="' . smarty_function_escape_special_chars(
-                $meridian_id !== null ? ($meridian_id ? $meridian_id : $_name) : ($all_id ? ($all_id . $_name) : $_name)
-            ) . '"';
+                    $meridian_id !== null ? ($meridian_id ? $meridian_id : $_name) : ($all_id ? ($all_id . $_name) : $_name)
+                ) . '"';
         }
         if ($meridian_size) {
             $_html_meridian .= ' size="' . $meridian_size . '"';

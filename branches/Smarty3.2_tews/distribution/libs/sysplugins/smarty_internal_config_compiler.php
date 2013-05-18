@@ -21,6 +21,20 @@ class Smarty_Internal_Config_Compiler extends Smarty_Internal_Code
 {
 
     /**
+     * Lexer class name
+     *
+     * @var string
+     */
+    public $lexer_class = '';
+
+    /**
+     * Parser class name
+     *
+     * @var string
+     */
+    public $parser_class = '';
+
+    /**
      * Lexer object
      *
      * @var object
@@ -33,6 +47,13 @@ class Smarty_Internal_Config_Compiler extends Smarty_Internal_Code
      * @var object
      */
     public $parser;
+
+    /**
+     * current template
+     *
+     * @var Smarty
+     */
+    public $tpl_obj = null;
 
     /**
      * file dependencies
@@ -51,15 +72,15 @@ class Smarty_Internal_Config_Compiler extends Smarty_Internal_Code
     /**
      * Initialize compiler
      *
-     * @param string $lexerclass config lexer class name
-     * @param string $parserclass config parser class name
-     * @param Smarty $template clone of Smarty class for config file
+     * @param string $lexer_class config lexer class name
+     * @param string $parser_class config parser class name
+     * @param Smarty $tpl_obj clone of Smarty class for config file
      */
-    public function __construct($lexerclass, $parserclass, $template)
+    public function __construct($lexer_class, $parser_class, $tpl_obj)
     {
-        $this->lexerclass = $lexerclass;
-        $this->parserclass = $parserclass;
-        $this->template = $template;
+        $this->lexer_class = $lexer_class;
+        $this->parser_class = $parser_class;
+        $this->tpl_obj = $tpl_obj;
         $this->config_data['sections'] = array();
         $this->config_data['vars'] = array();
     }
@@ -82,8 +103,8 @@ class Smarty_Internal_Config_Compiler extends Smarty_Internal_Code
             return true;
         }
         // init the lexer/parser to compile the config file
-        $this->lex = new $this->lexerclass($_content, $this);
-        $this->parser = new $this->parserclass($this->lex, $this);
+        $this->lex = new $this->lexer_class($_content, $this);
+        $this->parser = new $this->parser_class($this->lex, $this);
         if ($this->tpl_obj->_parserdebug)
             $this->parser->PrintTrace();
         // get tokens from lexer and parse them
@@ -111,9 +132,9 @@ class Smarty_Internal_Config_Compiler extends Smarty_Internal_Code
         $this->outdent()->php("}")->newline();
 
         $this->outdent()->php("}")->newline()->outdent()->php("}")->newline();
-        $this->php("\$this->smarty_content = new $class(\$tpl_obj);")->newline()->newline();
+        $this->php("\$this->smarty_content = new $class(\$tpl_obj, \$this);")->newline()->newline();
 
-        Smarty_Internal_Write_File::writeFile($this->tpl_obj->compiled->filepath, $this->buffer, $this->template);
+        Smarty_Internal_Write_File::writeFile($this->tpl_obj->compiled->filepath, $this->buffer, $this->tpl_obj);
         $this->buffer = '';
         $this->config_data = array();
         $this->lex->compiler = null;
@@ -122,7 +143,6 @@ class Smarty_Internal_Config_Compiler extends Smarty_Internal_Code
         $this->parser = null;
         $this->tpl_obj->compiled->exists = true;
         $this->tpl_obj->compiled->isCompiled = true;
-        $this->tpl_obj->mustCompile = false;
     }
 
     /**

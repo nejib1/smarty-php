@@ -19,14 +19,14 @@
  * @author Uwe Tews
  * @author Rodney Rehm
  *
- * @param Smarty $template template object
+ * @param Smarty $tpl_obj template object
  * @param string $input     output string
  * @param string $esc_type  escape type
  * @param string $char_set      character set
  * @throws SmartyRuntimeException
  * @return string with compiled code
  */
-function smarty_modifier_unescape(Smarty $template, $input, $esc_type = 'html', $char_set = null)
+function smarty_modifier_unescape(Smarty $tpl_obj, $input, $esc_type = 'html', $char_set = null)
 {
     if (!$char_set) {
         $char_set = SMARTY_RESOURCE_CHAR_SET;
@@ -45,6 +45,6 @@ function smarty_modifier_unescape(Smarty $template, $input, $esc_type = 'html', 
             return htmlspecialchars_decode($input, ENT_QUOTES);
 
         default:
-            throw new SmartyRuntimeException("Modifier unescape: Illegal unescape type '{$esc_type}'", $template);
+            throw new SmartyRuntimeException("Modifier unescape: Illegal unescape type '{$esc_type}'", $tpl_obj);
     }
 }

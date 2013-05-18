@@ -19,10 +19,10 @@
  *          (Smarty online manual)
  * @author   Monte Ohrt <monte at ohrt dot com>
  * @param array $params   parameters
- * @param Smarty $template template object
+ * @param Smarty $tpl_obj template object
  * @return string|null
  */
-function smarty_function_math($params, $template)
+function smarty_function_math($params, $tpl_obj)
 {
     static $_allowed_funcs = array(
         'int' => true, 'abs' => true, 'ceil' => true, 'cos' => true, 'exp' => true, 'floor' => true,

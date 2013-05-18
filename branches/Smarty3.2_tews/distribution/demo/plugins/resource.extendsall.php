@@ -15,16 +15,15 @@ class Smarty_Resource_Extendsall extends Smarty_Internal_Resource_Extends
     /**
      * populate Source Object with meta data from Resource
      *
-     * @param Smarty_Template_Source $source source object
-     * @param Smarty $_template template object
+     * @param Smarty $tpl_obj template object
      * @return void
      */
-    public function populate(Smarty_Template_Source $source, Smarty $_template = null)
+    public function populate( Smarty $tpl_obj = null)
     {
         $uid = '';
         $sources = array();
         $exists = true;
-        foreach ($_template->getTemplateDir() as $key => $directory) {
+        foreach ($tpl_obj->getTemplateDir() as $key => $directory) {
             try {
                 $s = Smarty_Resource::source(null, $source->smarty, '[' . $key . ']' . $source->name);
                 if (!$s->exists) {
@@ -38,7 +37,7 @@ class Smarty_Resource_Extendsall extends Smarty_Internal_Resource_Extends
 
         if (!$sources) {
             $source->exists = false;
-            $source->template = $_template;
+            $source->template = $tpl_obj;
             return;
         }
 
@@ -50,10 +49,10 @@ class Smarty_Resource_Extendsall extends Smarty_Internal_Resource_Extends
         $source->filepath = $s->filepath;
         $source->uid = sha1($uid);
         $source->exists = $exists;
-        if ($_template && $_template->compile_check) {
+        if ($tpl_obj && $tpl_obj->compile_check) {
             $source->timestamp = $s->timestamp;
         }
         // need the template at getContent()
-        $source->template = $_template;
+        $source->template = $tpl_obj;
     }
 }

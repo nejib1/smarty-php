@@ -49,7 +49,6 @@ class VariableCachevalueTests extends PHPUnit_Framework_TestCase
         }
         */
         Smarty::$template_objects = array();
-        Smarty_Resource::$sources = array();
         try {
             $tpl = $this->smarty->createTemplate('string:{$vars = [1,2,3,4,5]}{foreach $vars as $var}{$v = $var}{nocache}{$v}{/nocache}{/foreach}');
             $tpl->fetch();
@@ -86,7 +85,6 @@ class VariableCachevalueTests extends PHPUnit_Framework_TestCase
         }
         */
         Smarty::$template_objects = array();
-        Smarty_Resource::$sources = array();
         $tpl = $this->smarty->createTemplate('string:{$vars = [1,2,3,4,5]}{foreach $vars as $var}{$v = $var cachevalue}{nocache}{$v}{/nocache}{/foreach}');
         $this->assertEquals('12345', $tpl->fetch());
     }

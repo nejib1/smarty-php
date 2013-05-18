@@ -16,7 +16,6 @@ class CacheResourceFileTests extends PHPUnit_Framework_TestCase
         $this->smarty = SmartyTests::$smarty;
         $this->smartyBC = SmartyTests::$smartyBC;
         // reset cache for unit test
-        Smarty_CacheResource::$resources = array();
         SmartyTests::init();
     }
 

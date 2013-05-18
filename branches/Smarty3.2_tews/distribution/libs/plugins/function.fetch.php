@@ -18,11 +18,11 @@
  *       (Smarty online manual)
  * @author Monte Ohrt <monte at ohrt dot com>
  * @param array $params   parameters
- * @param Smarty $template template object
+ * @param Smarty $tpl_obj template object
  * @throws SmartyException
  * @return string|null if the assign parameter is passed, Smarty assigns the result to a template variable
  */
-function smarty_function_fetch($params, $template)
+function smarty_function_fetch($params, $tpl_obj)
 {
     if (empty($params['file'])) {
         trigger_error("[plugin] fetch parameter 'file' cannot be empty", E_USER_NOTICE);

@@ -46,10 +46,10 @@
  * @author Monte Ohrt <monte at ohrt dot com>
  * @author credits to Jason Sweat (added cc, bcc and subject functionality)
  * @param array $params   parameters
- * @param Smarty $template template object
+ * @param Smarty $tpl_obj template object
  * @return string
  */
-function smarty_function_mailto($params, $template)
+function smarty_function_mailto($params, $tpl_obj)
 {
     static $_allowed_encoding = array('javascript' => true, 'javascript_charcode' => true, 'hex' => true, 'none' => true);
     $extra = '';

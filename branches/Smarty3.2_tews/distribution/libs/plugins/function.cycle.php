@@ -40,10 +40,10 @@
  * @author credit to Jason Sweat <jsweat_php@yahoo.com>
  * @version  1.3
  * @param array $params   parameters
- * @param Smarty $template template object
+ * @param Smarty $tpl_obj template object
  * @return string|null
  */
-function smarty_function_cycle($params, $template)
+function smarty_function_cycle($params, $tpl_obj)
 {
     static $cycle_vars;
 

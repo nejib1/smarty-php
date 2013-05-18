@@ -48,10 +48,10 @@ require_once(SMARTY_PLUGINS_DIR . 'shared.make_timestamp.php');
  * @author Monte Ohrt <monte at ohrt dot com>
  * @author Rodney Rehm
  * @param array $params   parameters
- * @param Smarty $template template object
+ * @param Smarty $tpl_obj template object
  * @return string
  */
-function smarty_function_html_select_date($params, $template)
+function smarty_function_html_select_date($params, $tpl_obj)
 {
     // generate timestamps used for month names only
     static $_month_timestamps = null;
@@ -248,8 +248,8 @@ function smarty_function_html_select_date($params, $template)
             $_html_years = '<select name="' . $_name . '"';
             if ($year_id !== null || $all_id !== null) {
                 $_html_years .= ' id="' . smarty_function_escape_special_chars(
-                    $year_id !== null ? ($year_id ? $year_id : $_name) : ($all_id ? ($all_id . $_name) : $_name)
-                ) . '"';
+                        $year_id !== null ? ($year_id ? $year_id : $_name) : ($all_id ? ($all_id . $_name) : $_name)
+                    ) . '"';
             }
             if ($year_size) {
                 $_html_years .= ' size="' . $year_size . '"';
@@ -286,8 +286,8 @@ function smarty_function_html_select_date($params, $template)
         $_html_months = '<select name="' . $_name . '"';
         if ($month_id !== null || $all_id !== null) {
             $_html_months .= ' id="' . smarty_function_escape_special_chars(
-                $month_id !== null ? ($month_id ? $month_id : $_name) : ($all_id ? ($all_id . $_name) : $_name)
-            ) . '"';
+                    $month_id !== null ? ($month_id ? $month_id : $_name) : ($all_id ? ($all_id . $_name) : $_name)
+                ) . '"';
         }
         if ($month_size) {
             $_html_months .= ' size="' . $month_size . '"';
@@ -325,8 +325,8 @@ function smarty_function_html_select_date($params, $template)
         $_html_days = '<select name="' . $_name . '"';
         if ($day_id !== null || $all_id !== null) {
             $_html_days .= ' id="' . smarty_function_escape_special_chars(
-                $day_id !== null ? ($day_id ? $day_id : $_name) : ($all_id ? ($all_id . $_name) : $_name)
-            ) . '"';
+                    $day_id !== null ? ($day_id ? $day_id : $_name) : ($all_id ? ($all_id . $_name) : $_name)
+                ) . '"';
         }
         if ($day_size) {
             $_html_days .= ' size="' . $day_size . '"';

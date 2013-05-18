@@ -30,18 +30,17 @@ class Smarty_Internal_Resource_Extends extends Smarty_Resource
     /**
      * populate Source Object with meta data from Resource
      *
-     * @param Smarty_Template_Source $source    source object
      * @param Smarty $tpl_obj template object
      * @throws SmartyException
      */
-    public function populate(Smarty_Template_Source $source, Smarty $tpl_obj = null)
+    public function populate(Smarty $tpl_obj = null)
     {
         $uid = '';
         $sources = array();
-        $components = explode('|', $source->name);
+        $components = explode('|', $this->name);
         $exists = true;
         foreach ($components as $component) {
-            $s = Smarty_Resource::source(null, $tpl_obj, $component);
+            $s = $tpl_obj->_resourceLoader(Smarty::SOURCE, $component);
             if ($s->type == 'php') {
                 throw new SmartyException("Resource type {$s->type} cannot be used with the extends resource type");
             }
@@ -51,47 +50,45 @@ class Smarty_Internal_Resource_Extends extends Smarty_Resource
                 $exists = $exists && $s->exists;
             }
         }
-        $source->components = $sources;
-        $source->filepath = $s->filepath;
-        $source->uid = sha1($uid);
-        $source->filepath = 'extends_resource_' . $source->uid . '.tpl';
+        $this->components = $sources;
+        $this->filepath = $s->filepath;
+        $this->uid = sha1($uid);
+        $this->filepath = 'extends_resource_' . $this->uid . '.tpl';
         if ($tpl_obj && $tpl_obj->compile_check) {
-            $source->timestamp = 1;
-            $source->exists = $exists;
+            $this->timestamp = 1;
+            $this->exists = $exists;
         }
         // need the template at getContent()
-        $source->template = $tpl_obj;
+        $this->template = $tpl_obj;
     }
 
     /**
      * populate Source Object with timestamp and exists from Resource
      *
-     * @param Smarty_Template_Source $source source object
      */
-    public function populateTimestamp(Smarty_Template_Source $source)
+    public function populateTimestamp()
     {
-        $source->exists = true;
-        $source->timestamp = 1;
+        $this->exists = true;
+        $this->timestamp = 1;
     }
 
     /**
      * Load template's source from files into current template object
      *
-     * @param Smarty_Template_Source $source source object
      * @return string template source
      * @throws SmartyException if source cannot be loaded
      */
-    public function getContent(Smarty_Template_Source $source)
+    public function getContent()
     {
         $source_code = '';
-        $_components = array_reverse($source->components);
+        $_components = array_reverse($this->components);
         $_last = end($_components);
 
         foreach ($_components as $_component) {
             if ($_component != $_last) {
-                $source_code .= "{$source->tpl_obj->left_delimiter}private_inheritancetpl_obj file='$_component->filepath' child--{$source->tpl_obj->right_delimiter}\n";
+                $source_code .= "{$this->tpl_obj->left_delimiter}private_inheritancetpl_obj file='$_component->filepath' child--{$this->tpl_obj->right_delimiter}\n";
             } else {
-                $source_code .= "{$source->tpl_obj->left_delimiter}private_inheritancetpl_obj file='$_component->filepath'--{$source->tpl_obj->right_delimiter}\n";
+                $source_code .= "{$this->tpl_obj->left_delimiter}private_inheritancetpl_obj file='$_component->filepath'--{$this->tpl_obj->right_delimiter}\n";
             }
         }
         return $source_code;
@@ -100,12 +97,22 @@ class Smarty_Internal_Resource_Extends extends Smarty_Resource
     /**
      * Determine basename for compiled filename
      *
-     * @param Smarty_Template_Source $source source object
      * @return string resource's basename
      */
-    public function getBasename(Smarty_Template_Source $source)
+    public function getBasename()
     {
-        return str_replace(':', '.', basename($source->filepath));
+        return str_replace(':', '.', basename($this->filepath));
+    }
+
+    /**
+     * populate Source Object with meta data from Resource
+     *
+     * @param Smarty $tpl_obj     template object
+     */
+
+    public function buildFilepath(Smarty $tpl_obj = null)
+    {
+
     }
 
 }

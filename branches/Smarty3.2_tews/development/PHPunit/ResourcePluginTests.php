@@ -15,7 +15,6 @@ class ResourcePluginTests extends PHPUnit_Framework_TestCase
     {
         $this->smarty = SmartyTests::$smarty;
         // reset cache for unit test
-        Smarty_Resource::$resources = array();
         SmartyTests::init();
     }
 

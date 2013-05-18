@@ -73,7 +73,7 @@ class Smarty_Internal_Content extends Smarty_Internal_Magic_Error
      *
      * @var array
      */
-    public $template_functions = array();
+    public $tpl_obj_functions = array();
 
     /**
      * template functions called nocache
@@ -132,7 +132,7 @@ class Smarty_Internal_Content extends Smarty_Internal_Magic_Error
                 } elseif ($_file_to_check[2] == 'string') {
                     continue;
                 } else {
-                    $source = Smarty_Resource::source($tpl_obj, null, $_file_to_check[0]);
+                    $source = $tpl_obj->_loadHandler(Smarty::SOURCE, $_file_to_check[0]);
                     $mtime = $source->timestamp;
                 }
                 if (!$mtime || $mtime > $_file_to_check[1]) {
@@ -153,7 +153,7 @@ class Smarty_Internal_Content extends Smarty_Internal_Magic_Error
 
         if (!$this->is_cache) {
             if (!empty($this->template_functions) && isset($tpl_obj->parent) && $tpl_obj->parent->usage == Smarty::IS_TEMPLATE) {
-                $tpl_obj->parent->template_function_chain = $template;
+                $tpl_obj->parent->template_function_chain = $tpl_obj;
             }
         }
     }
@@ -233,20 +233,22 @@ class Smarty_Internal_Content extends Smarty_Internal_Magic_Error
      * Template code runtime function to create a local Smarty variable for array assignments
      *
      * @param string $tpl_var   tempate variable name
-     * @param object $tpl_obj  tempate object
+     * @param Smarty_Variable_Scope $_scope  variable scope
      * @param bool $nocache   cache mode of variable
      */
-    public function _createLocalArrayVariable($tpl_var, $tpl_obj, $nocache = false)
+    public function _createLocalArrayVariable($tpl_var, $_scope, $nocache = false)
     {
-        $result = $tpl_obj->getVariable($tpl_var, null, true, false);
-        if ($result === null) {
-            $tpl_obj->tpl_vars->{$tpl_var} = new Smarty_Variable(array());
+        if (isset($_scope->{$tpl_var})) {
+            $_scope->{$tpl_var} = clone $_scope->{$tpl_var};
+        } elseif ($result = $_scope->___attributes->tpl_ptr->getVariable($tpl_var, $_scope->___attributes->tpl_ptr->parent, true, false)) {
+            $_scope->{$tpl_var} = clone $result;
         } else {
-            $tpl_obj->tpl_vars->$tpl_var = clone $result;
+            $_scope->{$tpl_var} = new Smarty_Variable(array(), $nocache);
+            return;
         }
-        $tpl_obj->tpl_vars->{$tpl_var}->nocache = $nocache;
-        if (!(is_array($tpl_obj->tpl_vars->{$tpl_var}->value) || $tpl_obj->tpl_vars->{$tpl_var}->value instanceof ArrayAccess)) {
-            settype($tpl_obj->tpl_vars->{$tpl_var}->value, 'array');
+        $_scope->{$tpl_var}->nocache = $nocache;
+        if (!(is_array($_scope->{$tpl_var}->value) || $_scope->{$tpl_var}->value instanceof ArrayAccess)) {
+            settype($_scope->{$tpl_var}->value, 'array');
         }
     }
 
@@ -254,7 +256,7 @@ class Smarty_Internal_Content extends Smarty_Internal_Magic_Error
     /**
      * Template code runtime function to get subtemplate content
      *
-     * @param string $template_resource       the resource handle of the template file
+     * @param string $tpl_obj_resource       the resource handle of the template file
      * @param Smarty $parent_tpl_obj       calling template object
      * @param mixed $cache_id       cache id to be used with this template
      * @param mixed $compile_id     compile id to be used with this template
@@ -266,12 +268,12 @@ class Smarty_Internal_Content extends Smarty_Internal_Magic_Error
      * @param string $content_class  optional name of inline content class
      * @return string template content
      */
-    public function _getSubTemplate($template_resource, $parent_tpl_obj, $cache_id, $compile_id, $caching, $cache_lifetime, $data, $scope_type, $_scope, $content_class = null)
+    public function _getSubTemplate($tpl_obj_resource, $parent_tpl_obj, $cache_id, $compile_id, $caching, $cache_lifetime, $data, $scope_type, $_scope, $content_class = null)
     {
         if (isset($content_class)) {
             // clone new template object
             $tpl_obj = clone $parent_tpl_obj;
-            $tpl_obj->template_resource = $template_resource;
+            $tpl_obj->template_resource = $tpl_obj_resource;
             $tpl_obj->cache_id = $cache_id;
             $tpl_obj->compile_id = $compile_id;
             $tpl_obj->parent = $parent_tpl_obj;
@@ -285,9 +287,9 @@ class Smarty_Internal_Content extends Smarty_Internal_Magic_Error
             return $result;
         } else {
             if ($parent_tpl_obj->caching && $caching && $caching != Smarty::CACHING_NOCACHE_CODE) {
-                $parent_tpl_obj->cached_subtemplates[$template_resource] = array($template_resource, $cache_id, $compile_id, $caching, $cache_lifetime);
+                $parent_tpl_obj->cached_subtemplates[$tpl_obj_resource] = array($tpl_obj_resource, $cache_id, $compile_id, $caching, $cache_lifetime);
             }
-            return $parent_tpl_obj->fetch($template_resource, $cache_id, $compile_id, $parent_tpl_obj, false, true, $data, $scope_type, $caching, $cache_lifetime, $_scope);
+            return $parent_tpl_obj->fetch($tpl_obj_resource, $cache_id, $compile_id, $parent_tpl_obj, false, true, $data, $scope_type, $caching, $cache_lifetime, $_scope);
         }
 
     }
@@ -331,40 +333,40 @@ class Smarty_Internal_Content extends Smarty_Internal_Magic_Error
     /**
      * Template code runtime function to load config varibales
      *
-     * @param object $template       calling template object
+     * @param object $tpl_obj       calling template object
      */
-    public function _loadConfigVars($template)
+    public function _loadConfigVars($tpl_obj)
     {
         $ptr = $tpl_obj->parent;
-        $this->_loadConfigValuesInScope($template, $ptr->tpl_vars);
+        $this->_loadConfigValuesInScope($tpl_obj, $ptr->tpl_vars);
         $ptr = $ptr->parent;
         if ($tpl_obj->tpl_vars->___config_scope == 'parent' && $ptr != null) {
-            $this->_loadConfigValuesInScope($template, $ptr->tpl_vars);
+            $this->_loadConfigValuesInScope($tpl_obj, $ptr->tpl_vars);
         }
         if ($tpl_obj->tpl_vars->___config_scope == 'root' || $tpl_obj->tpl_vars->___config_scope == 'global') {
             while ($ptr != null && $ptr->usage == Smarty::IS_TEMPLATE) {
-                $this->_loadConfigValuesInScope($template, $ptr->tpl_vars);
+                $this->_loadConfigValuesInScope($tpl_obj, $ptr->tpl_vars);
                 $ptr = $ptr->parent;
             }
         }
         if ($tpl_obj->tpl_vars->___config_scope == 'root') {
             while ($ptr != null) {
-                $this->_loadConfigValuesInScope($template, $ptr->tpl_vars);
+                $this->_loadConfigValuesInScope($tpl_obj, $ptr->tpl_vars);
                 $ptr = $ptr->parent;
             }
         }
         if ($tpl_obj->tpl_vars->___config_scope == 'global') {
-            $this->_loadConfigValuesInScope($template, Smarty::$global_tpl_vars);
+            $this->_loadConfigValuesInScope($tpl_obj, Smarty::$global_tpl_vars);
         }
     }
 
     /**
      * Template code runtime function to load config varibales into a single scope
      *
-     * @param object $template       calling template object
+     * @param object $tpl_obj       calling template object
      * @param object $tpl_vars       variable container of scope
      */
-    public function _loadConfigValuesInScope($template, $tpl_vars)
+    public function _loadConfigValuesInScope($tpl_obj, $tpl_vars)
     {
         foreach ($this->config_data['vars'] as $var => $value) {
             if ($tpl_obj->config_overwrite || !isset($tpl_vars->$var)) {

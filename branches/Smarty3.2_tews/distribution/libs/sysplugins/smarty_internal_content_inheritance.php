@@ -71,7 +71,7 @@ class Smarty_Internal_Content_Inheritance extends Smarty_Internal_Content
      * @param string $name          name of block
      * @param object $scope_tpl     blocks must be processed in this variable scope
      * @param object $current_tpl   calling template  (optional)
-     * @param int    $mode          mode of this call
+     * @param int $mode          mode of this call
      * @param boolean $in_child_chain   flag when inside child template chaim
      * @return string | boolean false
      */
@@ -117,8 +117,8 @@ class Smarty_Internal_Content_Inheritance extends Smarty_Internal_Content
      *
      * @param string $name          name of block
      * @param Smarty_Internal_Variable_Scope $scope_tpl     blocks must be processed in this variable scope
-     * @param int    $mode          mode of this call
-     * @param Smarty  $current_tpl   calling template  (optional)
+     * @param int $mode          mode of this call
+     * @param Smarty $current_tpl   calling template  (optional)
      * @param boolean $in_child_chain   flag when inside child template chaim
      * @param null $parent_block
      * @return string | boolean false

@@ -23,9 +23,6 @@ class CustomResourceAmbiguousTests extends PHPUnit_Framework_TestCase
         // empty the template dir
         $this->smarty->setTemplateDir(array());
 
-        // kill cache for unit test
-        Smarty_Resource::$resources = array();
-        $this->smarty->_resource_handlers = array();
     }
 
     public static function isRunnable()

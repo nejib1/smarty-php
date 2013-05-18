@@ -161,9 +161,9 @@ class Smarty_Internal_Compile_Include extends Smarty_Internal_CompileBase
                         $compiler->required_plugins['nocache'] = array_merge($compiler->required_plugins['nocache'], $tpl->compiler->required_plugins['nocache']);
                         $tpl->compiler->required_plugins = array();
                         // merge compiled code for {function} tags
-                        if (!empty($tpl->compiler->tpl_obj_functions)) {
-                            $compiler->tpl_obj_functions = array_merge($compiler->tpl_obj_functions, $tpl->compiler->tpl_obj_functions);
-                            $compiler->tpl_obj_functions_code = array_merge($compiler->tpl_obj_functions_code, $tpl->compiler->tpl_obj_functions_code);
+                        if (!empty($tpl->compiler->template_functions)) {
+                            $compiler->template_functions = array_merge($compiler->template_functions, $tpl->compiler->template_functions);
+                            $compiler->template_functions_code = array_merge($compiler->template_functions_code, $tpl->compiler->template_functions_code);
                         }
                         // save merged template
                         Smarty_Compiler::$merged_inline_content_classes[$tpl_name]['code'] = $tpl->compiler->_createSmartyContentClass($tpl, true);

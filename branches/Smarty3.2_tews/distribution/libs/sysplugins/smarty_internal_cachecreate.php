@@ -126,7 +126,7 @@ class Smarty_Internal_CacheCreate
                 $level = ob_get_level();
                 $tpl_obj->compile_check = false; // no need to check again
                 eval('?>' . $this->code_obj->buffer);
-                $tpl_obj->cached->write($tpl_obj, $this->code_obj->buffer);
+                $tpl_obj->cached->writeCache($tpl_obj, $this->code_obj->buffer);
                 $this->code_obj = null;
                 $tpl_obj->cached->isValid = true;
                 $output = $tpl_obj->cached->smarty_content->get_template_content($tpl_obj, $_scope);
@@ -191,7 +191,7 @@ class Smarty_Internal_CacheCreate
             $this->code_obj->newline()->raw($code);
         }
         $this->code_obj->outdent()->php('}')->newline()->outdent()->php('}')->newline();
-        $this->code_obj->php("\$tpl_obj->cached->smarty_content = new {$class}(\$tpl_obj,\$tpl_obj->cached);\n\n");
+        $this->code_obj->php("\$tpl_obj->cached->smarty_content = new {$class}(\$tpl_obj, \$tpl_obj->cached);\n\n");
         return $this->code_obj->buffer;
     }
 

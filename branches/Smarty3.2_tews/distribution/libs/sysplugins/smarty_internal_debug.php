@@ -30,7 +30,7 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data
      *  URL debugging ?
      *
      * @param Smarty $smarty
-    */
+     */
     public static function checkURLDebug($smarty)
     {
         if (isset($_SERVER['QUERY_STRING'])) {

@@ -25,6 +25,7 @@
 					<li><a href="elementindex_PluginsInternal.html">PluginsInternal</a></li>
 					<li><a href="elementindex_TemplateResources.html">TemplateResources</a></li>
 					<li><a href="elementindex_Security.html">Security</a></li>
+					<li><a href="elementindex_Resources.html">Resources</a></li>
 			</ul>
 <a href="elementindex.html">All elements</a>
 <br />
@@ -36,6 +37,7 @@
 	<a class="index-letter" href="elementindex_CompiledResources.html#g">g</a>
 	<a class="index-letter" href="elementindex_CompiledResources.html#i">i</a>
 	<a class="index-letter" href="elementindex_CompiledResources.html#l">l</a>
+	<a class="index-letter" href="elementindex_CompiledResources.html#p">p</a>
 	<a class="index-letter" href="elementindex_CompiledResources.html#s">s</a>
 	<a class="index-letter" href="elementindex_CompiledResources.html#t">t</a>
 	<a class="index-letter" href="elementindex_CompiledResources.html#_">_</a>
@@ -52,7 +54,7 @@
 						<span class="method-title">__construct</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="CompiledResources/Smarty_Compiled.html#method__construct">Smarty_Compiled::__construct()</a> in smarty_compiled.php</div>
+			<div class="index-item-details"><a href="CompiledResources/Smarty_CompiledResource.html#method__construct">Smarty_CompiledResource::__construct()</a> in smarty_compiledresource.php</div>
 							<div class="index-item-description">create Compiled Object container</div>
 					</dd>
 		</dl>
@@ -67,7 +69,7 @@
 						<span class="method-title">buildFilepath</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="CompiledResources/Smarty_Compiled.html#methodbuildFilepath">Smarty_Compiled::buildFilepath()</a> in smarty_compiled.php</div>
+			<div class="index-item-details"><a href="CompiledResources/Smarty_Internal_CompiledResource_File.html#methodbuildFilepath">Smarty_Internal_CompiledResource_File::buildFilepath()</a> in smarty_internal_compiledresource_file.php</div>
 							<div class="index-item-description">populate Compiled Object with compiled filepath</div>
 					</dd>
 		</dl>
@@ -79,10 +81,24 @@
 	</div>
 	<dl>
 			<dt class="field">
+						<span class="var-title">$compile_id</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="CompiledResources/Smarty_CompiledResource.html#var$compile_id">Smarty_CompiledResource::$compile_id</a> in smarty_compiledresource.php</div>
+							<div class="index-item-description">Template Compile Id (Smarty::$compile_id)</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">clear</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="CompiledResources/Smarty_Internal_CompiledResource_File.html#methodclear">Smarty_Internal_CompiledResource_File::clear()</a> in smarty_internal_compiledresource_file.php</div>
+							<div class="index-item-description">Delete compiled template file</div>
+					</dd>
+			<dt class="field">
 						<span class="method-title">clearCompiledTemplate</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="CompiledResources/Smarty_Compiled.html#methodclearCompiledTemplate">Smarty_Compiled::clearCompiledTemplate()</a> in smarty_compiled.php</div>
+			<div class="index-item-details"><a href="CompiledResources/Smarty_CompiledResource.html#methodclearCompiledTemplate">Smarty_CompiledResource::clearCompiledTemplate()</a> in smarty_compiledresource.php</div>
 							<div class="index-item-description">Delete compiled template file</div>
 					</dd>
 		</dl>
@@ -97,7 +113,7 @@
 						<span class="var-title">$exists</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="CompiledResources/Smarty_Compiled.html#var$exists">Smarty_Compiled::$exists</a> in smarty_compiled.php</div>
+			<div class="index-item-details"><a href="CompiledResources/Smarty_CompiledResource.html#var$exists">Smarty_CompiledResource::$exists</a> in smarty_compiledresource.php</div>
 							<div class="index-item-description">Compiled Existance</div>
 					</dd>
 		</dl>
@@ -112,14 +128,14 @@
 						<span class="var-title">$filepath</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="CompiledResources/Smarty_Compiled.html#var$filepath">Smarty_Compiled::$filepath</a> in smarty_compiled.php</div>
+			<div class="index-item-details"><a href="CompiledResources/Smarty_CompiledResource.html#var$filepath">Smarty_CompiledResource::$filepath</a> in smarty_compiledresource.php</div>
 							<div class="index-item-description">Compiled Filepath</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$file_dependency</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="CompiledResources/Smarty_Compiled.html#var$file_dependency">Smarty_Compiled::$file_dependency</a> in smarty_compiled.php</div>
+			<div class="index-item-details"><a href="CompiledResources/Smarty_CompiledResource.html#var$file_dependency">Smarty_CompiledResource::$file_dependency</a> in smarty_compiledresource.php</div>
 							<div class="index-item-description">file dependencies</div>
 					</dd>
 		</dl>
@@ -131,16 +147,10 @@
 	</div>
 	<dl>
 			<dt class="field">
-						<span class="method-title">getObject</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="CompiledResources/Smarty_Compiled.html#methodgetObject">Smarty_Compiled::getObject()</a> in smarty_compiled.php</div>
-					</dd>
-			<dt class="field">
 						<span class="method-title">getRenderedTemplate</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="CompiledResources/Smarty_Compiled.html#methodgetRenderedTemplate">Smarty_Compiled::getRenderedTemplate()</a> in smarty_compiled.php</div>
+			<div class="index-item-details"><a href="CompiledResources/Smarty_CompiledResource.html#methodgetRenderedTemplate">Smarty_CompiledResource::getRenderedTemplate()</a> in smarty_compiledresource.php</div>
 							<div class="index-item-description">get rendered template output from compiled template</div>
 					</dd>
 		</dl>
@@ -155,14 +165,14 @@
 						<span class="var-title">$isCompiled</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="CompiledResources/Smarty_Compiled.html#var$isCompiled">Smarty_Compiled::$isCompiled</a> in smarty_compiled.php</div>
+			<div class="index-item-details"><a href="CompiledResources/Smarty_CompiledResource.html#var$isCompiled">Smarty_CompiledResource::$isCompiled</a> in smarty_compiledresource.php</div>
 							<div class="index-item-description">Template was recompiled</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$isValid</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="CompiledResources/Smarty_Compiled.html#var$isValid">Smarty_Compiled::$isValid</a> in smarty_compiled.php</div>
+			<div class="index-item-details"><a href="CompiledResources/Smarty_CompiledResource.html#var$isValid">Smarty_CompiledResource::$isValid</a> in smarty_compiledresource.php</div>
 							<div class="index-item-description">Compiled template is valid</div>
 					</dd>
 		</dl>
@@ -177,8 +187,23 @@
 						<span class="method-title">loadContent</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="CompiledResources/Smarty_Compiled.html#methodloadContent">Smarty_Compiled::loadContent()</a> in smarty_compiled.php</div>
+			<div class="index-item-details"><a href="CompiledResources/Smarty_CompiledResource.html#methodloadContent">Smarty_CompiledResource::loadContent()</a> in smarty_compiledresource.php</div>
 							<div class="index-item-description">Load compiled template content</div>
+					</dd>
+		</dl>
+	<a name="p"></a>
+	<div class="index-letter-section">
+		<div style="float: left" class="index-letter-title">p</div>
+		<div style="float: right"><a href="#top">top</a></div>
+		<div style="clear: both"></div>
+	</div>
+	<dl>
+			<dt class="field">
+						<span class="method-title">populate</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="CompiledResources/Smarty_Internal_CompiledResource_File.html#methodpopulate">Smarty_Internal_CompiledResource_File::populate()</a> in smarty_internal_compiledresource_file.php</div>
+							<div class="index-item-description">populate Compiled Resource Object with meta data from Resource</div>
 					</dd>
 		</dl>
 	<a name="s"></a>
@@ -192,27 +217,40 @@
 						<span class="var-title">$smarty_content</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="CompiledResources/Smarty_Compiled.html#var$smarty_content">Smarty_Compiled::$smarty_content</a> in smarty_compiled.php</div>
+			<div class="index-item-details"><a href="CompiledResources/Smarty_CompiledResource.html#var$smarty_content">Smarty_CompiledResource::$smarty_content</a> in smarty_compiledresource.php</div>
 							<div class="index-item-description">instance of smarty content from compiled file</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$source</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="CompiledResources/Smarty_Compiled.html#var$source">Smarty_Compiled::$source</a> in smarty_compiled.php</div>
+			<div class="index-item-details"><a href="CompiledResources/Smarty_CompiledResource.html#var$source">Smarty_CompiledResource::$source</a> in smarty_compiledresource.php</div>
 							<div class="index-item-description">Source Object</div>
 					</dd>
 			<dt class="field">
-						<span class="include-title">smarty_compiled.php</span>
+						<span class="include-title">smarty_compiledresource.php</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="CompiledResources/_libs---sysplugins---smarty_compiled.php.html">smarty_compiled.php</a> in smarty_compiled.php</div>
+			<div class="index-item-details"><a href="CompiledResources/_libs---sysplugins---smarty_compiledresource.php.html">smarty_compiledresource.php</a> in smarty_compiledresource.php</div>
 					</dd>
 			<dt class="field">
-						Smarty_Compiled
+						<span class="include-title">smarty_internal_compiledresource_file.php</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="CompiledResources/Smarty_Compiled.html">Smarty_Compiled</a> in smarty_compiled.php</div>
+			<div class="index-item-details"><a href="CompiledResources/_libs---sysplugins---smarty_internal_compiledresource_file.php.html">smarty_internal_compiledresource_file.php</a> in smarty_internal_compiledresource_file.php</div>
+					</dd>
+			<dt class="field">
+						Smarty_CompiledResource
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="CompiledResources/Smarty_CompiledResource.html">Smarty_CompiledResource</a> in smarty_compiledresource.php</div>
+							<div class="index-item-description">Meta Data Container for Compiled Template Files</div>
+					</dd>
+			<dt class="field">
+						Smarty_Internal_CompiledResource_File
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="CompiledResources/Smarty_Internal_CompiledResource_File.html">Smarty_Internal_CompiledResource_File</a> in smarty_internal_compiledresource_file.php</div>
 							<div class="index-item-description">Meta Data Container for Compiled Template Files</div>
 					</dd>
 		</dl>
@@ -227,7 +265,7 @@
 						<span class="var-title">$timestamp</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="CompiledResources/Smarty_Compiled.html#var$timestamp">Smarty_Compiled::$timestamp</a> in smarty_compiled.php</div>
+			<div class="index-item-details"><a href="CompiledResources/Smarty_CompiledResource.html#var$timestamp">Smarty_CompiledResource::$timestamp</a> in smarty_compiledresource.php</div>
 							<div class="index-item-description">Compiled Timestamp</div>
 					</dd>
 		</dl>
@@ -240,6 +278,7 @@
 	<a class="index-letter" href="elementindex_CompiledResources.html#g">g</a>
 	<a class="index-letter" href="elementindex_CompiledResources.html#i">i</a>
 	<a class="index-letter" href="elementindex_CompiledResources.html#l">l</a>
+	<a class="index-letter" href="elementindex_CompiledResources.html#p">p</a>
 	<a class="index-letter" href="elementindex_CompiledResources.html#s">s</a>
 	<a class="index-letter" href="elementindex_CompiledResources.html#t">t</a>
 	<a class="index-letter" href="elementindex_CompiledResources.html#_">_</a>

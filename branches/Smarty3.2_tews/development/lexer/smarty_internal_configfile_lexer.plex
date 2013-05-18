@@ -19,6 +19,8 @@ class Smarty_Internal_Configfile_Lexer extends Smarty_Internal_Magic_Error
     public $value;
     public $node;
     public $line;
+    public $compiler;
+    public $mbstring_overload;
     private $state = 1;
     public $smarty_token_names = array (		// Text for parser error messages
    				);
@@ -76,31 +78,31 @@ any {
 %statename START
 
 commentstart {
-    $this->token = Smarty_Internal_Configfileparser::TPC_COMMENTSTART;
+    $this->token = Smarty_Internal_Configfile_Parser::TPC_COMMENTSTART;
     $this->yypushstate(self::COMMENT);
 }
 openB {
-    $this->token = Smarty_Internal_Configfileparser::TPC_OPENB;
+    $this->token = Smarty_Internal_Configfile_Parser::TPC_OPENB;
     $this->yypushstate(self::SECTION);
 }
 closeB {
-    $this->token = Smarty_Internal_Configfileparser::TPC_CLOSEB;
+    $this->token = Smarty_Internal_Configfile_Parser::TPC_CLOSEB;
 }
 equal {
-    $this->token = Smarty_Internal_Configfileparser::TPC_EQUAL;
+    $this->token = Smarty_Internal_Configfile_Parser::TPC_EQUAL;
     $this->yypushstate(self::VALUE);
 }
 whitespace {
     return false;
 }
 newline {
-    $this->token = Smarty_Internal_Configfileparser::TPC_NEWLINE;
+    $this->token = Smarty_Internal_Configfile_Parser::TPC_NEWLINE;
 }
 id {
-    $this->token = Smarty_Internal_Configfileparser::TPC_ID;
+    $this->token = Smarty_Internal_Configfile_Parser::TPC_ID;
 }
 text {
-    $this->token = Smarty_Internal_Configfileparser::TPC_OTHER;
+    $this->token = Smarty_Internal_Configfile_Parser::TPC_OTHER;
 }
 
 */
@@ -112,23 +114,23 @@ whitespace {
     return false;
 }
 float {
-    $this->token = Smarty_Internal_Configfileparser::TPC_FLOAT;
+    $this->token = Smarty_Internal_Configfile_Parser::TPC_FLOAT;
     $this->yypopstate();
 }
 int {
-    $this->token = Smarty_Internal_Configfileparser::TPC_INT;
+    $this->token = Smarty_Internal_Configfile_Parser::TPC_INT;
     $this->yypopstate();
 }
 tripple_quotes {
-    $this->token = Smarty_Internal_Configfileparser::TPC_TRIPPLE_QUOTES;
+    $this->token = Smarty_Internal_Configfile_Parser::TPC_TRIPPLE_QUOTES;
     $this->yypushstate(self::TRIPPLE);
 }
 single_quoted_string {
-    $this->token = Smarty_Internal_Configfileparser::TPC_SINGLE_QUOTED_STRING;
+    $this->token = Smarty_Internal_Configfile_Parser::TPC_SINGLE_QUOTED_STRING;
     $this->yypopstate();
 }
 double_quoted_string {
-    $this->token = Smarty_Internal_Configfileparser::TPC_DOUBLE_QUOTED_STRING;
+    $this->token = Smarty_Internal_Configfile_Parser::TPC_DOUBLE_QUOTED_STRING;
     $this->yypopstate();
 }
 maybe_bool {
@@ -137,16 +139,16 @@ maybe_bool {
         $this->yypushstate(self::NAKED_STRING_VALUE);
         return true; //reprocess in new state
     } else {
-        $this->token = Smarty_Internal_Configfileparser::TPC_BOOL;
+        $this->token = Smarty_Internal_Configfile_Parser::TPC_BOOL;
         $this->yypopstate();
     }
 }
 naked_string {
-    $this->token = Smarty_Internal_Configfileparser::TPC_NAKED_STRING;
+    $this->token = Smarty_Internal_Configfile_Parser::TPC_NAKED_STRING;
     $this->yypopstate();
 }
 newline {
-    $this->token = Smarty_Internal_Configfileparser::TPC_NAKED_STRING;
+    $this->token = Smarty_Internal_Configfile_Parser::TPC_NAKED_STRING;
     $this->value = "";
     $this->yypopstate();
 }
@@ -157,7 +159,7 @@ newline {
 %statename NAKED_STRING_VALUE
 
 naked_string {
-    $this->token = Smarty_Internal_Configfileparser::TPC_NAKED_STRING;
+    $this->token = Smarty_Internal_Configfile_Parser::TPC_NAKED_STRING;
     $this->yypopstate();
 }
 
@@ -170,10 +172,10 @@ whitespace {
     return false;
 }
 naked_string {
-    $this->token = Smarty_Internal_Configfileparser::TPC_NAKED_STRING;
+    $this->token = Smarty_Internal_Configfile_Parser::TPC_NAKED_STRING;
 }
 newline {
-    $this->token = Smarty_Internal_Configfileparser::TPC_NEWLINE;
+    $this->token = Smarty_Internal_Configfile_Parser::TPC_NEWLINE;
     $this->yypopstate();
 }
 
@@ -183,10 +185,10 @@ newline {
 %statename SECTION
 
 dot {
-    $this->token = Smarty_Internal_Configfileparser::TPC_DOT;
+    $this->token = Smarty_Internal_Configfile_Parser::TPC_DOT;
 }
 section {
-    $this->token = Smarty_Internal_Configfileparser::TPC_SECTION;
+    $this->token = Smarty_Internal_Configfile_Parser::TPC_SECTION;
     $this->yypopstate();
 }
 
@@ -195,7 +197,7 @@ section {
 %statename TRIPPLE
 
 tripple_quotes_end {
-    $this->token = Smarty_Internal_Configfileparser::TPC_TRIPPLE_QUOTES_END;
+    $this->token = Smarty_Internal_Configfile_Parser::TPC_TRIPPLE_QUOTES_END;
     $this->yypopstate();
     $this->yypushstate(self::START);
 }
@@ -216,7 +218,7 @@ text {
   } else {
     $this->value = substr($this->data,$this->counter,$to-$this->counter);
   }
-  $this->token = Smarty_Internal_Configfileparser::TPC_TRIPPLE_TEXT;
+  $this->token = Smarty_Internal_Configfile_Parser::TPC_TRIPPLE_TEXT;
 }
 */
 

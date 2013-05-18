@@ -38,7 +38,7 @@ function smarty_modifiercompiler_escape(Smarty_Compiler $compiler, $input, $esc_
         $char_set = '\'' . Smarty::$_CHARSET . '\'';
     }
     if (preg_match('/^([\'"]?)[a-zA-Z0-9_]+(\\1)$/', $esc_type)) {
-        // $esc_type is litteral so we can produce compiled code
+        // $esc_type is literal so we can produce compiled code
         $esc = trim($esc_type, "'\"");
         switch ($esc) {
             case 'html':

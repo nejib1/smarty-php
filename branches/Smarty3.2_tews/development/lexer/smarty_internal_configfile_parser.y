@@ -16,6 +16,7 @@
     public $successful = true;
     public $retvalue = 0;
     private $lex;
+    public $compiler;
     private $internalError = false;
 
     function __construct($lex, $compiler) {

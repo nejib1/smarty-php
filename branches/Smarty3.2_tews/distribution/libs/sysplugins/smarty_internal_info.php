@@ -1,6 +1,7 @@
 <?php
 
-class Smarty_Internal_Info {
+class Smarty_Internal_Info
+{
     const ALL = 511;
     const PHP = 1;
     const PROPERTIES = 2;
@@ -79,17 +80,20 @@ class Smarty_Internal_Info {
     protected $constants = array();
     protected $statics = array();
 
-    public function __construct(Smarty $smarty, Smarty_Internal_Template $template = null) {
+    public function __construct(Smarty $smarty, Smarty $template = null)
+    {
         $this->smarty = $smarty;
         $this->template = $template;
     }
 
-    public function getArray($flags=0) {
+    public function getArray($flags = 0)
+    {
         $this->analyze($flags);
         return $this->data;
     }
 
-    public function getHtml($flags=0) {
+    public function getHtml($flags = 0)
+    {
         $this->analyze($flags);
 
         $tpl = new Smarty();
@@ -102,7 +106,8 @@ class Smarty_Internal_Info {
         return $tpl->fetch('eval:' . $template);
     }
 
-    protected function analyze($flags=0) {
+    protected function analyze($flags = 0)
+    {
         $started = microtime(true);
         $this->data = array(
             'na' => self::NOT_AVAILABLE,
@@ -157,7 +162,8 @@ class Smarty_Internal_Info {
         $this->data['duration'] = microtime(true) - $started;
     }
 
-    protected function analyzeTemplates() {
+    protected function analyzeTemplates()
+    {
         // run through ALL templates,
         //  test if they compile
         //  test if they contain deprecated plugins
@@ -165,7 +171,8 @@ class Smarty_Internal_Info {
         //  show include paths
     }
 
-    protected function analyzeEnvironment() {
+    protected function analyzeEnvironment()
+    {
         if ($this->php) {
             return;
         }
@@ -183,7 +190,7 @@ class Smarty_Internal_Info {
                         'func_overload' => array(
                             'name' => 'Function overload',
                             'href' => 'http://php.net/manual/en/mbstring.configuration.php#ini.mbstring.func-overload',
-                            'is_value' => (bool) (ini_get('mbstring.func_overload') & 2),
+                            'is_value' => (bool)(ini_get('mbstring.func_overload') & 2),
                             'best_value' => false,
                             'need_value' => null,
                         ),
@@ -209,7 +216,8 @@ class Smarty_Internal_Info {
         );
     }
 
-    protected function analyzeConstants() {
+    protected function analyzeConstants()
+    {
         if ($this->constants) {
             return;
         }
@@ -239,7 +247,8 @@ class Smarty_Internal_Info {
         $this->constants = $constants;
     }
 
-    protected function analyzeStatics() {
+    protected function analyzeStatics()
+    {
         if ($this->statics) {
             return;
         }
@@ -266,7 +275,8 @@ class Smarty_Internal_Info {
         $this->statics = $statics;
     }
 
-    protected function analyzeProperties() {
+    protected function analyzeProperties()
+    {
         if ($this->properties) {
             return;
         }
@@ -350,7 +360,8 @@ class Smarty_Internal_Info {
         $this->analyzePropertiesPlausibility();
     }
 
-    protected function analyzePropertiesPlausibility() {
+    protected function analyzePropertiesPlausibility()
+    {
         // maybe these checks should be performed by the compiler?
 
         if ($this->properties['left_delimiter']['smarty'] === $this->properties['right_delimiter']['smarty']) {
@@ -367,7 +378,8 @@ class Smarty_Internal_Info {
         }
     }
 
-    protected function analyzeFilesystem() {
+    protected function analyzeFilesystem()
+    {
         if ($this->filesystem) {
             return;
         }
@@ -428,7 +440,8 @@ class Smarty_Internal_Info {
         ksort($this->filesystem);
     }
 
-    protected function analyzeDirectory($path, $expect_writable=false, $use_include_path=false) {
+    protected function analyzeDirectory($path, $expect_writable = false, $use_include_path = false)
+    {
         $includepath = null;
         $realpath = realpath($path);
         if (!$realpath && $use_include_path && !preg_match('/^([\/\\\\]|[a-zA-Z]:[\/\\\\])/', $path)) {
@@ -467,7 +480,8 @@ class Smarty_Internal_Info {
         );
     }
 
-    protected function analyzePlugins() {
+    protected function analyzePlugins()
+    {
         if ($this->plugins) {
             return;
         }
@@ -551,7 +565,7 @@ class Smarty_Internal_Info {
                     'type' => $type,
                     'file' => $file->getFilename(),
                     'realpath' => $realpath,
-                    'link' => $link,
+//                    'link' => $link,
                     'function' => $_name,
                     'line' => $function instanceof Reflector ? $function->getStartLine() : null,
                     'signature' => $signature,
@@ -580,7 +594,7 @@ class Smarty_Internal_Info {
                 }
 
                 if ($function instanceof ReflectionFunction) {
-                    list(,, $link) = $this->reflectedAnnotations($function);
+                    list(, , $link) = $this->reflectedAnnotations($function);
                 }
 
                 $this->plugins[$type][$name] = array(
@@ -588,7 +602,7 @@ class Smarty_Internal_Info {
                     'type' => $type,
                     'file' => $function ? basename($function->getFileName()) : null,
                     'realpath' => $function ? $function->getFileName() : null,
-                    'link' => $function ? $link : null,
+//                    'link' => $function ? $link : null,
                     'function' => $function ? $function->getName() : null,
                     'line' => $function ? $function->getStartLine() : null,
                     'signature' => $function ? $this->reflectedSignature($function) : null,
@@ -618,7 +632,7 @@ class Smarty_Internal_Info {
                 }
 
                 if ($function instanceof ReflectionFunction) {
-                    list(,, $link) = $this->reflectedAnnotations($function);
+                    list(, , $link) = $this->reflectedAnnotations($function);
                 }
 
                 $this->plugins[$type][$name] = array(
@@ -647,7 +661,8 @@ class Smarty_Internal_Info {
         }
     }
 
-    protected function analyzeRegistered() {
+    protected function analyzeRegistered()
+    {
         if ($this->registered) {
             return;
         }
@@ -670,7 +685,8 @@ class Smarty_Internal_Info {
         $this->registered = $registered;
     }
 
-    protected function analyzeDefaults() {
+    protected function analyzeDefaults()
+    {
         if ($this->defaults) {
             return;
         }
@@ -684,7 +700,8 @@ class Smarty_Internal_Info {
         // Smarty::$autoload_filters might be getting an overhaul
     }
 
-    protected function analyzeSecurity() {
+    protected function analyzeSecurity()
+    {
         if ($this->security) {
             return;
         }
@@ -757,7 +774,8 @@ class Smarty_Internal_Info {
         ksort($this->security);
     }
 
-    protected function reflectedAnnotations($function) {
+    protected function reflectedAnnotations($function)
+    {
         $attributes = array(null, null);
 
         /*
@@ -789,7 +807,8 @@ class Smarty_Internal_Info {
         return $attributes;
     }
 
-    protected function reflectedSignature(ReflectionFunctionAbstract $function) {
+    protected function reflectedSignature(ReflectionFunctionAbstract $function)
+    {
         $params = array();
         foreach ($function->getParameters() as $p) {
             $param = '';
@@ -801,7 +820,7 @@ class Smarty_Internal_Info {
             try {
                 $param .= '=' . var_export($p->getDefaultValue(), true);
             } catch (ReflectionException $e) {
-                
+
             }
 
             $params[] = $param;
@@ -811,7 +830,8 @@ class Smarty_Internal_Info {
         return $signature;
     }
 
-    protected function reflectedFunctionFromFile($function_name, $filepath) {
+    protected function reflectedFunctionFromFile($function_name, $filepath)
+    {
         // Not sure if this is really such a great idea…
         // make sure we're not running into syntax errors
         $last = exec('php -l ' . escapeshellarg($filepath));
@@ -834,7 +854,8 @@ class Smarty_Internal_Info {
         return null;
     }
 
-    protected function reflectedFunctionOfCallable($callback) {
+    protected function reflectedFunctionOfCallable($callback)
+    {
         try {
             if (is_string($callback) || $callback instanceof Closure) {
                 return new ReflectionFunction($callback);
@@ -847,32 +868,33 @@ class Smarty_Internal_Info {
                 return $reflection->getMethod('__invoke');
             }
         } catch (ReflectionException $e) {
-            
+
         }
 
         return null;
     }
 
-    protected function sanitizeValue($name, $value, $type) {
+    protected function sanitizeValue($name, $value, $type)
+    {
         switch ($type) {
             case 'boolean':
-                $value = (boolean) $value;
+                $value = (boolean)$value;
                 break;
 
             case 'integer':
-                $value = (int) $value;
+                $value = (int)$value;
                 break;
 
             case 'float':
-                $value = (int) $value;
+                $value = (int)$value;
                 break;
 
             case 'array':
-                $value = (array) $value;
+                $value = (array)$value;
                 break;
 
             case 'string':
-                $value = (string) $value;
+                $value = (string)$value;
                 break;
 
             case 'callable':

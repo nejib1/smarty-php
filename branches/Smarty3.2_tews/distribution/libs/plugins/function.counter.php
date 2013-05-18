@@ -17,10 +17,10 @@
  * @link http://www.smarty.net/docs/en/language.custom.functions.tpl#language.function.counter {counter}
  *       (Smarty online manual)
  * @param array $params   parameters
- * @param Smarty $template template object
+ * @param Smarty $tpl_obj template object
  * @return string|null
  */
-function smarty_function_counter($params, $template)
+function smarty_function_counter($params, $tpl_obj)
 {
     static $counters = array();
 

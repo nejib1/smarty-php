@@ -143,7 +143,7 @@ class Smarty_Internal_Template_Lexer extends Smarty_Internal_Magic_Error
                 $yymatches = array_filter($yymatches, 'strlen'); // remove empty sub-patterns
                 if (!count($yymatches)) {
                     throw new Exception('Error: lexing failed because a rule matched' .
-                        ' an empty string.  Input "' . substr($this->data,
+                    ' an empty string.  Input "' . substr($this->data,
                         $this->counter, 5) . '... state BOM');
                 }
                 next($yymatches); // skip global match
@@ -177,7 +177,7 @@ class Smarty_Internal_Template_Lexer extends Smarty_Internal_Magic_Error
                 }
             } else {
                 throw new Exception('Unexpected input at line' . $this->line .
-                    ': ' . $this->data[$this->counter]);
+                ': ' . $this->data[$this->counter]);
             }
             break;
         } while (true);
@@ -238,7 +238,7 @@ class Smarty_Internal_Template_Lexer extends Smarty_Internal_Magic_Error
                 $yymatches = array_filter($yymatches, 'strlen'); // remove empty sub-patterns
                 if (!count($yymatches)) {
                     throw new Exception('Error: lexing failed because a rule matched' .
-                        ' an empty string.  Input "' . substr($this->data,
+                    ' an empty string.  Input "' . substr($this->data,
                         $this->counter, 5) . '... state TEXT');
                 }
                 next($yymatches); // skip global match
@@ -272,7 +272,7 @@ class Smarty_Internal_Template_Lexer extends Smarty_Internal_Magic_Error
                 }
             } else {
                 throw new Exception('Unexpected input at line' . $this->line .
-                    ': ' . $this->data[$this->counter]);
+                ': ' . $this->data[$this->counter]);
             }
             break;
         } while (true);
@@ -558,7 +558,7 @@ class Smarty_Internal_Template_Lexer extends Smarty_Internal_Magic_Error
                 $yymatches = array_filter($yymatches, 'strlen'); // remove empty sub-patterns
                 if (!count($yymatches)) {
                     throw new Exception('Error: lexing failed because a rule matched' .
-                        ' an empty string.  Input "' . substr($this->data,
+                    ' an empty string.  Input "' . substr($this->data,
                         $this->counter, 5) . '... state SMARTY');
                 }
                 next($yymatches); // skip global match
@@ -592,7 +592,7 @@ class Smarty_Internal_Template_Lexer extends Smarty_Internal_Magic_Error
                 }
             } else {
                 throw new Exception('Unexpected input at line' . $this->line .
-                    ': ' . $this->data[$this->counter]);
+                ': ' . $this->data[$this->counter]);
             }
             break;
         } while (true);
@@ -1090,7 +1090,7 @@ class Smarty_Internal_Template_Lexer extends Smarty_Internal_Magic_Error
                 $yymatches = array_filter($yymatches, 'strlen'); // remove empty sub-patterns
                 if (!count($yymatches)) {
                     throw new Exception('Error: lexing failed because a rule matched' .
-                        ' an empty string.  Input "' . substr($this->data,
+                    ' an empty string.  Input "' . substr($this->data,
                         $this->counter, 5) . '... state LITERAL');
                 }
                 next($yymatches); // skip global match
@@ -1124,7 +1124,7 @@ class Smarty_Internal_Template_Lexer extends Smarty_Internal_Magic_Error
                 }
             } else {
                 throw new Exception('Unexpected input at line' . $this->line .
-                    ': ' . $this->data[$this->counter]);
+                ': ' . $this->data[$this->counter]);
             }
             break;
         } while (true);
@@ -1228,7 +1228,7 @@ class Smarty_Internal_Template_Lexer extends Smarty_Internal_Magic_Error
                 $yymatches = array_filter($yymatches, 'strlen'); // remove empty sub-patterns
                 if (!count($yymatches)) {
                     throw new Exception('Error: lexing failed because a rule matched' .
-                        ' an empty string.  Input "' . substr($this->data,
+                    ' an empty string.  Input "' . substr($this->data,
                         $this->counter, 5) . '... state DOUBLEQUOTEDSTRING');
                 }
                 next($yymatches); // skip global match
@@ -1262,7 +1262,7 @@ class Smarty_Internal_Template_Lexer extends Smarty_Internal_Magic_Error
                 }
             } else {
                 throw new Exception('Unexpected input at line' . $this->line .
-                    ': ' . $this->data[$this->counter]);
+                ': ' . $this->data[$this->counter]);
             }
             break;
         } while (true);

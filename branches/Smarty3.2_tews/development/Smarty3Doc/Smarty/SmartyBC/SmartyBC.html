@@ -323,7 +323,7 @@
 								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$allow_ambiguous_resources">Smarty::$allow_ambiguous_resources</a></span><br>
 							</span>
 													<span class="var-title">
-								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$allow_phptpl_objs">Smarty::$allow_phptpl_objs</a></span><br>
+								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$allow_php_templates">Smarty::$allow_php_templates</a></span><br>
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$allow_relative_path">Smarty::$allow_relative_path</a></span><br>
@@ -360,6 +360,9 @@
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$caching_type">Smarty::$caching_type</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$compiled_type">Smarty::$compiled_type</a></span><br>
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$compiletime_options">Smarty::$compiletime_options</a></span><br>
@@ -425,7 +428,13 @@
 								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$enable_traceback">Smarty::$enable_traceback</a></span><br>
 							</span>
 													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$error_processing">Smarty::$error_processing</a></span><br>
+							</span>
+													<span class="var-title">
 								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$error_reporting">Smarty::$error_reporting</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$error_tpl">Smarty::$error_tpl</a></span><br>
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$error_unassigned">Smarty::$error_unassigned</a></span><br>
@@ -479,9 +488,6 @@
 								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$properties">Smarty::$properties</a></span><br>
 							</span>
 													<span class="var-title">
-								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$registered_cache_resources">Smarty::$registered_cache_resources</a></span><br>
-							</span>
-													<span class="var-title">
 								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$registered_classes">Smarty::$registered_classes</a></span><br>
 							</span>
 													<span class="var-title">
@@ -495,6 +501,9 @@
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$registered_resources">Smarty::$registered_resources</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$resource_cache">Smarty::$resource_cache</a></span><br>
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$right_delimiter">Smarty::$right_delimiter</a></span><br>
@@ -513,6 +522,9 @@
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$start_time">Smarty::$start_time</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$system_resources">Smarty::$system_resources</a></span><br>
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$template_functions">Smarty::$template_functions</a></span><br>
@@ -579,9 +591,6 @@
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$_previous_error_handler">Smarty::$_previous_error_handler</a></span><br>
-							</span>
-													<span class="var-title">
-								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$_resource_handlers">Smarty::$_resource_handlers</a></span><br>
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../../Smarty/Smarty/Smarty.html#var$_smarty_vars">Smarty::$_smarty_vars</a></span><br>
@@ -1912,7 +1921,9 @@
 													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#method_getFilterName">Smarty::_getFilterName()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#method_getScopePointer">Smarty::_getScopePointer()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#method_getTemplateObj">Smarty::_getTemplateObj()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#method_loadHandler">Smarty::_loadHandler()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#method_loadPlugin">Smarty::_loadPlugin()</a></span><br>
+													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#method_resourceLoader">Smarty::_resourceLoader()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#method__call">Smarty::__call()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#method__clone">Smarty::__clone()</a></span><br>
 													<span class="method-name"><a href="../../Smarty/Smarty/Smarty.html#method__destruct">Smarty::__destruct()</a></span><br>
@@ -1968,6 +1979,9 @@
 									<p>Inherited from <span class="classname"><a href="../../Smarty/Smarty/Smarty.html">Smarty</a></span></p>
 					<blockquote>
 													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Smarty/Smarty.html#constCACHE">Smarty::CACHE</a></span><br>
+							</span>
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Smarty/Smarty.html#constCACHING_LIFETIME_CURRENT">Smarty::CACHING_LIFETIME_CURRENT</a></span><br>
 							</span>
 													<span class="const-title">
@@ -1987,6 +2001,9 @@
 							</span>
 													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Smarty/Smarty.html#constCOMPILECHECK_ON">Smarty::COMPILECHECK_ON</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Smarty/Smarty.html#constCOMPILED">Smarty::COMPILED</a></span><br>
 							</span>
 													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Smarty/Smarty.html#constFILTER_OUTPUT">Smarty::FILTER_OUTPUT</a></span><br>
@@ -2058,6 +2075,9 @@
 								<span class="const-name"><a href="../../Smarty/Smarty/Smarty.html#constSMARTY_VERSION">Smarty::SMARTY_VERSION</a></span><br>
 							</span>
 													<span class="const-title">
+								<span class="const-name"><a href="../../Smarty/Smarty/Smarty.html#constSOURCE">Smarty::SOURCE</a></span><br>
+							</span>
+													<span class="const-title">
 								<span class="const-name"><a href="../../Smarty/Smarty/Smarty.html#constUNASSIGNED_EXCEPTION">Smarty::UNASSIGNED_EXCEPTION</a></span><br>
 							</span>
 													<span class="const-title">
@@ -2072,7 +2092,7 @@
 	</div>
 
 	<p class="notes" id="credit">
-		Documentation generated on Sat, 11 May 2013 08:18:54 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Sat, 18 May 2013 20:35:10 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

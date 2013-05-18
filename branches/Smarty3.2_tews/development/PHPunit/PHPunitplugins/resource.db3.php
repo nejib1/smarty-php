@@ -10,15 +10,15 @@
  */
 class Smarty_Resource_Db3 extends Smarty_Resource
 {
-    public function populate(Smarty_Template_Source $source, Smarty $_template = null)
+    public function populate(Smarty $tpl_obj = null)
     {
-        $source->filepath = 'db3:';
-        $source->uid = sha1($source->resource);
-        $source->timestamp = 0;
-        $source->exists = true;
+        $this->filepath = 'db3:';
+        $this->uid = sha1($this->resource);
+        $this->timestamp = 0;
+        $this->exists = true;
     }
 
-    public function getContent(Smarty_Template_Source $source)
+    public function getContent()
     {
         return '{$x="hello world"}{$x}';
     }

@@ -22,21 +22,21 @@ abstract class Smarty_Resource_Uncompiled extends Smarty_Resource
     /**
      * Render and output the template (without using the compiler)
      *
-     * @param Smarty_Template_Source $source    source object
      * @param Smarty $tpl_obj template object
-     * @throws SmartyException on failure
+     * @return
+     * @internal param \Smarty_Resource $source source object
      */
-    public abstract function renderUncompiled(Smarty_Template_Source $source, Smarty $tpl_obj);
+    public abstract function renderUncompiled(Smarty $tpl_obj);
 
     /**
      * get rendered template output from compiled template
      *
-     * @param Smarty_Template_Source $source    source object
+     * @param Smarty_Resource $source    source object
      * @param Smarty $tpl_obj template object
      * @throws Exception
      * @return string
      */
-    public function getRenderedTemplate(Smarty_Template_Source $source, $tpl_obj)
+    public function getRenderedTemplate(Smarty_Resource $source, $tpl_obj)
     {
         if ($tpl_obj->debugging) {
             Smarty_Internal_Debug::start_render($tpl_obj);

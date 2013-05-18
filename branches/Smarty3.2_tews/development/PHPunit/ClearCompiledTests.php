@@ -88,7 +88,6 @@ class ClearCompiledTests extends PHPUnit_Framework_TestCase
             }
         }
 
-        Smarty_Resource::$sources = array();
         /*
         foreach (Smarty::$template_objects as $tpl) {
             $tpl->cleanPointer();

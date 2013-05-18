@@ -89,9 +89,9 @@ class Smarty_Internal_Compile_Import extends Smarty_Internal_CompileBase
         $tpl->compiler->compileTemplate();
         $tpl->compiler->template_code->php("/*  End of imported template \"{$tpl_name}\" */")->newline();
         // merge compiled code for {function} tags
-        if (!empty($tpl->compiler->tpl_obj_functions)) {
-            $compiler->tpl_obj_functions = array_merge($compiler->tpl_obj_functions, $tpl->compiler->tpl_obj_functions);
-            $compiler->tpl_obj_functions_code = array_merge($compiler->tpl_obj_functions_code, $tpl->compiler->tpl_obj_functions_code);
+        if (!empty($tpl->compiler->template_functions)) {
+            $compiler->template_functions = array_merge($compiler->template_functions, $tpl->compiler->template_functions);
+            $compiler->template_functions_code = array_merge($compiler->template_functions_code, $tpl->compiler->template_functions_code);
         }
         // merge compiled code for {block} tags
         if (!empty($tpl->compiler->inheritance_blocks)) {

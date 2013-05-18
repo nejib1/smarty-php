@@ -2795,7 +2795,7 @@ class Smarty_Internal_Template_Parser extends Smarty_Internal_Magic_Error #line 
         if (self::$yyTraceFILE && $this->yyidx >= 0) {
             fwrite(self::$yyTraceFILE,
                 self::$yyTracePrompt . 'Popping ' . $this->yyTokenName[$yytos->major] .
-                    "\n");
+                "\n");
         }
         $yymajor = $yytos->major;
         self::yy_destructor($yymajor, $yytos->minor);

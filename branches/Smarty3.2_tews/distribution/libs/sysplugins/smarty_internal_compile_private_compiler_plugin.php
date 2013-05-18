@@ -159,7 +159,7 @@ class Smarty_Internal_Compile_Private_Compiler_PluginClose extends Smarty_Intern
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);
 
-        $this->tag_nocache = $compiler->nocache;
+        $compiler->tag_nocache = $compiler->nocache;
         $compiler->nocache = $this->closeTag($compiler, array(substr($tag, 0, -5)));
 
         $new_args = array();

@@ -23,6 +23,7 @@ class CacheResourceCustomRegisteredTests extends CacheResourceCustomMysqlTests
         }
         $this->smarty->caching_type = 'foobar';
         $this->smarty->registerCacheResource('foobar', new Smarty_CacheResource_Mysqltest());
+        $this->truncateTable();
     }
 }
 

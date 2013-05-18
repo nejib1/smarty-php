@@ -45,10 +45,10 @@
  * @link http://www.smarty.net/docs/en/language.function.html.table.tpl {html_table}
  *          (Smarty online manual)
  * @param array $params   parameters
- * @param Smarty $template template object
+ * @param Smarty $tpl_obj template object
  * @return string
  */
-function smarty_function_html_table($params, $template)
+function smarty_function_html_table($params, $tpl_obj)
 {
     $table_attr = 'border="1"';
     $tr_attr = '';

@@ -59,7 +59,7 @@ class Smarty_Internal_Compile_While extends Smarty_Internal_CompileBase
             }
             if (is_array($parameter['if condition']['var'])) {
                 $this->php("if (!isset(\$_scope->{$var}) || !is_array(\$_scope->{$var}->value)) {")->newline()->indent();
-                $this->php("\$this->_createLocalArrayVariable(" . $parameter['if condition']['var']['var'] . ", \$_smarty_tpl, {$_nocache});")->newline();
+                $this->php("\$this->_createLocalArrayVariable(" . $parameter['if condition']['var']['var'] . ", \$_scope, {$_nocache});")->newline();
                 $this->outdent()->php("}")->newline();
                 $this->php("while (\$_scope->{$var}->value" . $parameter['if condition']['var']['smarty_internal_index'] . " = " . $parameter['if condition']['value'] . "){")->newline()->indent();
             } else {

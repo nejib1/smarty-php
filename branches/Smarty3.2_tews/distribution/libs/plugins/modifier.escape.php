@@ -18,7 +18,7 @@
  * @link http://www.smarty.net/docs/en/language.modifier.escape.tpl (Smarty online manual)
  * @author Monte Ohrt <monte at ohrt dot com>
  *
- * @param Smarty $template template object
+ * @param Smarty $tpl_obj template object
  * @param string $string        input string
  * @param string $esc_type      escape type
  * @param string $char_set      character set, used for htmlspecialchars() or htmlentities()
@@ -26,7 +26,7 @@
  * @throws SmartyRuntimeException
  * @return string escaped input string
  */
-function smarty_modifier_escape(Smarty $template, $string, $esc_type = 'html', $char_set = null, $double_encode = true)
+function smarty_modifier_escape(Smarty $tpl_obj, $string, $esc_type = 'html', $char_set = null, $double_encode = true)
 {
     static $_double_encode = null;
     if ($_double_encode === null) {
@@ -184,6 +184,6 @@ function smarty_modifier_escape(Smarty $template, $string, $esc_type = 'html', $
             return $return;
 
         default:
-            throw new SmartyRuntimeException("Modifier escape: Illegal escape type '{$esc_type}'", $template);
+            throw new SmartyRuntimeException("Modifier escape: Illegal escape type '{$esc_type}'", $tpl_obj);
     }
 }

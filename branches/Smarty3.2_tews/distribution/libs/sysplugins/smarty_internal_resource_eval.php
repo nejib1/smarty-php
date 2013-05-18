@@ -23,29 +23,38 @@ class Smarty_Internal_Resource_Eval extends Smarty_Resource_Recompiled
 {
 
     /**
-     * populate Source Object with meta data from Resource
+     * populate Source Object filepath
      *
-     * @param Smarty_Template_Source $source    source object
      * @param Smarty $tpl_obj template object
      * @return void
      */
-    public function populate(Smarty_Template_Source $source, Smarty $tpl_obj = null)
+    public function buildFilepath(Smarty $tpl_obj = null)
     {
-        $source->uid = $source->filepath = sha1($source->name);
-        $source->timestamp = false;
-        $source->exists = true;
+        $this->populate($tpl_obj);
+    }
+
+    /**
+     * populate Source Object with meta data from Resource
+     *
+     * @param Smarty $tpl_obj template object
+     * @return void
+     */
+    public function populate(Smarty $tpl_obj = null)
+    {
+        $this->uid = $this->filepath = sha1($this->name);
+        $this->timestamp = false;
+        $this->exists = true;
     }
 
     /**
      * Load template's source from $resource_name into current template object
      *
      * @uses decode() to decode base64 and urlencoded template_resources
-     * @param Smarty_Template_Source $source source object
      * @return string template source
      */
-    public function getContent(Smarty_Template_Source $source)
+    public function getContent()
     {
-        return $this->decode($source->name);
+        return $this->decode($this->name);
     }
 
     /**
@@ -75,7 +84,7 @@ class Smarty_Internal_Resource_Eval extends Smarty_Resource_Recompiled
      * @param string $resource_name resource_name to make unique
      * @return string unique resource name
      */
-    protected function buildUniqueResourceName(Smarty $smarty, $resource_name)
+    public function buildUniqueResourceName(Smarty $smarty, $resource_name)
     {
         return get_class($this) . '#' . $this->decode($resource_name);
     }
@@ -83,10 +92,9 @@ class Smarty_Internal_Resource_Eval extends Smarty_Resource_Recompiled
     /**
      * Determine basename for compiled filename
      *
-     * @param Smarty_Template_Source $source source object
      * @return string resource's basename
      */
-    public function getBasename(Smarty_Template_Source $source)
+    public function getBasename()
     {
         return '';
     }

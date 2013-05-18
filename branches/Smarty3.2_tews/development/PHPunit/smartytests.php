@@ -33,7 +33,6 @@ class SmartyTests extends PHPUnit_Framework_TestSuite
         $smarty->setPluginsDir(SMARTY_PLUGINS_DIR);
         $smarty->setCacheDir('.' . DS . 'cache' . DS);
         $smarty->setConfigDir('.' . DS . 'configs' . DS);
-        Smarty::$template_objects = array();
         $smarty->tpl_vars =new Smarty_Variable_Scope($smarty, null, Smarty::IS_SMARTY, 'Smarty root');
         $smarty->template_functions = array();
         $smarty->force_compile = false;
@@ -72,10 +71,10 @@ class SmartyTests extends PHPUnit_Framework_TestSuite
         self::_init(SmartyTests::$smarty);
         self::_init(SmartyTests::$smartyBC);
         self::_init(SmartyTests::$smartyBC31);
-        Smarty_Resource::$sources = array();
+        Smarty::$template_objects = array();
+        Smarty::$resource_cache = array();
         Smarty::$global_tpl_vars = new stdClass;
         Smarty::$_smarty_vars = array();
-        Smarty_CacheResource::$resources = array();
         SmartyTests::$smartyBC->registerPlugin('block', 'php', 'smarty_php_tag');
     }
 

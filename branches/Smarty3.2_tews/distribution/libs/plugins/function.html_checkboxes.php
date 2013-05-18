@@ -38,11 +38,11 @@
  * @author credits to Monte Ohrt <monte at ohrt dot com>
  * @version    1.0
  * @param array $params parameters
- * @param object $template template object
+ * @param object $tpl_obj template object
  * @return string
  * @uses smarty_function_escape_special_chars()
  */
-function smarty_function_html_checkboxes($params, $template)
+function smarty_function_html_checkboxes($params, $tpl_obj)
 {
     require_once(SMARTY_PLUGINS_DIR . 'shared.escape_special_chars.php');
 

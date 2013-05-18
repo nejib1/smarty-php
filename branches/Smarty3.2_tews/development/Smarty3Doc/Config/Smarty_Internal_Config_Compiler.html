@@ -3,13 +3,13 @@
   <html xmlns="http://www.w3.org/1999/xhtml">
 		<head>
 			<!-- template designed by Marco Von Ballmoos -->
-			<title>Docs For Class Smarty_Internal_ConfigCompiler</title>
+			<title>Docs For Class Smarty_Internal_Config_Compiler</title>
 			<link rel="stylesheet" href="../media/stylesheet.css" />
 			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
 		</head>
 		<body>
 			<div class="page-body">			
-<h2 class="class-name">Class Smarty_Internal_ConfigCompiler</h2>
+<h2 class="class-name">Class Smarty_Internal_Config_Compiler</h2>
 
 <a name="sec-description"></a>
 <div class="info-box">
@@ -24,13 +24,15 @@
         		<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Main config file compiler class</p>
 		<p class="notes">
-			Located in <a class="field" href="_libs---sysplugins---smarty_internal_configcompiler.php.html">/libs/sysplugins/smarty_internal_configcompiler.php</a> (line <span class="field">20</span>)
+			Located in <a class="field" href="_libs---sysplugins---smarty_internal_config_compiler.php.html">/libs/sysplugins/smarty_internal_config_compiler.php</a> (line <span class="field">20</span>)
 		</p>
 		
 				
-		<pre><a href="../Compiler/Smarty_Internal_Code.html">Smarty_Internal_Code</a>
+		<pre><a href="../Smarty/Smarty_Internal_Magic_Error.html">Smarty_Internal_Magic_Error</a>
    |
-   --Smarty_Internal_ConfigCompiler</pre>
+   --<a href="../Compiler/Smarty_Internal_Code.html">Smarty_Internal_Code</a>
+      |
+      --Smarty_Internal_Config_Compiler</pre>
 	
 			</div>
 </div>
@@ -49,7 +51,7 @@
 								</div>
 		<div class="info-box-body">
 			<div class="var-summary">
-																																																<div class="var-title">
+																																																																								<div class="var-title">
 					<span class="var-type">array</span>
 					<a href="#$config_data" title="details" class="var-name">$config_data</a>
 				</div>
@@ -62,8 +64,20 @@
 					<a href="#$lex" title="details" class="var-name">$lex</a>
 				</div>
 																<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$lexer_class" title="details" class="var-name">$lexer_class</a>
+				</div>
+																<div class="var-title">
 					<span class="var-type">object</span>
 					<a href="#$parser" title="details" class="var-name">$parser</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$parser_class" title="details" class="var-name">$parser_class</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>
+					<a href="#$tpl_obj" title="details" class="var-name">$tpl_obj</a>
 				</div>
 											</div>
 		</div>
@@ -83,9 +97,9 @@
 			<div class="method-summary">
 																												
 												<div class="method-definition">
-											<span class="method-result">Smarty_Internal_ConfigCompiler</span>
+											<span class="method-result">Smarty_Internal_Config_Compiler</span>
 										<a href="#__construct" title="details" class="method-name">__construct</a>
-											(<span class="var-type">string</span>&nbsp;<span class="var-name">$lexerclass</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$parserclass</span>, <span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$template</span>)
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$lexer_class</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$parser_class</span>, <span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$tpl_obj</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result">bool</span>
@@ -121,7 +135,7 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$config_data</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">49</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">70</span>)
 		</span>
 	</div>
 
@@ -143,7 +157,7 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$file_dependency</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">42</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">63</span>)
 		</span>
 	</div>
 
@@ -165,7 +179,7 @@
 		<span class="var-title">
 			<span class="var-type">object</span>
 			<span class="var-name">$lex</span>
-						(line <span class="line-number">28</span>)
+						(line <span class="line-number">42</span>)
 		</span>
 	</div>
 
@@ -180,19 +194,85 @@
 		
 
 </div>
-<a name="var$parser" id="$parser"><!-- --></A>
+<a name="var$lexer_class" id="$lexer_class"><!-- --></A>
 <div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$lexer_class</span>
+			 = <span class="var-default"> ''</span>			(line <span class="line-number">28</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Lexer class name</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$parser" id="$parser"><!-- --></A>
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">object</span>
 			<span class="var-name">$parser</span>
-						(line <span class="line-number">35</span>)
+						(line <span class="line-number">49</span>)
 		</span>
 	</div>
 
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Parser object</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$parser_class" id="$parser_class"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$parser_class</span>
+			 = <span class="var-default"> ''</span>			(line <span class="line-number">35</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Parser class name</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$tpl_obj" id="$tpl_obj"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>
+			<span class="var-name">$tpl_obj</span>
+			 = <span class="var-default"> null</span>			(line <span class="line-number">56</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">current template</p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
@@ -239,10 +319,10 @@
 			<A NAME='method_detail'></A>
 
 <a name="method__construct" id="__construct"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">Constructor __construct</span> (line <span class="line-number">58</span>)
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">79</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -252,23 +332,23 @@
 			</ul>
 	
 	<div class="method-signature">
-		<span class="method-result">Smarty_Internal_ConfigCompiler</span>
+		<span class="method-result">Smarty_Internal_Config_Compiler</span>
 		<span class="method-name">
 			__construct
 		</span>
-					(<span class="var-type">string</span>&nbsp;<span class="var-name">$lexerclass</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$parserclass</span>, <span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$template</span>)
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$lexer_class</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$parser_class</span>, <span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>&nbsp;<span class="var-name">$tpl_obj</span>)
 			</div>
 	
 			<ul class="parameters">
 					<li>
 				<span class="var-type">string</span>
-				<span class="var-name">$lexerclass</span><span class="var-description">: config lexer class name</span>			</li>
+				<span class="var-name">$lexer_class</span><span class="var-description">: config lexer class name</span>			</li>
 					<li>
 				<span class="var-type">string</span>
-				<span class="var-name">$parserclass</span><span class="var-description">: config parser class name</span>			</li>
+				<span class="var-name">$parser_class</span><span class="var-description">: config parser class name</span>			</li>
 					<li>
 				<span class="var-type"><a href="../Smarty/Smarty/Smarty.html">Smarty</a></span>
-				<span class="var-name">$template</span><span class="var-description">: clone of Smarty class for config file</span>			</li>
+				<span class="var-name">$tpl_obj</span><span class="var-description">: clone of Smarty class for config file</span>			</li>
 				</ul>
 		
 			<hr class="separator" />
@@ -280,10 +360,10 @@
 			
 	</div>
 <a name="methodcompileTemplateSource" id="compileTemplateSource"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">compileTemplateSource</span> (line <span class="line-number">72</span>)
+		<span class="method-title">compileTemplateSource</span> (line <span class="line-number">93</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -305,10 +385,10 @@
 			
 	</div>
 <a name="methodtrigger_config_file_error" id="trigger_config_file_error"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">trigger_config_file_error</span> (line <span class="line-number">139</span>)
+		<span class="method-title">trigger_config_file_error</span> (line <span class="line-number">159</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -356,13 +436,21 @@
 													<span class="method-name"><a href="../Compiler/Smarty_Internal_Code.html#methodstring">Smarty_Internal_Code::string()</a></span><br>
 													<span class="method-name"><a href="../Compiler/Smarty_Internal_Code.html#method_processPHPoutput">Smarty_Internal_Code::_processPHPoutput()</a></span><br>
 											</blockquote>
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../Smarty/Smarty_Internal_Magic_Error.html">Smarty_Internal_Magic_Error</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../Smarty/Smarty_Internal_Magic_Error.html#method__call">Smarty_Internal_Magic_Error::__call()</a></span><br>
+													<span class="method-name"><a href="../Smarty/Smarty_Internal_Magic_Error.html#method__destruct">Smarty_Internal_Magic_Error::__destruct()</a></span><br>
+													<span class="method-name"><a href="../Smarty/Smarty_Internal_Magic_Error.html#method__get">Smarty_Internal_Magic_Error::__get()</a></span><br>
+													<span class="method-name"><a href="../Smarty/Smarty_Internal_Magic_Error.html#method__set">Smarty_Internal_Magic_Error::__set()</a></span><br>
+											</blockquote>
 										
 		</div>
 	</div>
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Fri, 03 May 2013 12:57:57 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Sat, 18 May 2013 20:35:23 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

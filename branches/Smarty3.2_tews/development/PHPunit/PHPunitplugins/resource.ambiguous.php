@@ -21,26 +21,13 @@ class Smarty_Resource_Ambiguous extends Smarty_Internal_Resource_File
     {
         $this->segment = $segment;
     }
-
-    /**
-     * modify resource_name according to resource handlers specifications
-     *
-     * @param Smarty $smarty        Smarty instance
-     * @param string $resource_name resource_name to make unique
-     * @return string unique resource name
-     */
-    protected function buildUniqueResourceName(Smarty $smarty, $resource_name)
-    {
-        return get_class($this) . '#' . $this->segment . '#' . $resource_name;
-    }
-
     /**
      * populate Source Object with meta data from Resource
      *
      * @param Smarty_Template_Source   $source    source object
      * @param Smarty $_template template object
      */
-    public function populate(Smarty_Template_Source $source, Smarty $_template = null)
+    public function populate(Smarty $tpl_obj = null)
     {
         $segment = '';
         if ($this->segment) {

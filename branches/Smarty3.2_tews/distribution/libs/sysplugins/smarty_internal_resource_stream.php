@@ -26,35 +26,33 @@ class Smarty_Internal_Resource_Stream extends Smarty_Resource_Recompiled
     /**
      * populate Source Object with meta data from Resource
      *
-     * @param Smarty_Template_Source $source    source object
      * @param Smarty $tpl_obj template object
      * @return void
      */
-    public function populate(Smarty_Template_Source $source, Smarty $tpl_obj = null)
+    public function populate(Smarty $tpl_obj = null)
     {
-        if (strpos($source->resource, '://') !== false) {
-            $source->filepath = $source->resource;
+        if (strpos($this->resource, '://') !== false) {
+            $this->filepath = $this->resource;
         } else {
-            $source->filepath = str_replace(':', '://', $source->resource);
+            $this->filepath = str_replace(':', '://', $this->resource);
         }
-        $source->uid = false;
-        $source->content = $this->getContent($source);
-        $source->timestamp = false;
-        $source->exists = !!$source->content;
+        $this->uid = false;
+        $this->content = $this->getContent();
+        $this->timestamp = false;
+        $this->exists = !!$this->content;
     }
 
     /**
      * Load template's source from stream into current template object
      *
-     * @param Smarty_Template_Source $source source object
      * @return string template source
      * @throws SmartyException if source cannot be loaded
      */
-    public function getContent(Smarty_Template_Source $source)
+    public function getContent()
     {
         $t = '';
         // the availability of the stream has already been checked in Smarty_Resource::fetch()
-        $fp = fopen($source->filepath, 'r+');
+        $fp = fopen($this->filepath, 'r+');
         if ($fp) {
             while (!feof($fp) && ($current_line = fgets($fp)) !== false) {
                 $t .= $current_line;
@@ -65,17 +63,4 @@ class Smarty_Internal_Resource_Stream extends Smarty_Resource_Recompiled
             return false;
         }
     }
-
-    /**
-     * modify resource_name according to resource handlers specifications
-     *
-     * @param Smarty $smarty        Smarty instance
-     * @param string $resource_name resource_name to make unique
-     * @return string unique resource name
-     */
-    protected function buildUniqueResourceName(Smarty $smarty, $resource_name)
-    {
-        return get_class($this) . '#' . $resource_name;
-    }
-
 }
