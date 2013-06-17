@@ -13,7 +13,7 @@ class Smarty_Resource_Db3 extends Smarty_Resource
     public function populate(Smarty $tpl_obj = null)
     {
         $this->filepath = 'db3:';
-        $this->uid = sha1($this->resource);
+        $this->uid = sha1($this->name);
         $this->timestamp = 0;
         $this->exists = true;
     }

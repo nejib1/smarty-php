@@ -63,4 +63,17 @@ class Smarty_Internal_Resource_Stream extends Smarty_Resource_Recompiled
             return false;
         }
     }
+
+    /**
+     * return unique name for this resource
+     *
+     * @param Smarty $smarty        Smarty instance
+     * @param string $template_resource  resource_name to make unique
+     * @return string unique resource name
+     */
+    public function buildUniqueResourceName(Smarty $smarty, $template_resource)
+    {
+        return get_class($this) . '#' . $template_resource;
+    }
+
 }

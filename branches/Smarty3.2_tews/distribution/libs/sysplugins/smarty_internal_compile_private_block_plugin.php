@@ -48,7 +48,7 @@ class Smarty_Internal_Compile_Private_Block_Plugin extends Smarty_Internal_Compi
             }
             unset($_attr['nocache']);
             $cache_attr = null;
-            if ($compiler->tpl_obj->caching) {
+            if ($compiler->caching) {
                 $result = $this->getAnnotation($function, 'smarty_nocache');
                 if ($result) {
                     $compiler->tag_nocache = $compiler->tag_nocache || $result;

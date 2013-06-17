@@ -145,7 +145,7 @@ class Smarty_Internal_Compile_Private_Print_Expression extends Smarty_Internal_C
         $plugin_name = "smarty_variablefilter_{$name}";
         $path = $compiler->tpl_obj->_loadPlugin($plugin_name, false);
         if ($path) {
-            if ($compiler->tpl_obj->caching) {
+            if ($compiler->caching) {
                 $compiler->required_plugins['nocache'][$name][Smarty::FILTER_VARIABLE]['file'] = $path;
                 $compiler->required_plugins['nocache'][$name][Smarty::FILTER_VARIABLE]['function'] = $plugin_name;
             } else {

@@ -144,7 +144,7 @@ class Smarty_Internal_Template_Parser extends Smarty_Internal_Magic_Error #line 
     {
         if ($this->compiler->tpl_obj->enable_traceback) {
             $line = $this->lex->taglineno;
-            if ($this->compiler->tpl_obj->caching && $this->last_taglineno_nocache != $this->lex->taglineno) {
+            if ($this->compiler->caching && $this->last_taglineno_nocache != $this->lex->taglineno) {
                 $this->compiler->has_code = true;
                 $this->compiler->nocache_nolog = true;
                 $this->compiler->nocacheCode('', true, $line);
@@ -3473,7 +3473,7 @@ class Smarty_Internal_Template_Parser extends Smarty_Internal_Magic_Error #line 
     {
         // execute end of template
         $this->compiler->template_code->newline()->php("array_shift(\$_smarty_tpl->trace_call_stack);\n");
-        if ($this->compiler->tpl_obj->caching) {
+        if ($this->compiler->caching) {
             $this->compiler->has_code = true;
             $this->compiler->nocache_nolog = true;
             $this->compiler->nocacheCode("array_shift(\$_smarty_tpl->trace_call_stack);", true);
@@ -3490,14 +3490,14 @@ class Smarty_Internal_Template_Parser extends Smarty_Internal_Magic_Error #line 
 #line 138 "smarty_internal_template_parser.y"
     function yy_r4()
     {
-        if ($this->compiler->tpl_obj->source->type == 'eval' || $this->compiler->tpl_obj->source->type == 'string') {
-            $resource = $this->compiler->tpl_obj->source->type;
+        if ($this->compiler->source->type == 'eval' || $this->compiler->source->type == 'string') {
+            $resource = $this->compiler->source->type;
         } else {
-            $resource = $this->compiler->tpl_obj->source->filepath;
+            $resource = $this->compiler->source->filepath;
         }
         if (strpos($this->compiler->tpl_obj->template_resource, 'extends:') === false) {
-            $code = "array_unshift(\$_smarty_tpl->trace_call_stack, array('{$resource}',{$this->lex->taglineno} , '{$this->compiler->tpl_obj->source->type}'));";
-            if ($this->compiler->tpl_obj->caching) {
+            $code = "array_unshift(\$_smarty_tpl->trace_call_stack, array('{$resource}',{$this->lex->taglineno} , '{$this->compiler->source->type}'));";
+            if ($this->compiler->caching) {
                 $this->compiler->has_code = true;
                 $this->compiler->nocache_nolog = true;
                 $this->compiler->nocacheCode($code, true);
@@ -3513,10 +3513,10 @@ class Smarty_Internal_Template_Parser extends Smarty_Internal_Magic_Error #line 
         if ($this->compiler->has_code) {
             $line = 0;
             if ($this->compiler->tpl_obj->enable_traceback) {
-                if ($this->compiler->tpl_obj->caching && $this->last_taglineno_nocache != $this->lex->taglineno && ($this->compiler->nocache || $this->compiler->tag_nocache)) {
+                if ($this->compiler->caching && $this->last_taglineno_nocache != $this->lex->taglineno && ($this->compiler->nocache || $this->compiler->tag_nocache)) {
                     $line = $this->last_taglineno_nocache = $this->lex->taglineno;
                 }
-                if ($this->last_taglineno != $this->lex->taglineno && (!$this->compiler->tpl_obj->caching || (!$this->compiler->nocache && !$this->compiler->tag_nocache))) {
+                if ($this->last_taglineno != $this->lex->taglineno && (!$this->compiler->caching || (!$this->compiler->nocache && !$this->compiler->tag_nocache))) {
                     $line = $this->last_taglineno = $this->lex->taglineno;
                 }
             }
@@ -3543,7 +3543,7 @@ class Smarty_Internal_Template_Parser extends Smarty_Internal_Magic_Error #line 
         } elseif ($this->php_handling == Smarty::PHP_QUOTE) {
             $this->compiler->template_code->php("echo '&lt;?php';\n");
         } elseif ($this->php_handling == Smarty::PHP_ALLOW) {
-            if (!($this->compiler->tpl_obj instanceof SmartyBC)) {
+            if (!($this->compiler->template instanceof SmartyBC)) {
                 $this->compiler->trigger_template_error(self::Err3);
             }
             $this->text_is_php = true;
@@ -3576,7 +3576,7 @@ class Smarty_Internal_Template_Parser extends Smarty_Internal_Magic_Error #line 
             $this->compiler->template_code->php("echo '&lt;%';\n");
         } elseif ($this->php_handling == Smarty::PHP_ALLOW) {
             if ($this->asp_tags) {
-                if (!($this->compiler->tpl_obj instanceof SmartyBC)) {
+                if (!($this->compiler->template instanceof SmartyBC)) {
                     $this->compiler->trigger_template_error(self::Err3);
                 }
                 $this->text_is_php = true;
@@ -3637,10 +3637,10 @@ class Smarty_Internal_Template_Parser extends Smarty_Internal_Magic_Error #line 
         if ($this->text_is_php) {
             $line = 0;
             if ($this->compiler->tpl_obj->enable_traceback) {
-                if ($this->compiler->tpl_obj->caching && $this->last_taglineno_nocache != $this->lex->taglineno && ($this->compiler->nocache || $this->compiler->tag_nocache)) {
+                if ($this->compiler->caching && $this->last_taglineno_nocache != $this->lex->taglineno && ($this->compiler->nocache || $this->compiler->tag_nocache)) {
                     $line = $this->last_taglineno_nocache = $this->lex->taglineno;
                 }
-                if ($this->last_taglineno != $this->lex->taglineno && (!$this->compiler->tpl_obj->caching || (!$this->compiler->nocache && !$this->compiler->tag_nocache))) {
+                if ($this->last_taglineno != $this->lex->taglineno && (!$this->compiler->caching || (!$this->compiler->nocache && !$this->compiler->tag_nocache))) {
                     $line = $this->last_taglineno = $this->lex->taglineno;
                 }
             }

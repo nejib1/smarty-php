@@ -47,7 +47,7 @@ class Smarty_Internal_Code extends Smarty_Internal_Magic_Error
     {
         $this->buffer = '';
         $this->indentation = $this->saved_indentation = $compiler->template_code->indentation;
-        $this->no_indent = !$compiler->suppressNocacheProcessing && $compiler->tpl_obj->caching && ($compiler->nocache || $compiler->tag_nocache || $compiler->forceNocache);
+        $this->no_indent = !$compiler->suppressNocacheProcessing && $compiler->caching && ($compiler->nocache || $compiler->tag_nocache || $compiler->forceNocache);
         return $this;
     }
 

@@ -59,8 +59,8 @@ class Smarty_Internal_Compile_Block extends Smarty_Internal_CompileBase
 
         $name = trim($_attr['name'], "'\"");
 
-        $this->openTag($compiler, 'block', array($_attr, $compiler->template_code, $compiler->nocache, $name, $compiler->tpl_obj->has_nocache_code, $compiler->lex->taglineno));
-        if ($_attr['nocache'] == true && $compiler->tpl_obj->caching) {
+        $this->openTag($compiler, 'block', array($_attr, $compiler->template_code, $compiler->nocache, $name, $compiler->has_nocache_code, $compiler->lex->taglineno));
+        if ($_attr['nocache'] == true && $compiler->caching) {
             $compiler->nocache = true;
         }
         $compiler->template_code = new Smarty_Internal_Code(3);
@@ -78,7 +78,7 @@ class Smarty_Internal_Compile_Block extends Smarty_Internal_CompileBase
         array_unshift($compiler->block_nesting_info, array('name' => $name, 'int_name' => $int_name, 'function' => '_' . $int_name . '_Interitance_Block_' . str_replace('.', '_', uniqid('', true))));
 
 
-        $compiler->tpl_obj->has_nocache_code = false;
+        $compiler->has_nocache_code = false;
         $compiler->has_code = false;
 
         return true;
@@ -114,7 +114,7 @@ class Smarty_Internal_Compile_Blockclose extends Smarty_Internal_CompileBase
         $name = trim($saved_data[0]['name'], "'\"");
         // must endblock be nocache?
         if ($compiler->nocache) {
-            $compiler->tag_nocache = $compiler->nocache && $compiler->tpl_obj->caching;
+            $compiler->tag_nocache = $compiler->nocache && $compiler->caching;
         }
         $compiler->nocache = $saved_data[2];
 
@@ -141,11 +141,11 @@ class Smarty_Internal_Compile_Blockclose extends Smarty_Internal_CompileBase
         $block_code->php("ob_start();")->newline();
         $block_code->php("/* Line {$saved_data[5]} */")->newline();
         $block_code->php("array_unshift(\$_smarty_tpl->trace_call_stack, array('{$resource}', {$saved_data[5]}, '{$compiler->tpl_obj->source->type}'));")->newline();
-        if ($compiler->tpl_obj->caching) {
+        if ($compiler->caching) {
             $block_code->php("echo '/*%%SmartyNocache%%*/array_unshift(\$_smarty_tpl->trace_call_stack, array(\'{$resource}\', {$saved_data[5]}, \'{$compiler->tpl_obj->source->type}\'));/*/%%SmartyNocache%%*/';")->newline();
         }
         $block_code->buffer .= $compiler->template_code->buffer;
-        if ($compiler->tpl_obj->caching) {
+        if ($compiler->caching) {
             $block_code->php("echo '/*%%SmartyNocache%%*/array_shift(\$_smarty_tpl->trace_call_stack);/*/%%SmartyNocache%%*/';")->newline();
         }
         $block_code->php("array_shift(\$_smarty_tpl->trace_call_stack);")->newline();
@@ -184,7 +184,7 @@ class Smarty_Internal_Compile_Blockclose extends Smarty_Internal_CompileBase
         array_shift($compiler->block_nesting_info);
         $compiler->block_nesting_level--;
 
-        $compiler->tpl_obj->has_nocache_code = $compiler->tpl_obj->has_nocache_code | $saved_data[4];
+        $compiler->has_nocache_code = $compiler->has_nocache_code | $saved_data[4];
 
         $compiler->has_code = true;
 

@@ -90,7 +90,7 @@ class Smarty_Internal_Compile_Include extends Smarty_Internal_CompileBase
 //            $_caching = Smarty::CACHING_OFF;
 //        }
         // default for included templates
-        if ($compiler->tpl_obj->caching && !$compiler->nocache && !$compiler->tag_nocache) {
+        if ($compiler->caching && !$compiler->nocache && !$compiler->tag_nocache) {
             $_caching = Smarty::CACHING_NOCACHE_CODE;
         }
         /*
@@ -130,7 +130,7 @@ class Smarty_Internal_Compile_Include extends Smarty_Internal_CompileBase
 
         $has_compiledtpl_obj = false;
         if (($compiler->tpl_obj->merge_compiled_includes || $_attr['inline'] === true) && !$compiler->tpl_obj->source->recompiled
-            && !($compiler->tpl_obj->caching && ($compiler->tag_nocache || $compiler->nocache || $compiler->nocache_nolog)) && $_caching != Smarty::CACHING_LIFETIME_CURRENT
+            && !($compiler->caching && ($compiler->tag_nocache || $compiler->nocache || $compiler->nocache_nolog)) && $_caching != Smarty::CACHING_LIFETIME_CURRENT
         ) {
             // check if compiled code can be merged (contains no variable part)
             if ((substr_count($include_file, '"') == 2 or substr_count($include_file, "'") == 2)
@@ -143,7 +143,7 @@ class Smarty_Internal_Compile_Include extends Smarty_Internal_CompileBase
                     unset($tpl->source, $tpl->compiled, $tpl->cached, $tpl->compiler, $tpl->mustCompile);
                     $tpl->template_resource = $tpl_name;
                     $tpl->parent = $compiler->tpl_obj;
-                    if ($compiler->tpl_obj->caching) {
+                    if ($compiler->caching) {
                         // needs code for cached page but no cache file
                         $tpl->caching = Smarty::CACHING_NOCACHE_CODE;
                     }
@@ -170,7 +170,7 @@ class Smarty_Internal_Compile_Include extends Smarty_Internal_CompileBase
                         // merge file dependency
                         $compiler->file_dependency[$tpl->source->uid] = array($tpl->source->filepath, $tpl->source->timestamp, $tpl->source->type);
                         $compiler->file_dependency = array_merge($compiler->file_dependency, $tpl->compiler->file_dependency);
-                        $compiler->tpl_obj->has_nocache_code = $compiler->tpl_obj->has_nocache_code | $tpl->has_nocache_code;
+                        $compiler->has_nocache_code = $compiler->has_nocache_code | $tpl->compiler->has_nocache_code;
                         $has_compiledtpl_obj = true;
                         // release compiler object to free memory
                         unset($tpl->compiler, $tpl);

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-        <!-- $Revision$ -->
-        <!-- EN-Revision: 3836 Maintainer: takagi Status: ready -->
-        <!-- CREDITS: mat-sh,daichi,joe -->
+<!-- $Revision$ -->
+<!-- EN-Revision: 4637 Maintainer: takagi Status: ready -->
+<!-- CREDITS: mat-sh,daichi,joe -->
 
-        <!ENTITY note.parameter.merge '<note>
+<!ENTITY note.parameter.merge '<note>
  <title>テクニカルノート</title>
  <para>
   <parameter>merge</parameter> パラメータは配列のキーを尊重するので、
@@ -15,7 +15,7 @@
  </para>
 </note>'>
 
-        <!ENTITY note.parameter.function '<note>
+<!ENTITY note.parameter.function '<note>
  <title>テクニカルノート</title>
  <para>
   選択したコールバック <parameter>function</parameter> が
@@ -26,7 +26,7 @@
  </para>
 </note>'>
 
-        <!ENTITY parameter.cacheid '<listitem>
+<!ENTITY parameter.cacheid '<listitem>
 <para>
 <parameter>cache_id</parameter> はオプションのパラメータです。
  この関数をコールするたびにこのパラメータを指定するかわりに、変数
@@ -38,7 +38,7 @@
 </para>
 </listitem>'>
 
-        <!ENTITY parameter.compileid2 '<listitem>
+<!ENTITY parameter.compileid2 '<listitem>
 <para>
 <parameter>compile_id</parameter> はオプションのパラメータです。
  この関数をコールするたびにこのパラメータを指定するかわりに、変数
@@ -50,7 +50,7 @@
 </para>
 </listitem>'>
 
-        <!ENTITY parameter.parent '<listitem>
+<!ENTITY parameter.parent '<listitem>
 <para>
 <parameter>parent</parameter> はオプションのパラメータです。
 これは、メイン Smarty オブジェクトやユーザが作成したデータオブジェクト、
@@ -60,14 +60,14 @@
 </para>
 </listitem>'>
 
-        <!ENTITY parameter.data '<listitem>
+<!ENTITY parameter.data '<listitem>
 <para>
 <parameter>data</parameter> はオプションのパラメータです。
 これは、オブジェクトに代入された変数の 名前/値 のペアを含む連想配列です。
 </para>
 </listitem>'>
 
-        <!ENTITY parameter.compileid '<para>
+<!ENTITY parameter.compileid '<para>
  任意の第３パラメータとして <parameter>$compile_id</parameter>
  を渡すことができます。
  異なる言語でコンパイルされた別々のテンプレートが存在するような、
@@ -78,25 +78,25 @@
 </para>'>
 
 
-        <!ENTITY parameter.filtertype '<listitem>
+<!ENTITY parameter.filtertype '<listitem>
 <para>
 <parameter>type</parameter> にはフィルタの型を定義します。使える値は "pre"、"post"、"output" および "variable" です。
 </para>
 </listitem>'>
 
-        <!ENTITY parameter.plugintype '<listitem>
+<!ENTITY parameter.plugintype '<listitem>
 <para>
 <parameter>type</parameter> にはプラグインの型を定義します。使える値は "function"、"block"、"compiler" および "modifier" です。
 </para>
 </listitem>'>
 
-        <!ENTITY parameter.pluginname '<listitem>
+<!ENTITY parameter.pluginname '<listitem>
 <para>
 <parameter>name</parameter> にはプラグインの名前を定義します。
 </para>
 </listitem>'>
 
-        <!ENTITY parameter.callback '<listitem>
+<!ENTITY parameter.callback '<listitem>
 <para>
    PHP 関数のコールバック <parameter>function</parameter>
    は、次のいずれかとなります。
@@ -106,8 +106,8 @@
        </para></listitem>
 
        <listitem><para>
-       <literal>array(&amp;$object, $method)</literal> 形式の配列
-       （<literal>&amp;$object</literal> はオブジェクトの参照で、
+       <literal>array($object, $method)</literal> 形式の配列
+       （<literal>$object</literal> はオブジェクトの参照で、
        <literal>$method</literal> はメソッド名を含む文字列）
        </para></listitem>
 

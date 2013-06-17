@@ -74,7 +74,7 @@ class Smarty_Internal_Compile_Import extends Smarty_Internal_CompileBase
         unset($tpl->source, $tpl->compiled, $tpl->cached, $tpl->compiler, $tpl->mustCompile);
         $tpl->template_resource = $tpl_name;
         $tpl->parent = $compiler->tpl_obj;
-        $tpl->caching = $compiler->tpl_obj->caching;
+        $tpl->caching = $compiler->caching;
         $tpl->compiler->nocache = $compiler->nocache;
         // set up parameter
         $tpl->compiler->suppressHeader = true;
@@ -103,7 +103,7 @@ class Smarty_Internal_Compile_Import extends Smarty_Internal_CompileBase
         // merge filedependency
         $compiler->file_dependency[$tpl->source->uid] = array($tpl->source->filepath, $tpl->source->timestamp, $tpl->source->type);
         $compiler->file_dependency = array_merge($compiler->file_dependency, $tpl->compiler->file_dependency);
-        $compiler->tpl_obj->has_nocache_code = $compiler->tpl_obj->has_nocache_code | $tpl->has_nocache_code;
+        $compiler->has_nocache_code = $compiler->has_nocache_code | $tpl->compiler->has_nocache_code;
 
         // merge flag that variable container must be cloned
         $compiler->must_clone_vars = $compiler->must_clone_vars || $tpl->compiler->must_clone_vars;

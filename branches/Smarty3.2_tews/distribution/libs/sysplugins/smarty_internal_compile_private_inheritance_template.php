@@ -46,7 +46,7 @@ class Smarty_Internal_Compile_Private_Inheritance_template extends Smarty_Intern
         // set inheritance flags
         $compiler->isInheritance = $compiler->isInheritanceChild = true;
         // parents must not create cache files
-        if ($compiler->tpl_obj->caching) {
+        if ($compiler->caching) {
             $_caching = Smarty::CACHING_NOCACHE_CODE;
         }
         $file = realpath(trim($_attr['file'], "'"));

@@ -85,7 +85,7 @@ class SmartyRuntimeException extends SmartyException
                 $this->file = $this->trace_call_stack[0][2] . ':';
                 $source_trace = false;
             } else {
-                $ptr = $this->object->_resourceLoader(Smarty::SOURCE, $this->trace_call_stack[0][2] . ':' . $this->trace_call_stack[0][0]);
+                $ptr = $this->object->_loadSource($this->trace_call_stack[0][2] . ':' . $this->trace_call_stack[0][0]);
                 // make sure we reload source content
                 unset($ptr->content);
                 $this->file = $ptr->filepath;

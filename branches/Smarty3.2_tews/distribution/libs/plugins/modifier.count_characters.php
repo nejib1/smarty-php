@@ -9,7 +9,7 @@
 
 /**
  * Smarty count_characters modifier plugin
- * NOTE: This plugin is called only when smarty_modifercompiler_count_characters() is not able to produce inline code
+ * NOTE: This plugin is called only when smarty_modifiercompiler_count_characters() is not able to produce inline code
  *
  * Type:     modifier<br>
  * Name:     count_characteres<br>

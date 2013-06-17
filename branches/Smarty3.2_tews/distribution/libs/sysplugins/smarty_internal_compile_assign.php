@@ -99,7 +99,7 @@ class Smarty_Internal_Compile_Assign extends Smarty_Internal_CompileBase
         if ($_scope == Smarty::SCOPE_GLOBAL) {
             $this->php("Smarty::\$global_tpl_vars->{$var} =  clone \$_scope->{$var};")->newline();
         }
-        if ($_attr['cachevalue'] === true && $compiler->tpl_obj->caching) {
+        if ($_attr['cachevalue'] === true && $compiler->caching) {
             if (isset($parameter['smarty_internal_index'])) {
                 $compiler->trigger_template_error('cannot assign to array with "cachevalue" option', $compiler->lex->taglineno);
             } else {

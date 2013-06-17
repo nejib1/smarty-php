@@ -148,6 +148,10 @@ class Smarty extends Smarty_Internal_Data
     const CACHING_LIFETIME_SAVED = 2;
     const CACHING_NOCACHE_CODE = 3; // create nocache code but no cache file
     /**
+     * define constant for clearing cache files be saved expiration datees
+     */
+    const CLEAR_EXPIRED = -1; 
+    /**
      * define compile check modes
      */
     const COMPILECHECK_OFF = 0;
@@ -862,13 +866,6 @@ class Smarty extends Smarty_Internal_Data
     public $template_resource = null;
 
     /**
-     * flag if template does contain nocache code sections
-     * @var boolean
-     * @internal
-     */
-    public $has_nocache_code = false;
-
-    /**
      * flag set when nocache code sections are executed
      * @var boolean
      * @internal
@@ -951,6 +948,12 @@ class Smarty extends Smarty_Internal_Data
      */
     public $compiletime_options = 0;
 
+    /*
+     * Source object in case of clone by createTemplate()
+     * @var Smarty_Resource
+     */
+    public $source = null;
+
     /*     * #@- */
 
     /**
@@ -1015,56 +1018,66 @@ class Smarty extends Smarty_Internal_Data
         if ($parent === null && (!($this->usage == self::IS_TEMPLATE || $this->usage == self::IS_CONFIG) || is_string($template))) {
             $parent = $this;
         }
-        //get Template object
-        $tpl_obj = $this->_getTemplateObj($template, $parent, $cache_id, $compile_id, $cache_lifetime);
 
-        if (isset($this->error_reporting)) {
-            $_smarty_old_error_level = error_reporting($this->error_reporting);
+        if (is_object($template)) {
+            // get source from template clone
+            $source = $template->source;
+            $tpl_obj = $template;
+        } else {
+            //get source object from cache  or create new one
+            $source = $this->_getSourceObj($template);
+            $tpl_obj = $this;
+        }
+
+        if (isset($tpl_obj->error_reporting)) {
+            $_smarty_old_error_level = error_reporting($tpl_obj->error_reporting);
         }
         // check URL debugging control
-        if (!$this->debugging && $this->debugging_ctrl == 'URL') {
-            Smarty_Internal_Debug::checkURLDebug($this);
+        if (!$tpl_obj->debugging && $tpl_obj->debugging_ctrl == 'URL') {
+            Smarty_Internal_Debug::checkURLDebug($tpl_obj);
         }
-        // get rendered template
-        // disable caching for evaluated code
-        if ($tpl_obj->source->recompiled) {
-            $tpl_obj->caching = false;
-        }
+
         // checks if template exists
-        if (!$tpl_obj->source->exists) {
-            $msg = "Unable to load template {$tpl_obj->source->type} '{$tpl_obj->source->name}'";
-            if ($tpl_obj->parent->usage == self::IS_TEMPLATE || $tpl_obj->parent->usage == self::IS_CONFIG) {
-                throw new SmartyRunTimeException($msg, $tpl_obj);
+        if (!$source->exists) {
+            $msg = "Unable to load template {$source->type} '{$sources->name}'";
+            if ($parent->usage == self::IS_TEMPLATE || $parent->usage == self::IS_CONFIG) {
+                throw new SmartyRunTimeException($msg, $source);
             } else {
                 throw new SmartyException($msg);
             }
         }
-        if ($tpl_obj->caching == self::CACHING_LIFETIME_CURRENT || $tpl_obj->caching == self::CACHING_LIFETIME_SAVED) {
+        // disable caching for evaluated code
+        $caching = $source->recompiled ? false : $tpl_obj->caching;
+        $compile_id = isset($compile_id) ? $compile_id : $tpl_obj->compile_id;
+        $cache_id = isset($cache_id) ? $cache_id : $tpl_obj->cache_id;
+
+        if ($caching == self::CACHING_LIFETIME_CURRENT || $caching == self::CACHING_LIFETIME_SAVED) {
             $browser_cache_valid = false;
-            $_output = $tpl_obj->cached->getRenderedTemplate($tpl_obj, $_scope, $scope_type, $data, $no_output_filter, $display);
+            $cached_obj = $tpl_obj->_loadCached($source, $compile_id, $cache_id, $caching);
+            $_output = $cached_obj->getRenderedTemplate($tpl_obj, $_scope, $scope_type, $data, $no_output_filter, $display);
             if ($_output === true) {
                 $browser_cache_valid = true;
             }
         } else {
-            if ($tpl_obj->source->uncompiled) {
-                $_output = $tpl_obj->source->getRenderedTemplate($tpl_obj, $_scope, $scope_type, $data);
+            if ($source->uncompiled) {
+                $_output = $source->getRenderedTemplate($tpl_obj, $_scope, $scope_type, $data);
             } else {
-                $_output = $tpl_obj->compiled->getRenderedTemplate($tpl_obj, $_scope, $scope_type, $data, $no_output_filter);
+                $compiled_obj = $tpl_obj->_loadCompiled($source, $compile_id);
+                $_output = $compiled_obj->getRenderedTemplate($tpl_obj, $_scope, $scope_type, $data, $no_output_filter);
             }
         }
-
-        if (isset($this->error_reporting)) {
+        if (isset($tpl_obj->error_reporting)) {
             error_reporting($_smarty_old_error_level);
         }
 
-        if (!$this->cache_objs) {
-            $this->_deleteTemplateObj($tpl_obj);
+        if (!$tpl_obj->cache_objs) {
+            $tpl_obj->_deleteTemplateObj($tpl_obj);
         }
 
 
         // display or fetch
         if ($display) {
-            if ($this->caching && $this->cache_modified_check) {
+            if ($tpl_obj->caching && $tpl_obj->cache_modified_check) {
                 if (!$browser_cache_valid) {
                     switch (PHP_SAPI) {
                         case 'cli':
@@ -1085,8 +1098,8 @@ class Smarty extends Smarty_Internal_Data
                 echo $_output;
             }
             // debug output
-            if ($this->debugging) {
-                Smarty_Internal_Debug::display_debug($this);
+            if ($tpl_obj->debugging) {
+                Smarty_Internal_Debug::display_debug($tpl_obj);
             }
             return;
         } else {
@@ -1122,16 +1135,35 @@ class Smarty extends Smarty_Internal_Data
      */
     public function isCached($template = null, $cache_id = null, $compile_id = null, $parent = null)
     {
+        if (!($this->caching == self::CACHING_LIFETIME_CURRENT || $this->caching == self::CACHING_LIFETIME_SAVED)) {
+            // caching is disabled
+            return false;
+        }
         if ($template === null && ($this->usage == self::IS_TEMPLATE || $this->usage == self::IS_CONFIG)) {
             $template = $this;
-        } elseif (is_string($template)) {
-            if ($parent === null) {
-                $parent = $this;
-            }
         }
-        //get Template object
-        $tpl_obj = $this->_getTemplateObj($template, $parent, $cache_id, $compile_id, null);
-        return $tpl_obj->cached->isValid;
+        if (is_object($template)) {
+            // get source from template clone
+            $source = $template->source;
+            $tpl_obj = $template;
+        } else {
+            //get source object from cache  or create new one
+            $source = $this->_getSourceObj($template);
+            $tpl_obj = $this;
+        }
+        if ($source->recompiled) {
+            // recompiled source can't be cached
+            return false;
+        }
+        $cached_obj = $tpl_obj->_loadCached($source, isset($compile_id) ? $compile_id : $tpl_obj->compile_id,
+            isset($cache_id) ? $cache_id : $tpl_obj->cache_id, $this->caching);
+        if (!$cached_obj->exists || !$cached_obj->isValid) {
+            // cache does not exists or is outdated
+            return false;
+        } else {
+            // cache is valid
+            return true;
+        }
     }
 
     /**
@@ -1161,7 +1193,16 @@ class Smarty extends Smarty_Internal_Data
         } else {
             $data = null;
         }
-        $tpl_obj = clone $this->_getTemplateObj($template_resource, null, $cache_id, $compile_id, null);
+        $tpl_obj = clone $this;
+        $tpl_obj->usage = self::IS_TEMPLATE;
+        $tpl_obj->parent = $parent;
+        if (isset($cache_id)) {
+            $tpl_obj->cache_id = $cache_id;
+        }
+        if (isset($compile_id)) {
+            $tpl_obj->compile_id = $compile_id;
+        }
+        $tpl_obj->source = $this->_getSourceObj($template_resource, $is_config);
         $tpl_obj->tpl_vars = new Smarty_Variable_Scope($tpl_obj, $parent, Smarty::IS_DATA, $template_resource);
         if (isset($data)) {
             foreach ($data as $varname => $value) {
@@ -1175,68 +1216,37 @@ class Smarty extends Smarty_Internal_Data
      * returns cached template object, or creates a new one
      *
      * @api
-     * @param string|Smarty $tpl_mixed  resource and template name string or Smarty object
-     * @param Smarty $parent
-     * @param mixed $cache_id
-     * @param mixed $compile_id
-     * @param null|int $cache_lifetime
-     * @param null|bool $cache_objs
-     * @return Smarty template object
+     * @param string $template_resource tenplate and resource name
+     * @param bool $is_config  is source for config file
+     * @return Smarty_Resource source object
      */
-    public function _getTemplateObj($tpl_mixed, $parent, $cache_id = null, $compile_id = null, $cache_lifetime = null, $cache_objs = null, $is_config = false)
+    public function _getSourceObj($template_resource, $is_config = false)
     {
-        if (is_object($tpl_mixed)) {
-            $tpl_obj = $tpl_mixed;
+        // already in template cache?
+        if ($this->allow_ambiguous_resources) {
+            $resource = $this->_loadHandler(self::SOURCE, $template_resource);
+            $_templateId = $resource->buildUniqueResourceName($this, $resourcename);
         } else {
-            $template_resource = $tpl_mixed;
-            // already in template cache?
-            // TODO  2. parameter $is_config
-            $tpl_objId = $this->_computeTemplateId($template_resource, false);
-            if (isset(self::$template_objects[$tpl_objId]['template'])) {
-                // return cached template object
-                $tpl_obj = self::$template_objects[$tpl_objId]['template'];
-                if (isset($parent)) {
-                    $tpl_obj->parent = $parent;
-                }
-            } else {
-                // create new template object
-                $tpl_obj = clone $this;
-                if (isset($cache_objs)) {
-                    $tpl_obj->cache_objs = $cache_objs;
-                }
-                $tpl_obj->usage = $is_config ?  self::IS_CONFIG : self::IS_TEMPLATE;
-                $tpl_obj->template_resource = $template_resource;
-                if (isset($parent)) {
-                    $tpl_obj->parent = $parent;
-                }
-                // create source object
-                $tpl_obj->source = $tpl_obj->_resourceLoader(self::SOURCE);
-                // cache template object under a unique ID
-                // do not cache eval resources
-                if ($tpl_obj->source->type != 'eval') {
-                    self::$template_objects[$tpl_objId]['template'] = $tpl_obj;
-                }
+            $_templateId = ($is_config ? $this->joined_config_dir : $this->joined_template_dir) . '#' . $template_resource;
+        }
+        if (isset($_templateId[150])) {
+            $_templateId = sha1($_templateId);
+        }
+        if (isset(self::$template_objects[$_templateId])) {
+            // return cached template object
+            $source = self::$template_objects[$_templateId];
+        } else {
+            // create new source object
+            $source = $this->_loadSource($template_resource);
+            $source->usage = $is_config ? self::IS_CONFIG : self::IS_TEMPLATE;
+            // cache template object under a unique ID
+            // do not cache eval resources
+            if ($source->type != 'eval') {
+                self::$template_objects[$_templateId] = $source;
             }
-            // update possible modifications
-            $tpl_obj->compile_id = $compile_id === null ? $this->compile_id : $compile_id;
-            $tpl_obj->cache_id = $cache_id === null ? $this->cache_id : $cache_id;
-            $tpl_obj->caching = $this->caching;
-            $tpl_obj->cache_lifetime = $cache_lifetime === null ? $this->cache_lifetime : $cache_lifetime;
         }
-        // check for changed compile Id's
-        if ($tpl_obj->compile_id != $tpl_obj->_tpl_old_compile_id) {
-            unset($tpl_obj->compiled);
-            unset($tpl_obj->cached);
-            $tpl_obj->_tpl_old_compile_id = $tpl_obj->compile_id;
-        }
-        // check for changes in cache parameter
-        if ($tpl_obj->cache_id != $tpl_obj->_tpl_old_cache_id) {
-            unset($tpl_obj->cached);
-            $tpl_obj->_tpl_old_cache_id = $tpl_obj->cache_id;
-        }
-        return $tpl_obj;
+        return $source;
     }
-
 
     public function _deleteTemplateObj($tpl_obj = null)
     {
@@ -1252,31 +1262,6 @@ class Smarty extends Smarty_Internal_Data
             }
         }
     }
-
-
-    /**
-     * compute unique template id
-     *
-     * @api
-     * @param string $template_resource the resource handle of the template file
-     * @param boolean $is_config flag that template will be for config files
-     * @return string unique template id
-     */
-    public function _computeTemplateId($template_resource, $is_config)
-    {
-        if ($this->allow_ambiguous_resources) {
-            $res_obj = $this->_loadHandler(self::SOURCE, $template_resource);
-            // TODO needs to be updated
-            $tpl_objId = get_class($this) . '#' . sha1($template_resource);
-        } else {
-            $tpl_objId = ($is_config ? $this->joined_config_dir : $this->joined_template_dir) . '#' . $template_resource;
-        }
-        if (isset($tpl_objId[150])) {
-            $tpl_objId = sha1($tpl_objId);
-        }
-        return $tpl_objId;
-    }
-
 
     /**
      * creates a data object
@@ -1629,12 +1614,12 @@ class Smarty extends Smarty_Internal_Data
      * Check if a template resource exists
      *
      * @api
-     * @param string $resource_name template name
+     * @param string $template_resource template name
      * @return boolean status
      */
-    public function templateExists($resource_name)
+    public function templateExists($template_resource)
     {
-        $source = $this->_resourceLoader(self::SOURCE, $resource_name);
+        $source = $this->_loadSource($template_resource);
         return $source->exists;
     }
 
@@ -2446,59 +2431,74 @@ class Smarty extends Smarty_Internal_Data
     }
 
     /**
-     * loads a resource for Source, Compiled or Cache
      *
-     * @param int $res_type  SOURCE|COMPILED|CACHE
-     * @param string $template_resource resource identifier  optional
-     * @param int $usage optional usage of current Smarty object
+     * @params string $template_resource template resource
+     * @return Smarty_Resource
      */
-    public function _resourceLoader($res_type, $template_resource = null, $usage = Smarty::IS_TEMPLATE)
+    public function _loadSource($template_resource)
     {
-        switch ($res_type) {
-            case self::SOURCE:
-                $res_obj = $this->_loadHandler(self::SOURCE, $template_resource);
-                $res_obj->populate($this);
-                return $res_obj;
-            case self::COMPILED:
-                // check runtime cache
-                $source_key = $this->source->uid;
-                $compiled_key = $this->compile_id ? $this->compile_id : '#undefined#';
-                if ($this->cache_objs) {
-                    if (isset(self::$resource_cache[$source_key]['compiled'][$compiled_key])) {
-                        return self::$resource_cache[$source_key]['compiled'][$compiled_key];
-                    }
-                }
-                // load Compiled resource handler
-                $res_obj = $this->_loadHandler(self::COMPILED);
-                $res_obj->compile_id = $this->compile_id;
-                $res_obj->populate($this);
+        $source = $this->_loadHandler(self::SOURCE, $template_resource);
+        $source->usage = self::IS_TEMPLATE;
+        $source->populate($this);
+        return $source;
+    }
 
-                // save in cache?
-                if ($this->cache_objs) {
-                    self::$resource_cache[$source_key]['compiled'][$compiled_key] = $res_obj;
-                }
-                return $res_obj;
-            case self::CACHE:
-                // check runtime cache
-                $source_key = $this->source->uid;
-                $compiled_key = $this->compile_id ? $this->compile_id : '#null#';
-                $cache_key = $this->cache_id ? $this->cache_id : '#null#';
-                $res_obj = null;
-                if ($this->cache_objs && isset(self::$resource_cache[$source_key]['cache'][$compiled_key][$cache_key])) {
-                     return self::$resource_cache[$source_key]['cache'][$compiled_key][$cache_key];
-                } else {
-                    // load Cache resource handler
-                    $res_obj = $this->_loadHandler(self::CACHE);
-                    $res_obj->compile_id = $this->compile_id;
-                    $res_obj->cache_id = $this->cache_id;
-                    $res_obj->source = $this->source;
-                    $res_obj->populate($this);
-                    // save in cache?
-                    if ($this->cache_objs) {
-                        self::$resource_cache[$source_key]['cache'][$compiled_key][$cache_key] = $res_obj;
-                    }
-                    return $res_obj;
-                }
+
+    /**
+     *
+     * @params Smarty_Resource $source source resource
+     * @params mixed $compile_id  compile id
+     * @params boolean $caching caching enabled ?
+     * @return Smarty_ResourceCompiled
+     */
+    public function _loadCompiled(Smarty_Resource $source, $compile_id, $caching = false)
+    {
+        // check runtime cache
+        $source_key = $source->uid;
+        $compiled_key = $compile_id ? $compile_id : '#null#';
+        if ($caching) {
+            $compiled_key .= '#caching';
+        }
+        if ($this->cache_objs) {
+            if (isset(self::$resource_cache[$source_key]['compiled'][$compiled_key])) {
+                return self::$resource_cache[$source_key]['compiled'][$compiled_key];
+            }
+        }
+        // load Compiled resource handler
+        $compiled_obj = $this->_loadHandler(self::COMPILED);
+        $compiled_obj->compile_id = $compile_id;
+        $compiled_obj->caching = $caching;
+        $compiled_obj->source = $source;
+        $compiled_obj->populate($this);
+
+        // save in cache?
+        if ($this->cache_objs) {
+            self::$resource_cache[$source_key]['compiled'][$compiled_key] = $compiled_obj;
+        }
+        return $compiled_obj;
+    }
+
+    public function _loadCached(Smarty_Resource $source, $compile_id, $cache_id, $caching)
+    {
+        // check runtime cache
+        $source_key = $source->uid;
+        $compiled_key = $compile_id ? $compile_id : '#null#';
+        $cache_key = $cache_id ? $cache_id : '#null#';
+        if ($this->cache_objs && isset(self::$resource_cache[$source_key]['cache'][$compiled_key][$cache_key])) {
+            return self::$resource_cache[$source_key]['cache'][$compiled_key][$cache_key];
+        } else {
+            // load Cache resource handler
+            $cached_obj = $this->_loadHandler(self::CACHE);
+            $cached_obj->compile_id = $compile_id;
+            $cached_obj->cache_id = $cache_id;
+            $cached_obj->caching = $caching;
+            $cached_obj->source = $source;
+            $cached_obj->populate($this);
+            // save in cache?
+            if ($this->cache_objs) {
+                self::$resource_cache[$source_key]['cache'][$compiled_key][$cache_key] = $cached_obj;
+            }
+            return $cached_obj;
         }
     }
 
@@ -2549,13 +2549,7 @@ class Smarty extends Smarty_Internal_Data
             if ($this->registered_resources[$res_type][$type] instanceof $res_params[$res_type][0]) {
                 $res_obj = clone $this->registered_resources[$res_type][$type];
             } else {
-                if (!isset(self::$resources['registered'])) {
-                    self::$resources['registered'] = new Smarty_Internal_Resource_Registered();
-                }
-                if (!isset($this->_resource_cache[$res_type][$type])) {
-                    $this->_resource_cache[$res_type][$type] = self::$resources['registered'];
-                }
-                $res_obj = $this->_resource_cache[$res_type][$type];
+                return new Smarty_Internal_Resource_Registered();
             }
         } elseif (isset(self::$system_resources[$res_type][$type])) {
             // try Smartys core Rescource
@@ -2577,7 +2571,7 @@ class Smarty extends Smarty_Internal_Data
                 ));
 
                 // give it another try, now that the resource is registered properly
-                return self::load($this, $type);
+                return $this->_loadHandler($res_type);
             }
         } else {
 
@@ -2596,9 +2590,12 @@ class Smarty extends Smarty_Internal_Data
             if ($res_type == self::SOURCE) {
                 $res_obj->name = $name;
                 $res_obj->type = $type;
-                $res_obj->uncompiled = $res_obj instanceof Smarty_Resource_Uncompiled;
-                $res_obj->recompiled = $res_obj instanceof Smarty_Resource_Recompiled;
-
+                if ($res_obj instanceof Smarty_Resource_Uncompiled) {
+                    $res_obj->uncompiled = true;
+                }
+                if ($res_obj instanceof Smarty_Resource_Recompiled) {
+                    $res_obj->recompiled = true;
+                }
             }
             // return create resource object
             return $res_obj;
@@ -2752,7 +2749,7 @@ class Smarty extends Smarty_Internal_Data
      */
     public function __clone()
     {
-        unset($this->compiled, $this->cached, $this->compiler, $this->source);
+        $this->source = null;
     }
 
     /**
@@ -2772,24 +2769,14 @@ class Smarty extends Smarty_Internal_Data
             'compile_dir' => 'getCompileDir',
             'cache_dir' => 'getCacheDir',
         );
-        if ($this->usage == self::IS_TEMPLATE || $this->usage == self::IS_CONFIG) {
-            switch ($property_name) {
-                case 'compiled':
-                    return $this->compiled = $this->_resourceLoader(self::COMPILED);
+        switch ($property_name) {
+            case 'compiled':
+                return $this->_loadCompiled($this->source, $this->compile_id, $this->caching);
+            case 'cached':
+                return $this->_loadCached($this->source, $this->compile_id, $this->cache_id, $this->caching);
+            case 'mustCompile':
+                return !$this->compiled->isValid;
 
-                case 'cached':
-                    $this->cached = $this->_resourceLoader(self::CACHE);
-                    return $this->cached;
-
-                case 'compiler':
-                    $this->compiler = Smarty_Compiler::load($this);
-                    return $this->compiler;
-                case 'source':
-                    return $this->source = $this->_resourceLoader(self::SOURCE);
-                case 'mustCompile':
-                    return !$this->compiled->isValid;
-
-            }
         }
         switch ($property_name) {
             case 'template_dir':
@@ -2820,16 +2807,6 @@ class Smarty extends Smarty_Internal_Data
             'compile_dir' => 'setCompileDir',
             'cache_dir' => 'setCacheDir',
         );
-        if ($this->usage == self::IS_TEMPLATE || $this->usage == self::IS_CONFIG) {
-            switch ($property_name) {
-                case 'source':
-                case 'compiled':
-                case 'cached':
-                case 'compiler':
-                    $this->$property_name = $value;
-                    return;
-            }
-        }
         switch ($property_name) {
             case 'template_dir':
             case 'config_dir':

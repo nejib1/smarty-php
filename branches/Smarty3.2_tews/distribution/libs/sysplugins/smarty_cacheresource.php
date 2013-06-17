@@ -67,6 +67,12 @@ abstract class Smarty_CacheResource extends Smarty_Internal_Magic_Error
     public $cache_id = null;
 
     /**
+     * Flag if caching enabled
+     * @var boolean
+     */
+    public $caching = false;
+
+    /**
      * Id for cache locking
      * @var string
      */
@@ -85,6 +91,12 @@ abstract class Smarty_CacheResource extends Smarty_Internal_Magic_Error
     public $source = null;
 
     /**
+     * Handler for updating cache files
+     * @var array Smarty_Internal_CacheCreate
+     */
+    public static $creator = array();
+
+    /**
      * Read the cached template and process header
      *
      * @param Smarty $tpl_obj template object
@@ -100,28 +112,6 @@ abstract class Smarty_CacheResource extends Smarty_Internal_Magic_Error
      * @return boolean success
      */
     public abstract function writeCachedContent(Smarty $tpl_obj, $content);
-
-    /**
-     *
-     * construtor for cache resource
-     *
-     * @ param  Smarty $tpl_obj template object
-     */
-    public function __construct(Smarty $tpl_obj)
-    {
-        if ($tpl_obj->usage != Smarty::IS_SMARTY) {
-            $tpl_obj->cached = $this;
-        }
-        $this->compile_id = $tpl_obj->compile_id;
-        $this->cache_id = $tpl_obj->cache_id;
-        if (isset($tpl_obj->source)) {
-            $this->source = $tpl_obj->source;
-        } else {
-            $this->source = null;
-        }
-    }
-
-
 
     /**
      * Empty cache
@@ -185,12 +175,7 @@ abstract class Smarty_CacheResource extends Smarty_Internal_Magic_Error
      */
     public static function invalidLoadedCache(Smarty $smarty)
     {
-        foreach (Smarty::$template_objects as $tpl) {
-            if (isset($tpl->cached)) {
-                $tpl->cached->isValid = false;
-            }
-        }
-        foreach (Smarty::$resource_cache as $source_key => $foo) {
+       foreach (Smarty::$resource_cache as $source_key => $foo) {
             unset(Smarty::$resource_cache[$source_key]['cache']);
         }
     }
@@ -249,9 +234,9 @@ abstract class Smarty_CacheResource extends Smarty_Internal_Magic_Error
     {
         $_scope = $tpl_obj->_buildScope($_scope, $scope_type, $data);
         $browser_cache_valid = false;
-        if ($display && $tpl_obj->cache_modified_check && $tpl_obj->cached->isValid && !$tpl_obj->has_nocache_code) {
+        if ($display && $tpl_obj->cache_modified_check && $this->isValid && !$this->smarty_content->has_nocache_code) {
             $_last_modified_date = @substr($_SERVER['HTTP_IF_MODIFIED_SINCE'], 0, strpos($_SERVER['HTTP_IF_MODIFIED_SINCE'], 'GMT') + 3);
-            if ($_last_modified_date !== false && $tpl_obj->cached->timestamp <= ($_last_modified_timestamp = strtotime($_last_modified_date)) &&
+            if ($_last_modified_date !== false && $this->timestamp <= ($_last_modified_timestamp = strtotime($_last_modified_date)) &&
                 $this->checkSubtemplateCache($tpl_obj, $_last_modified_timestamp)
             ) {
                 $browser_cache_valid = true;
@@ -278,18 +263,23 @@ abstract class Smarty_CacheResource extends Smarty_Internal_Magic_Error
         }
         if (!$browser_cache_valid) {
             if (!$this->isValid) {
+                // unshift new handler for cache creation in first position
+                // cache could be nested as subtemplates can have individual cache
+                array_unshift(self::$creator, new Smarty_Internal_CacheCreate());
                 if ($this->source->uncompiled) {
                     $output = $this->source->getRenderedTemplate($tpl_obj, $_scope);
                 } else {
-                    $output = $tpl_obj->compiled->getRenderedTemplate($tpl_obj, $_scope);
+                    $compiled_obj = $tpl_obj->_loadCompiled($this->source, $this->compile_id, $this->caching);
+                    $output = $compiled_obj->getRenderedTemplate($tpl_obj, $_scope, $scope_type, $data, $no_output_filter);
                 }
                 // write to cache when necessary
                 if (!$this->source->recompiled) {
-                    $output = $this->newcache->_createCacheFile($tpl_obj, $output, $_scope, $no_output_filter);
+                    $output = self::$creator[0]->_createCacheFile($this, $tpl_obj, $output, $_scope, $no_output_filter);
                 }
+                array_shift(self::$creator);
             } else {
                 if ($tpl_obj->debugging) {
-                    Smarty_Internal_Debug::start_cache($tpl_obj);
+                    Smarty_Internal_Debug::start_cache($this->source);
                 }
                 $tpl_obj->is_nocache = true;
                 try {
@@ -312,10 +302,10 @@ abstract class Smarty_CacheResource extends Smarty_Internal_Magic_Error
                 }
                 $tpl_obj->is_nocache = false;
                 if ($tpl_obj->debugging) {
-                    Smarty_Internal_Debug::end_cache($tpl_obj);
+                    Smarty_Internal_Debug::end_cache($this->source);
                 }
             }
-            if ($tpl_obj->has_nocache_code && !$no_output_filter && (isset($tpl_obj->autoload_filters['output']) || isset($tpl_obj->registered_filters['output']))) {
+            if ($this->smarty_content->has_nocache_code && !$no_output_filter && (isset($tpl_obj->autoload_filters['output']) || isset($tpl_obj->registered_filters['output']))) {
                 $output = Smarty_Internal_Filter_Handler::runFilter('output', $output, $tpl_obj);
             }
             return $output;
@@ -327,6 +317,7 @@ abstract class Smarty_CacheResource extends Smarty_Internal_Magic_Error
 
     /**
      * Check timestamp of browser cache against timestamp of individually cached subtemplates
+     *
      *
      * @api
      * @param Smarty $tpl_obj template object
@@ -367,7 +358,7 @@ abstract class Smarty_CacheResource extends Smarty_Internal_Magic_Error
      */
     public function writeCache(Smarty $tpl_obj, $content)
     {
-        if (!$tpl_obj->source->recompiled) {
+        if (!$this->source->recompiled) {
             if ($this->writeCachedContent($tpl_obj, $content)) {
                 $this->timestamp = time();
                 $this->exists = true;
@@ -470,42 +461,5 @@ abstract class Smarty_CacheResource extends Smarty_Internal_Magic_Error
                 }
             }
         }
-    }
-
-
-    /**
-     * <<magic>> Generic getter.
-     * Get Smarty_template_Cache property
-     *
-     * @param string $property_name property name
-     * @throws SmartyException
-     * @return $this|bool|\Smarty_Compiled|\Smarty_template_Cached|Smarty_Resource
-     */
-    public function __get($property_name)
-    {
-        switch ($property_name) {
-            case 'newcache':
-                $this->newcache = new Smarty_Internal_CacheCreate();
-                return $this->newcache;
-        }
-        parent::__get($property_name);
-    }
-
-    /**
-     * <<magic>> Generic setter.
-     * Set Smarty_template_Cache property
-     *
-     * @param string $property_name property name
-     * @param mixed $value value
-     * @throws SmartyException
-     */
-    public function __set($property_name, $value)
-    {
-        switch ($property_name) {
-            case 'newcache':
-                $this->$property_name = $value;
-                return;
-        }
-        parent::__set($property_name, $value);
     }
 }

@@ -60,12 +60,12 @@ class Smarty_Internal_Compile_Function extends Smarty_Internal_CompileBase
             $compiler->trigger_template_error('nocache option not allowed', $compiler->lex->taglineno);
         }
         unset($_attr['nocache']);
-        $this->openTag($compiler, 'function', array($_attr, $compiler->template_code, $compiler->tpl_obj->has_nocache_code, $compiler->lex->taglineno, $compiler->required_plugins));
+        $this->openTag($compiler, 'function', array($_attr, $compiler->template_code, $compiler->has_nocache_code, $compiler->lex->taglineno, $compiler->required_plugins));
 
         $compiler->template_code = new Smarty_Internal_Code(3);
 
         $compiler->compiles_template_function = true;
-        $compiler->tpl_obj->has_nocache_code = false;
+        $compiler->has_nocache_code = false;
         $compiler->has_code = false;
 
         return true;
@@ -105,7 +105,7 @@ class Smarty_Internal_Compile_Functionclose extends Smarty_Internal_CompileBase
             $compiler->template_functions[$_name]['parameter'][$_key] = $tmp;
         }
         // if caching save template function for possible nocache call
-        if ($compiler->tpl_obj->caching) {
+        if ($compiler->caching) {
             if (!empty($compiler->called_template_functions)) {
                 $compiler->template_functions[$_name]['called_functions'] = $compiler->called_template_functions;
                 $compiler->called_template_functions = array();
@@ -161,7 +161,7 @@ class Smarty_Internal_Compile_Functionclose extends Smarty_Internal_CompileBase
         // restore old compiler status
         $compiler->template_code = $saved_data[1];
 
-        $compiler->tpl_obj->has_nocache_code = $compiler->tpl_obj->has_nocache_code | $saved_data[2];
+        $compiler->has_nocache_code = $compiler->has_nocache_code | $saved_data[2];
         $compiler->has_code = false;
         return true;
     }

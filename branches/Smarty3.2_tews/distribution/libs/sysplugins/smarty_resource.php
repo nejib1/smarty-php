@@ -135,7 +135,7 @@ abstract class Smarty_Resource extends Smarty_Internal_Magic_Error
     /**
      * test is file exists and save timestamp
      *
-    * @param string $file file name
+     * @param string $file file name
      * @return bool  true if file exists
      */
     protected function fileExists($file)
@@ -201,7 +201,6 @@ abstract class Smarty_Resource extends Smarty_Internal_Magic_Error
                 return parent::__get($property_name);
         }
     }
-
 }
 
 

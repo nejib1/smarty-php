@@ -44,12 +44,12 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource
      */
     public function buildFilepath(Smarty $tpl_obj = null)
     {
-        $_source_file_path = str_replace(':', '.', $tpl_obj->source->filepath);
+        $_source_file_path = str_replace(':', '.', $this->source->filepath);
         $_cache_id = isset($tpl_obj->cache_id) ? preg_replace('![^\w\|]+!', '_', $tpl_obj->cache_id) : null;
         $_compile_id = isset($tpl_obj->compile_id) ? preg_replace('![^\w\|]+!', '_', $tpl_obj->compile_id) : null;
         // if use_sub_dirs build subfolders
         if ($tpl_obj->use_sub_dirs) {
-            $_filepath = substr($tpl_obj->source->uid, 0, 2) . DS . $tpl_obj->source->uid . DS;
+            $_filepath = substr($this->source->uid, 0, 2) . DS . $this->source->uid . DS;
             if (isset($_cache_id)) {
                 $_cache_id_parts = explode('|', $_cache_id);
                 $_cache_id_last = count($_cache_id_parts) - 1;
@@ -66,7 +66,7 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource
             }
             $_filepath .= '^' . $_compile_id . '^';
         } else {
-            $_filepath = str_replace('|', '.', $_cache_id) . '^' . $_compile_id . '^' . $tpl_obj->source->uid . '.';
+            $_filepath = str_replace('|', '.', $_cache_id) . '^' . $_compile_id . '^' . $this->source->uid . '.';
         }
         $_cache_dir = $tpl_obj->getCacheDir();
         if ($tpl_obj->cache_locking) {
@@ -77,7 +77,7 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource
             } else {
                 $_lock_dir = $_cache_dir;
             }
-            $this->lock_id = $_lock_dir . sha1($_cache_id . $_compile_id . $tpl_obj->source->uid) . '.lock';
+            $this->lock_id = $_lock_dir . sha1($_cache_id . $_compile_id . $this->source->uid) . '.lock';
         }
         return $_cache_dir . $_filepath . basename($_source_file_path) . '.php';
     }
@@ -97,7 +97,7 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource
      * Read the cached template and process its header
      *
      * @param Smarty $tpl_obj template object
-    * @return bool true or false if the cached content does not exist
+     * @return bool true or false if the cached content does not exist
      */
     public function process(Smarty $tpl_obj)
     {
@@ -164,7 +164,7 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource
         $_time = time();
 
         if (isset($resource_name)) {
-            $source = $smarty->_resourceLoader(Smarty::SOURCE, $resource_name);
+            $source = $smarty->_loadSource($resource_name);
             if ($source->exists) {
                 // set basename if not specified
                 $_basename = $source->getBasename($source);
@@ -311,8 +311,17 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource
                     continue;
                 }
                 // expired ?
-                if (isset($exp_time) && $_time - @filemtime($path) < $exp_time) {
-                    continue;
+                if (isset($exp_time)) {
+                    if ($exp_time < 0) {
+                        preg_match('#$cache_lifetime =\s*(\d*)#', file_get_contents($_file), $match);
+                        if ($_time < (@filemtime($_file) + $match[1])) {
+                            continue;
+                        }
+                    } else {
+                        if ($_time - @filemtime($_file) < $exp_time) {
+                            continue;
+                        }
+                    }
                 }
                 $_count += @unlink($path) ? 1 : 0;
                 // notify listeners of deleted file
@@ -326,7 +335,7 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource
      * Check is cache is locked for this template
      *
      * @param Smarty $smarty Smarty object
-      * @return bool true or false if cache is locked
+     * @return bool true or false if cache is locked
      */
     public function hasLock(Smarty $smarty)
     {
@@ -355,7 +364,7 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource
      * Unlock cache for this template
      *
      * @param Smarty $smarty Smarty object
-    * @return void
+     * @return void
      */
     public function releaseLock(Smarty $smarty)
     {

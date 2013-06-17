@@ -29,6 +29,16 @@ class Smarty_Internal_CompiledResource_File extends Smarty_CompiledResource
         $this->filepath = $this->buildFilepath($tpl_obj);
         $this->timestamp = @filemtime($this->filepath);
         $this->exists = !!$this->timestamp;
+    }
+
+    /**
+     * load and instance compiled template
+     *
+     * @param Smarty $tpl_obj template object
+     * @return void
+     */
+    public function process($tpl_obj)
+    {
         if ($this->exists) {
             // compiled template to see if it is still valid
             include $this->filepath;
@@ -39,43 +49,44 @@ class Smarty_Internal_CompiledResource_File extends Smarty_CompiledResource
     /**
      * populate Compiled Object with compiled filepath
      *
-     * @param Smarty|Smarty_Internal_Cached $mixed_obj template or cache object object
+     * @param Smarty $smarty template or cache object object
      * @return string
      */
-    public function buildFilepath($mixed_obj)
+    public function buildFilepath($smarty)
     {
-        $_compile_id = isset($mixed_obj->compile_id) ? preg_replace('![^\w\|]+!', '_', $mixed_obj->compile_id) : null;
-        $_filepath = $mixed_obj->source->uid . '_' . $mixed_obj->compiletime_options;
+        $_compile_id = isset($this->compile_id) ? preg_replace('![^\w\|]+!', '_', $this->compile_id) : null;
+        $_filepath = $this->source->uid . '_' . $smarty->compiletime_options;
         // if use_sub_dirs, break file into directories
-        if ($mixed_obj->use_sub_dirs) {
+        if ($smarty->use_sub_dirs) {
             $_filepath = substr($_filepath, 0, 2) . DS
                 . substr($_filepath, 2, 2) . DS
                 . substr($_filepath, 4, 2) . DS
                 . $_filepath;
         }
-        $_compile_dir_sep = $mixed_obj->use_sub_dirs ? DS : '^';
+        $_compile_dir_sep = $smarty->use_sub_dirs ? DS : '^';
         if (isset($_compile_id)) {
             $_filepath = $_compile_id . $_compile_dir_sep . $_filepath;
         }
         // subtype
-        if ($mixed_obj->usage == Smarty::IS_CONFIG) {
+        if ($this->source->usage == Smarty::IS_CONFIG) {
             $_subtype = '.config';
-        } elseif ($mixed_obj->caching) {
+            // TODO must caching be a compiled property?
+        } elseif ($this->caching) {
             $_subtype = '.cache';
         } else {
             $_subtype = '';
         }
-        $_compile_dir = $mixed_obj->getCompileDir();
+        $_compile_dir = $smarty->getCompileDir();
         // set basename if not specified
-        $_basename = $mixed_obj->source->getBasename($mixed_obj->source);
+        $_basename = $this->source->getBasename($this->source);
         if ($_basename === null) {
-            $_basename = basename(preg_replace('![^\w\/]+!', '_', $mixed_obj->source->name));
+            $_basename = basename(preg_replace('![^\w\/]+!', '_', $this->source->name));
         }
         // separate (optional) basename by dot
         if ($_basename) {
             $_basename = '.' . $_basename;
         }
-        return $_compile_dir . $_filepath . '.' . $mixed_obj->source->type . $_basename . $_subtype . '.php';
+        return $_compile_dir . $_filepath . '.' . $this->source->type . $_basename . $_subtype . '.php';
     }
 
 
@@ -95,7 +106,7 @@ class Smarty_Internal_CompiledResource_File extends Smarty_CompiledResource
         $compiletime_options = 0;
         $_dir_sep = $smarty->use_sub_dirs ? DS : '^';
         if (isset($template_resource)) {
-            $source = $smarty->_resourceLoader(Smarty::SOURCE, $template_resource);
+            $source = $smarty->_loadSource($template_resource);
 
             if ($source->exists) {
                 // set basename if not specified
@@ -168,10 +179,10 @@ class Smarty_Internal_CompiledResource_File extends Smarty_CompiledResource
             }
         }
         // clear compiled cache
-        foreach (Smarty::$template_objects as $key => $foo) {
-            unset(Smarty::$template_objects[$key]['compiled']);
+        foreach (Smarty::$resource_cache as $source_key => $foo) {
+            unset(Smarty::$resource_cache[$source_key]['compiled']);
         }
-        return $_count;
+         return $_count;
     }
 
 }

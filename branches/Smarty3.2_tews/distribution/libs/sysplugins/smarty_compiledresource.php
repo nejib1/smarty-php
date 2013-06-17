@@ -30,7 +30,7 @@ class Smarty_CompiledResource extends Smarty_Internal_Magic_Error
     public $timestamp = null;
 
     /**
-     * Compiled Existance
+     * Compiled Existence
      * @var boolean
      */
     public $exists = false;
@@ -68,29 +68,16 @@ class Smarty_CompiledResource extends Smarty_Internal_Magic_Error
     public $compile_id = null;
 
     /**
+     * Flag if caching enabled
+     * @var boolean
+     */
+    public $caching = false;
+
+    /**
      * Source Object
      * @var Smarty_Template_Source
      */
     public $source = null;
-
-    /**
-     * create Compiled Object container
-     *
-     * @param Smarty $tpl_obj
-     */
-    public function __construct($tpl_obj)
-    {
-        if ($tpl_obj->usage != Smarty::IS_SMARTY) {
-            $tpl_obj->compiled = $this;
-        }
-        $this->compile_id = $tpl_obj->compile_id;
-        if (isset($tpl_obj->source)) {
-            $this->source = $tpl_obj->source;
-        } else {
-            $this->source = null;
-        }
-    }
-
 
     /**
      * get rendered template output from compiled template
@@ -107,11 +94,14 @@ class Smarty_CompiledResource extends Smarty_Internal_Magic_Error
     {
         $_scope = $tpl_obj->_buildScope($_scope, $scope_type, $data);
         $tpl_obj->cached_subtemplates = array();
-        if (empty($this->smarty_content)) {
-            $this->loadContent($tpl_obj);
-        }
         try {
             $level = ob_get_level();
+            if (empty($this->smarty_content)) {
+                $this->loadContent($tpl_obj);
+            }
+            if ($tpl_obj->debugging) {
+                Smarty_Internal_Debug::start_render($this->source);
+            }
             if (empty($this->smarty_content)) {
                 throw new SmartyException("Invalid compiled template for '{$this->source->template_resource}'");
             }
@@ -131,22 +121,18 @@ class Smarty_CompiledResource extends Smarty_Internal_Magic_Error
             }
             throw $e;
         }
-        if ($tpl_obj->source->recompiled && empty($this->file_dependency[$tpl_obj->source->uid])) {
-            $this->file_dependency[$tpl_obj->source->uid] = array($tpl_obj->source->filepath, $tpl_obj->source->timestamp, $tpl_obj->source->type);
+        if ($this->source->recompiled && empty($this->file_dependency[$this->source->uid])) {
+            $this->file_dependency[$this->source->uid] = array($this->source->filepath, $this->source->timestamp, $this->source->type);
         }
-        if ($tpl_obj->caching) {
-            $cached = Smarty_Internal_CacheCreate::_getCachedObject($tpl_obj);
-            $cached->newcache->_mergeFromCompiled($tpl_obj);
+        if ($this->caching) {
+            Smarty_CacheResource::$creator[0]->_mergeFromCompiled($this);
         }
-        if ($tpl_obj->caching == Smarty::CACHING_NOCACHE_CODE && isset($tpl_obj->parent)) {
-            $tpl_obj->parent->has_nocache_code = $tpl_obj->parent->has_nocache_code || $tpl_obj->has_nocache_code;
-        }
-        if (!$no_output_filter && (isset($tpl_obj->autoload_filters['output']) || isset($tpl_obj->registered_filters['output']))) {
+       if (!$no_output_filter && (isset($tpl_obj->autoload_filters['output']) || isset($tpl_obj->registered_filters['output']))) {
             $output = Smarty_Internal_Filter_Handler::runFilter('output', $output, $tpl_obj);
         }
 
         if ($tpl_obj->debugging) {
-            Smarty_Internal_Debug::end_render($tpl_obj);
+            Smarty_Internal_Debug::end_render($this->source);
         }
         return $output;
     }
@@ -160,35 +146,56 @@ class Smarty_CompiledResource extends Smarty_Internal_Magic_Error
      */
     public function loadContent($tpl_obj)
     {
-        if ($tpl_obj->source->recompiled) {
-            if ($tpl_obj->debugging) {
-                Smarty_Internal_Debug::start_compile($tpl_obj);
+        try {
+            $level = ob_get_level();
+        if ($this->source->recompiled) {
+                if ($tpl_obj->debugging) {
+                    Smarty_Internal_Debug::start_compile($this->source);
+                }
+
+                $compiler = Smarty_Compiler::load($tpl_obj, $this->source, $this->caching);
+                $compiler->compileTemplate();
+                if ($tpl_obj->debugging) {
+                    Smarty_Internal_Debug::end_compile($this->source);
+                }
+                eval('?>' . $compiler->template_code->buffer);
+                unset($compiler);
+                if ($tpl_obj->debugging) {
+                    Smarty_Internal_Debug::end_compile($this->source);
+                }
+       } else {
+            $this->isValid = false;
+            if ($this->exists && !$tpl_obj->force_compile) {
+                $this->process($tpl_obj);
+                if (!empty($this->smarty_content)) {
+                $this->isValid = $this->smarty_content->isValid;
+                }
+            }
+            if (!$this->isValid) {
+                if ($tpl_obj->debugging) {
+                    Smarty_Internal_Debug::start_compile($this->source);
+                }
+                $compiler = Smarty_Compiler::load($tpl_obj, $this->source, $this->caching);
+                $compiler->compileTemplateSource($this);
+                unset($compiler);
+                if ($tpl_obj->debugging) {
+                    Smarty_Internal_Debug::end_compile($this->source);
+                }
+                $this->process($tpl_obj);
+                if (!empty($this->smarty_content)) {
+                    $this->isValid = $this->smarty_content->isValid;
+                }
+                if (!$this->isValid || empty($this->smarty_content)) {
+                    throw new SmartyException("Unable to load compile template file '{$this->filepath}");
+                }
             }
 
-            $tpl_obj->compiler->compileTemplate();
-            if ($tpl_obj->debugging) {
-                Smarty_Internal_Debug::end_compile($tpl_obj);
-                Smarty_Internal_Debug::start_render($tpl_obj);
+        }
+        } catch (Exception $e) {
+            while (ob_get_level() > $level) {
+                ob_end_clean();
             }
-            eval('?>' . $tpl_obj->compiler->template_code->buffer);
-            unset($tpl_obj->compiler);
-        } else {
-            $this->isValid = true;
-            if (!$this->exists || ($tpl_obj->force_compile && !$this->isCompiled)) {
-                $this->isValid = false;
-            } else {
-                include($this->filepath);
-            }
-            if ($this->isValid && !empty($this->smarty_content)) {
-                return;
-            } else {
-                $tpl_obj->compiler->compileTemplateSource();
-                unset($tpl_obj->compiler);
-            }
-            include($this->filepath);
-            if (!$this->isValid || empty($this->smarty_content)) {
-                throw new SmartyException("Unable to load compile template file '{$this->filepath}");
-            }
+            throw $e;
         }
     }
 

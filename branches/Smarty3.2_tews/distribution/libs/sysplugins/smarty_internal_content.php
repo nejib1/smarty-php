@@ -21,10 +21,10 @@ class Smarty_Internal_Content extends Smarty_Internal_Magic_Error
 
     /**
      * flag if class is valid
-     * @var boolean
+     * @var boolean assumed true
      * @internal
      */
-    public $is_valid = false;
+    public $isValid = true;
 
     /**
      * flag if class is from cache file
@@ -103,6 +103,35 @@ class Smarty_Internal_Content extends Smarty_Internal_Magic_Error
     public $is_inheritance_child = false;
 
     /**
+     * Filepath
+     * @var string
+     */
+    public $filepath = null;
+
+    /**
+     * Timestamp
+     * @var integer
+     */
+    public $timestamp = null;
+
+    /**
+     * Template Compile Id (Smarty::$compile_id)
+     * @var string
+     */
+    public $compile_id = null;
+
+    /**
+     * Flag if caching enabled
+     * @var boolean
+     */
+    public $caching = false;
+
+    /**
+     * Source Object
+     * @var Smarty_Template_Source
+     */
+    public $source = null;
+    /**
      *  Template variable of this scope
      *
      * @var Smarty_Variable_Scope
@@ -115,16 +144,18 @@ class Smarty_Internal_Content extends Smarty_Internal_Magic_Error
      */
     public function __construct($tpl_obj, $mixed_obj)
     {
+        $this->timestamp = $mixed_obj->timestamp;
+        $this->filepath = $mixed_obj->filepath;
+        $this->source = $mixed_obj->source;
         // check if class is still valid
-        $this->is_valid = true;
         if ($this->version != Smarty::SMARTY_VERSION) {
-            $this->is_valid = false;
+            $this->isValid = false;
         } else if ((!$this->is_cache && $tpl_obj->compile_check) || ($this->is_cache && ($tpl_obj->compile_check === true || $tpl_obj->compile_check === Smarty::COMPILECHECK_ON)) && !empty($this->file_dependency)) {
             foreach ($this->file_dependency as $_file_to_check) {
                 if ($_file_to_check[2] == 'file' || $_file_to_check[2] == 'php') {
-                    if ($tpl_obj->source->filepath == $_file_to_check[0] && isset($tpl_obj->source->timestamp)) {
+                    if ($mixed_obj->source->filepath == $_file_to_check[0] && isset($mixed_obj->source->timestamp)) {
                         // do not recheck current template
-                        $mtime = $tpl_obj->source->timestamp;
+                        $mtime = $mixed_obj->source->timestamp;
                     } else {
                         // file and php types can be checked without loading the respective resource handlers
                         $mtime = @filemtime($_file_to_check[0]);
@@ -136,12 +167,12 @@ class Smarty_Internal_Content extends Smarty_Internal_Magic_Error
                     $mtime = $source->timestamp;
                 }
                 if (!$mtime || $mtime > $_file_to_check[1]) {
-                    $this->is_valid = false;
+                    $this->isValid = false;
                     break;
                 }
             }
         }
-        if ($this->is_valid) {
+        if ($this->isValid) {
             foreach ($this->required_plugins as $file => $call) {
                 if (!is_callable($call)) {
                     include $file;
@@ -149,12 +180,149 @@ class Smarty_Internal_Content extends Smarty_Internal_Magic_Error
             }
         }
 
-        $mixed_obj->isValid = $this->is_valid;
-
         if (!$this->is_cache) {
             if (!empty($this->template_functions) && isset($tpl_obj->parent) && $tpl_obj->parent->usage == Smarty::IS_TEMPLATE) {
                 $tpl_obj->parent->template_function_chain = $tpl_obj;
             }
+        }
+    }
+
+    /**
+     * get rendered template output from compiled template
+     *
+     * @param Smarty $tpl_obj template object
+     * @param Smarty_Variable_Scope $_scope template variables
+     * @param int $scope_type
+     * @param null|array $data
+     * @param boolean $no_output_filter true if output filter shall nit run
+     * @throws Exception
+     * @return string
+     */
+    public function getRenderedTemplate($tpl_obj, $_scope = null, $scope_type = Smarty::SCOPE_LOCAL, $data = null, $no_output_filter = true)
+    {
+        $_scope = $tpl_obj->_buildScope($_scope, $scope_type, $data);
+        $tpl_obj->cached_subtemplates = array();
+        try {
+            $level = ob_get_level();
+            if (empty($this->smarty_content)) {
+                $this->loadContent($tpl_obj);
+            }
+            if ($tpl_obj->debugging) {
+                Smarty_Internal_Debug::start_render($this->source);
+            }
+            if (empty($this->smarty_content)) {
+                throw new SmartyException("Invalid compiled template for '{$this->source->template_resource}'");
+            }
+            array_unshift($tpl_obj->_capture_stack, array());
+            //
+            // render compiled template
+            //
+            $output = $this->smarty_content->get_template_content($tpl_obj, $_scope);
+            // any unclosed {capture} tags ?
+            if (isset($tpl_obj->_capture_stack[0][0])) {
+                $tpl_obj->_capture_error();
+            }
+            array_shift($tpl_obj->_capture_stack);
+        } catch (Exception $e) {
+            while (ob_get_level() > $level) {
+                ob_end_clean();
+            }
+            throw $e;
+        }
+        if ($this->source->recompiled && empty($this->file_dependency[$this->source->uid])) {
+            $this->file_dependency[$this->source->uid] = array($this->source->filepath, $this->source->timestamp, $this->source->type);
+        }
+        if ($this->caching) {
+            Smarty_CacheResource::$creator[0]->_mergeFromCompiled($this);
+        }
+        if (!$no_output_filter && (isset($tpl_obj->autoload_filters['output']) || isset($tpl_obj->registered_filters['output']))) {
+            $output = Smarty_Internal_Filter_Handler::runFilter('output', $output, $tpl_obj);
+        }
+
+        if ($tpl_obj->debugging) {
+            Smarty_Internal_Debug::end_render($this->source);
+        }
+        return $output;
+    }
+
+    /**
+     *
+     *  runtime routine to create a new variable scope
+     *
+     * @param Smarty $parent
+     * @param int $scope_type
+     * @param null $data
+     * @return array|null|\Smarty_Variable_Scope|\stdClass
+     */
+    public function _buildScope($parent, $scope_type = Smarty::SCOPE_LOCAL, $data = null)
+    {
+        if (!isset($parent)) {
+            $parent = $this->tpl_vars;
+        } elseif (!($parent instanceof Smarty_Variable_Scope)) {
+            $parent = $parent->tpl_vars;
+        }
+        switch ($scope_type) {
+            case Smarty::SCOPE_LOCAL:
+                if ($parent->___attributes->usage == Smarty::IS_SMARTY || $parent->___attributes->usage == Smarty::IS_TEMPLATE) {
+                    // we can just  clone it
+                    $scope = clone $parent;
+                } else {
+                    $scope = $this->_mergeScopes($parent);
+                }
+                $scope->___attributes->parent_scope = $parent;
+                $scope->___attributes->usage = Smarty::IS_TEMPLATE;
+                $scope->___attributes->name = $this->template_resource;
+                break;
+            case Smarty::SCOPE_PARENT:
+                $scope = $parent;
+                break;
+            case Smarty::SCOPE_GLOBAL:
+                $scope = Smarty::$global_tpl_vars;
+                break;
+            case Smarty::SCOPE_ROOT:
+                $scope = $parent;
+                while (isset($scope->___attributes->parent_scope)) {
+                    $scope = $scope->___attributes->parent_scope;
+                }
+                break;
+        }
+
+        // create special smarty variable
+        if (!isset($scope->smarty)) {
+            $scope->smarty = new Smarty_Variable();
+        }
+        // fill data if present
+        if ($data != null) {
+            // set up variable values
+            foreach ($data as $varname => $value) {
+                $scope->$varname = new Smarty_Variable($value);
+            }
+        }
+        return $scope;
+    }
+
+
+    /**
+     *
+     *  merge tpl vars
+     *
+     * @param Smarty_Variable_Scope $ptr current scope
+     * @return Smarty_Variable_Scope  merged tpl vars
+     */
+    public function _mergeScopes($ptr)
+    {
+        // Smarty::triggerCallback('trace', ' merge tpl ');
+
+        if (isset($ptr->___attributes->parent_scope)) {
+            $scope = $this->_mergeScopes($ptr->___attributes->parent_scope);
+            foreach ($ptr as $var => $data) {
+                if ($var != '___attributes') {
+                    $scope->$var = $data;
+                }
+            }
+            return $scope;
+        } else {
+            return clone $ptr;
         }
     }
 
@@ -232,7 +400,7 @@ class Smarty_Internal_Content extends Smarty_Internal_Magic_Error
     /**
      * Template code runtime function to create a local Smarty variable for array assignments
      *
-     * @param string $tpl_var   tempate variable name
+     * @param string $tpl_var   template variable name
      * @param Smarty_Variable_Scope $_scope  variable scope
      * @param bool $nocache   cache mode of variable
      */

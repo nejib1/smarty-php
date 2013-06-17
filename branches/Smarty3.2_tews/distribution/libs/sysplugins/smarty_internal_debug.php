@@ -61,66 +61,66 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data
     /**
      * Start logging of compile time
      *
-     * @param object $tpl_obj
+     * @param Smarty_Resource $source
      */
-    public static function start_compile($tpl_obj)
+    public static function start_compile($source)
     {
-        $key = self::get_key($tpl_obj);
+        $key = self::get_key($source);
         self::$_template_data[$key]['start_time'] = microtime(true);
     }
 
     /**
      * End logging of compile time
      *
-     * @param object $tpl_obj
+     * @param Smarty_Resource $source
      */
-    public static function end_compile($tpl_obj)
+    public static function end_compile($source)
     {
-        $key = self::get_key($tpl_obj);
+        $key = self::get_key($source);
         self::$_template_data[$key]['compile_time'] += microtime(true) - self::$_template_data[$key]['start_time'];
     }
 
     /**
      * Start logging of render time
      *
-     * @param object $tpl_obj
+     * @param Smarty_Resource $source
      */
-    public static function start_render($tpl_obj)
+    public static function start_render($source)
     {
-        $key = self::get_key($tpl_obj);
+        $key = self::get_key($source);
         self::$_template_data[$key]['start_time'] = microtime(true);
     }
 
     /**
      * End logging of compile time
      *
-     * @param object $tpl_obj
+     * @param Smarty_Resource $source
      */
-    public static function end_render($tpl_obj)
+    public static function end_render($source)
     {
-        $key = self::get_key($tpl_obj);
+        $key = self::get_key($source);
         self::$_template_data[$key]['render_time'] += microtime(true) - self::$_template_data[$key]['start_time'];
     }
 
     /**
      * Start logging of cache time
      *
-     * @param object $tpl_obj cached template
+     * @param Smarty_Resource $source
      */
-    public static function start_cache($tpl_obj)
+    public static function start_cache($source)
     {
-        $key = self::get_key($tpl_obj);
+        $key = self::get_key($source);
         self::$_template_data[$key]['start_time'] = microtime(true);
     }
 
     /**
      * End logging of cache time
      *
-     * @param object $tpl_obj cached template
+     * @param Smarty_Resource $source
      */
-    public static function end_cache($tpl_obj)
+    public static function end_cache($source)
     {
-        $key = self::get_key($tpl_obj);
+        $key = self::get_key($source);
         self::$_template_data[$key]['cache_time'] += microtime(true) - self::$_template_data[$key]['start_time'];
     }
 
@@ -133,11 +133,7 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data
     {
         // prepare information of assigned variables
         $ptr = self::get_debug_vars($obj);
-        $tpl_obj = clone $obj;
-        $tpl_obj->usage = Smarty::IS_TEMPLATE;
-        unset($tpl_obj->source, $tpl_obj->compiled, $tpl_obj->cached, $tpl_obj->compiler, $tpl_obj->mustCompile);
-        $tpl_obj->tpl_vars = new Smarty_Variable_Scope($tpl_obj);
-        $tpl_obj->template_resource = $tpl_obj->debug_tpl;
+        $tpl_obj = $obj->createTemplate($obj->debug_tpl);
         $tpl_obj->registered_filters = array();
         $tpl_obj->autoload_filters = array();
         $tpl_obj->default_modifiers = array();
@@ -215,24 +211,24 @@ class Smarty_Internal_Debug extends Smarty_Internal_Data
     /**
      * Return key into $_template_data for template
      *
-     * @param object $tpl_obj  template object
+     * @param Smarty_Resource $source
      * @return string   key into $_template_data
      */
-    private static function get_key($tpl_obj)
+    private static function get_key($source)
     {
         static $_is_stringy = array('string' => true, 'eval' => true);
         // calculate Uid if not already done
-        if ($tpl_obj->source->uid == '') {
-            $tpl_obj->source->filepath;
+        if ($source->uid == '') {
+            $source->filepath;
         }
-        $key = $tpl_obj->source->uid;
+        $key = $source->uid;
         if (isset(self::$_template_data[$key])) {
             return $key;
         } else {
-            if (isset($_is_stringy[$tpl_obj->source->type])) {
-                self::$_template_data[$key]['name'] = '\'' . substr($tpl_obj->source->name, 0, 25) . '...\'';
+            if (isset($_is_stringy[$source->type])) {
+                self::$_template_data[$key]['name'] = '\'' . substr($source->name, 0, 25) . '...\'';
             } else {
-                self::$_template_data[$key]['name'] = $tpl_obj->source->filepath;
+                self::$_template_data[$key]['name'] = $source->filepath;
             }
             self::$_template_data[$key]['compile_time'] = 0;
             self::$_template_data[$key]['render_time'] = 0;

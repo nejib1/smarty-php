@@ -40,7 +40,7 @@ class Smarty_Internal_Resource_Extends extends Smarty_Resource
         $components = explode('|', $this->name);
         $exists = true;
         foreach ($components as $component) {
-            $s = $tpl_obj->_resourceLoader(Smarty::SOURCE, $component);
+            $s = $tpl_obj->_loadSource($component);
             if ($s->type == 'php') {
                 throw new SmartyException("Resource type {$s->type} cannot be used with the extends resource type");
             }

@@ -52,7 +52,7 @@ class Smarty_Internal_Resource_File extends Smarty_Resource
     public function buildFilepath(Smarty $tpl_obj = null)
     {
         $file = $this->name;
-        if ($tpl_obj->usage == Smarty::IS_CONFIG) {
+        if ($this->usage == Smarty::IS_CONFIG) {
             $_directories = $tpl_obj->getConfigDir();
             $_default_handler = $tpl_obj->default_config_handler_func;
         } else {

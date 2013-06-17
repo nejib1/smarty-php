@@ -20,11 +20,32 @@ class Smarty_Internal_Template_Compiler extends Smarty_Compiler
 {
 
     /**
+     * current template
+     *
+     * @var Smarty
+     */
+    public $tpl_obj = null;
+
+    /**
+     * source object
+     *
+     * @var Smarty_Resource
+     */
+    public $source = null;
+
+
+    /**
      * Lexer class name
      *
      * @var string
      */
     public $lexer_class = '';
+
+    /**
+     * Flag if caching enabled
+     * @var boolean
+     */
+    public $caching = false;
 
     /**
      * Parser class name
@@ -53,13 +74,6 @@ class Smarty_Internal_Template_Compiler extends Smarty_Compiler
      * @var int
      */
     public $line_offset = 0;
-
-    /**
-     * array of vars which can be compiled in local scope
-     *
-     * @var array
-     */
-    public $local_var = array();
 
     /**
      * inline template code templates
@@ -141,12 +155,6 @@ class Smarty_Internal_Template_Compiler extends Smarty_Compiler
      */
     public $_tag_stack = array();
 
-    /**
-     * current template
-     *
-     * @var Smarty
-     */
-    public $tpl_obj = null;
 
     /**
      * file dependencies
@@ -253,6 +261,12 @@ class Smarty_Internal_Template_Compiler extends Smarty_Compiler
     public $write_compiled_code = true;
 
     /**
+     * flag if template does contain nocache code sections
+     * @var boolean
+     */
+    public $has_nocache_code = false;
+
+    /**
      * flag if currently a template function is compiled
      * @var bool
      */
@@ -321,13 +335,17 @@ class Smarty_Internal_Template_Compiler extends Smarty_Compiler
      *
      * @param string $lexer_class  class name
      * @param string $parser_class class name
+     * @param Smarty_Resource $source
+     * @param boolean $caching   flag if caching enabled
      * @param Smarty $tpl_obj
      */
-    public function __construct($lexer_class, $parser_class, $tpl_obj)
+    public function __construct($lexer_class, $parser_class, $tpl_obj, $source, $caching)
     {
         //parent::__construct();
 
         $this->tpl_obj = $tpl_obj;
+        $this->source = $source;
+        $this->caching = $caching;
         // get required plugins
         $this->lexer_class = $lexer_class;
         $this->parser_class = $parser_class;
@@ -386,25 +404,25 @@ class Smarty_Internal_Template_Compiler extends Smarty_Compiler
      * @throws SmartyException in case of compilation errors
      * @throws Exception
      */
-    public function compileTemplateSource()
+    public function compileTemplateSource(Smarty_CompiledResource $compiled)
     {
         $this->isInheritance = $this->isInheritanceChild = $this->tpl_obj->is_inheritance_child;
-        if (!$this->tpl_obj->source->recompiled) {
-            if ($this->tpl_obj->source->components) {
+        if (!$this->source->recompiled) {
+            if ($this->source->components) {
                 // uses real resource for file dependency
-                $source = end($this->tpl_obj->source->components);
+                $source = end($this->source->components);
             } else {
-                $source = $this->tpl_obj->source;
+                $source = $this->source;
             }
-            $this->file_dependency[$this->tpl_obj->source->uid] = array($this->tpl_obj->source->filepath, $this->tpl_obj->source->timestamp, $source->type);
+            $this->file_dependency[$this->source->uid] = array($this->source->filepath, $this->source->timestamp, $source->type);
         }
         if ($this->tpl_obj->debugging) {
             Smarty_Internal_Debug::start_compile($this->tpl_obj);
         }
         // compile locking
-        if ($this->tpl_obj->compile_locking && !$this->tpl_obj->source->recompiled) {
-            if ($saved_timestamp = $this->tpl_obj->compiled->timestamp) {
-                touch($this->tpl_obj->compiled->filepath);
+        if ($this->tpl_obj->compile_locking && !$this->source->recompiled) {
+            if ($saved_timestamp = $compiled->timestamp) {
+                touch($compiled->filepath);
             }
         }
         // call compiler
@@ -412,20 +430,20 @@ class Smarty_Internal_Template_Compiler extends Smarty_Compiler
             $code = $this->compileTemplate();
         } catch (Exception $e) {
             // restore old timestamp in case of error
-            if ($this->tpl_obj->compile_locking && !$this->tpl_obj->source->recompiled && $saved_timestamp) {
-                touch($this->tpl_obj->compiled->filepath, $saved_timestamp);
+            if ($this->tpl_obj->compile_locking && !$this->source->recompiled && $saved_timestamp) {
+                touch($compiled->filepath, $saved_timestamp);
             }
             throw $e;
         }
         // compiling succeded
-        if (!$this->tpl_obj->source->recompiled && $this->tpl_obj->compiler->write_compiled_code) {
+        if (!$this->source->recompiled && $this->write_compiled_code) {
             // write compiled template
-            $_filepath = $this->tpl_obj->compiled->filepath;
+            $_filepath = $compiled->filepath;
             if ($_filepath === false)
                 throw new SmartyException('Invalid filepath for compiled template');
             Smarty_Internal_Write_File::writeFile($_filepath, $code, $this->tpl_obj);
-            $this->tpl_obj->compiled->exists = true;
-            $this->tpl_obj->compiled->isCompiled = true;
+            $compiled->exists = true;
+            $compiled->isCompiled = true;
         }
         if ($this->tpl_obj->debugging) {
             Smarty_Internal_Debug::end_compile($this->tpl_obj);
@@ -442,16 +460,16 @@ class Smarty_Internal_Template_Compiler extends Smarty_Compiler
         // flag for nochache sections
         //        $this->nocache = false;
         $this->tag_nocache = false;
-        // reset has noche code flag
-        $this->tpl_obj->has_nocache_code = false;
+        // reset has nocache code flag
+        $this->has_nocache_code = false;
         // check if content class name already predefine
         if (empty($this->content_class)) {
             $this->content_class = '__Smarty_Content_' . str_replace('.', '_', uniqid('', true));
         }
-        $this->tpl_obj->_current_file = $saved_filepath = $this->tpl_obj->source->filepath;
+        $this->tpl_obj->_current_file = $saved_filepath = $this->source->filepath;
         // template header code
         if (!$this->suppressHeader) {
-            $template_header = "<?php /* Smarty version " . Smarty::SMARTY_VERSION . ", created on " . strftime("%Y-%m-%d %H:%M:%S") . " compiled from \"" . $this->tpl_obj->source->filepath . "\" */\n";
+            $template_header = "<?php /* Smarty version " . Smarty::SMARTY_VERSION . ", created on " . strftime("%Y-%m-%d %H:%M:%S") . " compiled from \"" . $this->source->filepath . "\" */\n";
         } else {
             $template_header = '<?php ';
         }
@@ -465,14 +483,14 @@ class Smarty_Internal_Template_Compiler extends Smarty_Compiler
 
         // get source and run prefilter if required and pass iit to lexer
         if (isset($this->tpl_obj->autoload_filters['pre']) || isset($this->tpl_obj->registered_filters['pre'])) {
-            $this->lex->data = Smarty_Internal_Filter_Handler::runFilter('pre', $this->tpl_obj->source->content, $this->tpl_obj);
+            $this->lex->data = Smarty_Internal_Filter_Handler::runFilter('pre', $this->source->content, $this->tpl_obj);
         } else {
-            $this->lex->data = $this->tpl_obj->source->getContent();
+            $this->lex->data = $this->source->getContent();
         }
         // call compiler
         $this->doCompile();
 
-        $this->tpl_obj->source->filepath = $saved_filepath;
+        $this->source->filepath = $saved_filepath;
         // free memory
         $this->parser->compiler = null;
         $this->parser = null;
@@ -698,7 +716,7 @@ class Smarty_Internal_Template_Compiler extends Smarty_Compiler
     public function getPlugin($plugin_name, $plugin_type)
     {
         $function = null;
-        if ($this->tpl_obj->caching && ($this->nocache || $this->tag_nocache)) {
+        if ($this->caching && ($this->nocache || $this->tag_nocache)) {
             if (isset($this->required_plugins['nocache'][$plugin_name][$plugin_type])) {
                 $function = $this->required_plugins['nocache'][$plugin_name][$plugin_type]['function'];
             } else if (isset($this->required_plugins['compiled'][$plugin_name][$plugin_type])) {
@@ -724,7 +742,7 @@ class Smarty_Internal_Template_Compiler extends Smarty_Compiler
         $file = $this->tpl_obj->_loadPlugin($function, false);
 
         if (is_string($file)) {
-            if ($this->tpl_obj->caching && ($this->nocache || $this->tag_nocache)) {
+            if ($this->caching && ($this->nocache || $this->tag_nocache)) {
                 $this->required_plugins['nocache'][$plugin_name][$plugin_type]['file'] = $file;
                 $this->required_plugins['nocache'][$plugin_name][$plugin_type]['function'] = $function;
             } else {
@@ -762,7 +780,7 @@ class Smarty_Internal_Template_Compiler extends Smarty_Compiler
             $this->tag_nocache = $this->tag_nocache || !$cacheable;
             if ($script !== null) {
                 if (is_file($script)) {
-                    if ($this->tpl_obj->caching && ($this->nocache || $this->tag_nocache)) {
+                    if ($this->caching && ($this->nocache || $this->tag_nocache)) {
                         $this->required_plugins['nocache'][$tag][$plugin_type]['file'] = $script;
                         $this->required_plugins['nocache'][$tag][$plugin_type]['function'] = $callback;
                     } else {
@@ -825,11 +843,11 @@ class Smarty_Internal_Template_Compiler extends Smarty_Compiler
 
             // generate replacement code
             $make_nocache_code = $this->nocache || $this->tag_nocache || $this->forceNocache == 2;
-            if ((!($this->tpl_obj->source->recompiled) || $this->forceNocache) && $this->tpl_obj->caching && !$this->suppressNocacheProcessing &&
+            if ((!($this->source->recompiled) || $this->forceNocache) && $this->caching && !$this->suppressNocacheProcessing &&
                 ($make_nocache_code || $this->nocache_nolog)
             ) {
                 if ($make_nocache_code) {
-                    $this->tpl_obj->has_nocache_code = true;
+                    $this->has_nocache_code = true;
                 }
                 if ($lineno && !$this->suppressTraceback) {
                     $content = "/* Line {$this->lex->taglineno} */\$_smarty_tpl->trace_call_stack[0][1] = {$lineno};" . $content;
@@ -839,7 +857,7 @@ class Smarty_Internal_Template_Compiler extends Smarty_Compiler
                 if (!empty($postfix_code)) {
                     $this->template_code->formatPHP($postfix_code);
                 }
-                // make sure we include modifer plugins for nocache code
+                // make sure we include modifier plugins for nocache code
                 foreach ($this->modifier_plugins as $plugin_name => $dummy) {
                     if (isset($this->required_plugins['compiled'][$plugin_name]['modifier'])) {
                         $this->required_plugins['nocache'][$plugin_name]['modifier'] = $this->required_plugins['compiled'][$plugin_name]['modifier'];
@@ -902,7 +920,7 @@ class Smarty_Internal_Template_Compiler extends Smarty_Compiler
             $substr = substr($this->lex->data, $from, $to);
             $source .= sprintf('%4d : ', $i + $this->line_offset) . htmlspecialchars(trim(preg_replace('![\t\r\n]+!', ' ', $substr))) . "<br>";
         }
-        $error_text = "<b>Syntax Error</b> in template <b>'{$this->tpl_obj->source->filepath}'</b>  on line " . ($line + $this->line_offset) . "<br>{$source}";
+        $error_text = "<b>Syntax Error</b> in template <b>'{$this->source->filepath}'</b>  on line " . ($line + $this->line_offset) . "<br>{$source}";
         if (isset($msg)) {
             // individual error message
             $error_text .= "<br><b>{$msg}</b><br>";
@@ -940,7 +958,7 @@ class Smarty_Internal_Template_Compiler extends Smarty_Compiler
 
         $template_code->php("class {$this->content_class} extends Smarty_Internal_Content" . ($this->isInheritance ? "_Inheritance" : '') . " {")->newline()->indent();
         $template_code->php("public \$version = '" . Smarty::SMARTY_VERSION . "';")->newline();
-        $template_code->php("public \$has_nocache_code = " . ($tpl_obj->has_nocache_code ? 'true' : 'false') . ";")->newline();
+        $template_code->php("public \$has_nocache_code = " . ($this->has_nocache_code ? 'true' : 'false') . ";")->newline();
         if ($this->isInheritanceChild) {
             $template_code->php("public \$is_inheritance_child = true;")->newline();
         }

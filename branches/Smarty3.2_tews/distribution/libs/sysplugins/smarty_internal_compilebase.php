@@ -274,7 +274,7 @@ class Smarty_Internal_CompileBase extends Smarty_Internal_Code
                     $par_names[$name] = true;
                     $optional = $par->isOptional();
                     if (isset($params[$name])) {
-                        if ($compiler->tpl_obj->caching && is_array($cache_attr) && in_array($name, $cache_attr)) {
+                        if ($compiler->caching && is_array($cache_attr) && in_array($name, $cache_attr)) {
                             $value = str_replace(array('$', '"'), array('^##^', '^#^'), $params[$name]);
                             $par_array[] = "'$name'=>^#^.var_export($value,true).^#^";
                         } else {
@@ -305,7 +305,7 @@ class Smarty_Internal_CompileBase extends Smarty_Internal_Code
         foreach ($params as $key => $value) {
             if (is_int($key)) {
                 $par_array[] = "$key=>$value";
-            } elseif ($compiler->tpl_obj->caching && is_array($cache_attr) && in_array($key, $cache_attr)) {
+            } elseif ($compiler->caching && is_array($cache_attr) && in_array($key, $cache_attr)) {
                 $value = str_replace(array('$', '"'), array('^##^', '^#^'), $value);
                 $par_array[] = "'$key'=>^#^.var_export($value,true).^#^";
             } else {

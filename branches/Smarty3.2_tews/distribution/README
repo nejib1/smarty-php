@@ -433,7 +433,7 @@ template exits, none of the new variables or modifications can be seen in the
 parent template(s). This is same behavior as in Smarty 2. 
 
 With Smarty 3, we can assign variables with a scope attribute which allows the
-availablility of these new variables or modifications globally (ie in the parent
+availability of these new variables or modifications globally (ie in the parent
 templates.)
 
 Possible scopes are local, parent, root and global. 

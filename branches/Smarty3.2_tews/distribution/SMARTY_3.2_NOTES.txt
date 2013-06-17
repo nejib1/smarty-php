@@ -47,7 +47,7 @@ New template features
 ---------------------
 
     whitespace control
-Whitespaces in front or after tags can now be controled by the tag itself.
+Whitespaces in front or after tags can now be controlled by the tag itself.
 {-tag} remove white space infront of tag up to the previous non-whitespace character or beginning of the line
    "text \n\n\t {-tag}" -> "text \n\n{tag}"
    "text \n\n\t text\t {-tag}" -> "text \n\n\t text{tag}"

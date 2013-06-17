@@ -158,7 +158,7 @@ class Smarty_Internal_Compile_Private_Modifier extends Smarty_Internal_CompileBa
     }
 
     /**
-     * Check number of required modifer parameter oand optionally return context object
+     * Check number of required modifier parameter oand optionally return context object
      *
      * @param string $modifier modifier name
      * @param callback $callback modifier callback

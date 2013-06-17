@@ -9,7 +9,7 @@
 
 /**
  * Smarty unescape modifier plugin
- * NOTE: This plugin is called only when smarty_modifercompiler_escape() is not able to produce inline code
+ * NOTE: This plugin is called only when smarty_modifiercompiler_escape() is not able to produce inline code
  *
  * Type:     modifier<br>
  * Name:     unescape<br>

@@ -71,7 +71,7 @@ class Smarty_Internal_Compile_Call extends Smarty_Internal_CompileBase
         if ($_attr['nocache'] === true) {
             $compiler->tag_nocache = true;
         }
-        if ($compiler->tpl_obj->caching && ($compiler->tag_nocache || $compiler->nocache)) {
+        if ($compiler->caching && ($compiler->tag_nocache || $compiler->nocache)) {
             $compiler->called_nocache_template_functions[trim($_name, "'\"")] = true;
         }
         unset($_attr['name'], $_attr['assign'], $_attr['nocache']);

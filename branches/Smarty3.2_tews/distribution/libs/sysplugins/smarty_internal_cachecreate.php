@@ -14,7 +14,7 @@
  * @package Cacher
  * @author Uwe Tews
  */
-class Smarty_Internal_CacheCreate
+class Smarty_Internal_CacheCreate extends Smarty_Internal_Magic_Error
 {
 
     /**
@@ -66,6 +66,23 @@ class Smarty_Internal_CacheCreate
     public $file_dependency = array();
 
     /**
+     * flag if cache does have nocache code
+     *
+     * @var boolean
+     */
+    public $has_nocache_code = false;
+
+    /*
+     * Internal class to render new cached content
+     *
+     * @var Smarty_Internal_Content
+     */
+    public $smarty_content = null;
+
+    // dummmy
+    public $isValid;
+
+    /**
      * Find template object of cache file and return Smarty_template_Cached
      *
      * @param Smarty $tpl_obj     current template
@@ -86,6 +103,7 @@ class Smarty_Internal_CacheCreate
     /**
      * Create new cache file
      *
+     * @param $cache_obj            cache object
      * @param Smarty $tpl_obj      current template
      * @param string $output        cache file content
      * @param Smarty_Variable_Scope $_scope
@@ -93,13 +111,12 @@ class Smarty_Internal_CacheCreate
      * @throws Exception
      * @return string
      */
-    public function _createCacheFile($tpl_obj, $output, $_scope, $no_output_filter)
+    public function _createCacheFile($cache_obj, $tpl_obj, $output, $_scope, $no_output_filter)
     {
         if ($tpl_obj->debugging) {
-            Smarty_Internal_Debug::start_cache($tpl_obj);
+            Smarty_Internal_Debug::start_cache($cache_obj->source);
         }
         $this->code_obj = new Smarty_Internal_Code(3);
-        $tpl_obj->has_nocache_code = false;
         // get text between non-cached items
         $cache_split = preg_split("!/\*%%SmartyNocache%%\*/(.+?)/\*/%%SmartyNocache%%\*/!s", $output);
         // get non-cached items
@@ -111,25 +128,26 @@ class Smarty_Internal_CacheCreate
                 $this->code_obj->php("echo ")->string($curr_split)->raw(";\n");
             }
             if (isset($cache_parts[0][$curr_idx])) {
-                $tpl_obj->has_nocache_code = true;
+                $this->has_nocache_code = true;
                 // format and add nocache PHP code
                 $this->code_obj->formatPHP($cache_parts[1][$curr_idx]);
             }
         }
-        if (!$no_output_filter && !$tpl_obj->has_nocache_code && (isset($tpl_obj->autoload_filters['output']) || isset($tpl_obj->registered_filters['output']))) {
+        if (!$no_output_filter && !$this->has_nocache_code && (isset($tpl_obj->autoload_filters['output']) || isset($tpl_obj->registered_filters['output']))) {
             $this->code_obj->buffer = Smarty_Internal_Filter_Handler::runFilter('output', $this->code_obj->buffer, $tpl_obj);
         }
         // write cache file content
-        if (!$tpl_obj->source->recompiled && ($tpl_obj->caching == Smarty::CACHING_LIFETIME_CURRENT || $tpl_obj->caching == Smarty::CACHING_LIFETIME_SAVED)) {
+        if (!$cache_obj->source->recompiled && ($cache_obj->caching == Smarty::CACHING_LIFETIME_CURRENT || $cache_obj->caching == Smarty::CACHING_LIFETIME_SAVED)) {
             $this->code_obj->buffer = $this->_createSmartyContentClass($tpl_obj);
+            // TODO this must be rewritten
             try {
                 $level = ob_get_level();
-                $tpl_obj->compile_check = false; // no need to check again
                 eval('?>' . $this->code_obj->buffer);
-                $tpl_obj->cached->writeCache($tpl_obj, $this->code_obj->buffer);
+                $cache_obj->writeCache($tpl_obj, $this->code_obj->buffer);
                 $this->code_obj = null;
-                $tpl_obj->cached->isValid = true;
-                $output = $tpl_obj->cached->smarty_content->get_template_content($tpl_obj, $_scope);
+                $output = $this->smarty_content->get_template_content($tpl_obj, $_scope);
+                $cache_obj->isValid = true;
+                $cache_obj->smarty_content = $this->smarty_content;
             } catch (Exception $e) {
                 while (ob_get_level() > $level) {
                     ob_end_clean();
@@ -138,7 +156,7 @@ class Smarty_Internal_CacheCreate
             }
         }
         if ($tpl_obj->debugging) {
-            Smarty_Internal_Debug::end_cache($tpl_obj);
+            Smarty_Internal_Debug::end_cache($cache_obj->source);
         }
         return $output;
     }
@@ -160,7 +178,7 @@ class Smarty_Internal_CacheCreate
         $this->code_obj->raw("<?php")->newline();
         $this->code_obj->php("if (!class_exists('{$class}',false)) {")->newline()->indent()->php("class {$class} extends Smarty_Internal_Content" . (!empty($this->inheritance_blocks_code) ? "_Inheritance" : '') . " {")->newline()->indent();
         $this->code_obj->php("public \$version = '" . Smarty::SMARTY_VERSION . "';")->newline();
-        $this->code_obj->php("public \$has_nocache_code = " . ($tpl_obj->has_nocache_code ? 'true' : 'false') . ";")->newline();
+        $this->code_obj->php("public \$has_nocache_code = " . ($this->has_nocache_code ? 'true' : 'false') . ";")->newline();
         if (!empty($tpl_obj->cached_subtemplates)) {
             $this->code_obj->php("public \$cached_subtemplates = ")->repr($tpl_obj->cached_subtemplates)->raw(";")->newline();
         }
@@ -191,7 +209,7 @@ class Smarty_Internal_CacheCreate
             $this->code_obj->newline()->raw($code);
         }
         $this->code_obj->outdent()->php('}')->newline()->outdent()->php('}')->newline();
-        $this->code_obj->php("\$tpl_obj->cached->smarty_content = new {$class}(\$tpl_obj, \$tpl_obj->cached);\n\n");
+        $this->code_obj->php("\$this->smarty_content = new {$class}(\$tpl_obj, \$this);\n\n");
         return $this->code_obj->buffer;
     }
 
@@ -199,14 +217,16 @@ class Smarty_Internal_CacheCreate
     /**
      * Merge plugin info, dependencies and nocache template functions into cache
      *
-     * @param Smarty $tpl_obj     current template
+     * @param Smarty_CompiledResource $comp_obj  compiled object
      */
-    public function _mergeFromCompiled($tpl_obj)
+    public function _mergeFromCompiled($comp_obj)
     {
-        $this->required_plugins = array_merge($this->required_plugins, $tpl_obj->compiled->smarty_content->required_plugins_nocache);
-        $this->file_dependency = array_merge($this->file_dependency, $tpl_obj->compiled->smarty_content->file_dependency);
-        if (!empty($tpl_obj->compiled->smarty_content->called_nocache_template_functions)) {
-            foreach ($tpl_obj->compiled->smarty_content->called_nocache_template_functions as $name => $dummy) {
+        $this->required_plugins = array_merge($this->required_plugins, $comp_obj->smarty_content->required_plugins_nocache);
+        $this->file_dependency = array_merge($this->file_dependency, $comp_obj->smarty_content->file_dependency);
+        $this->has_nocache_code = $this->has_nocache_code || $comp_obj->smarty_content->has_nocache_code;
+
+        if (!empty($comp_obj->smarty_content->called_nocache_template_functions)) {
+            foreach ($comp_obj->smarty_content->called_nocache_template_functions as $name => $dummy) {
                 self::_mergeNocacheTemplateFunction($tpl_obj, $name);
             }
         }

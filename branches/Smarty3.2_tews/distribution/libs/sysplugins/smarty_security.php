@@ -127,7 +127,7 @@ class Smarty_Security
     /**
      * Allowed PHP functions (as modifier plugins)
      *
-     * This is an array of trusted PHP modifers.
+     * This is an array of trusted PHP modifiers.
      *
      * If empty all modifiers are allowed.
      * To disable all modifier set $modifiers = null.

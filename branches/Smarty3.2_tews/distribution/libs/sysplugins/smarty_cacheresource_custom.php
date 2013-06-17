@@ -74,6 +74,7 @@ abstract class Smarty_CacheResource_Custom extends Smarty_CacheResource
     /**
      * populate Cached Object with meta data from Resource
      *
+     * @param Smarty $tpl_obj
      * @return void
      */
     public function populate(Smarty $tpl_obj)
@@ -93,14 +94,14 @@ abstract class Smarty_CacheResource_Custom extends Smarty_CacheResource
      */
     public function populateTimestamp(Smarty $tpl_obj)
     {
-        $mtime = $this->fetchTimestamp($this->filepath,$this->source->name, $this->cache_id, $this->compile_id);
+        $mtime = $this->fetchTimestamp($this->filepath, $this->source->name, $this->cache_id, $this->compile_id);
         if ($mtime !== null) {
             $this->timestamp = $mtime;
             $this->exists = !!$this->timestamp;
             return;
         }
         $timestamp = null;
-        $this->fetch($this->filepath,$this->source->name, $this->cache_id, $this->compile_id, $this->content, $timestamp);
+        $this->fetch($this->filepath, $this->source->name, $this->cache_id, $this->compile_id, $this->content, $timestamp);
         $this->timestamp = isset($timestamp) ? $timestamp : false;
         $this->exists = !!$this->timestamp;
     }
@@ -119,10 +120,10 @@ abstract class Smarty_CacheResource_Custom extends Smarty_CacheResource
         } else {
             $content = null;
         }
-         $timestamp = $this->timestamp ? $this->timestamp : null;
+        $timestamp = $this->timestamp ? $this->timestamp : null;
         if ($content === null || !$timestamp) {
             $this->fetch(
-                $this->filepath,$this->source->name, $this->cache_id, $this->compile_id, $content, $timestamp
+                $this->filepath, $this->source->name, $this->cache_id, $this->compile_id, $content, $timestamp
             );
         }
         if (isset($content)) {
@@ -210,7 +211,7 @@ abstract class Smarty_CacheResource_Custom extends Smarty_CacheResource
     /**
      * Unlock cache for this template
      *
-     * @param Smarty $smarty Smarty object
+     * @param Smarty $tpl_obj template object
      * @return void
      */
     public function releaseLock(Smarty $tpl_obj)

@@ -86,7 +86,7 @@ class Smarty_Internal_Resource_PHP extends Smarty_Internal_Resource_File
      */
     public function renderUncompiled(Smarty $tpl_obj)
     {
-        $_smartytpl_obj = $tpl_obj;
+        $_smarty_tpl = $tpl_obj;
 
         if (!$tpl_obj->allow_php_templates) {
             throw new SmartyException("PHP templates are disabled");

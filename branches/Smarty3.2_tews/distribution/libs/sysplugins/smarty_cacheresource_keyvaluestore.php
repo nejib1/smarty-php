@@ -20,7 +20,7 @@
  * each level of the cache group hierarchy can have its own value in the store. These values
  * are nothing but microtimes, telling us when a particular cache group was cleared for the
  * last time. These keys are evaluated for every cache read to determine if the cache has
- * been invalidated since it was created and should hence be treated as inexistent.
+ * been invalidated since it was created and should hence be treated as not existent.
  *
  * Although deep hierarchies are possible, they are not recommended. Try to keep your
  * cache groups as shallow as possible. Anything up 3-5 parents should be ok. So

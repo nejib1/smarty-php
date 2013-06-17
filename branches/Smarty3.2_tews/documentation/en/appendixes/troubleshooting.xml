@@ -25,7 +25,7 @@ Fatal error: Smarty: [in index.tpl line 28]: syntax error: missing section name
    <para>
     Smarty shows you the template name, the line number and the error.
     After that, the error consists of the actual line number in the Smarty
-    class that the error occured.
+    class that the error occurred.
    </para>
 
    <para>

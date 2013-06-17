@@ -21,10 +21,10 @@
  */
 class Smarty_Compiler extends Smarty_Internal_Code
 {
-    public static function  load(Smarty $tpl_obj)
+    public static function  load(Smarty $tpl_obj, $source, $caching = false)
     {
-        if ($tpl_obj->usage == Smarty::IS_TEMPLATE) {
-            return new Smarty_Internal_Template_Compiler('Smarty_Internal_Template_Lexer', 'Smarty_Internal_Template_Parser', $tpl_obj);
+        if ($source->usage == Smarty::IS_TEMPLATE) {
+            return new Smarty_Internal_Template_Compiler('Smarty_Internal_Template_Lexer', 'Smarty_Internal_Template_Parser', $tpl_obj, $source, $caching);
         } else {
             return new Smarty_Internal_Config_Compiler('Smarty_Internal_ConfigFile_Lexer', 'Smarty_Internal_ConfigFile_Parser', $tpl_obj);
         }

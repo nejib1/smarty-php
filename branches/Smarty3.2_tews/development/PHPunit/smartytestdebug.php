@@ -8,7 +8,7 @@
 include 'smartytestdebug.inc.php';
 
 // place request PHPunit test class here or leave empty for all
-$_classes = 'ConfigVarTests';
+$_classes = 'StringResourceTests';
 
 // place method name for a singe test here or leave empty for all
 $function = array();
@@ -92,19 +92,11 @@ foreach ((array)$_classes as $class) {
         $o->error_functions = array();
 
         foreach ($error_functions as $func) {
-            try {
                 $o->current_function = $func;
                 $o->setUP();
                 // You may set a debugger breakpoint below for debugging failing tests
                 $o->$func();
-            } catch (Exception $e) {
-                while (ob_get_level() > 0) {
-                    ob_end_clean();
-                }
-                $o->error();
-                echo '<br>Exception: ', $e->getMessage(), "<br>";
-            }
-        }
+         }
     }
     $function = array();
 

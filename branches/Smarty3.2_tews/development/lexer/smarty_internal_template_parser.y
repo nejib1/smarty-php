@@ -63,7 +63,7 @@
     public function updateNocacheLineTrace($allways = false) {
        if ($this->compiler->tpl_obj->enable_traceback) {
            $line = $this->lex->taglineno;
-           if ($this->compiler->tpl_obj->caching && $this->last_taglineno_nocache != $this->lex->taglineno) {
+           if ($this->compiler->caching && $this->last_taglineno_nocache != $this->lex->taglineno) {
                $this->compiler->has_code = true;
                $this->compiler->nocache_nolog = true;
                $this->compiler->nocacheCode('', true, $line);
@@ -110,7 +110,7 @@
 start ::= template. {
    // execute end of template
    $this->compiler->template_code->newline()->php("array_shift(\$_smarty_tpl->trace_call_stack);\n");
-   if ($this->compiler->tpl_obj->caching) {
+   if ($this->compiler->caching) {
        $this->compiler->has_code = true;
        $this->compiler->nocache_nolog = true;
        $this->compiler->nocacheCode("array_shift(\$_smarty_tpl->trace_call_stack);", true);
@@ -136,14 +136,14 @@ template       ::= .
 //
                       // Template init
 template_element ::= TEMPLATEINIT(i). {
-    if ($this->compiler->tpl_obj->source->type == 'eval' || $this->compiler->tpl_obj->source->type == 'string') {
-        $resource = $this->compiler->tpl_obj->source->type;
+    if ($this->compiler->source->type == 'eval' || $this->compiler->source->type == 'string') {
+        $resource = $this->compiler->source->type;
     } else {
-        $resource = $this->compiler->tpl_obj->source->filepath;
+        $resource = $this->compiler->source->filepath;
     }
     if (strpos($this->compiler->tpl_obj->template_resource,'extends:') ===false) {
-        $code = "array_unshift(\$_smarty_tpl->trace_call_stack, array('{$resource}',{$this->lex->taglineno} , '{$this->compiler->tpl_obj->source->type}'));";
-        if ($this->compiler->tpl_obj->caching) {
+        $code = "array_unshift(\$_smarty_tpl->trace_call_stack, array('{$resource}',{$this->lex->taglineno} , '{$this->compiler->source->type}'));";
+        if ($this->compiler->caching) {
             $this->compiler->has_code = true;
             $this->compiler->nocache_nolog = true;
             $this->compiler->nocacheCode($code, true);
@@ -158,10 +158,10 @@ template_element ::= smartytag(st). {
     if ($this->compiler->has_code) {
         $line = 0;
         if ($this->compiler->tpl_obj->enable_traceback) {
-            if ($this->compiler->tpl_obj->caching && $this->last_taglineno_nocache != $this->lex->taglineno && ($this->compiler->nocache || $this->compiler->tag_nocache)) { 
+            if ($this->compiler->caching && $this->last_taglineno_nocache != $this->lex->taglineno && ($this->compiler->nocache || $this->compiler->tag_nocache)) { 
                 $line = $this->last_taglineno_nocache = $this->lex->taglineno;
             }
-            if ($this->last_taglineno != $this->lex->taglineno && (!$this->compiler->tpl_obj->caching || (!$this->compiler->nocache && !$this->compiler->tag_nocache))) { 
+            if ($this->last_taglineno != $this->lex->taglineno && (!$this->compiler->caching || (!$this->compiler->nocache && !$this->compiler->tag_nocache))) { 
                 $line = $this->last_taglineno = $this->lex->taglineno;
             }
         }
@@ -269,10 +269,10 @@ template_element ::= TEXT(o). {
     if ($this->text_is_php) {
         $line = 0;
         if ($this->compiler->tpl_obj->enable_traceback) {
-            if ($this->compiler->tpl_obj->caching && $this->last_taglineno_nocache != $this->lex->taglineno && ($this->compiler->nocache || $this->compiler->tag_nocache)) { 
+            if ($this->compiler->caching && $this->last_taglineno_nocache != $this->lex->taglineno && ($this->compiler->nocache || $this->compiler->tag_nocache)) { 
                 $line = $this->last_taglineno_nocache = $this->lex->taglineno;
             }
-            if ($this->last_taglineno != $this->lex->taglineno && (!$this->compiler->tpl_obj->caching || (!$this->compiler->nocache && !$this->compiler->tag_nocache))) { 
+            if ($this->last_taglineno != $this->lex->taglineno && (!$this->compiler->caching || (!$this->compiler->nocache && !$this->compiler->tag_nocache))) { 
                 $line = $this->last_taglineno = $this->lex->taglineno;
             }
         }

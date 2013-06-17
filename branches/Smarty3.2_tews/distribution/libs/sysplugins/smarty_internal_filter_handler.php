@@ -29,11 +29,11 @@ class Smarty_Internal_Filter_Handler
      *
      * @param string $type     the type of filter ('pre','post','output') which shall run
      * @param string $content  the content which shall be processed by the filters
-     * @param Smarty $template template object
+     * @param Smarty $tpl_obj template object
      * @throws SmartyException
      * @return string the filtered content
      */
-    public static function runFilter($type, $content, Smarty $template)
+    public static function runFilter($type, $content, Smarty $tpl_obj)
     {
         $output = $content;
         // loop over autoload filters of specified type
@@ -43,10 +43,10 @@ class Smarty_Internal_Filter_Handler
                 if ($tpl_obj->_loadPlugin($plugin_name)) {
                     if (function_exists($plugin_name)) {
                         // use loaded Smarty2 style plugin
-                        $output = $plugin_name($output, $template);
+                        $output = $plugin_name($output, $tpl_obj);
                     } elseif (class_exists($plugin_name, false)) {
                         // loaded class of filter plugin
-                        $output = call_user_func(array($plugin_name, 'execute'), $output, $template);
+                        $output = call_user_func(array($plugin_name, 'execute'), $output, $tpl_obj);
                     }
                 } else {
                     // nothing found, throw exception
@@ -54,13 +54,13 @@ class Smarty_Internal_Filter_Handler
                 }
             }
         }
-        // loop over registerd filters of specified type
+        // loop over registered filters of specified type
         if (!empty($tpl_obj->registered_filters[$type])) {
             foreach ($tpl_obj->registered_filters[$type] as $key => $name) {
                 if (is_array($tpl_obj->registered_filters[$type][$key])) {
-                    $output = call_user_func($tpl_obj->registered_filters[$type][$key], $output, $template);
+                    $output = call_user_func($tpl_obj->registered_filters[$type][$key], $output, $tpl_obj);
                 } else {
-                    $output = $tpl_obj->registered_filters[$type][$key]($output, $template);
+                    $output = $tpl_obj->registered_filters[$type][$key]($output, $tpl_obj);
                 }
             }
         }

@@ -45,9 +45,9 @@ abstract class Smarty_Resource_Custom extends Smarty_Resource
     /**
      * populate Source Object with meta data from Resource
      *
-    * @param Smarty $tpl_obj template object
+     * @param Smarty $tpl_obj template object
      */
-    public function populate( Smarty $tpl_obj = null)
+    public function populate(Smarty $tpl_obj = null)
     {
         $this->filepath = strtolower($this->type . ':' . $this->name);
         $this->uid = sha1($this->type . ':' . $this->name);

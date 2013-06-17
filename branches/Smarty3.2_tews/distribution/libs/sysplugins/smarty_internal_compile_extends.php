@@ -65,7 +65,7 @@ class Smarty_Internal_Compile_Extends extends Smarty_Internal_CompileBase
         }
         $_caching = Smarty::CACHING_OFF;
         // parents must not create cache files
-        if ($compiler->tpl_obj->caching) {
+        if ($compiler->caching) {
             $_caching = Smarty::CACHING_NOCACHE_CODE;
         }
 
