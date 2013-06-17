@@ -118,7 +118,7 @@ smarty [AT] example [DOT] com
    <title>Other examples</title>
     <screen>
 <![CDATA[
-{* the "rewind" paramater registers the current location *}
+{* the "rewind" parameter registers the current location *}
 <a href="$my_path?page=foo&rewind=$my_uri|urlencode}">click here</a>
 ]]>
    </screen>

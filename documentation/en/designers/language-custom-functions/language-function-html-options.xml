@@ -145,7 +145,7 @@ $smarty->assign('mySelect', 9904);
 </example>
 
 <example>
-<title>Dropdown with seperate arrays for <varname>values</varname> and
+<title>Dropdown with separate arrays for <varname>values</varname> and
 <varname>ouptut</varname></title>
   <programlisting role="php">
 <![CDATA[
