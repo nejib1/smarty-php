@@ -9,14 +9,15 @@
 /**
 * class for function plugin tests
 */
-class CompileFunctionPluginTests extends PHPUnit_Framework_TestCase {
+class CompileFunctionPluginTests extends PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
         SmartyTests::init();
     }
 
-    public static function isRunnable()
+    static function isRunnable()
     {
         return true;
     }
@@ -60,4 +61,3 @@ class CompileFunctionPluginTests extends PHPUnit_Framework_TestCase {
         {
             return "plugin test called $params[foo]";
         }
-?>

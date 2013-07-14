@@ -6,18 +6,18 @@
 * @author Uwe Tews
 */
 
-
 /**
 * class for extends resource tests
 */
-class ExtendsResourceTests extends PHPUnit_Framework_TestCase {
+class ExtendsResourceTests extends PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
         SmartyTests::init();
     }
 
-    public static function isRunnable()
+    static function isRunnable()
     {
         return true;
     }
@@ -214,5 +214,3 @@ class ExtendsResourceTests extends PHPUnit_Framework_TestCase {
         $this->assertFalse($tpl->source->exists);
     }
 }
-
-?>

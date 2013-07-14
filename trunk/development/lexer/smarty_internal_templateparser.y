@@ -8,6 +8,7 @@
 * @subpackage Compiler
 * @author Uwe Tews
 */
+%stack_size 500
 %name TP_
 %declare_class {class Smarty_Internal_Templateparser}
 %include_class

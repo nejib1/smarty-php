@@ -9,7 +9,8 @@
 /**
 * class for registered object function tests
 */
-class CompileRegisteredObjectFunctionTests extends PHPUnit_Framework_TestCase {
+class CompileRegisteredObjectFunctionTests extends PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
@@ -20,7 +21,7 @@ class CompileRegisteredObjectFunctionTests extends PHPUnit_Framework_TestCase {
         $this->smarty->registerObject('objecttest', $this->object, 'myhello', true, 'myblock');
     }
 
-    public static function isRunnable()
+    static function isRunnable()
     {
         return true;
     }
@@ -63,17 +64,16 @@ class CompileRegisteredObjectFunctionTests extends PHPUnit_Framework_TestCase {
 }
 
 Class RegObject {
-    function myhello($params)
+    public function myhello($params)
     {
         return 'hello world';
     }
-    function myblock($params, $content, &$smarty_tpl, &$repeat)
+    public function myblock($params, $content, &$smarty_tpl, &$repeat)
     {
         if (isset($content)) {
             $output = str_replace('hello world', 'block test', $content);
+
             return $output;
         }
     }
 }
-
-?>
