@@ -13,7 +13,8 @@ require_once SMARTY_DIR . 'SmartyBC.class.php';
 /**
  * class for running test suite
  */
-class SmartyTests extends PHPUnit_Framework_TestSuite {
+class smartytests extends PHPUnit_Framework_TestSuite
+{
     static $smarty = null ;
     static $smartyBC = null ;
 
@@ -66,7 +67,7 @@ class SmartyTests extends PHPUnit_Framework_TestSuite {
         $smarty->default_resource_type = 'file';
     }
 
-    public static function init()
+    static function init()
     {
         error_reporting(E_ALL | E_STRICT);
         self::_init(SmartyTests::$smarty);
@@ -79,7 +80,7 @@ class SmartyTests extends PHPUnit_Framework_TestSuite {
     /**
      * look for test units and run them
      */
-    public static function suite()
+    static function suite()
     {
         $testorder = array('CoreTests', 'ClearCompiledTests', 'ClearCacheTests', 'StringResourceTests', 'FileResourceTests' ,'DoubleQuotedStringTests',  'CompileAssignTests', 'AttributeTests');
         $smarty_libs_dir = dirname(__FILE__) . '/../../distribution/libs';
@@ -104,7 +105,7 @@ class SmartyTests extends PHPUnit_Framework_TestSuite {
                 $class = basename($file, '.php');
                 if (!in_array($class, $testorder)) {
                     require_once $file->getPathname();
-                    // to have an optional test suite, it should implement a public static function isRunnable
+                    // to have an optional test suite, it should implement a static function isRunnable
                     // that returns true only if all the conditions are met to run it successfully, for example
                     // it can check that an external library is present
                     if (!method_exists($class, 'isRunnable') || call_user_func(array($class, 'isRunnable'))) {
@@ -121,5 +122,3 @@ class SmartyTests extends PHPUnit_Framework_TestSuite {
         return $suite;
     }
 }
-
-?>

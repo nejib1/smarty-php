@@ -9,14 +9,15 @@
 /**
 * class for block extends compiler tests
 */
-class CompileBlockExtendsTests extends PHPUnit_Framework_TestCase {
+class CompileBlockExtendsTests extends PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
         SmartyTests::init();
     }
 
-    public static function isRunnable()
+    static function isRunnable()
     {
         return true;
     }
@@ -348,5 +349,3 @@ class CompileBlockExtendsTests extends PHPUnit_Framework_TestCase {
         $this->assertContains('foo 2', $this->smarty->fetch('extends:test_block_nocache_parent.tpl|test_block_nocache_child.tpl'));
     }
 }
-
-?>
