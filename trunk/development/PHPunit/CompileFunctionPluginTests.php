@@ -27,7 +27,7 @@ class CompileFunctionPluginTests extends PHPUnit_Framework_TestCase
     */
     public function testFunctionPluginFromTemplateFile()
     {
-        $tpl = $this->smarty->createTemplate('functionplugintest.tpl', $this->smarty->tpl_vars);
+        $tpl = $this->smarty->createTemplate('functionplugintest.tpl', $this->smarty);
         $this->assertEquals("10", $this->smarty->fetch($tpl));
     }
     /**
@@ -36,7 +36,7 @@ class CompileFunctionPluginTests extends PHPUnit_Framework_TestCase
     public function testFunctionPluginFromCompiledTemplateFile()
     {
         $this->smarty->force_compile = false;
-        $tpl = $this->smarty->createTemplate('functionplugintest.tpl', $this->smarty->tpl_vars);
+        $tpl = $this->smarty->createTemplate('functionplugintest.tpl', $this->smarty);
         $this->assertEquals("10", $this->smarty->fetch($tpl));
     }
     /**
@@ -45,7 +45,7 @@ class CompileFunctionPluginTests extends PHPUnit_Framework_TestCase
     public function testFunctionPluginRegisteredFunction()
     {
         $this->smarty->registerPlugin(Smarty::PLUGIN_FUNCTION,'plugintest', 'myplugintest');
-        $tpl = $this->smarty->createTemplate('eval:{plugintest foo=bar}', $this->smarty->tpl_vars);
+        $tpl = $this->smarty->createTemplate('eval:{plugintest foo=bar}', $this->smarty);
         $this->assertEquals("plugin test called bar", $this->smarty->fetch($tpl));
     }
 
