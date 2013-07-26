@@ -348,4 +348,8 @@ class CompileBlockExtendsTests extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->smarty->isCached('extends:test_block_nocache_parent.tpl|test_block_nocache_child.tpl'));
         $this->assertContains('foo 2', $this->smarty->fetch('extends:test_block_nocache_parent.tpl|test_block_nocache_child.tpl'));
     }
+    public function testCompileBlockIssue127()
+    {
+        $this->assertContains('Sect2 -- section 2 here', $this->smarty->fetch('test_block_c1.tpl'));
+    }
 }
