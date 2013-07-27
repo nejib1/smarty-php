@@ -19,6 +19,7 @@ class CompileRegisteredObjectFunctionTests extends PHPUnit_Framework_TestCase
         $this->smarty->disableSecurity();
         $this->object = new RegObject;
         $this->smarty->registerObject('objecttest', $this->object, 'myhello', true, 'myblock');
+        $this->smarty->registerObject('objectprop', $this->object);
     }
 
     static function isRunnable()
@@ -61,9 +62,21 @@ class CompileRegisteredObjectFunctionTests extends PHPUnit_Framework_TestCase
         $tpl = $this->smarty->createTemplate('eval:{objecttest->myblock}hello world{/objecttest->myblock|default:""|strtoupper}');
         $this->assertEquals(strtoupper('block test'), $this->smarty->fetch($tpl));
     }
+    public function testRegisteredObjectProperty()
+    {
+        $tpl = $this->smarty->createTemplate('eval:{objectprop->prop}');          
+        $this->assertEquals('hello world', $this->smarty->fetch($tpl));
+    }
+    public function testRegisteredObjectPropertyAssign()
+    {
+        $tpl = $this->smarty->createTemplate('eval:{objectprop->prop assign="foo"}{$foo}');          
+        $this->assertEquals('hello world', $this->smarty->fetch($tpl));
+    }
 }
 
 Class RegObject {
+    public $prop = 'hello world' ;
+    
     public function myhello($params)
     {
         return 'hello world';
