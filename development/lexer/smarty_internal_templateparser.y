@@ -19,6 +19,7 @@
     // states whether the parse was successful or not
     public $successful = true;
     public $retvalue = 0;
+    public static $prefix_number = 0;
     private $lex;
     private $internalError = false;
     private $strip = false;
@@ -30,7 +31,6 @@
         $this->template = $this->compiler->template;
         $this->compiler->has_variable_string = false;
         $this->compiler->prefix_code = array();
-        $this->prefix_number = 0;
         $this->block_nesting_level = 0;
         if ($this->security = isset($this->smarty->security_policy)) {
             $this->php_handling = $this->smarty->security_policy->php_handling;
@@ -658,9 +658,9 @@ expr(res)        ::= value(v1) INSTANCEOF(i) ID(id). {
 }
 
 expr(res)        ::= value(v1) INSTANCEOF(i) value(v2). {
-    $this->prefix_number++;
-    $this->compiler->prefix_code[] = '<?php $_tmp'.$this->prefix_number.'='.v2.';?>';
-    res = v1.i.'$_tmp'.$this->prefix_number;
+    self::$prefix_number++;
+    $this->compiler->prefix_code[] = '<?php $_tmp'.self::$prefix_number.'='.v2.';?>';
+    res = v1.i.'$_tmp'.self::$prefix_number;
 }
 
 //
@@ -774,9 +774,9 @@ value(res)    ::= varindexed(vi) DOUBLECOLON static_class_access(r). {
 
                   // Smarty tag
 value(res)       ::= smartytag(st). {
-    $this->prefix_number++;
-    $this->compiler->prefix_code[] = '<?php ob_start();?>'.st.'<?php $_tmp'.$this->prefix_number.'=ob_get_clean();?>';
-    res = '$_tmp'.$this->prefix_number;
+    self::$prefix_number++;
+    $this->compiler->prefix_code[] = '<?php ob_start();?>'.st.'<?php $_tmp'.self::$prefix_number.'=ob_get_clean();?>';
+    res = '$_tmp'.self::$prefix_number;
 }
 
 value(res)       ::= value(v) modifierlist(l). {
@@ -977,9 +977,9 @@ function(res)     ::= ID(f) OPENP params(p) CLOSEP. {
                 }
                 $par = implode(',',p);
                 if (strncasecmp($par,'$_smarty_tpl->getConfigVariable',strlen('$_smarty_tpl->getConfigVariable')) === 0) {
-                    $this->prefix_number++;
-                    $this->compiler->prefix_code[] = '<?php $_tmp'.$this->prefix_number.'='.str_replace(')',', false)',$par).';?>';
-                    $isset_par = '$_tmp'.$this->prefix_number;
+                    self::$prefix_number++;
+                    $this->compiler->prefix_code[] = '<?php $_tmp'.self::$prefix_number.'='.str_replace(')',', false)',$par).';?>';
+                    $isset_par = '$_tmp'.self::$prefix_number;
                 } else {
                     $isset_par=str_replace("')->value","',null,true,false)->value",$par);
                 }
@@ -1016,9 +1016,9 @@ method(res)     ::= DOLLAR ID(f) OPENP params(p) CLOSEP.  {
     if ($this->security) {
         $this->compiler->trigger_template_error (self::Err2);
     }
-    $this->prefix_number++;
-    $this->compiler->prefix_code[] = '<?php $_tmp'.$this->prefix_number.'='.$this->compileVariable("'".f."'").';?>';
-    res = '$_tmp'.$this->prefix_number.'('. implode(',',p) .')';
+    self::$prefix_number++;
+    $this->compiler->prefix_code[] = '<?php $_tmp'.self::$prefix_number.'='.$this->compileVariable("'".f."'").';?>';
+    res = '$_tmp'.self::$prefix_number.'('. implode(',',p) .')';
 }
 
 // function/method parameter
