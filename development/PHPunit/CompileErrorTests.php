@@ -30,7 +30,7 @@ class CompileErrorTests extends PHPUnit_Framework_TestCase
         try {
             $this->smarty->fetch('eval:{include file=\'no.tpl\'}');
         } catch (Exception $e) {
-            $this->assertContains(htmlentities('Unable to load template'), $e->getMessage());
+            $this->assertContains('Unable to load template', $e->getMessage());
 
             return;
         }
@@ -44,7 +44,7 @@ class CompileErrorTests extends PHPUnit_Framework_TestCase
         try {
             $this->smarty->fetch('eval:{unknown}');
         } catch (Exception $e) {
-            $this->assertContains(htmlentities('unknown tag "unknown"'), $e->getMessage());
+            $this->assertContains('unknown tag "unknown"', $e->getMessage());
 
             return;
         }
@@ -58,7 +58,7 @@ class CompileErrorTests extends PHPUnit_Framework_TestCase
         try {
             $this->smarty->fetch('eval:{if true}');
         } catch (Exception $e) {
-            $this->assertContains(htmlentities('unclosed {if} tag'), $e->getMessage());
+            $this->assertContains('unclosed {if} tag', $e->getMessage());
 
             return;
         }
@@ -72,8 +72,8 @@ class CompileErrorTests extends PHPUnit_Framework_TestCase
         try {
             $this->smarty->fetch('eval:{assign var=}');
         } catch (Exception $e) {
-            $this->assertContains(htmlentities('Syntax Error in template "599a9cf0e3623a3206bd02a0f5c151d5f5f3f69e"'), $e->getMessage());
-            $this->assertContains(htmlentities('Unexpected "}"'), $e->getMessage());
+            $this->assertContains('Syntax error in template "599a9cf0e3623a3206bd02a0f5c151d5f5f3f69e"', $e->getMessage());
+            $this->assertContains('Unexpected "}"', $e->getMessage());
 
             return;
         }

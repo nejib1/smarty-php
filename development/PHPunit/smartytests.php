@@ -101,7 +101,7 @@ class smartytests extends PHPUnit_Framework_TestSuite
 
         $_classes = array();
         foreach (new DirectoryIterator(dirname(__FILE__)) as $file) {
-            if (!$file->isDot() && !$file->isDir() && (string) $file !== 'smartytests.php' && (string) $file !== 'smartytestssingle.php' && (string) $file !== 'smartytestsfile.php' && substr((string) $file, -4) === '.php') {
+            if (!$file->isDot() && !$file->isDir() && !in_array((string) $file, array('smartytests.php','smartytestssingle.php','smartytestsfile.php','smartytestdebug.php','smartytestdebug.inc.php')) && substr((string) $file, -4) === '.php') {
                 $class = basename($file, '.php');
                 if (!in_array($class, $testorder)) {
                     require_once $file->getPathname();

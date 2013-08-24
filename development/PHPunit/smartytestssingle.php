@@ -83,7 +83,7 @@ class SmartyTests extends PHPUnit_Framework_TestSuite
     static function suite()
     {
         $testorder = array(
-            'PluginModifierCapitalizeTests',
+            'CompileBlockExtendsTests',
             // 'PluginFunctionHtmlImageTests',
             // 'PluginFunctionFetchTests',
         );

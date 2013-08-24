@@ -28,7 +28,7 @@ class Smarty_Resource_Ambiguous extends Smarty_Internal_Resource_File
      * @param  string $resource_name resource_name to make unique
      * @return string unique resource name
      */
-    protected function buildUniqueResourceName(Smarty $smarty, $resource_name)
+    protected function buildUniqueResourceName(Smarty $smarty, $resource_name, $is_config = false)
     {
         return get_class($this) . '#' . $this->segment . '#' . $resource_name;
     }

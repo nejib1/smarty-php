@@ -32,7 +32,7 @@ class DefaultTemplateHandlerTests extends PHPUnit_Framework_TestCase
         try {
             $this->smarty->fetch('foo.tpl');
         } catch (Exception $e) {
-            $this->assertContains(htmlentities('Unable to load template'), $e->getMessage());
+            $this->assertContains('Unable to load template', $e->getMessage());
 
             return;
         }
@@ -46,7 +46,7 @@ class DefaultTemplateHandlerTests extends PHPUnit_Framework_TestCase
         try {
             $this->smarty->registerDefaultTemplateHandler('foo');
         } catch (Exception $e) {
-            $this->assertContains(htmlentities("Default template handler 'foo' not callable"), $e->getMessage());
+            $this->assertContains("Default template handler 'foo' not callable", $e->getMessage());
 
             return;
         }
@@ -76,7 +76,7 @@ class DefaultTemplateHandlerTests extends PHPUnit_Framework_TestCase
         try {
             $this->smarty->fetch('foo.tpl');
         } catch (Exception $e) {
-            $this->assertContains(htmlentities('Unable to load template'), $e->getMessage());
+            $this->assertContains('Unable to load template', $e->getMessage());
 
             return;
         }

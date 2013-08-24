@@ -59,7 +59,7 @@ class ResourcePluginTests extends PHPUnit_Framework_TestCase
         try {
             $this->assertEquals('hello world', $this->smarty->fetch('db3:test'));
         } catch (Exception $e) {
-            $this->assertContains(htmlentities('not return a destination'), $e->getMessage());
+            $this->assertContains('not return a destination', $e->getMessage());
 
             return;
         }
