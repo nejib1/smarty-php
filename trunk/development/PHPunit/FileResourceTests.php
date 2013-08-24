@@ -62,7 +62,7 @@ class FileResourceTests extends PHPUnit_Framework_TestCase
         try {
             $result = $this->smarty->fetch('notthere.tpl');
         } catch (Exception $e) {
-            $this->assertContains(htmlentities('Unable to load template file \'notthere.tpl\''), $e->getMessage());
+            $this->assertContains('Unable to load template file \'notthere.tpl\'', $e->getMessage());
 
             return;
         }
@@ -302,7 +302,7 @@ class FileResourceTests extends PHPUnit_Framework_TestCase
         try {
             $this->smarty->fetch('relative_notexist.tpl');
         } catch (Exception $e) {
-            $this->assertContains(htmlentities("Unable to load template"), $e->getMessage());
+            $this->assertContains("Unable to load template", $e->getMessage());
 
             return;
         }

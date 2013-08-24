@@ -155,7 +155,7 @@ class ModifierTests extends PHPUnit_Framework_TestCase
         try {
             $this->smarty->fetch('eval:{"hello world"|unknown}');
         } catch (Exception $e) {
-            $this->assertContains(htmlentities('unknown modifier "unknown"'), $e->getMessage());
+            $this->assertContains('unknown modifier "unknown"', $e->getMessage());
 
             return;
         }

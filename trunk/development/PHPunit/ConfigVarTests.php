@@ -208,7 +208,7 @@ class ConfigVarTests extends PHPUnit_Framework_TestCase
         try {
             $this->smarty->fetch('eval:{config_load file=\'test_error.conf\'}');
         } catch (Exception $e) {
-            $this->assertContains(htmlentities('Syntax error in config file'), $e->getMessage());
+            $this->assertContains('Syntax error in config file', $e->getMessage());
 
             return;
         }

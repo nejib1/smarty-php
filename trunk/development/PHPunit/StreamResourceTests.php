@@ -127,7 +127,7 @@ class StreamResourceTests extends PHPUnit_Framework_TestCase
         try {
             $result = $this->smarty->fetch('global:notthere');
         } catch (Exception $e) {
-            $this->assertContains(htmlentities('Unable to load template global \'notthere\''), $e->getMessage());
+            $this->assertContains('Unable to load template global \'notthere\'', $e->getMessage());
 
             return;
         }

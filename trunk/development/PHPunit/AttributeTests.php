@@ -30,7 +30,7 @@ class AttributeTests extends PHPUnit_Framework_TestCase
         try {
             $this->smarty->fetch('string:{assign value=1}');
         } catch (Exception $e) {
-            $this->assertContains(htmlentities('missing "var" attribute'), $e->getMessage());
+            $this->assertContains('missing "var" attribute', $e->getMessage());
 
             return;
         }
@@ -44,7 +44,7 @@ class AttributeTests extends PHPUnit_Framework_TestCase
         try {
             $this->smarty->fetch('string:{assign var=foo value=1 bar=2}');
         } catch (Exception $e) {
-            $this->assertContains(htmlentities('unexpected "bar" attribute'), $e->getMessage());
+            $this->assertContains('unexpected "bar" attribute', $e->getMessage());
 
             return;
         }
@@ -72,7 +72,7 @@ class AttributeTests extends PHPUnit_Framework_TestCase
         try {
             $this->smarty->fetch('string:{assign foo 1 2}');
         } catch (Exception $e) {
-            $this->assertContains(htmlentities('too many shorthand attributes'), $e->getMessage());
+            $this->assertContains('too many shorthand attributes', $e->getMessage());
 
             return;
         }

@@ -132,7 +132,7 @@ class CompileInsertTests extends PHPUnit_Framework_TestCase
         try {
             $this->smarty->fetch($tpl);
         } catch (Exception $e) {
-            $this->assertContains(htmlentities("{insert} no function or plugin found for 'mustfail'"), $e->getMessage());
+            $this->assertContains("{insert} no function or plugin found for 'mustfail'", $e->getMessage());
 
             return;
         }
@@ -147,7 +147,7 @@ class CompileInsertTests extends PHPUnit_Framework_TestCase
         try {
             $this->smarty->fetch($tpl);
         } catch (Exception $e) {
-            $this->assertContains(htmlentities('missing script file'), $e->getMessage());
+            $this->assertContains('missing script file', $e->getMessage());
 
             return;
         }
