@@ -122,17 +122,22 @@ class FilterTests extends PHPUnit_Framework_TestCase
    /**
      * test registered post filter
      */
-    public function testRegisteredVariableFilter()
+    public function testRegisteredVariableFilter2()
     {
-        function myvariablefilter($input, $smarty)
-        {
-            return 'var{$foo}' . $input;
-        }
-        $this->smarty->registerFilter(Smarty::FILTER_VARIABLE,'myvariablefilter');
-        $tpl = $this->smarty->createTemplate('eval:{$foo}');
+        $var = new VarFilter();
+        
+        $this->smarty->registerFilter(Smarty::FILTER_VARIABLE,array($var, 'variablefilter'));
+        $tpl = $this->smarty->createTemplate('string:{$foo}');
         $tpl->assign('foo', 'bar');
         $this->assertEquals('var{$foo}bar', $this->smarty->fetch($tpl));
     }
+}
+
+Class VarFilter {
+         function variablefilter($input, $smarty)
+        {
+            return 'var{$foo}' . $input;
+        }   
 }
 
 function myoutputfilter($input)
