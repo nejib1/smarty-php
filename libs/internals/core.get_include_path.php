@@ -18,25 +18,24 @@
 
 function smarty_core_get_include_path(&$params, &$smarty)
 {
-    static $_path_array = null;
+	static $_include_path = null;
 
-    if(!isset($_path_array)) {
-        $_ini_include_path = ini_get('include_path');
+	if (function_exists('stream_resolve_include_path')) {
+		// available since PHP 5.3.2
+		return stream_resolve_include_path($params['file_path']);
+	}
 
-        if(strstr($_ini_include_path,';')) {
-            // windows pathnames
-            $_path_array = explode(';',$_ini_include_path);
-        } else {
-            $_path_array = explode(':',$_ini_include_path);
-        }
-    }
-    foreach ($_path_array as $_include_path) {
-        if (@is_readable($_include_path . DIRECTORY_SEPARATOR . $params['file_path'])) {
-               $params['new_file_path'] = $_include_path . DIRECTORY_SEPARATOR . $params['file_path'];
-            return true;
-        }
-    }
-    return false;
+	if ($_include_path === null) {
+		$_include_path = explode(PATH_SEPARATOR, get_include_path());
+	}
+
+	foreach ($_include_path as $_path) {
+		if (file_exists($_path . DIRECTORY_SEPARATOR . $params['file_path'])) {
+			return $_path . DIRECTORY_SEPARATOR . $params['file_path'];
+		}
+	}
+
+	return false;
 }
 
 /* vim: set expandtab: */

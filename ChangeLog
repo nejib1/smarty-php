@@ -1,3 +1,13 @@
+Smarty2Dev
+==========
+
+2014-01-13
+
+    * Fixed core.get_include_path.php (updated to same functinonallity ass in Smarty 3.1) (Issue 171)
+
+Smarty 2.6.28
+=============
+
 2013-09-30
 
     * Fixed old vulnerability bug https://bugs.gentoo.org/show_bug.cgi?id=356615
