@@ -97,7 +97,7 @@ class FileResourceTests extends PHPUnit_Framework_TestCase
     public function testGetCompiledFilepath()
     {
         $tpl = $this->smarty->createTemplate('helloworld.tpl');
-        $expected = './templates_c/'.sha1($this->smarty->getTemplateDir(0) . 'helloworld.tpl').'.file.helloworld.tpl.php';
+        $expected = './templates_c/'.sha1(realpath($this->smarty->getTemplateDir(0) . 'helloworld.tpl')).'.file.helloworld.tpl.php';
         $this->assertEquals($expected, $this->relative($tpl->compiled->filepath));
     }
 
@@ -158,14 +158,14 @@ class FileResourceTests extends PHPUnit_Framework_TestCase
         $this->smarty->caching = true;
         $this->smarty->cache_lifetime = 1000;
         $tpl = $this->smarty->createTemplate('helloworld.tpl');
-        $expected = './cache/'.sha1($this->smarty->getTemplateDir(0) . 'helloworld.tpl').'.helloworld.tpl.php';
+        $expected = './cache/'.sha1(realpath($this->smarty->getTemplateDir(0) . 'helloworld.tpl')).'.helloworld.tpl.php';
         $this->assertEquals($expected, $this->relative($tpl->cached->filepath));
     }
 
     public function testGetCachedTimestamp()
     {
         // create dummy cache file for the following test
-        file_put_contents('./cache/'.sha1($this->smarty->getTemplateDir(0) . 'helloworld.tpl').'.helloworld.tpl.php', '<?php ?>');
+        file_put_contents('./cache/'.sha1(realpath($this->smarty->getTemplateDir(0) . 'helloworld.tpl')).'.helloworld.tpl.php', '<?php ?>');
         $this->smarty->caching = true;
         $this->smarty->cache_lifetime = 1000;
         $tpl = $this->smarty->createTemplate('helloworld.tpl');
