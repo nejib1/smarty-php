@@ -2390,7 +2390,7 @@ static public $yy_action = array(
 #line 2386 "smarty_internal_templateparser.php"
 #line 369 "smarty_internal_templateparser.y"
     function yy_r39(){
-    $this->_retvalue = $this->compiler->compileTag($this->yystack[$this->yyidx + -3]->minor,$this->yystack[$this->yyidx + 0]->minor,array('object_methode'=>$this->yystack[$this->yyidx + -1]->minor));
+    $this->_retvalue = $this->compiler->compileTag($this->yystack[$this->yyidx + -3]->minor,$this->yystack[$this->yyidx + 0]->minor,array('object_method'=>$this->yystack[$this->yyidx + -1]->minor));
     }
 #line 2391 "smarty_internal_templateparser.php"
 #line 374 "smarty_internal_templateparser.y"
@@ -2401,7 +2401,7 @@ static public $yy_action = array(
 #line 2397 "smarty_internal_templateparser.php"
 #line 380 "smarty_internal_templateparser.y"
     function yy_r41(){
-    $this->_retvalue = '<?php ob_start();?>'.$this->compiler->compileTag($this->yystack[$this->yyidx + -4]->minor,$this->yystack[$this->yyidx + 0]->minor,array('object_methode'=>$this->yystack[$this->yyidx + -2]->minor)).'<?php echo ';
+    $this->_retvalue = '<?php ob_start();?>'.$this->compiler->compileTag($this->yystack[$this->yyidx + -4]->minor,$this->yystack[$this->yyidx + 0]->minor,array('object_method'=>$this->yystack[$this->yyidx + -2]->minor)).'<?php echo ';
     $this->_retvalue .= $this->compiler->compileTag('private_modifier',array(),array('modifierlist'=>$this->yystack[$this->yyidx + -1]->minor,'value'=>'ob_get_clean()')).'?>';
     }
 #line 2403 "smarty_internal_templateparser.php"
@@ -2492,12 +2492,12 @@ static public $yy_action = array(
 #line 2488 "smarty_internal_templateparser.php"
 #line 481 "smarty_internal_templateparser.y"
     function yy_r61(){
-    $this->_retvalue = $this->compiler->compileTag($this->yystack[$this->yyidx + -2]->minor.'close',array(),array('object_methode'=>$this->yystack[$this->yyidx + 0]->minor));
+    $this->_retvalue = $this->compiler->compileTag($this->yystack[$this->yyidx + -2]->minor.'close',array(),array('object_method'=>$this->yystack[$this->yyidx + 0]->minor));
     }
 #line 2493 "smarty_internal_templateparser.php"
 #line 485 "smarty_internal_templateparser.y"
     function yy_r62(){
-    $this->_retvalue = $this->compiler->compileTag($this->yystack[$this->yyidx + -3]->minor.'close',array(),array('object_methode'=>$this->yystack[$this->yyidx + -1]->minor, 'modifier_list'=>$this->yystack[$this->yyidx + 0]->minor));
+    $this->_retvalue = $this->compiler->compileTag($this->yystack[$this->yyidx + -3]->minor.'close',array(),array('object_method'=>$this->yystack[$this->yyidx + -1]->minor, 'modifier_list'=>$this->yystack[$this->yyidx + 0]->minor));
     }
 #line 2498 "smarty_internal_templateparser.php"
 #line 493 "smarty_internal_templateparser.y"
