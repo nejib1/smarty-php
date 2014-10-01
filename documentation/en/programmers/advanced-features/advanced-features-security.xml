@@ -182,7 +182,7 @@ class My_Security_Policy extends Smarty_Security {
   // remove PHP tags
   public $php_handling = Smarty::PHP_REMOVE;
   // allow everthing as modifier
-  public $modifiers = array();
+  public $php_modifiers = array();
 }
 $smarty = new Smarty();
 // enable security
@@ -204,7 +204,7 @@ $my_security_policy->php_functions = null;
 // remove PHP tags
 $my_security_policy->php_handling = Smarty::PHP_REMOVE;
 // allow everthing as modifier
-$my_security_policy->$modifiers = array();
+$my_security_policy->php_modifiers = array();
 // enable security
 $smarty->enableSecurity($my_security_policy);
 ?>
@@ -225,7 +225,7 @@ $smarty->enableSecurity();
 </programlisting>
   </example>
   <note><para>
-    Must security policy settings are only checked when the template gets compiled. For that reasion you should
+    Most security policy settings are only checked when the template gets compiled. For that reasion you should
     delete all cached and compiled template files when you change your security settings.
   </para></note>
 </sect1>
