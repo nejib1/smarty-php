@@ -19,7 +19,9 @@
          public $node;
          public $line;
          public $taglineno;
+         public $is_phpScript = false;
          public $state = 1;
+         public $smarty;
          private $heredoc_id_stack = Array();
          public $yyTraceFILE;
          public $yyTracePrompt;
@@ -114,8 +116,9 @@
      dollarid = /\$[0-9]*[a-zA-Z_]\w*/
      all = /[\S\s]+/
      emptyjava = /\{\}/
-     phpstarttag = /<\?(?:php\w+|=|[a-zA-Z]+)?/
+     phpstarttag = /(<script\s+language\s*=\s*[\"\']?\s*php\s*[\"\']?\s*>)|(<\?(?:php\w+|=|[a-zA-Z]+)?)/
      phpendtag = /\?>/
+     phpendscript = /<\/script>/
      aspstarttag = /<%/
      aspendtag = /%>/
      slash = /\//
@@ -277,7 +280,10 @@
        }
      }
      phpstarttag {
-       if (in_array($this->value, Array('<?', '<?=', '<?php'))) {
+       if (in_array($this->value, Array('<?', '<?=', '<?php')) || $script = strpos($this->value, '<s') === 0) {
+        if ($script) {
+            $this->is_phpScript = true;
+        }
          $this->token = Smarty_Internal_Templateparser::TP_PHPSTARTTAG;
        } elseif ($this->value == '<?xml') {
            $this->token = Smarty_Internal_Templateparser::TP_XMLTAG;
@@ -289,6 +295,12 @@
      phpendtag {
        $this->token = Smarty_Internal_Templateparser::TP_PHPENDTAG;
      }
+     phpendscript {
+       $this->token = Smarty_Internal_Templateparser::TP_PHPENDSCRIPT;
+     }
+     phpendscript {
+       $this->token = Smarty_Internal_Templateparser::TP_PHPENDSCRIPT;
+     }
      rdel {
        $this->token = Smarty_Internal_Templateparser::TP_TEXT;
      }
@@ -299,8 +311,9 @@
        $this->token = Smarty_Internal_Templateparser::TP_ASPENDTAG;
      }
      text {
+       $phpEndScript = $this->is_phpScript ? '|<\\/script>' : '';
        $to = strlen($this->data);
-       preg_match("/{$this->ldel}|<\?|\?>|<%|%>/",$this->data,$match,PREG_OFFSET_CAPTURE,$this->counter);
+       preg_match("/{$this->ldel}|<\?|<%|\?>|%>|<script\s+language\s*=\s*[\"\']?\s*php\s*[\"\']?\s*>{$phpEndScript}/",$this->data,$match,PREG_OFFSET_CAPTURE,$this->counter);
        if (isset($match[0][1])) {
          $to = $match[0][1];
        }
@@ -574,7 +587,10 @@
        }
      }
      phpstarttag {
-       if (in_array($this->value, Array('<?', '<?=', '<?php'))) {
+       if (in_array($this->value, Array('<?', '<?=', '<?php')) || $script = strpos($this->value, '<s') === 0) {
+        if ($script) {
+            $this->is_phpScript = true;
+        }
          $this->token = Smarty_Internal_Templateparser::TP_PHPSTARTTAG;
         } else {
          $this->token = Smarty_Internal_Templateparser::TP_FAKEPHPSTARTTAG;
@@ -584,6 +600,9 @@
      phpendtag {
        $this->token = Smarty_Internal_Templateparser::TP_PHPENDTAG;
      }
+     phpendscript {
+       $this->token = Smarty_Internal_Templateparser::TP_PHPENDSCRIPT;
+     }
      aspstarttag {
        $this->token = Smarty_Internal_Templateparser::TP_ASPSTARTTAG;
      }
@@ -591,8 +610,9 @@
        $this->token = Smarty_Internal_Templateparser::TP_ASPENDTAG;
      }
      text {
+       $phpEndScript = $this->is_phpScript ? '|<\\/script>' : '';
        $to = strlen($this->data);
-       preg_match("/{$this->ldel}\/?literal{$this->rdel}|<\?|<%|\?>|%>/",$this->data,$match,PREG_OFFSET_CAPTURE,$this->counter);
+       preg_match("/{$this->ldel}\/?literal{$this->rdel}|<\?|<%|\?>|%>|<script\s+language\s*=\s*[\"\']?\s*php\s*[\"\']?\s*>{$phpEndScript}/",$this->data,$match,PREG_OFFSET_CAPTURE,$this->counter);
        if (isset($match[0][1])) {
          $to = $match[0][1];
        } else {
