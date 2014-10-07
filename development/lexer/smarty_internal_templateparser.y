@@ -21,7 +21,7 @@
     public $retvalue = 0;
     public static $prefix_number = 0;
     private $_string;
-    private $yymajor;
+    public $yymajor;
     public $last_index;
     public $last_variable;
     public $root_buffer;
