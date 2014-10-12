@@ -20,6 +20,7 @@
          public $line;
          public $taglineno;
          public $is_phpScript = false;
+         public $phpValue = '';
          public $state = 1;
          public $smarty;
          private $heredoc_id_stack = Array();
@@ -119,6 +120,7 @@
      phpstarttag = /(<script\s+language\s*=\s*[\"\']?\s*php\s*[\"\']?\s*>)|(<\?(?:php\w+|=|[a-zA-Z]+)?)/
      phpendtag = /\?>/
      phpendscript = /<\/script>/
+     scriptcomment = /<(([^>]*?)(?=SMARTYldel)SMARTYldel\*([\S\s]*?)\*SMARTYrdel)+([^>]*?)(?!SMARTYldel)>/
      aspstarttag = /<%/
      aspendtag = /%>/
      slash = /\//
@@ -284,6 +286,7 @@
         if ($script) {
             $this->is_phpScript = true;
         }
+        $this->phpValue = $this->value;
          $this->token = Smarty_Internal_Templateparser::TP_PHPSTARTTAG;
        } elseif ($this->value == '<?xml') {
            $this->token = Smarty_Internal_Templateparser::TP_XMLTAG;
@@ -310,10 +313,22 @@
      aspendtag {
        $this->token = Smarty_Internal_Templateparser::TP_ASPENDTAG;
      }
+     scriptcomment {
+       $clean = preg_replace("/{$this->ldel}\*([\S\s]*?)\*{$this->rdel}/",'',$this->value);
+       if (preg_match("/<script\s+language\s*=\s*[\"\']?\s*php\s*[\"\']?\s*>/",$clean,$match)) {
+        $this->phpValue = $match[0];
+        $this->is_phpScript = true;
+        $this->token = Smarty_Internal_Templateparser::TP_PHPSTARTTAG;
+       } else {
+        preg_match("/([\S\s]*?)(?={$this->ldel})/",$this->value,$match);
+        $this->value = $match[0];
+        $this->token = Smarty_Internal_Templateparser::TP_TEXT;
+       }
+     }
      text {
        $phpEndScript = $this->is_phpScript ? '|<\\/script>' : '';
        $to = strlen($this->data);
-       preg_match("/{$this->ldel}|<\?|<%|\?>|%>|<script\s+language\s*=\s*[\"\']?\s*php\s*[\"\']?\s*>{$phpEndScript}/",$this->data,$match,PREG_OFFSET_CAPTURE,$this->counter);
+       preg_match("/<\?|<%|\?>|%>|<script\s+language\s*=\s*[\"\']?\s*php\s*[\"\']?\s*>|<(([^>]*?)(?={$this->ldel}){$this->ldel}\*([\S\s]*?)\*{$this->rdel})+([^>]*?)(?!{$this->ldel})>|{$this->ldel}{$phpEndScript}/",$this->data,$match,PREG_OFFSET_CAPTURE,$this->counter);
        if (isset($match[0][1])) {
          $to = $match[0][1];
        }
@@ -609,10 +624,22 @@
      aspendtag {
        $this->token = Smarty_Internal_Templateparser::TP_ASPENDTAG;
      }
+     scriptcomment {
+       $clean = preg_replace("/{$this->ldel}\*([\S\s]*?)\*{$this->rdel}/",'',$this->value);
+       if (preg_match("/<script\s+language\s*=\s*[\"\']?\s*php\s*[\"\']?\s*>/",$clean,$match)) {
+        $this->phpValue = $match[0];
+        $this->is_phpScript = true;
+        $this->token = Smarty_Internal_Templateparser::TP_PHPSTARTTAG;
+       } else {
+        preg_match("/([\S\s]*?)(?={$this->ldel})/",$this->value,$match);
+        $this->value = $match[0];
+        $this->token = Smarty_Internal_Templateparser::TP_TEXT;
+       }
+     }
      text {
        $phpEndScript = $this->is_phpScript ? '|<\\/script>' : '';
        $to = strlen($this->data);
-       preg_match("/{$this->ldel}\/?literal{$this->rdel}|<\?|<%|\?>|%>|<script\s+language\s*=\s*[\"\']?\s*php\s*[\"\']?\s*>{$phpEndScript}/",$this->data,$match,PREG_OFFSET_CAPTURE,$this->counter);
+       preg_match("/<\?|<%|\?>|%>|<script\s+language\s*=\s*[\"\']?\s*php\s*[\"\']?\s*>|<(([^>]*?)(?={$this->ldel}){$this->ldel}\*([\S\s]*?)\*{$this->rdel})+([^>]*?)(?!{$this->ldel})>|{$this->ldel}\/?literal{$this->rdel}{$phpEndScript}/",$this->data,$match,PREG_OFFSET_CAPTURE,$this->counter);
        if (isset($match[0][1])) {
          $to = $match[0][1];
        } else {
