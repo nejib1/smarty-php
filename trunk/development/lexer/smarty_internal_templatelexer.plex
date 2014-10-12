@@ -282,11 +282,11 @@
        }
      }
      phpstarttag {
-       if (in_array($this->value, Array('<?', '<?=', '<?php')) || $script = strpos($this->value, '<s') === 0) {
-        if ($script) {
+        if ($script = strpos($this->value, '<s') === 0 || in_array($this->value, Array('<?', '<?=', '<?php'))) {
+         if ($script) {
             $this->is_phpScript = true;
-        }
-        $this->phpValue = $this->value;
+         }
+         $this->phpValue = $this->value;
          $this->token = Smarty_Internal_Templateparser::TP_PHPSTARTTAG;
        } elseif ($this->value == '<?xml') {
            $this->token = Smarty_Internal_Templateparser::TP_XMLTAG;
@@ -602,14 +602,14 @@
        }
      }
      phpstarttag {
-       if (in_array($this->value, Array('<?', '<?=', '<?php')) || $script = strpos($this->value, '<s') === 0) {
-        if ($script) {
-            $this->is_phpScript = true;
-        }
-         $this->token = Smarty_Internal_Templateparser::TP_PHPSTARTTAG;
+        if ($script = strpos($this->value, '<s') === 0 || in_array($this->value, Array('<?', '<?=', '<?php'))) {
+            if ($script) {
+                $this->is_phpScript = true;
+            }
+             $this->token = Smarty_Internal_Templateparser::TP_PHPSTARTTAG;
         } else {
-         $this->token = Smarty_Internal_Templateparser::TP_FAKEPHPSTARTTAG;
-         $this->value = substr($this->value, 0, 2);
+            $this->token = Smarty_Internal_Templateparser::TP_FAKEPHPSTARTTAG;
+            $this->value = substr($this->value, 0, 2);
         }
      }
      phpendtag {
