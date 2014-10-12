@@ -49,7 +49,7 @@
     }
 
     public static function escape_start_tag($tag_text) {
-        $tag = preg_replace(array('/\A<\?(.*)\z/', '/(language\s*=\s*[\"\']?\s*php\s*[\"\']?)/'), array('<<?php ?>?\1', '<?php echo \'\1\'; ?>'), addcslashes($tag_text, "'"), -1 , $count); //Escape tag
+        $tag = preg_replace('/\A<\?(.*)\z/', '<<?php ?>?\1', $tag_text, -1 , $count); //Escape tag
         return $tag;
     }
 
@@ -154,7 +154,15 @@ template_element(res)::= PHPSTARTTAG(st). {
         $this->lex->is_phpScript = true;
     }
     if ($this->php_handling == Smarty::PHP_PASSTHRU) {
-        res = new _smarty_text($this, self::escape_start_tag($this->lex->phpValue));
+        if ($this->lex->is_phpScript) {
+            $s = addcslashes($this->lex->phpValue, "'");
+            $this->compiler->tag_nocache = true;
+            $save = $this->template->has_nocache_code;
+            res = new _smarty_text($this, $this->compiler->processNocacheCode("<?php echo '{$s}';?>\n", true));
+            $this->template->has_nocache_code = $save;
+        } else {
+            res = new _smarty_text($this, self::escape_start_tag($this->lex->phpValue));
+        }
     } elseif ($this->php_handling == Smarty::PHP_QUOTE) {
         res = new _smarty_text($this, htmlspecialchars($this->lex->phpValue, ENT_QUOTES));
     } elseif ($this->php_handling == Smarty::PHP_ALLOW) {
