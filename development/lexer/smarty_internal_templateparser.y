@@ -116,6 +116,7 @@ template       ::= template_element(e). {
                       // loop of elements
 template       ::= template template_element(e). {
     if (e != null) {
+        // because of possible code injection
         $this->current_buffer->append_subtree(e);
     }
 }
@@ -150,21 +151,21 @@ template_element(res) ::= literal(l). {
 
                       // '<?php' | '<script language=php>' tag
 template_element(res)::= PHPSTARTTAG(st). {
-    if (strpos($this->lex->phpValue, '<s') === 0) {
+    if (strpos(st, '<s') === 0) {
         $this->lex->is_phpScript = true;
     }
     if ($this->php_handling == Smarty::PHP_PASSTHRU) {
         if ($this->lex->is_phpScript) {
-            $s = addcslashes($this->lex->phpValue, "'");
+            $s = addcslashes(st, "'");
             $this->compiler->tag_nocache = true;
             $save = $this->template->has_nocache_code;
             res = new _smarty_text($this, $this->compiler->processNocacheCode("<?php echo '{$s}';?>\n", true));
             $this->template->has_nocache_code = $save;
         } else {
-            res = new _smarty_text($this, self::escape_start_tag($this->lex->phpValue));
+            res = new _smarty_text($this, self::escape_start_tag(st));
         }
     } elseif ($this->php_handling == Smarty::PHP_QUOTE) {
-        res = new _smarty_text($this, htmlspecialchars($this->lex->phpValue, ENT_QUOTES));
+        res = new _smarty_text($this, htmlspecialchars(st, ENT_QUOTES));
     } elseif ($this->php_handling == Smarty::PHP_ALLOW) {
         if (!($this->smarty instanceof SmartyBC)) {
             $this->compiler->trigger_template_error (self::Err3);
