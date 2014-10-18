@@ -1,10 +1,14 @@
  ===== 3.1.21-dev ===== (xx.xx.2014)
+ 18.10.2014
+ - composer moved to github
+ - add COMPOSER_RELEASE_NOTES
+
  17.10.2014
  - bugfix on $php_handling security and optimization of smarty_internal_parsetree (Thue Kristensen)
- 
+
  16.10.2014
  - bugfix composer.json update
- 
+
  15.10.2014
  - bugfix calling a new created cache file with fetch() and Smarty::CACHING_LIFETIME_SAVED multiple times did fail (forum 22350)
 
