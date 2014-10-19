@@ -1,5 +1,5 @@
 {
-    "name": "smarty/smarty-dev",
+    "name": "smarty/smarty",
     "type": "library",
     "description": "Smarty - the compiling PHP template engine",
     "keywords": ["templating"],
@@ -29,12 +29,11 @@
     },
     "autoload": {
         "classmap": [
-            "distribution/libs/Smarty.class.php",
-            "distribution/libs/SmartyBC.class.php",
-            "distribution/libs/sysplugins/smarty_security.php"
+            "libs/Smarty.class.php",
+            "libs/SmartyBC.class.php",
+            "libs/sysplugins/smarty_security.php"
         ]
     },
-
     "extra": {
         "branch-alias": {
             "dev-master": "3.1.x-dev"
