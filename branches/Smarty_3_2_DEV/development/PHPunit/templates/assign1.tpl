@@ -1,0 +1,1 @@
+{include "assign2.tpl"}{$foo}
