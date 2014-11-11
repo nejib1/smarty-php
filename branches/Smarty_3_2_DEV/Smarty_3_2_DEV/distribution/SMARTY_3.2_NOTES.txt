@@ -1,0 +1,49 @@
+Smarty 3.2 Notes
+================
+
+Enhancements
+------------
+
+    $cache_modified_check
+Befor 3.2 the brower cache was not used with cached subtemplates which did have individual cache_lifetime.
+Smarty 3.2 does now also check the update time of each cached subtemplate. 
+
+    $use_sub_dirs and $cache_id
+In previous versions of Smarty the $use_sub_dirs did not really help when you created cache files with a large
+number of different $cache_id's. The subfolder structure for cache files has now been changed that a cache_id hash
+is included to limit the number of files in single folders.
+    
+Default settings
+----------------
+
+    $merge_compiled_include
+For maximum redering speed this option is enabled now by default.
+Because of this you will no longer see compiled template files of subtemplates in $compile_dir as the compiled code
+is merged into the compiled main templates.
+
+
+Deprecated functionality
+------------------------
+
+    registered objects
+The use of registered objects has been deprecated and is removed from standard Smarty.
+For backward compatibility it is available by the SmartyBC class.
+
+
+New template features
+---------------------
+
+    whitespace control
+Whitespaces in front or after tags can now be controled by the tag itself.
+{-tag} remove white space infront of tag up to the previous non-whitespace character or beginning of the line
+   "text \n\n\t {-tag}" -> "text \n\n{tag}"
+   "text \n\n\t text\t {-tag}" -> "text \n\n\t text{tag}"
+{--tag} remove white space infront of tag up to the previous non-whitespace character
+   "text \n\n\t {--tag}" -> "text{tag}"
+   "text \n\n\t text\t {--tag}" -> "text \n\n\t text{tag}"
+{tag-} remove white space after tag up to the next non-whitespace character or end of the line
+   "{tag-} \n\n\t text" -> "{tag}\n\n\t text"
+   "{tag-} text \n\n\t text" -> "{tag}text \n\n\t text"
+{tag--} remove white space after tag up to the next non-whitespace character
+   "{tag--} \n\n\t text" -> "{tag}text"
+   "{tag--} text \n\n\t text" -> "{tag}text \n\n\t text"
