@@ -9,8 +9,7 @@
 /**
 * class for {include_php} tests
 */
-class CompileIncludePhpTests extends PHPUnit_Framework_TestCase
-{
+class CompileIncludePHPTests extends PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->smartyBC = SmartyTests::$smartyBC;
@@ -18,7 +17,7 @@ class CompileIncludePhpTests extends PHPUnit_Framework_TestCase
         $this->smartyBC->force_compile = true;
     }
 
-    static function isRunnable()
+    public static function isRunnable()
     {
         return true;
     }
@@ -53,3 +52,4 @@ class CompileIncludePhpTests extends PHPUnit_Framework_TestCase
         $this->assertContains("test include php", $result);
     }
 }
+?>

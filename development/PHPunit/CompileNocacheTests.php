@@ -9,15 +9,14 @@
 /**
 * class for {nocache} tag tests
 */
-class CompileNocacheTests extends PHPUnit_Framework_TestCase
-{
+class CompileNocacheTests extends PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
         SmartyTests::init();
     }
 
-    static function isRunnable()
+    public static function isRunnable()
     {
         return true;
     }
@@ -64,3 +63,5 @@ class CompileNocacheTests extends PHPUnit_Framework_TestCase
         $this->assertContains("include 6A", $content);
     }
 }
+
+?>

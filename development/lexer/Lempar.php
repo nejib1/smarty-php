@@ -4,7 +4,7 @@ class ParseyyToken implements ArrayAccess
     public $string = '';
     public $metadata = array();
 
-    public function __construct($s, $m = array())
+    function __construct($s, $m = array())
     {
         if ($s instanceof ParseyyToken) {
             $this->string = $s->string;
@@ -19,29 +19,28 @@ class ParseyyToken implements ArrayAccess
         }
     }
 
-    public function __toString()
+    function __toString()
     {
         return $this->_string;
     }
 
-    public function offsetExists($offset)
+    function offsetExists($offset)
     {
         return isset($this->metadata[$offset]);
     }
 
-    public function offsetGet($offset)
+    function offsetGet($offset)
     {
         return $this->metadata[$offset];
     }
 
-    public function offsetSet($offset, $value)
+    function offsetSet($offset, $value)
     {
         if ($offset === null) {
             if (isset($value[0])) {
                 $x = ($value instanceof ParseyyToken) ?
                     $value->metadata : $value;
                 $this->metadata = array_merge($this->metadata, $x);
-
                 return;
             }
             $offset = count($this->metadata);
@@ -58,7 +57,7 @@ class ParseyyToken implements ArrayAccess
         }
     }
 
-    public function offsetUnset($offset)
+    function offsetUnset($offset)
     {
         unset($this->metadata[$offset]);
     }
@@ -83,41 +82,41 @@ class ParseyyStackEntry
 
 %%
 %%
-    public static $yyFallback = array(
+    static public $yyFallback = array(
 %%
     );
-    public function Trace($TraceFILE, $zTracePrompt)
+    static function Trace($TraceFILE, $zTracePrompt)
     {
         if (!$TraceFILE) {
             $zTracePrompt = 0;
         } elseif (!$zTracePrompt) {
             $TraceFILE = 0;
         }
-        $this->yyTraceFILE = $TraceFILE;
-        $this->yyTracePrompt = $zTracePrompt;
+        self::$yyTraceFILE = $TraceFILE;
+        self::$yyTracePrompt = $zTracePrompt;
     }
 
-    public function PrintTrace()
+    static function PrintTrace()
     {
-        $this->yyTraceFILE = fopen('php://output', 'w');
-        $this->yyTracePrompt = '<br>';
+        self::$yyTraceFILE = fopen('php://output', 'w');
+        self::$yyTracePrompt = '<br>';
     }
 
-    public $yyTraceFILE;
-    public $yyTracePrompt;
+    static public $yyTraceFILE;
+    static public $yyTracePrompt;
     public $yyidx;                    /* Index of top element in stack */
     public $yyerrcnt;                 /* Shifts left before out of the error */
     public $yystack = array();  /* The parser's stack */
 
-    public $yyTokenName = array(
+    public $yyTokenName = array( 
 %%
     );
 
-    public static $yyRuleName = array(
+    static public $yyRuleName = array(
 %%
     );
 
-    public function tokenName($tokenType)
+    function tokenName($tokenType)
     {
         if ($tokenType === 0) {
             return 'End of Input';
@@ -129,7 +128,7 @@ class ParseyyStackEntry
         }
     }
 
-    public static function yy_destructor($yymajor, $yypminor)
+    static function yy_destructor($yymajor, $yypminor)
     {
         switch ($yymajor) {
 %%
@@ -137,35 +136,34 @@ class ParseyyStackEntry
         }
     }
 
-    public function yy_pop_parser_stack()
+    function yy_pop_parser_stack()
     {
         if (!count($this->yystack)) {
             return;
         }
         $yytos = array_pop($this->yystack);
-        if ($this->yyTraceFILE && $this->yyidx >= 0) {
-            fwrite($this->yyTraceFILE,
-                $this->yyTracePrompt . 'Popping ' . $this->yyTokenName[$yytos->major] .
+        if (self::$yyTraceFILE && $this->yyidx >= 0) {
+            fwrite(self::$yyTraceFILE,
+                self::$yyTracePrompt . 'Popping ' . $this->yyTokenName[$yytos->major] .
                     "\n");
         }
         $yymajor = $yytos->major;
         self::yy_destructor($yymajor, $yytos->minor);
         $this->yyidx--;
-
         return $yymajor;
     }
 
-    public function __destruct()
+    function __destruct()
     {
         while ($this->yystack !== Array()) {
             $this->yy_pop_parser_stack();
         }
-        if (is_resource($this->yyTraceFILE)) {
-            fclose($this->yyTraceFILE);
+        if (is_resource(self::$yyTraceFILE)) {
+            fclose(self::$yyTraceFILE);
         }
     }
 
-    public function yy_get_expected_tokens($token)
+    function yy_get_expected_tokens($token)
     {
         $state = $this->yystack[$this->yyidx]->stateno;
         $expected = self::$yyExpectedTokens[$state];
@@ -193,12 +191,11 @@ class ParseyyStackEntry
                         $this->yystack[$this->yyidx]->stateno,
                         self::$yyRuleInfo[$yyruleno]['lhs']);
                     if (isset(self::$yyExpectedTokens[$nextstate])) {
-                $expected = array_merge($expected, self::$yyExpectedTokens[$nextstate]);
+		        $expected = array_merge($expected, self::$yyExpectedTokens[$nextstate]);
                             if (in_array($token,
                                   self::$yyExpectedTokens[$nextstate], true)) {
                             $this->yyidx = $yyidx;
                             $this->yystack = $stack;
-
                             return array_unique($expected);
                         }
                     }
@@ -229,13 +226,12 @@ class ParseyyStackEntry
             }
             break;
         } while (true);
-    $this->yyidx = $yyidx;
-    $this->yystack = $stack;
-
+	$this->yyidx = $yyidx;
+	$this->yystack = $stack;
         return array_unique($expected);
     }
 
-    public function yy_is_expected_token($token)
+    function yy_is_expected_token($token)
     {
         if ($token === 0) {
             return true; // 0 is not part of this
@@ -268,7 +264,6 @@ class ParseyyStackEntry
                           in_array($token, self::$yyExpectedTokens[$nextstate], true)) {
                         $this->yyidx = $yyidx;
                         $this->yystack = $stack;
-
                         return true;
                     }
                     if ($nextstate < self::YYNSTATE) {
@@ -304,14 +299,13 @@ class ParseyyStackEntry
         } while (true);
         $this->yyidx = $yyidx;
         $this->yystack = $stack;
-
         return true;
     }
 
-   public function yy_find_shift_action($iLookAhead)
+   function yy_find_shift_action($iLookAhead)
     {
         $stateno = $this->yystack[$this->yyidx]->stateno;
-
+     
         /* if ($this->yyidx < 0) return self::YY_NO_ACTION;  */
         if (!isset(self::$yy_shift_ofst[$stateno])) {
             // no shift actions
@@ -329,22 +323,20 @@ class ParseyyStackEntry
               self::$yy_lookahead[$i] != $iLookAhead) {
             if (count(self::$yyFallback) && $iLookAhead < count(self::$yyFallback)
                    && ($iFallback = self::$yyFallback[$iLookAhead]) != 0) {
-                if ($this->yyTraceFILE) {
-                    fwrite($this->yyTraceFILE, $this->yyTracePrompt . "FALLBACK " .
+                if (self::$yyTraceFILE) {
+                    fwrite(self::$yyTraceFILE, self::$yyTracePrompt . "FALLBACK " .
                         $this->yyTokenName[$iLookAhead] . " => " .
                         $this->yyTokenName[$iFallback] . "\n");
                 }
-
                 return $this->yy_find_shift_action($iFallback);
             }
-
             return self::$yy_default[$stateno];
         } else {
             return self::$yy_action[$i];
         }
     }
 
-    public function yy_find_reduce_action($stateno, $iLookAhead)
+    function yy_find_reduce_action($stateno, $iLookAhead)
     {
         /* $stateno = $this->yystack[$this->yyidx]->stateno; */
 
@@ -367,19 +359,18 @@ class ParseyyStackEntry
         }
     }
 
-    public function yy_shift($yyNewState, $yyMajor, $yypMinor)
+    function yy_shift($yyNewState, $yyMajor, $yypMinor)
     {
         $this->yyidx++;
         if ($this->yyidx >= self::YYSTACKDEPTH) {
             $this->yyidx--;
-            if ($this->yyTraceFILE) {
-                fprintf($this->yyTraceFILE, "%sStack Overflow!\n", $this->yyTracePrompt);
+            if (self::$yyTraceFILE) {
+                fprintf(self::$yyTraceFILE, "%sStack Overflow!\n", self::$yyTracePrompt);
             }
             while ($this->yyidx >= 0) {
                 $this->yy_pop_parser_stack();
             }
 %%
-
             return;
         }
         $yytos = new ParseyyStackEntry;
@@ -387,36 +378,36 @@ class ParseyyStackEntry
         $yytos->major = $yyMajor;
         $yytos->minor = $yypMinor;
         array_push($this->yystack, $yytos);
-        if ($this->yyTraceFILE && $this->yyidx > 0) {
-            fprintf($this->yyTraceFILE, "%sShift %d\n", $this->yyTracePrompt,
+        if (self::$yyTraceFILE && $this->yyidx > 0) {
+            fprintf(self::$yyTraceFILE, "%sShift %d\n", self::$yyTracePrompt,
                 $yyNewState);
-            fprintf($this->yyTraceFILE, "%sStack:", $this->yyTracePrompt);
-            for ($i = 1; $i <= $this->yyidx; $i++) {
-                fprintf($this->yyTraceFILE, " %s",
+            fprintf(self::$yyTraceFILE, "%sStack:", self::$yyTracePrompt);
+            for($i = 1; $i <= $this->yyidx; $i++) {
+                fprintf(self::$yyTraceFILE, " %s",
                     $this->yyTokenName[$this->yystack[$i]->major]);
             }
-            fwrite($this->yyTraceFILE,"\n");
+            fwrite(self::$yyTraceFILE,"\n");
         }
     }
 
-    public static $yyRuleInfo = array(
+    static public $yyRuleInfo = array(
 %%
     );
 
-    public static $yyReduceMap = array(
+    static public $yyReduceMap = array(
 %%
     );
 %%
 
     private $_retvalue;
 
-    public function yy_reduce($yyruleno)
+    function yy_reduce($yyruleno)
     {
         $yymsp = $this->yystack[$this->yyidx];
-        if ($this->yyTraceFILE && $yyruleno >= 0
+        if (self::$yyTraceFILE && $yyruleno >= 0 
               && $yyruleno < count(self::$yyRuleName)) {
-            fprintf($this->yyTraceFILE, "%sReduce (%d) [%s].\n",
-                $this->yyTracePrompt, $yyruleno,
+            fprintf(self::$yyTraceFILE, "%sReduce (%d) [%s].\n",
+                self::$yyTracePrompt, $yyruleno,
                 self::$yyRuleName[$yyruleno]);
         }
 
@@ -430,13 +421,13 @@ class ParseyyStackEntry
         $yygoto = self::$yyRuleInfo[$yyruleno]['lhs'];
         $yysize = self::$yyRuleInfo[$yyruleno]['rhs'];
         $this->yyidx -= $yysize;
-        for ($i = $yysize; $i; $i--) {
+        for($i = $yysize; $i; $i--) {
             // pop all of the right-hand side parameters
             array_pop($this->yystack);
         }
         $yyact = $this->yy_find_reduce_action($this->yystack[$this->yyidx]->stateno, $yygoto);
         if ($yyact < self::YYNSTATE) {
-            if (!$this->yyTraceFILE && $yysize) {
+            if (!self::$yyTraceFILE && $yysize) {
                 $this->yyidx++;
                 $x = new ParseyyStackEntry;
                 $x->stateno = $yyact;
@@ -451,35 +442,37 @@ class ParseyyStackEntry
         }
     }
 
-    public function yy_parse_failed()
+    function yy_parse_failed()
     {
-        if ($this->yyTraceFILE) {
-            fprintf($this->yyTraceFILE, "%sFail!\n", $this->yyTracePrompt);
-        } while ($this->yyidx >= 0) {
+        if (self::$yyTraceFILE) {
+            fprintf(self::$yyTraceFILE, "%sFail!\n", self::$yyTracePrompt);
+        }
+        while ($this->yyidx >= 0) {
             $this->yy_pop_parser_stack();
         }
 %%
     }
 
-    public function yy_syntax_error($yymajor, $TOKEN)
+    function yy_syntax_error($yymajor, $TOKEN)
     {
 %%
     }
 
-    public function yy_accept()
+    function yy_accept()
     {
-        if ($this->yyTraceFILE) {
-            fprintf($this->yyTraceFILE, "%sAccept!\n", $this->yyTracePrompt);
-        } while ($this->yyidx >= 0) {
+        if (self::$yyTraceFILE) {
+            fprintf(self::$yyTraceFILE, "%sAccept!\n", self::$yyTracePrompt);
+        }
+        while ($this->yyidx >= 0) {
             $stack = $this->yy_pop_parser_stack();
         }
 %%
     }
 
-    public function doParse($yymajor, $yytokenvalue)
+    function doParse($yymajor, $yytokenvalue)
     {
         $yyerrorhit = 0;   /* True if yymajor has invoked an error */
-
+        
         if ($this->yyidx === null || $this->yyidx < 0) {
             $this->yyidx = 0;
             $this->yyerrcnt = -1;
@@ -490,12 +483,12 @@ class ParseyyStackEntry
             array_push($this->yystack, $x);
         }
         $yyendofinput = ($yymajor==0);
-
-        if ($this->yyTraceFILE) {
-            fprintf($this->yyTraceFILE, "%sInput %s\n",
-                $this->yyTracePrompt, $this->yyTokenName[$yymajor]);
+        
+        if (self::$yyTraceFILE) {
+            fprintf(self::$yyTraceFILE, "%sInput %s\n",
+                self::$yyTracePrompt, $this->yyTokenName[$yymajor]);
         }
-
+        
         do {
             $yyact = $this->yy_find_shift_action($yymajor);
             if ($yymajor < self::YYERRORSYMBOL &&
@@ -514,19 +507,19 @@ class ParseyyStackEntry
             } elseif ($yyact < self::YYNSTATE + self::YYNRULE) {
                 $this->yy_reduce($yyact - self::YYNSTATE);
             } elseif ($yyact == self::YY_ERROR_ACTION) {
-                if ($this->yyTraceFILE) {
-                    fprintf($this->yyTraceFILE, "%sSyntax Error!\n",
-                        $this->yyTracePrompt);
+                if (self::$yyTraceFILE) {
+                    fprintf(self::$yyTraceFILE, "%sSyntax Error!\n",
+                        self::$yyTracePrompt);
                 }
                 if (self::YYERRORSYMBOL) {
                     if ($this->yyerrcnt < 0) {
                         $this->yy_syntax_error($yymajor, $yytokenvalue);
                     }
                     $yymx = $this->yystack[$this->yyidx]->major;
-                    if ($yymx == self::YYERRORSYMBOL || $yyerrorhit) {
-                        if ($this->yyTraceFILE) {
-                            fprintf($this->yyTraceFILE, "%sDiscard input token %s\n",
-                                $this->yyTracePrompt, $this->yyTokenName[$yymajor]);
+                    if ($yymx == self::YYERRORSYMBOL || $yyerrorhit ){
+                        if (self::$yyTraceFILE) {
+                            fprintf(self::$yyTraceFILE, "%sDiscard input token %s\n",
+                                self::$yyTracePrompt, $this->yyTokenName[$yymajor]);
                         }
                         $this->yy_destructor($yymajor, $yytokenvalue);
                         $yymajor = self::YYNOCODE;
@@ -562,7 +555,7 @@ class ParseyyStackEntry
             } else {
                 $this->yy_accept();
                 $yymajor = self::YYNOCODE;
-            }
+            }            
         } while ($yymajor != self::YYNOCODE && $this->yyidx >= 0);
     }
 }

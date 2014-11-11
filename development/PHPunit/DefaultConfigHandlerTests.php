@@ -6,11 +6,11 @@
 * @author Uwe Tews
 */
 
+
 /**
 * class for block plugin tests
 */
-class DefaultConfigHandlerTests extends PHPUnit_Framework_TestCase
-{
+class DefaultConfigHandlerTests extends PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
@@ -19,19 +19,20 @@ class DefaultConfigHandlerTests extends PHPUnit_Framework_TestCase
         $this->smarty->disableSecurity();
     }
 
-    static function isRunnable()
+    public static function isRunnable()
     {
         return true;
     }
+
 
     public function testUnknownConfig()
     {
         try {
             $this->smarty->configLoad('foo.conf');
             $this->assertEquals("123.4", $this->smarty->fetch('eval:{#Number#}'));
-        } catch (Exception $e) {
-            $this->assertContains('Unable to read config file', $e->getMessage());
-
+        }
+        catch (Exception $e) {
+            $this->assertContains('Unable to load config file', $e->getMessage());
             return;
         }
         $this->fail('Exception for none existing config has not been raised.');
@@ -41,9 +42,9 @@ class DefaultConfigHandlerTests extends PHPUnit_Framework_TestCase
     {
         try {
             $this->smarty->registerDefaultConfigHandler('foo');
-        } catch (Exception $e) {
-            $this->assertContains("Default config handler 'foo' not callable", $e->getMessage());
-
+        }
+        catch (Exception $e) {
+            $this->assertContains("registerDefaultConfigHandler(): Invalid callback", $e->getMessage());
             return;
         }
         $this->fail('Exception for non-callable function has not been raised.');
@@ -63,15 +64,16 @@ class DefaultConfigHandlerTests extends PHPUnit_Framework_TestCase
         $this->assertEquals("123.4", $this->smarty->fetch('eval:{#Number#}'));
     }
 
+
     public function testDefaultConfigHandlerReturningFalse()
     {
         $this->smarty->registerDefaultConfigHandler('my_config_false');
         try {
             $this->smarty->configLoad('foo.conf');
             $this->assertEquals("123.4", $this->smarty->fetch('eval:{#Number#}'));
-        } catch (Exception $e) {
-            $this->assertContains('Unable to read config file', $e->getMessage());
-
+        }
+        catch (Exception $e) {
+            $this->assertContains('Unable to load config file', $e->getMessage());
             return;
         }
         $this->fail('Exception for none existing template has not been raised.');
@@ -91,7 +93,6 @@ function my_config_handler ($resource_type, $resource_name, &$config_source, &$c
     $output = "foo = 'bar'\n";
     $config_source = $output;
     $config_timestamp = time();
-
     return true;
 }
 function my_config_handler_file ($resource_type, $resource_name, &$config_source, &$config_timestamp, Smarty $smarty)
@@ -102,3 +103,5 @@ function my_config_false ($resource_type, $resource_name, &$config_source, &$con
 {
     return false;
 }
+
+?>

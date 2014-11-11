@@ -1,13 +1,15 @@
 <?php
+
 /**
  * Smarty plugin
- *
- * @package    Smarty
+ * 
+ * @package Smarty
  * @subpackage PluginsModifier
  */
 
 /**
  * Smarty date_format modifier plugin
+ * 
  * Type:     modifier<br>
  * Name:     date_format<br>
  * Purpose:  format datestamps via strftime<br>
@@ -15,25 +17,23 @@
  *          - string: input date string
  *          - format: strftime format for output
  *          - default_date: default date if $string is empty
- *
- * @link   http://www.smarty.net/manual/en/language.modifier.date.format.php date_format (Smarty online manual)
- * @author Monte Ohrt <monte at ohrt dot com>
- *
+ * 
+ * @link http://www.smarty.net/manual/en/language.modifier.date.format.php date_format (Smarty online manual)
+ * @author Monte Ohrt <monte at ohrt dot com> 
  * @param string $string       input date string
  * @param string $format       strftime format for output
  * @param string $default_date default date if $string is empty
  * @param string $formatter    either 'strftime' or 'auto'
- *
  * @return string |void
- * @uses   smarty_make_timestamp()
+ * @uses smarty_make_timestamp()
  */
-function smarty_modifier_date_format($string, $format = null, $default_date = '', $formatter = 'auto')
+function smarty_modifier_date_format($string, $format=null, $default_date='', $formatter='auto')
 {
     if ($format === null) {
         $format = Smarty::$_DATE_FORMAT;
     }
     /**
-     * Include the {@link shared.make_timestamp.php} plugin
+    * Include the {@link shared.make_timestamp.php} plugin
      */
     require_once(SMARTY_PLUGINS_DIR . 'shared.make_timestamp.php');
     if ($string != '' && $string != '0000-00-00' && $string != '0000-00-00 00:00:00') {
@@ -57,9 +57,9 @@ function smarty_modifier_date_format($string, $format = null, $default_date = ''
             }
             $format = str_replace($_win_from, $_win_to, $format);
         }
-
         return strftime($format, $timestamp);
     } else {
         return date($format, $timestamp);
     }
 }
+

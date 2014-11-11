@@ -1,26 +1,25 @@
 <?php
 /**
-* Smarty PHPunit tests assignGlobal method  and {assignGlobal} tag
-*
+* Smarty PHPunit tests assignGlobal methode  and {assignGlobal} tag
+* 
 * @package PHPunit
-* @author Uwe Tews
+* @author Uwe Tews 
 */
 
 /**
-* class for assignGlobal method  and {assignGlobal} tag tests
+* class for assignGlobal methode  and {assignGlobal} tag tests
 */
-class AssignGlobalTests extends PHPUnit_Framework_TestCase
-{
+class AssignGlobalTests extends PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
         SmartyTests::init();
-    }
+    } 
 
-    static function isRunnable()
+    public static function isRunnable()
     {
         return true;
-    }
+    } 
 
     /**
     * test  assignGlobal and getGlobal
@@ -29,7 +28,7 @@ class AssignGlobalTests extends PHPUnit_Framework_TestCase
     {
         $this->smarty->assignGlobal('foo', 'bar');
         $this->assertEquals('bar', $this->smarty->getGlobal('foo'));
-    }
+    } 
     /**
     * test  assignGlobal and getGlobal on arrays
     */
@@ -38,10 +37,10 @@ class AssignGlobalTests extends PHPUnit_Framework_TestCase
         $this->smarty->assignGlobal('foo', array('foo' => 'bar', 'foo2' => 'bar2'));
         $a1 = array('foo' => array('foo' => 'bar', 'foo2' => 'bar2'));
         $a2 = $this->smarty->getGlobal();
-//        $diff = array_diff($a1, $a2);
-//        $cmp = empty($diff);
-        $this->assertTrue($a1 === $a2);
-    }
+        $diff = array_diff($a1, $a2);
+        $cmp = empty($diff);
+        $this->assertTrue($cmp);
+    } 
     /**
     * test assignGlobal tag
     */
@@ -52,7 +51,7 @@ class AssignGlobalTests extends PHPUnit_Framework_TestCase
         $this->assertEquals('buh', $this->smarty->fetch('eval:{assign var=foo value=buh scope=global}{$foo}'));
         $this->assertEquals('buh', $this->smarty->fetch('eval:{$foo}'));
         $this->assertEquals('buh', $this->smarty->getGlobal('foo'));
-    }
+    } 
     /**
     * test global var array element tag
     */
@@ -61,5 +60,7 @@ class AssignGlobalTests extends PHPUnit_Framework_TestCase
         $this->smarty->assignGlobal('foo', array('foo' => 'bar', 'foo2' => 'bar2'));
         $this->assertEquals('bar2', $this->smarty->fetch('eval:{$foo.foo2}'));
         $this->assertEquals('bar', $this->smarty->fetch('eval:{$foo.foo}'));
-    }
-}
+    } 
+} 
+
+?>

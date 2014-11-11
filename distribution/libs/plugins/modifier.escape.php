@@ -1,34 +1,35 @@
 <?php
+
 /**
  * Smarty plugin
  *
- * @package    Smarty
+ * @package Smarty
  * @subpackage PluginsModifier
  */
 
 /**
  * Smarty escape modifier plugin
+ * NOTE: This plugin is called only when smarty_modifercompiler_escape() is not able to produce inline code
+ *
  * Type:     modifier<br>
  * Name:     escape<br>
  * Purpose:  escape string for output
  *
- * @link   http://www.smarty.net/docs/en/language.modifier.escape
+ * @link http://www.smarty.net/docs/en/language.modifier.escape.tpl (Smarty online manual)
  * @author Monte Ohrt <monte at ohrt dot com>
  *
+ * @param Smarty_Internal_Template $template template object
  * @param string  $string        input string
  * @param string  $esc_type      escape type
  * @param string  $char_set      character set, used for htmlspecialchars() or htmlentities()
  * @param boolean $double_encode encode already encoded entitites again, used for htmlspecialchars() or htmlentities()
- *
  * @return string escaped input string
  */
-function smarty_modifier_escape($string, $esc_type = 'html', $char_set = null, $double_encode = true)
-{
+function smarty_modifier_escape(Smarty_Internal_Template $template, $string, $esc_type = 'html', $char_set = null, $double_encode = true) {
     static $_double_encode = null;
     if ($_double_encode === null) {
         $_double_encode = version_compare(PHP_VERSION, '5.2.3', '>=');
     }
-
     if (!$char_set) {
         $char_set = Smarty::$_CHARSET;
     }
@@ -47,7 +48,6 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = null, $
                     $string = preg_replace('!&(#?\w+);!', '%%%SMARTY_START%%%\\1%%%SMARTY_END%%%', $string);
                     $string = htmlspecialchars($string, ENT_QUOTES, $char_set);
                     $string = str_replace(array('%%%SMARTY_START%%%', '%%%SMARTY_END%%%'), array('&', ';'), $string);
-
                     return $string;
                 }
             }
@@ -67,11 +67,9 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = null, $
                         $string = preg_replace('!&(#?\w+);!', '%%%SMARTY_START%%%\\1%%%SMARTY_END%%%', $string);
                         $string = htmlspecialchars($string, ENT_QUOTES, $char_set);
                         $string = str_replace(array('%%%SMARTY_START%%%', '%%%SMARTY_END%%%'), array('&', ';'), $string);
-
                         return $string;
                     }
                 }
-
                 // htmlentities() won't convert everything, so use mb_convert_encoding
                 return mb_convert_encoding($string, 'HTML-ENTITIES', $char_set);
             }
@@ -86,7 +84,6 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = null, $
                     $string = preg_replace('!&(#?\w+);!', '%%%SMARTY_START%%%\\1%%%SMARTY_END%%%', $string);
                     $string = htmlentities($string, ENT_QUOTES, $char_set);
                     $string = str_replace(array('%%%SMARTY_START%%%', '%%%SMARTY_END%%%'), array('&', ';'), $string);
-
                     return $string;
                 }
             }
@@ -106,10 +103,9 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = null, $
             // Note that the UTF-8 encoded character ä will be represented as %c3%a4
             $return = '';
             $_length = strlen($string);
-            for ($x = 0; $x < $_length; $x ++) {
+            for ($x = 0; $x < $_length; $x++) {
                 $return .= '%' . bin2hex($string[$x]);
             }
-
             return $return;
 
         case 'hexentity':
@@ -120,15 +116,13 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = null, $
                 foreach (smarty_mb_to_unicode($string, Smarty::$_CHARSET) as $unicode) {
                     $return .= '&#x' . strtoupper(dechex($unicode)) . ';';
                 }
-
                 return $return;
             }
             // no MBString fallback
             $_length = strlen($string);
-            for ($x = 0; $x < $_length; $x ++) {
+            for ($x = 0; $x < $_length; $x++) {
                 $return .= '&#x' . bin2hex($string[$x]) . ';';
             }
-
             return $return;
 
         case 'decentity':
@@ -139,15 +133,13 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = null, $
                 foreach (smarty_mb_to_unicode($string, Smarty::$_CHARSET) as $unicode) {
                     $return .= '&#' . $unicode . ';';
                 }
-
                 return $return;
             }
             // no MBString fallback
             $_length = strlen($string);
-            for ($x = 0; $x < $_length; $x ++) {
+            for ($x = 0; $x < $_length; $x++) {
                 $return .= '&#' . ord($string[$x]) . ';';
             }
-
             return $return;
 
         case 'javascript':
@@ -157,7 +149,6 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = null, $
         case 'mail':
             if (Smarty::$_MBSTRING) {
                 require_once(SMARTY_PLUGINS_DIR . 'shared.mb_str_replace.php');
-
                 return smarty_mb_str_replace(array('@', '.'), array(' [AT] ', ' [DOT] '), $string);
             }
             // no MBString fallback
@@ -175,12 +166,11 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = null, $
                         $return .= chr($unicode);
                     }
                 }
-
                 return $return;
             }
 
             $_length = strlen($string);
-            for ($_i = 0; $_i < $_length; $_i ++) {
+            for ($_i = 0; $_i < $_length; $_i++) {
                 $_ord = ord(substr($string, $_i, 1));
                 // non-standard char, escape it
                 if ($_ord >= 126) {
@@ -189,10 +179,9 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = null, $
                     $return .= substr($string, $_i, 1);
                 }
             }
-
             return $return;
 
         default:
-            return $string;
+            throw new SmartyRuntimeException("Modifier escape: Illegal escape type '{$esc_type}'", $template);
     }
 }

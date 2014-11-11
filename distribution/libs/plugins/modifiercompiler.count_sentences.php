@@ -1,27 +1,28 @@
 <?php
+
 /**
  * Smarty plugin
  *
- * @package    Smarty
+ * @package Smarty
  * @subpackage PluginsModifierCompiler
  */
 
 /**
  * Smarty count_sentences modifier plugin
+ *
  * Type:     modifier<br>
  * Name:     count_sentences
  * Purpose:  count the number of sentences in a text
  *
- * @link    http://www.smarty.net/manual/en/language.modifier.count.paragraphs.php
+ * @link http://www.smarty.net/docs/en/language.modifier.count.sentences.tpl
  *          count_sentences (Smarty online manual)
- * @author  Uwe Tews
+ * @author Uwe Tews
  *
- * @param array $params parameters
- *
+ * @param string $input input string
  * @return string with compiled code
  */
-function smarty_modifiercompiler_count_sentences($params)
-{
+// NOTE: The parser does pass all parameter as strings which could be directly inserted into the compiled code string
+function smarty_modifiercompiler_count_sentences($input) {
     // find periods, question marks, exclamation marks with a word before but not after.
-    return 'preg_match_all("#\w[\.\?\!](\W|$)#S' . Smarty::$_UTF8_MODIFIER . '", ' . $params[0] . ', $tmp)';
+    return 'preg_match_all("#\w[\.\?\!](\W|$)#' . Smarty::$_UTF8_MODIFIER . 'S", ' . $input . ', $tmp)';
 }

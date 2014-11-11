@@ -6,11 +6,11 @@
 * @author Uwe Tews
 */
 
+
 /**
 * class for security test
 */
-class SecurityTests extends PHPUnit_Framework_TestCase
-{
+class SecurityTests extends PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
@@ -22,7 +22,7 @@ class SecurityTests extends PHPUnit_Framework_TestCase
         $this->smarty->clearAllCache();
     }
 
-    static function isRunnable()
+    public static function isRunnable()
     {
         return true;
     }
@@ -34,6 +34,7 @@ class SecurityTests extends PHPUnit_Framework_TestCase
     {
         $this->assertTrue(is_object($this->smarty->security_policy));
     }
+
 
     /**
     * test trusted PHP function
@@ -51,9 +52,9 @@ class SecurityTests extends PHPUnit_Framework_TestCase
         $this->smarty->security_policy->php_functions = array('null');
         try {
             $this->smarty->fetch('eval:{assign var=foo value=[1,2,3,4,5]}{count($foo)}');
-        } catch (Exception $e) {
-            $this->assertContains(htmlentities("PHP function 'count' not allowed by security setting"), $e->getMessage());
-
+        }
+        catch (Exception $e) {
+            $this->assertContains("PHP function 'count' not allowed by security setting", $e->getMessage());
             return;
         }
         $this->fail('Exception for not trusted modifier has not been raised.');
@@ -70,7 +71,7 @@ class SecurityTests extends PHPUnit_Framework_TestCase
     }
 
     /**
-    * test trusted modifier
+    * test trusted modifer
     */
     public function testTrustedModifier()
     {
@@ -80,23 +81,23 @@ class SecurityTests extends PHPUnit_Framework_TestCase
     /**
     * test not trusted modifier
     */
-    public function testNotTrustedModifier()
+    public function testNotTrustedModifer()
     {
         $this->smarty->security_policy->php_modifiers = array('null');
         try {
             $this->smarty->fetch('eval:{assign var=foo value=[1,2,3,4,5]}{$foo|@count}');
-        } catch (Exception $e) {
-            $this->assertContains(htmlentities("modifier 'count' not allowed by security setting"), $e->getMessage());
-
+        }
+        catch (Exception $e) {
+            $this->assertContains("modifier 'count' not allowed by security setting", $e->getMessage());
             return;
         }
         $this->fail('Exception for not trusted modifier has not been raised.');
     }
 
     /**
-    * test not trusted modifier at disabled security
+    * test not trusted modifer at disabled security
     */
-    public function testDisabledTrustedModifier()
+    public function testDisabledTrustedMofifer()
     {
         $this->smarty->security_policy->php_modifiers = array('null');
         $this->smarty->disableSecurity();
@@ -120,9 +121,9 @@ class SecurityTests extends PHPUnit_Framework_TestCase
         $this->smarty->security_policy->allowed_tags = array('counter');
         try {
             $this->smarty->fetch('eval:{counter}{cycle values="1,2"}');
-        } catch (Exception $e) {
-            $this->assertContains(htmlentities("tag 'cycle' not allowed by security setting"), $e->getMessage());
-
+        }
+        catch (Exception $e) {
+            $this->assertContains("tag 'cycle' not allowed by security setting", $e->getMessage());
             return;
         }
         $this->fail('Exception for not allowed tag has not been raised.');
@@ -136,9 +137,9 @@ class SecurityTests extends PHPUnit_Framework_TestCase
         $this->smarty->security_policy->disabled_tags = array('cycle');
         try {
             $this->smarty->fetch('eval:{counter}{cycle values="1,2"}');
-        } catch (Exception $e) {
-            $this->assertContains(htmlentities("tag 'cycle' disabled by security setting"), $e->getMessage());
-
+        }
+        catch (Exception $e) {
+            $this->assertContains("tag 'cycle' disabled by security setting", $e->getMessage());
             return;
         }
         $this->fail('Exception for disabled tag has not been raised.');
@@ -166,9 +167,9 @@ class SecurityTests extends PHPUnit_Framework_TestCase
         $this->smarty->security_policy->allowed_modifiers = array('upper');
         try {
             $this->smarty->fetch('eval:{"hello"|upper}{"world"|lower}');
-        } catch (Exception $e) {
-            $this->assertContains(htmlentities("modifier 'lower' not allowed by security setting"), $e->getMessage());
-
+        }
+        catch (Exception $e) {
+            $this->assertContains("modifier 'lower' not allowed by security setting", $e->getMessage());
             return;
         }
         $this->fail('Exception for not allowed tag has not been raised.');
@@ -182,9 +183,9 @@ class SecurityTests extends PHPUnit_Framework_TestCase
         $this->smarty->security_policy->disabled_modifiers = array('lower');
         try {
             $this->smarty->fetch('eval:{"hello"|upper}{"world"|lower}');
-        } catch (Exception $e) {
-            $this->assertContains(htmlentities("modifier 'lower' disabled by security setting"), $e->getMessage());
-
+        }
+        catch (Exception $e) {
+            $this->assertContains("modifier 'lower' disabled by security setting", $e->getMessage());
             return;
         }
         $this->fail('Exception for disabled tag has not been raised.');
@@ -262,9 +263,9 @@ class SecurityTests extends PHPUnit_Framework_TestCase
         $this->smarty->security_policy->secure_dir = array('.' . DIRECTORY_SEPARATOR . 'templates_3' . DIRECTORY_SEPARATOR);
         try {
             $this->smarty->fetch('eval:{include file="templates_2/hello.tpl"}');
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
             $this->assertContains("/PHPunit/templates_2/hello.tpl' not allowed by security setting", str_replace('\\','/',$e->getMessage()));
-
             return;
         }
         $this->fail('Exception for not trusted directory has not been raised.');
@@ -297,13 +298,15 @@ class SecurityTests extends PHPUnit_Framework_TestCase
         $this->smarty->security_policy->static_classes = array('null');
         try {
             $this->smarty->fetch('eval:{mysecuritystaticclass::square(5)}');
-        } catch (Exception $e) {
-            $this->assertContains(htmlentities("access to static class 'mysecuritystaticclass' not allowed by security setting"), $e->getMessage());
-
+        }
+        catch (Exception $e) {
+            $this->assertContains("access to static class 'mysecuritystaticclass' not allowed by security setting", $e->getMessage());
             return;
         }
         $this->fail('Exception for not trusted static class has not been raised.');
     }
+
+
 
     public function testChangedTrustedDirectory()
     {
@@ -328,33 +331,34 @@ class SecurityTests extends PHPUnit_Framework_TestCase
         try {
             $this->smarty->fetch('eval:{fetch file="http://www.smarty.net/foo.bar"}');
         } catch (SmartyException $e) {
-            $this->assertNotContains(htmlentities("not allowed by security setting"), $e->getMessage());
+            $this->assertNotContains("not allowed by security setting", $e->getMessage());
         }
 
         try {
             $this->smarty->fetch('eval:{fetch file="https://www.smarty.net/foo.bar"}');
             $this->fail("Exception for unknown resource not thrown (protocol)");
         } catch (SmartyException $e) {
-            $this->assertContains(htmlentities("not allowed by security setting"), $e->getMessage());
+            $this->assertContains("not allowed by security setting", $e->getMessage());
         }
-
+        
         try {
             $this->smarty->fetch('eval:{fetch file="http://www.smarty.com/foo.bar"}');
             $this->fail("Exception for unknown resource not thrown (domain)");
         } catch (SmartyException $e) {
-            $this->assertContains(htmlentities("not allowed by security setting"), $e->getMessage());
+            $this->assertContains("not allowed by security setting", $e->getMessage());
         }
     }
-
+    
 }
 
-class mysecuritystaticclass
-{
+class mysecuritystaticclass {
     const STATIC_CONSTANT_VALUE = 3;
-    static $static_var = 5;
+    public static $static_var = 5;
 
     static function square($i)
     {
         return $i*$i;
     }
 }
+
+?>

@@ -9,8 +9,7 @@
 /**
  * class for register->resource tests
  */
-class RegisteredResourceTests extends PHPUnit_Framework_TestCase
-{
+class RegisteredResourceTests extends PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
@@ -21,7 +20,7 @@ class RegisteredResourceTests extends PHPUnit_Framework_TestCase
                 "rr_get_trusted"));
     }
 
-    static function isRunnable()
+    public static function isRunnable()
     {
         return true;
     }
@@ -58,7 +57,6 @@ class RegisteredResourceTests extends PHPUnit_Framework_TestCase
         $this->smarty->compile_id = 'b';
         $this->assertEquals('this is template 2', $this->smarty->fetch('myresource:some'));
         $this->assertEquals('this is template 2', $this->smarty->fetch('myresource:some'));
-
     }
 }
 
@@ -69,15 +67,13 @@ function rr_get_template ($tpl_name, &$tpl_source, $smarty_obj)
 {
     // populating $tpl_source
     $tpl_source = '{$x="hello world"}{$x}';
-
     return true;
 }
 
 function rr_get_timestamp($tpl_name, &$tpl_timestamp, $smarty_obj)
 {
     // $tpl_timestamp.
-    $tpl_timestamp = (int) floor(time() / 100) * 100;
-
+    $tpl_timestamp = (int)floor(time() / 100) * 100;
     return true;
 }
 
@@ -93,7 +89,6 @@ function rr_get_trusted($tpl_name, $smarty_obj)
 }
 
 // resource functions for compile_id change test
-
 function getSecure($name, $smarty)
 {
     return true;
@@ -106,16 +101,14 @@ function getSource($name, &$source, $smarty)
     // we update a counter, so that we return a new source for every call
     static $counter = 0;
     $counter++;
-
     // construct a new source
     $source = "this is template $counter";
-
     return true;
 }
 function getTimestamp($name, &$timestamp, $smarty)
 {
     // always pretend the template is brand new
     $timestamp = time();
-
     return true;
 }
+?>

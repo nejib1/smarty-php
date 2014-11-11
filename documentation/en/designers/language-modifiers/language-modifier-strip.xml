@@ -3,7 +3,7 @@
  <sect1 id="language.modifier.strip">
   <title>strip</title>
   <para>
-   This replaces all spaces, newlines and tabs with a single
+   This replaces all repeated spaces, newlines and tabs with a single
    space, or with the supplied string.
   </para>
   <note>

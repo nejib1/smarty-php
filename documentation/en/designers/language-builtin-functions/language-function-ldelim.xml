@@ -9,7 +9,7 @@
    <emphasis role="bold">{</emphasis> and <emphasis role="bold">}</emphasis>.
    You can also use <link linkend="language.function.literal"><varname>{literal}{/literal}</varname></link>
    to escape blocks of text eg Javascript or CSS.
-    See also the complementary <link
+    See also the complimentary <link
     linkend="language.variables.smarty.ldelim"><parameter>{$smarty.ldelim}</parameter></link>.
   </para>
   <example>

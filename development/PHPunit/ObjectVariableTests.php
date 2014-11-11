@@ -9,8 +9,7 @@
 /**
 * class for object variable tests
 */
-class ObjectVariableTests extends PHPUnit_Framework_TestCase
-{
+class ObjectVariableTests extends PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
@@ -18,7 +17,7 @@ class ObjectVariableTests extends PHPUnit_Framework_TestCase
         $this->smarty->force_compile = true;
     }
 
-    static function isRunnable()
+    public static function isRunnable()
     {
         return true;
     }
@@ -90,8 +89,10 @@ class ObjectVariableTests extends PHPUnit_Framework_TestCase
 Class VariableObject {
     public $hello = 'hello_world';
 
-    public function myhello()
+    function myhello()
     {
         return 'hello world';
     }
 }
+
+?>

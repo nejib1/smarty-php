@@ -9,8 +9,7 @@
 /**
 * class for cache resource file tests
 */
-class CacheResourceCustomMysqlTests extends PHPUnit_Framework_TestCase
-{
+class CacheResourceCustomMysqlTests extends PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
@@ -19,7 +18,7 @@ class CacheResourceCustomMysqlTests extends PHPUnit_Framework_TestCase
         $this->smarty->addPluginsDir(dirname(__FILE__)."/PHPunitplugins/");
     }
 
-    static function isRunnable()
+    public static function isRunnable()
     {
         return true;
     }
@@ -37,7 +36,7 @@ class CacheResourceCustomMysqlTests extends PHPUnit_Framework_TestCase
         $this->smarty->caching = true;
         $this->smarty->cache_lifetime = 1000;
         $tpl = $this->smarty->createTemplate('helloworld.tpl');
-        $sha1 = sha1($tpl->source->filepath);
+	    $sha1 = sha1($tpl->source->filepath);
         $this->assertEquals($sha1, $tpl->cached->filepath);
     }
     /**
@@ -82,7 +81,8 @@ class CacheResourceCustomMysqlTests extends PHPUnit_Framework_TestCase
         $this->smarty->caching = true;
         $this->smarty->cache_lifetime = 1000;
         $tpl = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar');
-        $tpl->writeCachedContent('hello world');
+        $tpl->fetch();
+        $tpl->cached->content = null;
         $this->assertEquals('hello world', $tpl->cached->handler->getCachedContent($tpl));
         // Custom CacheResources may return -1 if they can't tell the number of deleted elements
         $this->assertEquals(-1, $this->smarty->clearAllCache());
@@ -96,12 +96,15 @@ class CacheResourceCustomMysqlTests extends PHPUnit_Framework_TestCase
         $this->smarty->cache_lifetime = 1000;
         $this->smarty->clearAllCache();
         // create and cache templates
-        $tpl = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar');
-        $tpl->writeCachedContent('hello world 1');
-        $tpl2 = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar2', 'blar');
-        $tpl2->writeCachedContent('hello world 2');
-        $tpl3 = $this->smarty->createTemplate('helloworld2.tpl', 'foo|bar', 'blar');
-        $tpl3->writeCachedContent('hello world 3');
+        $tpl = $this->smarty->createTemplate('helloworld_1.tpl', 'foo|bar', 'blar');
+        $tpl->fetch();
+        $tpl->cached->content = null;
+        $tpl2 = $this->smarty->createTemplate('helloworld_2.tpl', 'foo|bar2', 'blar');
+        $tpl2->fetch();
+        $tpl2->cached->content = null;
+        $tpl3 = $this->smarty->createTemplate('helloworld_3.tpl', 'foo|bar', 'blar');
+        $tpl3->fetch();
+        $tpl3->cached->content = null;
         // test cached content
         $this->assertEquals('hello world 1', $tpl->cached->handler->getCachedContent($tpl));
         $this->assertEquals('hello world 2', $tpl->cached->handler->getCachedContent($tpl2));
@@ -121,11 +124,14 @@ class CacheResourceCustomMysqlTests extends PHPUnit_Framework_TestCase
         $this->smarty->clearAllCache();
         // create and cache templates
         $tpl = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar');
-        $tpl->writeCachedContent('hello world');
+        $tpl->fetch();
+        $tpl->cached->content = null;
         $tpl2 = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar2', 'blar');
-        $tpl2->writeCachedContent('hello world');
+        $tpl2->fetch();
+        $tpl2->cached->content = null;
         $tpl3 = $this->smarty->createTemplate('helloworld2.tpl', 'foo|bar', 'blar');
-        $tpl3->writeCachedContent('hello world');
+        $tpl3->fetch();
+        $tpl3->cached->content = null;
         // test cached content
         $this->assertEquals('hello world', $tpl->cached->handler->getCachedContent($tpl));
         $this->assertEquals('hello world', $tpl->cached->handler->getCachedContent($tpl2));
@@ -145,11 +151,14 @@ class CacheResourceCustomMysqlTests extends PHPUnit_Framework_TestCase
         $this->smarty->clearAllCache();
         // create and cache templates
         $tpl = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar');
-        $tpl->writeCachedContent('hello world');
+        $tpl->fetch();
+        $tpl->cached->content = null;
         $tpl2 = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar2', 'blar');
-        $tpl2->writeCachedContent('hello world');
+        $tpl2->fetch();
+        $tpl2->cached->content = null;
         $tpl3 = $this->smarty->createTemplate('helloworld2.tpl', 'foo|bar', 'blar');
-        $tpl3->writeCachedContent('hello world');
+        $tpl3->fetch();
+        $tpl3->cached->content = null;
         // test cached content
         $this->assertEquals('hello world', $tpl->cached->handler->getCachedContent($tpl));
         $this->assertEquals('hello world', $tpl->cached->handler->getCachedContent($tpl2));
@@ -168,11 +177,14 @@ class CacheResourceCustomMysqlTests extends PHPUnit_Framework_TestCase
         $this->smarty->clearAllCache();
         // create and cache templates
         $tpl = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar');
-        $tpl->writeCachedContent('hello world');
+        $tpl->fetch();
+        $tpl->cached->content = null;
         $tpl2 = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar2');
-        $tpl2->writeCachedContent('hello world');
+        $tpl2->fetch();
+        $tpl2->cached->content = null;
         $tpl3 = $this->smarty->createTemplate('helloworld2.tpl', 'foo|bar', 'blar');
-        $tpl3->writeCachedContent('hello world');
+        $tpl3->fetch();
+        $tpl3->cached->content = null;
         // test cached content
         $this->assertEquals('hello world', $tpl->cached->handler->getCachedContent($tpl));
         $this->assertEquals('hello world', $tpl->cached->handler->getCachedContent($tpl2));
@@ -191,11 +203,14 @@ class CacheResourceCustomMysqlTests extends PHPUnit_Framework_TestCase
         $this->smarty->clearAllCache();
         // create and cache templates
         $tpl = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar');
-        $tpl->writeCachedContent('hello world');
+        $tpl->fetch();
+        $tpl->cached->content = null;
         $tpl2 = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar2');
-        $tpl2->writeCachedContent('hello world');
+        $tpl2->fetch();
+        $tpl2->cached->content = null;
         $tpl3 = $this->smarty->createTemplate('helloworld2.tpl', 'foo|bar', 'blar');
-        $tpl3->writeCachedContent('hello world');
+        $tpl3->fetch();
+        $tpl3->cached->content = null;
         // test cached content
         $this->assertEquals('hello world', $tpl->cached->handler->getCachedContent($tpl));
         $this->assertEquals('hello world', $tpl->cached->handler->getCachedContent($tpl2));
@@ -214,11 +229,14 @@ class CacheResourceCustomMysqlTests extends PHPUnit_Framework_TestCase
         $this->smarty->clearAllCache();
         // create and cache templates
         $tpl = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar');
-        $tpl->writeCachedContent('hello world');
+        $tpl->fetch();
+        $tpl->cached->content = null;
         $tpl2 = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar2');
-        $tpl2->writeCachedContent('hello world');
+        $tpl2->fetch();
+        $tpl2->cached->content = null;
         $tpl3 = $this->smarty->createTemplate('helloworld2.tpl', 'foo|bar', 'blar');
-        $tpl3->writeCachedContent('hello world');
+        $tpl3->fetch();
+        $tpl3->cached->content = null;
         // test cached content
         $this->assertEquals('hello world', $tpl->cached->handler->getCachedContent($tpl));
         $this->assertEquals('hello world', $tpl->cached->handler->getCachedContent($tpl2));
@@ -237,11 +255,14 @@ class CacheResourceCustomMysqlTests extends PHPUnit_Framework_TestCase
         $this->smarty->clearAllCache();
         // create and cache templates
         $tpl = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar');
-        $tpl->writeCachedContent('hello world');
+        $tpl->fetch();
+        $tpl->cached->content = null;
         $tpl2 = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar2');
-        $tpl2->writeCachedContent('hello world');
+        $tpl2->fetch();
+        $tpl2->cached->content = null;
         $tpl3 = $this->smarty->createTemplate('helloworld2.tpl', 'foo|bar', 'blar');
-        $tpl3->writeCachedContent('hello world');
+        $tpl3->fetch();
+        $tpl3->cached->content = null;
         // test cached content
         $this->assertEquals('hello world', $tpl->cached->handler->getCachedContent($tpl));
         $this->assertEquals('hello world', $tpl->cached->handler->getCachedContent($tpl2));
@@ -260,11 +281,14 @@ class CacheResourceCustomMysqlTests extends PHPUnit_Framework_TestCase
         $this->smarty->clearAllCache();
         // create and cache templates
         $tpl = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar');
-        $tpl->writeCachedContent('hello world');
+        $tpl->fetch();
+        $tpl->cached->content = null;
         $tpl2 = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar2');
-        $tpl2->writeCachedContent('hello world');
+        $tpl2->fetch();
+        $tpl2->cached->content = null;
         $tpl3 = $this->smarty->createTemplate('helloworld2.tpl', 'foo|bar', 'blar');
-        $tpl3->writeCachedContent('hello world');
+        $tpl3->fetch();
+        $tpl3->cached->content = null;
         // test cached content
         $this->assertEquals('hello world', $tpl->cached->handler->getCachedContent($tpl));
         $this->assertEquals('hello world', $tpl->cached->handler->getCachedContent($tpl2));
@@ -283,11 +307,14 @@ class CacheResourceCustomMysqlTests extends PHPUnit_Framework_TestCase
         $this->smarty->clearAllCache();
         // create and cache templates
         $tpl = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar');
-        $tpl->writeCachedContent('hello world');
+        $tpl->fetch();
+        $tpl->cached->content = null;
         $tpl2 = $this->smarty->createTemplate('helloworld.tpl',  'foo|bar', 'blar2');
-        $tpl2->writeCachedContent('hello world');
+        $tpl2->fetch();
+        $tpl2->cached->content = null;
         $tpl3 = $this->smarty->createTemplate('helloworld2.tpl', 'foo|bar', 'blar');
-        $tpl3->writeCachedContent('hello world');
+        $tpl3->fetch();
+        $tpl3->cached->content = null;
         // test cached content
         $this->assertEquals('hello world', $tpl->cached->handler->getCachedContent($tpl));
         $this->assertEquals('hello world', $tpl->cached->handler->getCachedContent($tpl2));
@@ -306,13 +333,17 @@ class CacheResourceCustomMysqlTests extends PHPUnit_Framework_TestCase
         $this->smarty->clearAllCache();
         // create and cache templates
         $tpl = $this->smarty->createTemplate('helloworld.tpl');
-        $tpl->writeCachedContent('hello world');
+        $tpl->fetch();
+        $tpl->cached->content = null;
         $tpl2 = $this->smarty->createTemplate('helloworld.tpl',null,'bar');
-        $tpl2->writeCachedContent('hello world');
+        $tpl2->fetch();
+        $tpl2->cached->content = null;
         $tpl3 = $this->smarty->createTemplate('helloworld.tpl','buh|blar');
-        $tpl3->writeCachedContent('hello world');
+        $tpl3->fetch();
+        $tpl3->cached->content = null;
         $tpl4 = $this->smarty->createTemplate('helloworld2.tpl');
-        $tpl4->writeCachedContent('hello world');
+        $tpl4->fetch();
+        $tpl4->cached->content = null;
         // test cached content
         $this->assertEquals('hello world', $tpl->cached->handler->getCachedContent($tpl));
         $this->assertEquals('hello world', $tpl->cached->handler->getCachedContent($tpl2));
@@ -333,13 +364,17 @@ class CacheResourceCustomMysqlTests extends PHPUnit_Framework_TestCase
         $this->smarty->clearAllCache();
         // create and cache templates
         $tpl = $this->smarty->createTemplate('helloworld.tpl');
-        $tpl->writeCachedContent('hello world');
+        $tpl->fetch();
+        $tpl->cached->content = null;
         $tpl2 = $this->smarty->createTemplate('helloworld.tpl',null,'bar');
-        $tpl2->writeCachedContent('hello world');
+        $tpl2->fetch();
+        $tpl2->cached->content = null;
         $tpl3 = $this->smarty->createTemplate('helloworld.tpl','buh|blar');
-        $tpl3->writeCachedContent('hello world');
+        $tpl3->fetch();
+        $tpl3->cached->content = null;
         $tpl4 = $this->smarty->createTemplate('helloworld2.tpl');
-        $tpl4->writeCachedContent('hello world');
+        $tpl4->fetch();
+        $tpl4->cached->content = null;
         // test cached content
         $this->assertEquals('hello world', $tpl->cached->handler->getCachedContent($tpl));
         $this->assertEquals('hello world', $tpl->cached->handler->getCachedContent($tpl2));
@@ -362,3 +397,5 @@ class CacheResourceCustomMysqlTests extends PHPUnit_Framework_TestCase
         $this->smarty->clearAllCache();
     }
 }
+
+?>

@@ -6,21 +6,22 @@
 * @author Uwe Tews
 */
 
+
 /**
 * class core function tests
 */
-class CoreTests extends PHPUnit_Framework_TestCase
-{
+class CoreTests extends PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
         SmartyTests::init();
     }
 
-    static function isRunnable()
+    public static function isRunnable()
     {
         return true;
     }
+
 
     /**
     * loadPlugin test unkown plugin
@@ -48,6 +49,8 @@ class CoreTests extends PHPUnit_Framework_TestCase
     */
     public function testLoadPluginSmartyPluginCounter()
     {
-        $this->assertTrue($this->smarty->loadPlugin('Smarty_Function_Counter') == true);
+        $this->assertTrue($this->smarty->loadPlugin('smarty_function_counter') == true);
     }
 }
+
+?>

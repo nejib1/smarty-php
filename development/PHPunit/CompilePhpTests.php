@@ -9,8 +9,7 @@
 /**
  * class for {php} and <?php...?> tag tests
  */
-class CompilePhpTests extends PHPUnit_Framework_TestCase
-{
+class CompilePhpTests extends PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->smartyBC = SmartyTests::$smartyBC;
@@ -18,7 +17,7 @@ class CompilePhpTests extends PHPUnit_Framework_TestCase
         $this->smartyBC->disableSecurity();
     }
 
-    static function isRunnable()
+    public static function isRunnable()
     {
         return true;
     }
@@ -60,8 +59,7 @@ class CompilePhpTests extends PHPUnit_Framework_TestCase
 \$a = Array("?>" => 3 );
 \$b = Array("?>" => "?>");
 \$c = Array("a" => Array("b" => 7));
-class d_class
-{
+class d_class {
   public \$d_attr = 8;
 }
 \$d = new d_class();
@@ -74,7 +72,7 @@ echo '{\$a["?>"]}';
 echo "{\$a['?>']}";
 echo '{\$a["{\$b["?>"]}"]}';
 echo "{\$c['a']['b']}";
-echo "a{\$e['f']->d_attr}a"
+echo "a{\$e['f']->d_attr}a";
 ?>
 STR;
 
@@ -421,3 +419,5 @@ STR;
         $this->assertEquals('2', $content);
     }
 }
+
+?>

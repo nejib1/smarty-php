@@ -1,23 +1,22 @@
 <?php
 /**
 * Smarty PHPunit tests of modifier
-*
+* 
 * @package PHPunit
-* @author Rodney Rehm
+* @author Rodney Rehm 
 */
 
 /**
 * class for modifier tests
 */
-class PluginFunctionFetchTests extends PHPUnit_Framework_TestCase
-{
+class PluginFunctionFetchTests extends PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
         SmartyTests::init();
-    }
-
-    static function isRunnable()
+    } 
+    
+    public static function isRunnable()
     {
         return true;
     }
@@ -26,4 +25,6 @@ class PluginFunctionFetchTests extends PHPUnit_Framework_TestCase
     {
         // TODO: UnitTests for {fetch}
     }
-}
+} 
+
+?>

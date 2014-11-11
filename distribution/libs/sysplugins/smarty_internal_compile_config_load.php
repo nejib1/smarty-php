@@ -1,21 +1,23 @@
 <?php
+
 /**
  * Smarty Internal Plugin Compile Config Load
+ *
  * Compiles the {config load} tag
  *
- * @package    Smarty
+ * @package Smarty
  * @subpackage Compiler
- * @author     Uwe Tews
+ * @author Uwe Tews
  */
 
 /**
  * Smarty Internal Plugin Compile Config Load Class
  *
- * @package    Smarty
+ * @package Smarty
  * @subpackage Compiler
  */
-class Smarty_Internal_Compile_Config_Load extends Smarty_Internal_CompileBase
-{
+class Smarty_Internal_Compile_Config_Load extends Smarty_Internal_CompileBase {
+
     /**
      * Attribute definition: Overwrites base class.
      *
@@ -23,6 +25,7 @@ class Smarty_Internal_Compile_Config_Load extends Smarty_Internal_CompileBase
      * @see Smarty_Internal_CompileBase
      */
     public $required_attributes = array('file');
+
     /**
      * Attribute definition: Overwrites base class.
      *
@@ -30,6 +33,7 @@ class Smarty_Internal_Compile_Config_Load extends Smarty_Internal_CompileBase
      * @see Smarty_Internal_CompileBase
      */
     public $shorttag_order = array('file', 'section');
+
     /**
      * Attribute definition: Overwrites base class.
      *
@@ -41,13 +45,11 @@ class Smarty_Internal_Compile_Config_Load extends Smarty_Internal_CompileBase
     /**
      * Compiles code for the {config_load} tag
      *
-     * @param  array  $args     array with attributes from parser
-     * @param  object $compiler compiler object
-     *
+     * @param array  $args     array with attributes from parser
+     * @param object $compiler compiler object
      * @return string compiled code
      */
-    public function compile($args, $compiler)
-    {
+    public function compile($args, $compiler) {
         static $_is_legal_scope = array('local' => true, 'parent' => true, 'root' => true, 'global' => true);
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);
@@ -56,7 +58,8 @@ class Smarty_Internal_Compile_Config_Load extends Smarty_Internal_CompileBase
             $compiler->trigger_template_error('nocache option not allowed', $compiler->lex->taglineno);
         }
 
-        // save possible attributes
+
+        // save posible attributes
         $conf_file = $_attr['file'];
         if (isset($_attr['section'])) {
             $section = $_attr['section'];
@@ -75,8 +78,8 @@ class Smarty_Internal_Compile_Config_Load extends Smarty_Internal_CompileBase
         }
         // create config object
         $_output = "<?php  \$_config = new Smarty_Internal_Config($conf_file, \$_smarty_tpl->smarty, \$_smarty_tpl);";
-        $_output .= "\$_config->loadConfigVars($section, '$scope'); ?>";
-
+        $_output .= "\$_config->fetch($section, '$scope'); ?>";
         return $_output;
     }
+
 }

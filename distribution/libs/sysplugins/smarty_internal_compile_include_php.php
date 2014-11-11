@@ -1,21 +1,23 @@
 <?php
+
 /**
  * Smarty Internal Plugin Compile Include PHP
+ *
  * Compiles the {include_php} tag
  *
- * @package    Smarty
+ * @package Smarty
  * @subpackage Compiler
- * @author     Uwe Tews
+ * @author Uwe Tews
  */
 
 /**
  * Smarty Internal Plugin Compile Insert Class
  *
- * @package    Smarty
+ * @package Smarty
  * @subpackage Compiler
  */
-class Smarty_Internal_Compile_Include_Php extends Smarty_Internal_CompileBase
-{
+class Smarty_Internal_Compile_Include_Php extends Smarty_Internal_CompileBase {
+
     /**
      * Attribute definition: Overwrites base class.
      *
@@ -23,6 +25,7 @@ class Smarty_Internal_Compile_Include_Php extends Smarty_Internal_CompileBase
      * @see Smarty_Internal_CompileBase
      */
     public $required_attributes = array('file');
+
     /**
      * Attribute definition: Overwrites base class.
      *
@@ -30,6 +33,7 @@ class Smarty_Internal_Compile_Include_Php extends Smarty_Internal_CompileBase
      * @see Smarty_Internal_CompileBase
      */
     public $shorttag_order = array('file');
+
     /**
      * Attribute definition: Overwrites base class.
      *
@@ -41,23 +45,19 @@ class Smarty_Internal_Compile_Include_Php extends Smarty_Internal_CompileBase
     /**
      * Compiles code for the {include_php} tag
      *
-     * @param  array  $args     array with attributes from parser
-     * @param  object $compiler compiler object
-     *
-     * @throws SmartyException
+     * @param array  $args     array with attributes from parser
+     * @param object $compiler compiler object
      * @return string compiled code
      */
-    public function compile($args, $compiler)
-    {
+    public function compile($args, $compiler) {
         if (!($compiler->smarty instanceof SmartyBC)) {
             throw new SmartyException("{include_php} is deprecated, use SmartyBC class to enable");
         }
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);
 
-        /** @var Smarty_Internal_Template $_smarty_tpl
-         * used in evaluated code
-         */
+        $_output = '<?php ';
+
         $_smarty_tpl = $compiler->template;
         $_filepath = false;
         eval('$_file = ' . $_attr['file'] . ';');
@@ -104,4 +104,5 @@ class Smarty_Internal_Compile_Include_Php extends Smarty_Internal_CompileBase
             return "<?php include{$_once} ('{$_filepath}');?>\n";
         }
     }
+
 }

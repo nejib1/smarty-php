@@ -9,8 +9,7 @@
 /**
 * class for escape_html property tests
 */
-class AutoEscapeTests extends PHPUnit_Framework_TestCase
-{
+class AutoEscapeTests extends PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
@@ -18,7 +17,7 @@ class AutoEscapeTests extends PHPUnit_Framework_TestCase
         $this->smarty->escape_html = true;
     }
 
-    static function isRunnable()
+    public static function isRunnable()
     {
         return true;
     }
@@ -33,3 +32,4 @@ class AutoEscapeTests extends PHPUnit_Framework_TestCase
         $this->assertEquals("&lt;a@b.c&gt;", $this->smarty->fetch($tpl));
     }
 }
+?>

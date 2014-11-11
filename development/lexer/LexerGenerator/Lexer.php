@@ -75,7 +75,7 @@ class PHP_LexerGenerator_Lexer
      * prepare scanning
      * @param string the input
      */
-    public function __construct($data)
+    function __construct($data)
     {
         $this->data = str_replace("\r\n", "\n", $data);
         $this->N = 0;
@@ -108,21 +108,18 @@ class PHP_LexerGenerator_Lexer
             $this->value = substr($this->data, $this->N);
             $this->N = strlen($this->data);
             $this->token = self::PHPCODE;
-
             return true;
         }
         if ($a > $this->N) {
             $this->value = substr($this->data, $this->N, $a - $this->N);
             $this->N = $a;
             $this->token = self::PHPCODE;
-
             return true;
         }
         $this->value = '/*!lex2php' . "\n";
         $this->N += 11; // strlen("/*lex2php\n")
         $this->token = self::COMMENTSTART;
         $this->state = 'Declare';
-
         return true;
     }
 
@@ -140,21 +137,18 @@ class PHP_LexerGenerator_Lexer
             $this->value = substr($this->data, $this->N);
             $this->N = strlen($this->data);
             $this->token = self::PHPCODE;
-
             return true;
         }
         if ($a > $this->N) {
             $this->value = substr($this->data, $this->N, $a - $this->N);
             $this->N = $a;
             $this->token = self::PHPCODE;
-
             return true;
         }
         $this->value = '/*!lex2php' . "\n";
         $this->N += 11; // strlen("/*lex2php\n")
         $this->token = self::COMMENTSTART;
         $this->state = 'Rule';
-
         return true;
     }
 
@@ -186,7 +180,6 @@ class PHP_LexerGenerator_Lexer
             $this->value = '*/';
             $this->N += 2;
             $this->token = self::COMMENTEND;
-
             return true;
         }
         if (preg_match('/\G%([a-z]+)/', $this->data, $token, null, $this->N)) {
@@ -194,7 +187,6 @@ class PHP_LexerGenerator_Lexer
             $this->N += strlen($token[1]) + 1;
             $this->state = 'DeclarePI';
             $this->token = self::PI;
-
             return true;
         }
         if (preg_match('/\G[a-zA-Z_][a-zA-Z0-9_]*/', $this->data, $token, null, $this->N)) {
@@ -202,11 +194,9 @@ class PHP_LexerGenerator_Lexer
             $this->token = self::PATTERN;
             $this->N += strlen($token[0]);
             $this->state = 'DeclareEquals';
-
             return true;
         }
         $this->error('expecting declaration of sub-patterns');
-
         return false;
     }
 
@@ -221,7 +211,6 @@ class PHP_LexerGenerator_Lexer
             $this->N++;
             $this->state = 'Declare';
             $this->line++;
-
             return $this->lexDeclare();
         }
         if ($this->data[$this->N] == '{') {
@@ -229,13 +218,11 @@ class PHP_LexerGenerator_Lexer
         }
         if (!preg_match("/\G[^\n]+/", $this->data, $token, null, $this->N)) {
             $this->error('Unexpected end of file');
-
             return false;
         }
         $this->value = $token[0];
         $this->N += strlen($this->value);
         $this->token = self::SUBPATTERN;
-
         return true;
     }
 
@@ -250,7 +237,6 @@ class PHP_LexerGenerator_Lexer
             $this->N++;
             $this->state = 'Rule';
             $this->line++;
-
             return $this->lexRule();
         }
         if ($this->data[$this->N] == '{') {
@@ -258,13 +244,11 @@ class PHP_LexerGenerator_Lexer
         }
         if (!preg_match("/\G[^\n]+/", $this->data, $token, null, $this->N)) {
             $this->error('Unexpected end of file');
-
             return false;
         }
         $this->value = $token[0];
         $this->N += strlen($this->value);
         $this->token = self::SUBPATTERN;
-
         return true;
     }
 
@@ -280,7 +264,6 @@ class PHP_LexerGenerator_Lexer
         }
         if ($this->data[$this->N] != '=') {
             $this->error('expecting "=" for sub-pattern declaration');
-
             return false;
         }
         $this->N++;
@@ -288,10 +271,8 @@ class PHP_LexerGenerator_Lexer
         $this -> skipWhitespace();
         if ($this->N >= strlen($this->data)) {
             $this->error('unexpected end of file, expecting right side of sub-pattern declaration');
-
             return false;
         }
-
         return $this->lexDeclareRightside();
     }
 
@@ -305,7 +286,6 @@ class PHP_LexerGenerator_Lexer
             $this->state = 'lexDeclare';
             $this->N++;
             $this->line++;
-
             return $this->lexDeclare();
         }
         if ($this->data[$this->N] == '"') {
@@ -328,12 +308,10 @@ class PHP_LexerGenerator_Lexer
                  && $this->data[$token - 2] != '\\'));
         if ($token === false) {
             $this->error('Unterminated regex pattern (started with "' . $test . '"');
-
             return false;
         }
         if (substr_count($this->data, "\n", $this->N, $token - $this->N)) {
             $this->error('Regex pattern extends over multiple lines');
-
             return false;
         }
         $this->value = substr($this->data, $this->N + 1, $token - $this->N - 1);
@@ -342,7 +320,6 @@ class PHP_LexerGenerator_Lexer
         $this->value = str_replace('\\' . $test, $test, $this->value);
         $this->N = $token + 1;
         $this->token = self::SUBPATTERN;
-
         return true;
     }
 
@@ -363,24 +340,21 @@ class PHP_LexerGenerator_Lexer
                   ($this->data[$token - 1] == '\\' && $this->data[$token - 2] != '\\'));
         if ($token === false) {
             $this->error('unterminated quote');
-
             return false;
         }
         if (substr_count($this->data, "\n", $this->N, $token - $this->N)) {
             $this->error('quote extends over multiple lines');
-
             return false;
         }
         $this->value = substr($this->data, $this->N + 1, $token - $this->N - 1);
         $this->value = str_replace('\\'.$quote, $quote, $this->value);
         $this->value = str_replace('\\\\', '\\', $this->value);
         $this->N = $token + 1;
-        if ($quote == '\'') {
+        if ($quote == '\'' ) {
             $this->token = self::SINGLEQUOTE;
         } else {
             $this->token = self::QUOTE;
         }
-
         return true;
     }
 
@@ -402,7 +376,7 @@ class PHP_LexerGenerator_Lexer
                 && $this->data[$this->N + 1] == '/'
             )
         ) {
-            if ($this->data[$this->N] == '/' && $this->data[$this->N + 1] == '/') {
+            if ( $this->data[$this->N] == '/' && $this->data[$this->N + 1] == '/' ) {
                 // Skip single line comments
                 $next_newline = strpos($this->data, "\n", $this->N) + 1;
                 if ($next_newline) {
@@ -427,7 +401,6 @@ class PHP_LexerGenerator_Lexer
             $this->value = '*/';
             $this->N += 2;
             $this->token = self::COMMENTEND;
-
             return true;
         }
         if ($this->data[$this->N] == '\'') {
@@ -438,7 +411,6 @@ class PHP_LexerGenerator_Lexer
             $this->N += strlen($token[1]) + 1;
             $this->state = 'DeclarePIRule';
             $this->token = self::PI;
-
             return true;
         }
         if ($this->data[$this->N] == "{") {
@@ -451,11 +423,9 @@ class PHP_LexerGenerator_Lexer
             $this->value = $token[0];
             $this->N += strlen($token[0]);
             $this->token = self::SUBPATTERN;
-
             return true;
         } else {
             $this->error('expecting token rule (quotes or sub-patterns)');
-
             return false;
         }
     }
@@ -497,13 +467,11 @@ class PHP_LexerGenerator_Lexer
         if ($cp >= strlen($this->data)) {
             $this->error("PHP code starting on this line is not terminated before the end of the file.");
             $this->error++;
-
             return false;
         } else {
             $this->value = substr($this->data, $this->N + 1, $cp - $this->N - 1);
             $this->token = self::CODE;
             $this->N = $cp + 1;
-
             return true;
         }
     }
@@ -511,8 +479,7 @@ class PHP_LexerGenerator_Lexer
     /**
      * Skip whitespace characters
      */
-    private function skipWhitespace()
-    {
+    private function skipWhitespace() {
         while (
             $this->N < strlen($this->data)
             && (
@@ -527,8 +494,7 @@ class PHP_LexerGenerator_Lexer
     /**
      * Skip whitespace and EOL characters
      */
-    private function skipWhitespaceEol()
-    {
+    private function skipWhitespaceEol() {
         while (
             $this->N < strlen($this->data)
             && (
@@ -549,7 +515,7 @@ class PHP_LexerGenerator_Lexer
      *
      * In addition to lexing, this properly increments the line number of lexing.
      * This calls the proper sub-lexer based on the parser state
-     * @param  unknown_type $parser
+     * @param unknown_type $parser
      * @return unknown
      */
     public function advance($parser)
@@ -559,10 +525,9 @@ class PHP_LexerGenerator_Lexer
         }
         if ($this->{'lex' . $this->state}()) {
             $this->line += substr_count($this->value, "\n");
-
             return true;
         }
-
         return false;
     }
 }
+?>

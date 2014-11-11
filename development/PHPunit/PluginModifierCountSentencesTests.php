@@ -1,26 +1,25 @@
 <?php
 /**
 * Smarty PHPunit tests of modifier
-*
+* 
 * @package PHPunit
-* @author Rodney Rehm
+* @author Rodney Rehm 
 */
 
 /**
 * class for modifier tests
 */
-class PluginModifierCountSentencesTests extends PHPUnit_Framework_TestCase
-{
+class PluginModifierCountSentencesTests extends PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
         SmartyTests::init();
-    }
+    } 
 
-    static function isRunnable()
+    public static function isRunnable()
     {
         return true;
-    }
+    } 
 
     public function testDefault()
     {
@@ -31,7 +30,7 @@ class PluginModifierCountSentencesTests extends PHPUnit_Framework_TestCase
         $tpl = $this->smarty->createTemplate('eval:{"hello world.wrong"|count_sentences}');
         $this->assertEquals("0", $this->smarty->fetch($tpl));
     }
-
+    
     public function testDefaultWithoutMbstring()
     {
         Smarty::$_MBSTRING = false;
@@ -43,7 +42,7 @@ class PluginModifierCountSentencesTests extends PHPUnit_Framework_TestCase
         $this->assertEquals("0", $this->smarty->fetch($tpl));
         Smarty::$_MBSTRING = true;
     }
-
+    
     public function testUmlauts()
     {
         $tpl = $this->smarty->createTemplate('eval:{"hello worldä."|count_sentences}');
@@ -57,4 +56,6 @@ class PluginModifierCountSentencesTests extends PHPUnit_Framework_TestCase
         $tpl = $this->smarty->createTemplate('eval:{"hello world.ärong"|count_sentences}');
         $this->assertEquals("0", $this->smarty->fetch($tpl));
     }
-}
+} 
+
+?>

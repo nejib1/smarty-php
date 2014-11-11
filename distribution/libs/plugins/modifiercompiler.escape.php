@@ -1,57 +1,50 @@
 <?php
+
 /**
  * Smarty plugin
  *
- * @package    Smarty
+ * @package Smarty
  * @subpackage PluginsModifierCompiler
  */
-
 /**
  * @ignore
  */
-require_once(SMARTY_PLUGINS_DIR . 'shared.literal_compiler_param.php');
 
 /**
  * Smarty escape modifier plugin
+ *
  * Type:     modifier<br>
  * Name:     escape<br>
  * Purpose:  escape string for output
  *
- * @link   http://www.smarty.net/docsv2/en/language.modifier.escape count_characters (Smarty online manual)
+ * @link http://www.smarty.net/docs/en/language.modifier.escape.tpl (Smarty online manual)
  * @author Rodney Rehm
  *
- * @param array $params parameters
- * @param       $compiler
- *
+ * @param Smarty_Internal_TemplateCompilerBase $compiler compiler object
+ * @param string  $input         input string
+ * @param string  $esc_type      escape type
+ * @param string  $char_set      character set, used for htmlspecialchars() or htmlentities()
+ * @param boolean $double_encode encode already encoded entitites again, used for htmlspecialchars() or htmlentities()
  * @return string with compiled code
  */
-function smarty_modifiercompiler_escape($params, $compiler)
-{
+// NOTE: The parser does pass all parameter as strings which could be directly inserted into the compiled code string
+function smarty_modifiercompiler_escape(Smarty_Internal_TemplateCompilerBase $compiler, $input, $esc_type = 'html', $char_set = 'null', $double_encode = 'true') {
     static $_double_encode = null;
     if ($_double_encode === null) {
         $_double_encode = version_compare(PHP_VERSION, '5.2.3', '>=');
     }
-
-    try {
-        $esc_type = smarty_literal_compiler_param($params, 1, 'html');
-        $char_set = smarty_literal_compiler_param($params, 2, Smarty::$_CHARSET);
-        $double_encode = smarty_literal_compiler_param($params, 3, true);
-
-        if (!$char_set) {
-            $char_set = Smarty::$_CHARSET;
-        }
-
-        switch ($esc_type) {
+    if (trim($char_set, "'\"") == 'null') {
+        $char_set = '\'' . Smarty::$_CHARSET . '\'';
+    }
+    if (preg_match('/^([\'"]?)[a-zA-Z0-9_]+(\\1)$/', $esc_type)) {
+        // $esc_type is litteral so we can produce compiled code
+        $esc = trim($esc_type, "'\"");
+        switch ($esc) {
             case 'html':
-                if ($_double_encode) {
-                    return 'htmlspecialchars('
-                    . $params[0] . ', ENT_QUOTES, '
-                    . var_export($char_set, true) . ', '
-                    . var_export($double_encode, true) . ')';
-                } elseif ($double_encode) {
-                    return 'htmlspecialchars('
-                    . $params[0] . ', ENT_QUOTES, '
-                    . var_export($char_set, true) . ')';
+               if ($_double_encode) {
+                    return "htmlspecialchars({$input}, ENT_QUOTES, {$char_set}, {$double_encode})";
+                } else if ($double_encode) {
+                    return "htmlspecialchars({$input}, ENT_QUOTES, {$char_set})";
                 } else {
                     // fall back to modifier.escape.php
                 }
@@ -60,19 +53,10 @@ function smarty_modifiercompiler_escape($params, $compiler)
                 if (Smarty::$_MBSTRING) {
                     if ($_double_encode) {
                         // php >=5.2.3 - go native
-                        return 'mb_convert_encoding(htmlspecialchars('
-                        . $params[0] . ', ENT_QUOTES, '
-                        . var_export($char_set, true) . ', '
-                        . var_export($double_encode, true)
-                        . '), "HTML-ENTITIES", '
-                        . var_export($char_set, true) . ')';
-                    } elseif ($double_encode) {
+                        return "mb_convert_encoding(htmlspecialchars({$input}, ENT_QUOTES, {$char_set}, {$double_encode}), 'HTML-ENTITIES', {$char_set})";
+                    } else if ($double_encode) {
                         // php <5.2.3 - only handle double encoding
-                        return 'mb_convert_encoding(htmlspecialchars('
-                        . $params[0] . ', ENT_QUOTES, '
-                        . var_export($char_set, true)
-                        . '), "HTML-ENTITIES", '
-                        . var_export($char_set, true) . ')';
+                        return "mb_convert_encoding(htmlspecialchars({$input}, ENT_QUOTES, {$char_set}), 'HTML-ENTITIES', {$char_set})";
                     } else {
                         // fall back to modifier.escape.php
                     }
@@ -81,46 +65,37 @@ function smarty_modifiercompiler_escape($params, $compiler)
                 // no MBString fallback
                 if ($_double_encode) {
                     // php >=5.2.3 - go native
-                    return 'htmlentities('
-                    . $params[0] . ', ENT_QUOTES, '
-                    . var_export($char_set, true) . ', '
-                    . var_export($double_encode, true) . ')';
-                } elseif ($double_encode) {
+                    return "htmlentities({$input}, ENT_QUOTES, {$char_set}, {$double_encode})";
+                } else if ($double_encode) {
                     // php <5.2.3 - only handle double encoding
-                    return 'htmlentities('
-                    . $params[0] . ', ENT_QUOTES, '
-                    . var_export($char_set, true) . ')';
+                    return "htmlentities({$input}, ENT_QUOTES, {$char_set})";
                 } else {
                     // fall back to modifier.escape.php
                 }
 
             case 'url':
-                return 'rawurlencode(' . $params[0] . ')';
+                return "rawurlencode({$input})";
 
             case 'urlpathinfo':
-                return 'str_replace("%2F", "/", rawurlencode(' . $params[0] . '))';
+                return "str_replace('%2F', '/', rawurlencode({$input}))";
 
             case 'quotes':
                 // escape unescaped single quotes
-                return 'preg_replace("%(?<!\\\\\\\\)\'%", "\\\'",' . $params[0] . ')';
+                return 'preg_replace("%(?<!\\\\\\\\)\'%", "\\\'",' . $input . ')';
 
             case 'javascript':
                 // escape quotes and backslashes, newlines, etc.
-                return 'strtr(' . $params[0] . ', array("\\\\" => "\\\\\\\\", "\'" => "\\\\\'", "\"" => "\\\\\"", "\\r" => "\\\\r", "\\n" => "\\\n", "</" => "<\/" ))';
+                return 'strtr(' . $input . ', array("\\\\" => "\\\\\\\\", "\'" => "\\\\\'", "\"" => "\\\\\"", "\\r" => "\\\\r", "\\n" => "\\\n", "</" => "<\/" ))';
         }
-    }
-    catch (SmartyException $e) {
-        // pass through to regular plugin fallback
     }
 
     // could not optimize |escape call, so fallback to regular plugin
-    if ($compiler->template->caching && ($compiler->tag_nocache | $compiler->nocache)) {
+    if ($compiler->tag_nocache | $compiler->nocache) {
         $compiler->template->required_plugins['nocache']['escape']['modifier']['file'] = SMARTY_PLUGINS_DIR . 'modifier.escape.php';
         $compiler->template->required_plugins['nocache']['escape']['modifier']['function'] = 'smarty_modifier_escape';
     } else {
         $compiler->template->required_plugins['compiled']['escape']['modifier']['file'] = SMARTY_PLUGINS_DIR . 'modifier.escape.php';
         $compiler->template->required_plugins['compiled']['escape']['modifier']['function'] = 'smarty_modifier_escape';
     }
-
-    return 'smarty_modifier_escape(' . join(', ', $params) . ')';
+    return "smarty_modifier_escape(\$_smarty_tpl, {$input}, {$esc_type}, {$char_set}, {$double_encode})";
 }

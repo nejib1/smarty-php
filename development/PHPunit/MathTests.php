@@ -1,7 +1,7 @@
 <?php
 /**
 * Smarty PHPunit tests of modifier
-*
+* 
 * @package PHPunit
 * @author Rodney Rehm
 */
@@ -9,18 +9,17 @@
 /**
 * class for modifier tests
 */
-class MathTests extends PHPUnit_Framework_TestCase
-{
+class MathTests extends PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
         SmartyTests::init();
-    }
+    } 
 
-    static function isRunnable()
+    public static function isRunnable()
     {
         return true;
-    }
+    } 
 
     /**
     * test PHP function as modifier
@@ -32,7 +31,7 @@ class MathTests extends PHPUnit_Framework_TestCase
         $tpl = $this->smarty->createTemplate('eval:{$x = 4}{$y = 5}{$x * $y} -- {20 / 5}');
         $this->assertEquals($expected, $this->smarty->fetch($tpl));
     }
-
+    
     public function testFunction()
     {
         $this->smarty->disableSecurity();
@@ -40,7 +39,7 @@ class MathTests extends PHPUnit_Framework_TestCase
         $tpl = $this->smarty->createTemplate('eval:{$x = 4}{$y = 5}{math equation="x * y" x=$x y=$y} -- {math equation="20 / 5"}');
         $this->assertEquals($expected, $this->smarty->fetch($tpl));
     }
-
+    
     public function testSyntaxSin()
     {
         $this->smarty->disableSecurity();
@@ -48,7 +47,7 @@ class MathTests extends PHPUnit_Framework_TestCase
         $tpl = $this->smarty->createTemplate('eval:{$x = 4}{$x|sin} -- {$y = sin($x)}{$y}');
         $this->assertEquals($expected, $this->smarty->fetch($tpl));
     }
-
+    
     public function testFunctionSin()
     {
         $this->smarty->disableSecurity();
@@ -56,7 +55,7 @@ class MathTests extends PHPUnit_Framework_TestCase
         $tpl = $this->smarty->createTemplate('eval:{$x = 4}{math equation="sin(x)" x=$x} -- {math equation="sin(x)" x=$x assign="y"}{$y}');
         $this->assertEquals($expected, $this->smarty->fetch($tpl));
     }
-
+    
     public function testSyntaxFloat()
     {
         $this->smarty->disableSecurity();
@@ -64,7 +63,7 @@ class MathTests extends PHPUnit_Framework_TestCase
         $tpl = $this->smarty->createTemplate('eval:{$x = 4}{$y = 5.5}{$x * $y} -- {20.5 / 5}');
         $this->assertEquals($expected, $this->smarty->fetch($tpl));
     }
-
+    
     public function testFunctionFloat()
     {
         $this->smarty->disableSecurity();
@@ -72,7 +71,7 @@ class MathTests extends PHPUnit_Framework_TestCase
         $tpl = $this->smarty->createTemplate('eval:{$x = 4}{$y = 5.5}{math equation="x * y" x=$x y=$y} -- {math equation="20.5 / 5"}');
         $this->assertEquals($expected, $this->smarty->fetch($tpl));
     }
-
+    
     public function testSyntaxFormat()
     {
         $this->smarty->disableSecurity();
@@ -80,7 +79,7 @@ class MathTests extends PHPUnit_Framework_TestCase
         $tpl = $this->smarty->createTemplate('eval:{$x = 4}{$y = 5.5}{$z = $x * $y}{"%0.2f"|sprintf:$z} -- {$x = 20.5}{$y = 5}{$z = $x / $y}{"%0.2f"|sprintf:$z}');
         $this->assertEquals($expected, $this->smarty->fetch($tpl));
     }
-
+    
     public function testFunctionFormat()
     {
         $this->smarty->disableSecurity();
@@ -88,7 +87,7 @@ class MathTests extends PHPUnit_Framework_TestCase
         $tpl = $this->smarty->createTemplate('eval:{$x = 4}{$y = 5.5}{math equation="x * y" x=$x y=$y format="%0.2f"} -- {math equation="20.5 / 5" format="%0.2f"}');
         $this->assertEquals($expected, $this->smarty->fetch($tpl));
     }
-
+    
     public function testSyntaxString()
     {
         $this->smarty->disableSecurity();
@@ -96,7 +95,7 @@ class MathTests extends PHPUnit_Framework_TestCase
         $tpl = $this->smarty->createTemplate('eval:{$x = "4"}{$y = "5.5"}{$z = $x * $y}{"%0.2f"|sprintf:$z} -- {$x = "20.5"}{$y = "5"}{$z = $x / $y}{"%0.2f"|sprintf:$z}');
         $this->assertEquals($expected, $this->smarty->fetch($tpl));
     }
-
+    
     public function testFunctionString()
     {
         $this->smarty->disableSecurity();
@@ -105,3 +104,5 @@ class MathTests extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $this->smarty->fetch($tpl));
     }
 }
+
+?>

@@ -1,23 +1,24 @@
 <?php
 /**
-* Smarty PHPunit tests append method
+* Smarty PHPunit tests append methode
 *
 * @package PHPunit
 * @author Uwe Tews
 */
 
+
 /**
 * class for append tests
 */
-class AppendTests extends PHPUnit_Framework_TestCase
-{
+class AppendTests extends PHPUnit_Framework_TestCase {
+
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
         SmartyTests::init();
     }
 
-    static function isRunnable()
+    public static function isRunnable()
     {
         return true;
     }
@@ -27,8 +28,8 @@ class AppendTests extends PHPUnit_Framework_TestCase
     */
     public function testAppend()
     {
-            $this->smarty->assign('foo','bar');
-            $this->smarty->append('foo','bar2');
+        $this->smarty->assign('foo','bar');
+        $this->smarty->append('foo','bar2');
         $this->assertEquals('bar bar2', $this->smarty->fetch('eval:{$foo[0]} {$foo[1]}'));
     }
     /**
@@ -36,7 +37,7 @@ class AppendTests extends PHPUnit_Framework_TestCase
     */
     public function testAppendUnassigned()
     {
-            $this->smarty->append('foo','bar');
+        $this->smarty->append('foo','bar');
         $this->assertEquals('bar', $this->smarty->fetch('eval:{$foo[0]}'));
     }
     /**
@@ -44,8 +45,8 @@ class AppendTests extends PHPUnit_Framework_TestCase
     */
     public function testAppendMerge()
     {
-            $this->smarty->assign('foo',array('a'=>'a','b'=>'b','c'=>'c'));
-            $this->smarty->append('foo',array('b'=>'d'),true);
+        $this->smarty->assign('foo',array('a'=>'a','b'=>'b','c'=>'c'));
+        $this->smarty->append('foo',array('b'=>'d'),true);
         $this->assertEquals('a d c', $this->smarty->fetch('eval:{$foo["a"]} {$foo["b"]} {$foo["c"]}'));
     }
     /**
@@ -53,8 +54,8 @@ class AppendTests extends PHPUnit_Framework_TestCase
     */
     public function testAppendArrayMerge()
     {
-            $this->smarty->assign('foo',array('b'=>'d'));
-            $this->smarty->append('foo',array('a'=>'a','b'=>'b','c'=>'c'),true);
+        $this->smarty->assign('foo',array('b'=>'d'));
+        $this->smarty->append('foo',array('a'=>'a','b'=>'b','c'=>'c'),true);
         $this->assertEquals('a b c', $this->smarty->fetch('eval:{$foo["a"]} {$foo["b"]} {$foo["c"]}'));
     }
     /**
@@ -62,8 +63,8 @@ class AppendTests extends PHPUnit_Framework_TestCase
     */
     public function testArrayAppend()
     {
-            $this->smarty->assign('foo','foo');
-            $this->smarty->append(array('bar'=>'bar2','foo'=>'foo2'));
+        $this->smarty->assign('foo','foo');
+        $this->smarty->append(array('bar'=>'bar2','foo'=>'foo2'));
         $this->assertEquals('foo foo2 bar2', $this->smarty->fetch('eval:{$foo[0]} {$foo[1]} {$bar[0]}'));
     }
     /**
@@ -71,8 +72,9 @@ class AppendTests extends PHPUnit_Framework_TestCase
     */
     public function testArrayAppendArrayMerge()
     {
-            $this->smarty->assign('foo',array('b'=>'d'));
-            $this->smarty->append(array('bar'=>'bar','foo'=>array('a'=>'a','b'=>'b','c'=>'c')),null,true);
+        $this->smarty->assign('foo',array('b'=>'d'));
+        $this->smarty->append(array('bar'=>'bar','foo'=>array('a'=>'a','b'=>'b','c'=>'c')),null,true);
         $this->assertEquals('a b c bar', $this->smarty->fetch('eval:{$foo["a"]} {$foo["b"]} {$foo["c"]} {$bar[0]}'));
     }
 }
+?>

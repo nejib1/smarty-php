@@ -1,33 +1,32 @@
 <?php
+
 /**
  * Smarty plugin
  *
- * @package    Smarty
+ * @package Smarty
  * @subpackage PluginsModifierCompiler
  */
 
 /**
  * Smarty to_charset modifier plugin
+ *
  * Type:     modifier<br>
  * Name:     to_charset<br>
  * Purpose:  convert character encoding from internal encoding to $charset
  *
+ * @link http://www.smarty.net/docs/en/language.modifier.to_charset.tpl
+ *          regex_replace (Smarty online manual)
  * @author Rodney Rehm
  *
- * @param array $params parameters
- *
+ * @param string $input input string
+ * @param string $charset target charset
  * @return string with compiled code
  */
-function smarty_modifiercompiler_to_charset($params)
-{
+// NOTE: The parser does pass all parameter as strings which could be directly inserted into the compiled code string
+function smarty_modifiercompiler_to_charset($input, $charset = '\'ISO-8859-1\'') {
     if (!Smarty::$_MBSTRING) {
         // FIXME: (rodneyrehm) shouldn't this throw an error?
-        return $params[0];
+        return $input;
     }
-
-    if (!isset($params[1])) {
-        $params[1] = '"ISO-8859-1"';
-    }
-
-    return 'mb_convert_encoding(' . $params[0] . ', ' . $params[1] . ', "' . addslashes(Smarty::$_CHARSET) . '")';
+    return "mb_convert_encoding({$input}, {$charset}, '" . addslashes(Smarty::$_CHARSET) . "')";
 }

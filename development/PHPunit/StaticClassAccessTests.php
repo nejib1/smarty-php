@@ -1,27 +1,27 @@
 <?php
 /**
-* Smarty PHPunit tests static class access to constants, variables and methods
-*
+* Smarty PHPunit tests static class access to constants, variables and methodes
+* 
 * @package PHPunit
-* @author Uwe Tews
+* @author Uwe Tews 
 */
 
+
 /**
-* class for static class access to constants, variables and methods tests
+* class for static class access to constants, variables and methodes tests
 */
-class StaticClassAccessTests extends PHPUnit_Framework_TestCase
-{
+class StaticClassAccessTests extends PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
         SmartyTests::init();
         $this->smarty->disableSecurity();
-    }
+    } 
 
-    static function isRunnable()
+    public static function isRunnable()
     {
         return true;
-    }
+    } 
 
     /**
     * test static class variable
@@ -30,7 +30,7 @@ class StaticClassAccessTests extends PHPUnit_Framework_TestCase
     {
         $tpl = $this->smarty->createTemplate('eval:{mystaticclass::$static_var}');
         $this->assertEquals('5', $this->smarty->fetch($tpl));
-    }
+    } 
     /**
     * test registered static class variable
     */
@@ -39,7 +39,7 @@ class StaticClassAccessTests extends PHPUnit_Framework_TestCase
         $this->smarty->registerClass('registeredclass','mystaticclass');
         $tpl = $this->smarty->createTemplate('eval:{registeredclass::$static_var}');
         $this->assertEquals('5', $this->smarty->fetch($tpl));
-    }
+    } 
     /**
     * test static class constant
     */
@@ -47,7 +47,7 @@ class StaticClassAccessTests extends PHPUnit_Framework_TestCase
     {
         $tpl = $this->smarty->createTemplate('eval:{mystaticclass::STATIC_CONSTANT_VALUE}');
         $this->assertEquals('3', $this->smarty->fetch($tpl));
-    }
+    } 
     /**
     * test static class constant
     */
@@ -56,69 +56,70 @@ class StaticClassAccessTests extends PHPUnit_Framework_TestCase
         $this->smarty->registerClass('registeredclass','mystaticclass');
         $tpl = $this->smarty->createTemplate('eval:{registeredclass::STATIC_CONSTANT_VALUE}');
         $this->assertEquals('3', $this->smarty->fetch($tpl));
-    }
+    } 
     /**
-    * test static class method
+    * test static class methode
     */
-    public function testStaticClassmethod()
+    public function testStaticClassMethode()
     {
         $tpl = $this->smarty->createTemplate('eval:{mystaticclass::square(5)}');
         $this->assertEquals('25', $this->smarty->fetch($tpl));
-    }
+    } 
     /**
-    * test static class method
+    * test static class methode
     */
-    public function testRegisteredStaticClassmethod()
+    public function testRegisteredStaticClassMethode()
     {
         $this->smarty->registerClass('registeredclass','mystaticclass');
         $tpl = $this->smarty->createTemplate('eval:{registeredclass::square(5)}');
         $this->assertEquals('25', $this->smarty->fetch($tpl));
-    }
+    } 
     /**
-    * test static class variable method
+    * test static class variable methode
     */
-    public function testStaticClassVariablemethod()
+    public function testStaticClassVariableMethode()
     {
         $tpl = $this->smarty->createTemplate('eval:{$foo=\'square\'}{mystaticclass::$foo(5)}');
         $this->assertEquals('25', $this->smarty->fetch($tpl));
-    }
+    } 
     /**
-    * test registered static class variable method
+    * test registered static class variable methode
     */
-    public function testRegisteredStaticClassVariablemethod()
+    public function testRegisteredStaticClassVariableMethode()
     {
         $this->smarty->registerClass('registeredclass','mystaticclass');
         $tpl = $this->smarty->createTemplate('eval:{$foo=\'square\'}{registeredclass::$foo(5)}');
         $this->assertEquals('25', $this->smarty->fetch($tpl));
-    }
+    } 
     /**
-    * test static class variable method
+    * test static class variable methode
     */
-    public function testStaticClassVariablemethod2()
+    public function testStaticClassVariableMethode2()
     {
         $tpl = $this->smarty->createTemplate('eval:{mystaticclass::$foo(5)}');
         $tpl->assign('foo','square');
         $this->assertEquals('25', $this->smarty->fetch($tpl));
-    }
+    } 
     /**
-    * test registered static class variable method
+    * test registered static class variable methode
     */
-    public function testRegisteredStaticClassVariablemethod2()
+    public function testRegisteredStaticClassVariableMethode2()
     {
         $this->smarty->registerClass('registeredclass','mystaticclass');
         $tpl = $this->smarty->createTemplate('eval:{registeredclass::$foo(5)}');
         $tpl->assign('foo','square');
         $this->assertEquals('25', $this->smarty->fetch($tpl));
-    }
-}
+    } 
+} 
 
-class mystaticclass
-{
+class mystaticclass {
     const STATIC_CONSTANT_VALUE = 3;
-    static $static_var = 5;
-
+    public static $static_var = 5;
+    
     static function square($i)
     {
         return $i*$i;
-    }
-}
+    } 
+} 
+
+?>

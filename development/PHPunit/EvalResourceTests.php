@@ -6,18 +6,18 @@
 * @author Uwe Tews
 */
 
+
 /**
 * class for eval resource tests
 */
-class EvalResourceTests extends PHPUnit_Framework_TestCase
-{
+class EvalResourceTests extends PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
         SmartyTests::init();
     }
 
-    static function isRunnable()
+    public static function isRunnable()
     {
         return true;
     }
@@ -80,7 +80,7 @@ class EvalResourceTests extends PHPUnit_Framework_TestCase
     public function testMustCompile()
     {
         $tpl = $this->smarty->createTemplate('eval:hello world');
-        $this->assertTrue($tpl->mustCompile());
+        $this->assertTrue($tpl->mustCompile);
     }
     /**
     * test getCompiledFilepath
@@ -104,7 +104,7 @@ class EvalResourceTests extends PHPUnit_Framework_TestCase
     public function testWriteCachedContent()
     {
         $tpl = $this->smarty->createTemplate('eval:hello world');
-        $this->assertFalse($tpl->writeCachedContent('dummy'));
+        $this->assertFalse($tpl->cached->write($tpl, 'dummy'));
     }
     /**
     * test isCached
@@ -160,3 +160,5 @@ class EvalResourceTests extends PHPUnit_Framework_TestCase
         $this->assertEquals('foobar', $tpl->fetch());
     }
 }
+
+?>

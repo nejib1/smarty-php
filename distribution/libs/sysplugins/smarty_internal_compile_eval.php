@@ -1,21 +1,23 @@
 <?php
+
 /**
  * Smarty Internal Plugin Compile Eval
+ *
  * Compiles the {eval} tag.
  *
- * @package    Smarty
+ * @package Smarty
  * @subpackage Compiler
- * @author     Uwe Tews
+ * @author Uwe Tews
  */
 
 /**
  * Smarty Internal Plugin Compile Eval Class
  *
- * @package    Smarty
+ * @package Smarty
  * @subpackage Compiler
  */
-class Smarty_Internal_Compile_Eval extends Smarty_Internal_CompileBase
-{
+class Smarty_Internal_Compile_Eval extends Smarty_Internal_CompileBase {
+
     /**
      * Attribute definition: Overwrites base class.
      *
@@ -23,6 +25,7 @@ class Smarty_Internal_Compile_Eval extends Smarty_Internal_CompileBase
      * @see Smarty_Internal_CompileBase
      */
     public $required_attributes = array('var');
+
     /**
      * Attribute definition: Overwrites base class.
      *
@@ -30,6 +33,7 @@ class Smarty_Internal_Compile_Eval extends Smarty_Internal_CompileBase
      * @see Smarty_Internal_CompileBase
      */
     public $optional_attributes = array('assign');
+
     /**
      * Attribute definition: Overwrites base class.
      *
@@ -41,19 +45,17 @@ class Smarty_Internal_Compile_Eval extends Smarty_Internal_CompileBase
     /**
      * Compiles code for the {eval} tag
      *
-     * @param  array  $args     array with attributes from parser
-     * @param  object $compiler compiler object
-     *
+     * @param array  $args     array with attributes from parser
+     * @param object $compiler compiler object
      * @return string compiled code
      */
-    public function compile($args, $compiler)
-    {
+    public function compile($args, $compiler) {
         $this->required_attributes = array('var');
         $this->optional_attributes = array('assign');
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);
         if (isset($_attr['assign'])) {
-            // output will be stored in a smarty variable instead of being displayed
+            // output will be stored in a smarty variable instead of beind displayed
             $_assign = $_attr['assign'];
         }
 
@@ -65,7 +67,7 @@ class Smarty_Internal_Compile_Eval extends Smarty_Internal_CompileBase
         } else {
             $_output .= "echo \$_template->fetch();";
         }
-
         return "<?php $_output ?>";
     }
+
 }

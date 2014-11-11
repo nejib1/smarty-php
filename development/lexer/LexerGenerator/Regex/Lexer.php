@@ -35,13 +35,13 @@ class PHP_LexerGenerator_Regex_Lexer
     public $value;
     public $line;
 
-    public function __construct($data)
+    function __construct($data)
     {
         $this->input = $data;
         $this->N = 0;
     }
 
-    public function reset($data, $line)
+    function reset($data, $line)
     {
         $this->input = $data;
         $this->N = 0;
@@ -50,31 +50,34 @@ class PHP_LexerGenerator_Regex_Lexer
         $this->yybegin(self::INITIAL);
     }
 
+
     private $_yy_state = 1;
     private $_yy_stack = array();
 
-    public function yylex()
+    function yylex()
     {
         return $this->{'yylex' . $this->_yy_state}();
     }
 
-    public function yypushstate($state)
+    function yypushstate($state)
     {
         array_push($this->_yy_stack, $this->_yy_state);
         $this->_yy_state = $state;
     }
 
-    public function yypopstate()
+    function yypopstate()
     {
         $this->_yy_state = array_pop($this->_yy_stack);
     }
 
-    public function yybegin($state)
+    function yybegin($state)
     {
         $this->_yy_state = $state;
     }
 
-    public function yylex1()
+
+
+    function yylex1()
     {
         $tokenMap = array (
               1 => 0,
@@ -210,7 +213,6 @@ class PHP_LexerGenerator_Regex_Lexer
                         // accept
                         $this->N += strlen($this->value);
                         $this->line += substr_count($this->value, "\n");
-
                         return true;
                     }
                 }
@@ -223,126 +225,129 @@ class PHP_LexerGenerator_Regex_Lexer
 
     } // end function
 
+
     const INITIAL = 1;
-    public function yy_r1_1($yy_subpatterns)
+    function yy_r1_1($yy_subpatterns)
     {
 
     $this->token = self::ESCAPEDBACKSLASH;
     }
-    public function yy_r1_2($yy_subpatterns)
+    function yy_r1_2($yy_subpatterns)
     {
 
     $this->token = self::TEXT;
     }
-    public function yy_r1_3($yy_subpatterns)
+    function yy_r1_3($yy_subpatterns)
     {
 
     $this->token = self::CONTROLCHAR;
     }
-    public function yy_r1_4($yy_subpatterns)
+    function yy_r1_4($yy_subpatterns)
     {
 
     $this->token = self::OPENCHARCLASS;
     $this->yybegin(self::CHARACTERCLASSSTART);
     }
-    public function yy_r1_5($yy_subpatterns)
+    function yy_r1_5($yy_subpatterns)
     {
 
     $this->token = self::BAR;
     }
-    public function yy_r1_6($yy_subpatterns)
+    function yy_r1_6($yy_subpatterns)
     {
 
     $this->token = self::TEXT;
     }
-    public function yy_r1_7($yy_subpatterns)
+    function yy_r1_7($yy_subpatterns)
     {
 
     $this->token = self::COULDBEBACKREF;
     }
-    public function yy_r1_8($yy_subpatterns)
+    function yy_r1_8($yy_subpatterns)
     {
 
     $this->token = self::CONTROLCHAR;
     }
-    public function yy_r1_9($yy_subpatterns)
+    function yy_r1_9($yy_subpatterns)
     {
 
     $this->token = self::MATCHSTART;
     }
-    public function yy_r1_10($yy_subpatterns)
+    function yy_r1_10($yy_subpatterns)
     {
 
     $this->token = self::MATCHSTART;
     }
-    public function yy_r1_11($yy_subpatterns)
+    function yy_r1_11($yy_subpatterns)
     {
 
     $this->token = self::CLOSEPAREN;
     $this->yybegin(self::INITIAL);
     }
-    public function yy_r1_12($yy_subpatterns)
+    function yy_r1_12($yy_subpatterns)
     {
 
     $this->token = self::MATCHEND;
     }
-    public function yy_r1_13($yy_subpatterns)
+    function yy_r1_13($yy_subpatterns)
     {
 
     $this->token = self::MULTIPLIER;
     }
-    public function yy_r1_14($yy_subpatterns)
+    function yy_r1_14($yy_subpatterns)
     {
 
     $this->token = self::MATCHEND;
     }
-    public function yy_r1_15($yy_subpatterns)
+    function yy_r1_15($yy_subpatterns)
     {
 
     $this->token = self::OPENASSERTION;
     $this->yybegin(self::ASSERTION);
     }
-    public function yy_r1_16($yy_subpatterns)
+    function yy_r1_16($yy_subpatterns)
     {
 
     $this->token = self::OPENPAREN;
     }
-    public function yy_r1_17($yy_subpatterns)
+    function yy_r1_17($yy_subpatterns)
     {
 
     $this->token = self::FULLSTOP;
     }
-    public function yy_r1_18($yy_subpatterns)
+    function yy_r1_18($yy_subpatterns)
     {
 
     $this->token = self::BACKREFERENCE;
     }
-    public function yy_r1_19($yy_subpatterns)
+    function yy_r1_19($yy_subpatterns)
     {
 
     $this->token = self::CONTROLCHAR;
     }
-    public function yy_r1_20($yy_subpatterns)
+    function yy_r1_20($yy_subpatterns)
     {
 
     $this->token = self::CONTROLCHAR;
     }
-    public function yy_r1_21($yy_subpatterns)
+    function yy_r1_21($yy_subpatterns)
     {
 
     $this->token = self::CONTROLCHAR;
     }
-    public function yy_r1_22($yy_subpatterns)
+    function yy_r1_22($yy_subpatterns)
     {
 
     $this->token = self::CONTROLCHAR;
     }
-    public function yy_r1_23($yy_subpatterns)
+    function yy_r1_23($yy_subpatterns)
     {
+
     return false;
     }
 
-    public function yylex2()
+
+    function yylex2()
     {
         $tokenMap = array (
               1 => 0,
@@ -438,7 +443,6 @@ class PHP_LexerGenerator_Regex_Lexer
                         // accept
                         $this->N += strlen($this->value);
                         $this->line += substr_count($this->value, "\n");
-
                         return true;
                     }
                 }
@@ -451,27 +455,28 @@ class PHP_LexerGenerator_Regex_Lexer
 
     } // end function
 
+
     const CHARACTERCLASSSTART = 2;
-    public function yy_r2_1($yy_subpatterns)
+    function yy_r2_1($yy_subpatterns)
     {
 
     $this->token = self::NEGATE;
     }
-    public function yy_r2_2($yy_subpatterns)
+    function yy_r2_2($yy_subpatterns)
     {
 
     $this->yybegin(self::CHARACTERCLASS);
     $this->token = self::TEXT;
     }
-    public function yy_r2_3($yy_subpatterns)
+    function yy_r2_3($yy_subpatterns)
     {
 
     $this->yybegin(self::CHARACTERCLASS);
-
     return true;
     }
 
-    public function yylex3()
+
+    function yylex3()
     {
         $tokenMap = array (
               1 => 0,
@@ -583,7 +588,6 @@ class PHP_LexerGenerator_Regex_Lexer
                         // accept
                         $this->N += strlen($this->value);
                         $this->line += substr_count($this->value, "\n");
-
                         return true;
                     }
                 }
@@ -596,65 +600,68 @@ class PHP_LexerGenerator_Regex_Lexer
 
     } // end function
 
+
     const CHARACTERCLASS = 3;
-    public function yy_r3_1($yy_subpatterns)
+    function yy_r3_1($yy_subpatterns)
     {
 
     $this->token = self::ESCAPEDBACKSLASH;
     }
-    public function yy_r3_2($yy_subpatterns)
+    function yy_r3_2($yy_subpatterns)
     {
 
     $this->yybegin(self::INITIAL);
     $this->token = self::CLOSECHARCLASS;
     }
-    public function yy_r3_3($yy_subpatterns)
+    function yy_r3_3($yy_subpatterns)
     {
 
     $this->token = self::TEXT;
     }
-    public function yy_r3_4($yy_subpatterns)
+    function yy_r3_4($yy_subpatterns)
     {
 
     $this->token = self::TEXT;
     }
-    public function yy_r3_5($yy_subpatterns)
+    function yy_r3_5($yy_subpatterns)
     {
 
     $this->token = self::COULDBEBACKREF;
     }
-    public function yy_r3_6($yy_subpatterns)
+    function yy_r3_6($yy_subpatterns)
     {
 
     $this->token = self::BACKREFERENCE;
     }
-    public function yy_r3_7($yy_subpatterns)
+    function yy_r3_7($yy_subpatterns)
     {
 
     $this->token = self::TEXT;
     }
-    public function yy_r3_8($yy_subpatterns)
+    function yy_r3_8($yy_subpatterns)
     {
 
     $this->token = self::HYPHEN;
     $this->yybegin(self::RANGE);
     }
-    public function yy_r3_9($yy_subpatterns)
+    function yy_r3_9($yy_subpatterns)
     {
 
     $this->token = self::TEXT;
     }
-    public function yy_r3_10($yy_subpatterns)
+    function yy_r3_10($yy_subpatterns)
     {
+
     return false; // ignore escaping of normal text
     }
-    public function yy_r3_11($yy_subpatterns)
+    function yy_r3_11($yy_subpatterns)
     {
 
     $this->token = self::TEXT;
     }
 
-    public function yylex4()
+
+    function yylex4()
     {
         $tokenMap = array (
               1 => 0,
@@ -758,7 +765,6 @@ class PHP_LexerGenerator_Regex_Lexer
                         // accept
                         $this->N += strlen($this->value);
                         $this->line += substr_count($this->value, "\n");
-
                         return true;
                     }
                 }
@@ -771,46 +777,49 @@ class PHP_LexerGenerator_Regex_Lexer
 
     } // end function
 
+
     const RANGE = 4;
-    public function yy_r4_1($yy_subpatterns)
+    function yy_r4_1($yy_subpatterns)
     {
 
     $this->token = self::ESCAPEDBACKSLASH;
     }
-    public function yy_r4_2($yy_subpatterns)
+    function yy_r4_2($yy_subpatterns)
     {
 
     $this->token = self::TEXT;
     $this->yybegin(self::CHARACTERCLASS);
     }
-    public function yy_r4_3($yy_subpatterns)
+    function yy_r4_3($yy_subpatterns)
     {
 
     $this->token = self::TEXT;
     $this->yybegin(self::CHARACTERCLASS);
     }
-    public function yy_r4_4($yy_subpatterns)
+    function yy_r4_4($yy_subpatterns)
     {
 
     $this->token = self::COULDBEBACKREF;
     }
-    public function yy_r4_5($yy_subpatterns)
+    function yy_r4_5($yy_subpatterns)
     {
 
     $this->token = self::BACKREFERENCE;
     }
-    public function yy_r4_6($yy_subpatterns)
+    function yy_r4_6($yy_subpatterns)
     {
 
     $this->token = self::TEXT;
     $this->yybegin(self::CHARACTERCLASS);
     }
-    public function yy_r4_7($yy_subpatterns)
+    function yy_r4_7($yy_subpatterns)
     {
+
     return false; // ignore escaping of normal text
     }
 
-    public function yylex5()
+
+    function yylex5()
     {
         $tokenMap = array (
               1 => 0,
@@ -926,7 +935,6 @@ class PHP_LexerGenerator_Regex_Lexer
                         // accept
                         $this->N += strlen($this->value);
                         $this->line += substr_count($this->value, "\n");
-
                         return true;
                     }
                 }
@@ -939,81 +947,81 @@ class PHP_LexerGenerator_Regex_Lexer
 
     } // end function
 
+
     const ASSERTION = 5;
-    public function yy_r5_1($yy_subpatterns)
+    function yy_r5_1($yy_subpatterns)
     {
 
     $this->token = self::INTERNALOPTIONS;
     }
-    public function yy_r5_2($yy_subpatterns)
+    function yy_r5_2($yy_subpatterns)
     {
 
     $this->token = self::COLON;
     $this->yybegin(self::INITIAL);
     }
-    public function yy_r5_3($yy_subpatterns)
+    function yy_r5_3($yy_subpatterns)
     {
 
     $this->token = self::CLOSEPAREN;
     $this->yybegin(self::INITIAL);
     }
-    public function yy_r5_4($yy_subpatterns)
+    function yy_r5_4($yy_subpatterns)
     {
 
     $this->token = self::PATTERNNAME;
     $this->yybegin(self::INITIAL);
     }
-    public function yy_r5_5($yy_subpatterns)
+    function yy_r5_5($yy_subpatterns)
     {
 
     $this->token = self::POSITIVELOOKBEHIND;
     $this->yybegin(self::INITIAL);
     }
-    public function yy_r5_6($yy_subpatterns)
+    function yy_r5_6($yy_subpatterns)
     {
 
     $this->token = self::NEGATIVELOOKBEHIND;
     $this->yybegin(self::INITIAL);
     }
-    public function yy_r5_7($yy_subpatterns)
+    function yy_r5_7($yy_subpatterns)
     {
 
     $this->token = self::POSITIVELOOKAHEAD;
     $this->yybegin(self::INITIAL);
     }
-    public function yy_r5_8($yy_subpatterns)
+    function yy_r5_8($yy_subpatterns)
     {
 
     $this->token = self::NEGATIVELOOKAHEAD;
     $this->yybegin(self::INITIAL);
     }
-    public function yy_r5_9($yy_subpatterns)
+    function yy_r5_9($yy_subpatterns)
     {
 
     $this->token = self::ONCEONLY;
     $this->yybegin(self::INITIAL);
     }
-    public function yy_r5_10($yy_subpatterns)
+    function yy_r5_10($yy_subpatterns)
     {
 
     $this->token = self::OPENASSERTION;
     }
-    public function yy_r5_11($yy_subpatterns)
+    function yy_r5_11($yy_subpatterns)
     {
 
     $this->token = self::COMMENT;
     $this->yybegin(self::INITIAL);
     }
-    public function yy_r5_12($yy_subpatterns)
+    function yy_r5_12($yy_subpatterns)
     {
 
     $this->token = self::RECUR;
     }
-    public function yy_r5_13($yy_subpatterns)
+    function yy_r5_13($yy_subpatterns)
     {
 
     $this->yybegin(self::INITIAL);
-
     return true;
     }
 

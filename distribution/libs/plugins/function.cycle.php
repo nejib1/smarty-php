@@ -1,13 +1,15 @@
 <?php
+
 /**
  * Smarty plugin
  *
- * @package    Smarty
+ * @package Smarty
  * @subpackage PluginsFunction
  */
 
 /**
  * Smarty {cycle} function plugin
+ *
  * Type:     function<br>
  * Name:     cycle<br>
  * Date:     May 3, 2002<br>
@@ -30,22 +32,18 @@
  * {cycle name=row}
  * </pre>
  *
- * @link     http://www.smarty.net/manual/en/language.function.cycle.php {cycle}
- *           (Smarty online manual)
- * @author   Monte Ohrt <monte at ohrt dot com>
- * @author   credit to Mark Priatel <mpriatel@rogers.com>
- * @author   credit to Gerard <gerard@interfold.com>
- * @author   credit to Jason Sweat <jsweat_php@yahoo.com>
+ * @link http://www.smarty.net/docs/en/language.function.cycle.tpl {cycle}
+ *       (Smarty online manual)
+ * @author Monte Ohrt <monte at ohrt dot com>
+ * @author credit to Mark Priatel <mpriatel@rogers.com>
+ * @author credit to Gerard <gerard@interfold.com>
+ * @author credit to Jason Sweat <jsweat_php@yahoo.com>
  * @version  1.3
- *
  * @param array                    $params   parameters
  * @param Smarty_Internal_Template $template template object
- *
  * @return string|null
  */
-
-function smarty_function_cycle($params, $template)
-{
+function smarty_function_cycle($params, $template) {
     static $cycle_vars;
 
     $name = (empty($params['name'])) ? 'default' : $params['name'];
@@ -56,13 +54,11 @@ function smarty_function_cycle($params, $template)
     if (!isset($params['values'])) {
         if (!isset($cycle_vars[$name]['values'])) {
             trigger_error("cycle: missing 'values' parameter");
-
             return;
         }
     } else {
         if (isset($cycle_vars[$name]['values'])
-            && $cycle_vars[$name]['values'] != $params['values']
-        ) {
+                && $cycle_vars[$name]['values'] != $params['values']) {
             $cycle_vars[$name]['index'] = 0;
         }
         $cycle_vars[$name]['values'] = $params['values'];
@@ -99,7 +95,7 @@ function smarty_function_cycle($params, $template)
         if ($cycle_vars[$name]['index'] >= count($cycle_array) - 1) {
             $cycle_vars[$name]['index'] = 0;
         } else {
-            $cycle_vars[$name]['index'] ++;
+            $cycle_vars[$name]['index']++;
         }
     }
 

@@ -6,8 +6,8 @@
 * @author Rodney Rehm
 */
 
-class IndexedFileResourceTests extends PHPUnit_Framework_TestCase
-{
+
+class IndexedFileResourceTests extends PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
@@ -18,7 +18,7 @@ class IndexedFileResourceTests extends PHPUnit_Framework_TestCase
         $this->smarty->addTemplateDir(dirname(__FILE__) .'/templates_4', 'foo');
     }
 
-    static function isRunnable()
+    public static function isRunnable()
     {
         return true;
     }
@@ -29,7 +29,6 @@ class IndexedFileResourceTests extends PHPUnit_Framework_TestCase
         if (DS == "\\") {
             $path = str_replace( "\\", "/", $path );
         }
-
         return $path;
     }
 
@@ -54,6 +53,7 @@ class IndexedFileResourceTests extends PHPUnit_Framework_TestCase
         $this->assertEquals('./templates_4/dirname.tpl', $this->relative($tpl->source->filepath));
     }
 
+
     public function testFetch()
     {
         $tpl = $this->smarty->createTemplate('dirname.tpl');
@@ -75,25 +75,29 @@ class IndexedFileResourceTests extends PHPUnit_Framework_TestCase
         $this->assertEquals('templates_4', $this->smarty->fetch($tpl));
     }
 
+
     public function testGetCompiledFilepath()
     {
         $tpl = $this->smarty->createTemplate('[foo]dirname.tpl');
-        $expected = './templates_c/'.sha1(realpath($this->smarty->getTemplateDir('foo').'dirname.tpl')).'.file.dirname.tpl.php';
+        $expected = './templates_c/'.sha1($this->smarty->getTemplateDir('foo').'dirname.tpl').'_0.file.dirname.tpl.php';
         $this->assertEquals($expected, $this->relative($tpl->compiled->filepath));
     }
+
 
     public function testGetCachedFilepath()
     {
         $this->smarty->caching = true;
         $this->smarty->cache_lifetime = 1000;
         $tpl = $this->smarty->createTemplate('[foo]dirname.tpl');
-        $expected = './cache/'.sha1(realpath($this->smarty->getTemplateDir('foo').'dirname.tpl')).'.dirname.tpl.php';
+	    $expected = './cache/^^'.sha1($this->smarty->getTemplateDir('foo').'dirname.tpl').'.dirname.tpl.php';
         $this->assertEquals($expected, $this->relative($tpl->cached->filepath));
     }
 
     public function testFinalCleanup()
     {
         $this->smarty->clearCompiledTemplate();
-      $this->smarty->clearAllCache();
+	  $this->smarty->clearAllCache();
     }
 }
+
+?>

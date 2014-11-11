@@ -9,15 +9,14 @@
 /**
  * class for security test
  */
-class CommentsTests extends PHPUnit_Framework_TestCase
-{
+class CommentsTests extends PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
         SmartyTests::init();
     }
 
-    static function isRunnable()
+    public static function isRunnable()
     {
         return true;
     }
@@ -73,4 +72,11 @@ class CommentsTests extends PHPUnit_Framework_TestCase
         $tpl = $this->smarty->createTemplate("eval:I{* multi \nline *}\nJ");
         $this->assertEquals("I\nJ", $this->smarty->fetch($tpl));
     }
+    public function testTextComment5()
+    {
+        $tpl = $this->smarty->createTemplate("eval:D{* comment *--}\n{* comment *}E\nF");
+        $this->assertEquals("DE\nF", $this->smarty->fetch($tpl));
+    }
 }
+
+?>

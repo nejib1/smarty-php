@@ -6,11 +6,11 @@
 * @author Uwe Tews
 */
 
+
 /**
 * class for string resource tests
 */
-class StringResourceTests extends PHPUnit_Framework_TestCase
-{
+class StringResourceTests extends PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
@@ -19,7 +19,7 @@ class StringResourceTests extends PHPUnit_Framework_TestCase
         SmartyTests::init();
     }
 
-    static function isRunnable()
+    public static function isRunnable()
     {
         return true;
     }
@@ -30,7 +30,6 @@ class StringResourceTests extends PHPUnit_Framework_TestCase
         if (DS == "\\") {
             $path = str_replace( "\\", "/", $path );
         }
-
         return $path;
     }
 
@@ -92,7 +91,7 @@ class StringResourceTests extends PHPUnit_Framework_TestCase
     public function testMustCompile()
     {
         $tpl = $this->smarty->createTemplate('string:hello world');
-        $this->assertTrue($tpl->mustCompile());
+        $this->assertTrue($tpl->mustCompile);
     }
     /**
     * test getCompiledFilepath
@@ -100,7 +99,7 @@ class StringResourceTests extends PHPUnit_Framework_TestCase
     public function testGetCompiledFilepath()
     {
         $tpl = $this->smarty->createTemplate('string:hello world');
-        $this->assertEquals('./templates_c/2aae6c35c94fcfb415dbe95f408b9ce91ee846ed.string.php', $this->relative($tpl->compiled->filepath));
+        $this->assertEquals('./templates_c/2aae6c35c94fcfb415dbe95f408b9ce91ee846ed_0.string.php', $this->relative($tpl->compiled->filepath));
     }
     /**
     * test getCompiledTimestamp
@@ -124,7 +123,7 @@ class StringResourceTests extends PHPUnit_Framework_TestCase
     public function testWriteCachedContent()
     {
         $tpl = $this->smarty->createTemplate('string:hello world');
-        $this->assertFalse($tpl->writeCachedContent('dummy'));
+        $this->assertTrue($tpl->cached->write($tpl, 'dummy'));
     }
     /**
     * test isCached
@@ -166,3 +165,5 @@ class StringResourceTests extends PHPUnit_Framework_TestCase
         $this->assertEquals('foobar', $tpl->fetch());
     }
 }
+
+?>

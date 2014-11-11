@@ -1,32 +1,29 @@
 <?php
+
 /**
  * Smarty plugin
  *
- * @package    Smarty
+ * @package Smarty
  * @subpackage PluginsFunction
  */
 
 /**
  * Smarty {fetch} plugin
+ *
  * Type:     function<br>
  * Name:     fetch<br>
  * Purpose:  fetch file, web or ftp data and display results
  *
- * @link   http://www.smarty.net/manual/en/language.function.fetch.php {fetch}
- *         (Smarty online manual)
+ * @link http://www.smarty.net/docs/en/language.function.fetch.tpl {fetch}
+ *       (Smarty online manual)
  * @author Monte Ohrt <monte at ohrt dot com>
- *
  * @param array                    $params   parameters
  * @param Smarty_Internal_Template $template template object
- *
- * @throws SmartyException
  * @return string|null if the assign parameter is passed, Smarty assigns the result to a template variable
  */
-function smarty_function_fetch($params, $template)
-{
+function smarty_function_fetch($params, $template) {
     if (empty($params['file'])) {
         trigger_error("[plugin] fetch parameter 'file' cannot be empty", E_USER_NOTICE);
-
         return;
     }
 
@@ -42,7 +39,7 @@ function smarty_function_fetch($params, $template)
 
     if (isset($template->smarty->security_policy)) {
         if ($protocol) {
-            // remote resource (or php stream, â€¦)
+            // remote resource (or php stream, …)
             if (!$template->smarty->security_policy->isTrustedUri($params['file'])) {
                 return;
             }
@@ -65,7 +62,7 @@ function smarty_function_fetch($params, $template)
             $agent = "Smarty Template Engine " . Smarty::SMARTY_VERSION;
             $referer = "";
             $uri = !empty($uri_parts['path']) ? $uri_parts['path'] : '/';
-            $uri .= !empty($uri_parts['query']) ? '?' . $uri_parts['query'] : '';
+            $uri .=!empty($uri_parts['query']) ? '?' . $uri_parts['query'] : '';
             $_is_proxy = false;
             if (empty($uri_parts['port'])) {
                 $port = 80;
@@ -104,7 +101,6 @@ function smarty_function_fetch($params, $template)
                         if (!empty($param_value)) {
                             if (!preg_match('![\w\d-]+: .+!', $param_value)) {
                                 trigger_error("[plugin] invalid header format '" . $param_value . "'", E_USER_NOTICE);
-
                                 return;
                             } else {
                                 $extra_headers[] = $param_value;
@@ -121,7 +117,6 @@ function smarty_function_fetch($params, $template)
                             $proxy_port = (int) $param_value;
                         } else {
                             trigger_error("[plugin] invalid value for attribute '" . $param_key . "'", E_USER_NOTICE);
-
                             return;
                         }
                         break;
@@ -140,13 +135,11 @@ function smarty_function_fetch($params, $template)
                             $timeout = (int) $param_value;
                         } else {
                             trigger_error("[plugin] invalid value for attribute '" . $param_key . "'", E_USER_NOTICE);
-
                             return;
                         }
                         break;
                     default:
                         trigger_error("[plugin] unrecognized attribute '" . $param_key . "'", E_USER_NOTICE);
-
                         return;
                 }
             }
@@ -159,7 +152,6 @@ function smarty_function_fetch($params, $template)
 
             if (!$fp) {
                 trigger_error("[plugin] unable to fetch: $errstr ($errno)", E_USER_NOTICE);
-
                 return;
             } else {
                 if ($_is_proxy) {
@@ -203,7 +195,6 @@ function smarty_function_fetch($params, $template)
             }
         } else {
             trigger_error("[plugin fetch] unable to parse URL, check syntax", E_USER_NOTICE);
-
             return;
         }
     } else {

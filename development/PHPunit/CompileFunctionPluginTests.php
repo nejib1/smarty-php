@@ -9,15 +9,14 @@
 /**
 * class for function plugin tests
 */
-class CompileFunctionPluginTests extends PHPUnit_Framework_TestCase
-{
+class CompileFunctionPluginTests extends PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
         SmartyTests::init();
     }
 
-    static function isRunnable()
+    public static function isRunnable()
     {
         return true;
     }
@@ -47,7 +46,16 @@ class CompileFunctionPluginTests extends PHPUnit_Framework_TestCase
         $this->smarty->registerPlugin(Smarty::PLUGIN_FUNCTION,'plugintest', 'myplugintest');
         $tpl = $this->smarty->createTemplate('eval:{plugintest foo=bar}', $this->smarty);
         $this->assertEquals("plugin test called bar", $this->smarty->fetch($tpl));
-    }
+          }
+    /**
+    * test function plugin with standard parameter
+    */
+    public function testFunctionPluginParRegisteredFunction()
+    {
+        $this->smarty->registerPlugin(Smarty::PLUGIN_FUNCTION,'plugintest', 'mypluginparametertest');
+        $tpl = $this->smarty->createTemplate('eval:{plugintest bar=buh}', $this->smarty);
+        $this->assertEquals("plugin test called buh foo", $this->smarty->fetch($tpl));
+     }
 
     /**
     * test muiltiline tags
@@ -56,8 +64,14 @@ class CompileFunctionPluginTests extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals("10", $this->smarty->fetch("eval:{counter\n\tstart=10}"));
     }
+
 }
         function myplugintest($params, &$smarty)
         {
             return "plugin test called $params[foo]";
         }
+        function mypluginparametertest(Smarty_Internal_Template $obj, $bar, $foo = 'foo')
+        {
+            return "plugin test called $bar $foo";
+        }
+?>

@@ -9,8 +9,7 @@
 /**
 * class for cache resource file tests
 */
-class CacheResourceFileTests extends PHPUnit_Framework_TestCase
-{
+class CacheResourceFileTests extends PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
@@ -20,7 +19,7 @@ class CacheResourceFileTests extends PHPUnit_Framework_TestCase
         SmartyTests::init();
     }
 
-    static function isRunnable()
+    public static function isRunnable()
     {
         return true;
     }
@@ -31,7 +30,6 @@ class CacheResourceFileTests extends PHPUnit_Framework_TestCase
         if (DS == "\\") {
             $path = str_replace( "\\", "/", $path );
         }
-
         return $path;
     }
 
@@ -44,13 +42,11 @@ class CacheResourceFileTests extends PHPUnit_Framework_TestCase
         $this->smarty->cache_lifetime = 1000;
         $this->smarty->use_sub_dirs = true;
         $tpl = $this->smarty->createTemplate('helloworld.tpl');
-        $sha1 = sha1(realpath($this->smarty->getTemplateDir(0) . 'helloworld.tpl'));
-        $expected = sprintf('./cache/%s/%s/%s/%s.helloworld.tpl.php',
-            substr($sha1, 0, 2),
-            substr($sha1, 2, 2),
-            substr($sha1, 4, 2),
-            $sha1
-        );
+	    $sha1 = sha1($this->smarty->getTemplateDir(0) . 'helloworld.tpl');
+	    $expected = sprintf('./cache/%s/%s/^^helloworld.tpl.php',
+		    substr($sha1, 0, 2),
+		    $sha1
+		);
         $this->assertEquals($expected, $this->relative($tpl->cached->filepath));
     }
     /**
@@ -62,13 +58,15 @@ class CacheResourceFileTests extends PHPUnit_Framework_TestCase
         $this->smarty->cache_lifetime = 1000;
         $this->smarty->use_sub_dirs = true;
         $tpl = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar');
-        $sha1 = sha1(realpath($this->smarty->getTemplateDir(0) . 'helloworld.tpl'));
-        $expected = sprintf('./cache/foo/bar/%s/%s/%s/%s.helloworld.tpl.php',
-            substr($sha1, 0, 2),
-            substr($sha1, 2, 2),
-            substr($sha1, 4, 2),
-            $sha1
-        );
+	    $sha1 = sha1($this->smarty->getTemplateDir(0) . 'helloworld.tpl');
+	    $md5 = md5('bar');
+	    $expected = sprintf('./cache/%s/%s/foo/%s/%s/%s/bar^^helloworld.tpl.php',
+		    substr($sha1, 0, 2),
+		    $sha1,
+		    substr($md5, 0, 2),
+		    substr($md5, 2, 2),
+		    substr($md5, 4, 2)
+		);
         $this->assertEquals($expected, $this->relative($tpl->cached->filepath));
     }
     /**
@@ -80,13 +78,11 @@ class CacheResourceFileTests extends PHPUnit_Framework_TestCase
         $this->smarty->cache_lifetime = 1000;
         $this->smarty->use_sub_dirs = true;
         $tpl = $this->smarty->createTemplate('helloworld.tpl', null, 'blar');
-        $sha1 = sha1(realpath($this->smarty->getTemplateDir(0) . 'helloworld.tpl'));
-        $expected = sprintf('./cache/blar/%s/%s/%s/%s.helloworld.tpl.php',
-            substr($sha1, 0, 2),
-            substr($sha1, 2, 2),
-            substr($sha1, 4, 2),
-            $sha1
-        );
+	    $sha1 = sha1($this->smarty->getTemplateDir(0) . 'helloworld.tpl');
+	    $expected = sprintf('./cache/%s/%s/^blar^helloworld.tpl.php',
+		    substr($sha1, 0, 2),
+		    $sha1
+		);
         $this->assertEquals($expected, $this->relative($tpl->cached->filepath));
     }
     /**
@@ -98,13 +94,15 @@ class CacheResourceFileTests extends PHPUnit_Framework_TestCase
         $this->smarty->cache_lifetime = 1000;
         $this->smarty->use_sub_dirs = true;
         $tpl = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar');
-        $sha1 = sha1(realpath($this->smarty->getTemplateDir(0) . 'helloworld.tpl'));
-        $expected = sprintf('./cache/foo/bar/blar/%s/%s/%s/%s.helloworld.tpl.php',
-            substr($sha1, 0, 2),
-            substr($sha1, 2, 2),
-            substr($sha1, 4, 2),
-            $sha1
-        );
+    	$sha1 = sha1($this->smarty->getTemplateDir(0) . 'helloworld.tpl');
+	    $md5 = md5('bar');
+	    $expected = sprintf('./cache/%s/%s/foo/%s/%s/%s/bar^blar^helloworld.tpl.php',
+		    substr($sha1, 0, 2),
+		    $sha1,
+		    substr($md5, 0, 2),
+		    substr($md5, 2, 2),
+		    substr($md5, 4, 2)
+		);
         $this->assertEquals($expected, $this->relative($tpl->cached->filepath));
     }
     /**
@@ -117,7 +115,7 @@ class CacheResourceFileTests extends PHPUnit_Framework_TestCase
         $this->smarty->cache_lifetime = 1000;
         $this->smarty->use_sub_dirs = true;
         $tpl = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar');
-        $tpl->writeCachedContent('hello world');
+        $tpl->fetch();
         $this->assertTrue(file_exists($tpl->cached->filepath));
         $this->assertEquals(1, $this->smarty->clearAllCache());
     }
@@ -131,11 +129,11 @@ class CacheResourceFileTests extends PHPUnit_Framework_TestCase
         $this->smarty->clearAllCache();
         $this->smarty->use_sub_dirs = false;
         $tpl = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar');
-        $tpl->writeCachedContent('hello world');
+        $tpl->fetch();
         $tpl2 = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar2', 'blar');
-        $tpl2->writeCachedContent('hello world');
+        $tpl2->fetch();
         $tpl3 = $this->smarty->createTemplate('helloworld2.tpl', 'foo|bar', 'blar');
-        $tpl3->writeCachedContent('hello world');
+        $tpl3->fetch();
         $this->assertTrue(file_exists($tpl->cached->filepath));
         $this->assertTrue(file_exists($tpl2->cached->filepath));
         $this->assertTrue(file_exists($tpl3->cached->filepath));
@@ -151,11 +149,11 @@ class CacheResourceFileTests extends PHPUnit_Framework_TestCase
         $this->smartyBC->clearAllCache();
         $this->smartyBC->use_sub_dirs = false;
         $tpl = $this->smartyBC->createTemplate('helloworld.tpl', 'foo|bar', 'blar');
-        $tpl->writeCachedContent('hello world');
+        $tpl->fetch();
         $tpl2 = $this->smartyBC->createTemplate('helloworld.tpl', 'foo|bar2', 'blar');
-        $tpl2->writeCachedContent('hello world');
+        $tpl2->fetch();
         $tpl3 = $this->smartyBC->createTemplate('helloworld2.tpl', 'foo|bar', 'blar');
-        $tpl3->writeCachedContent('hello world');
+        $tpl3->fetch();
         $this->assertTrue(file_exists($tpl->cached->filepath));
         $this->assertTrue(file_exists($tpl2->cached->filepath));
         $this->assertTrue(file_exists($tpl3->cached->filepath));
@@ -172,11 +170,11 @@ class CacheResourceFileTests extends PHPUnit_Framework_TestCase
         $this->smartyBC->clearAllCache();
         $this->smartyBC->use_sub_dirs = true;
         $tpl = $this->smartyBC->createTemplate('helloworld.tpl', 'foo|bar', 'blar');
-        $tpl->writeCachedContent('hello world');
+        $tpl->fetch();
         $tpl2 = $this->smartyBC->createTemplate('helloworld.tpl', 'foo|bar2', 'blar');
-        $tpl2->writeCachedContent('hello world');
+        $tpl2->fetch();
         $tpl3 = $this->smartyBC->createTemplate('helloworld2.tpl', 'foo|bar', 'blar');
-        $tpl3->writeCachedContent('hello world');
+        $tpl3->fetch();
         $this->assertTrue(file_exists($tpl->cached->filepath));
         $this->assertTrue(file_exists($tpl2->cached->filepath));
         $this->assertTrue(file_exists($tpl3->cached->filepath));
@@ -193,11 +191,11 @@ class CacheResourceFileTests extends PHPUnit_Framework_TestCase
         $this->smarty->use_sub_dirs = false;
         $this->smarty->clearAllCache();
         $tpl = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar');
-        $tpl->writeCachedContent('hello world');
+        $tpl->fetch();
         $tpl2 = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar2', 'blar');
-        $tpl2->writeCachedContent('hello world');
+        $tpl2->fetch();
         $tpl3 = $this->smarty->createTemplate('helloworld2.tpl', 'foo|bar', 'blar');
-        $tpl3->writeCachedContent('hello world');
+        $tpl3->fetch();
         $this->assertTrue(file_exists($tpl->cached->filepath));
         $this->assertTrue(file_exists($tpl2->cached->filepath));
         $this->assertTrue(file_exists($tpl3->cached->filepath));
@@ -213,11 +211,11 @@ class CacheResourceFileTests extends PHPUnit_Framework_TestCase
         $this->smartyBC->use_sub_dirs = false;
         $this->smartyBC->clearAllCache();
         $tpl = $this->smartyBC->createTemplate('helloworld.tpl', 'foo|bar', 'blar');
-        $tpl->writeCachedContent('hello world');
+        $tpl->fetch();
         $tpl2 = $this->smartyBC->createTemplate('helloworld.tpl', 'foo|bar2', 'blar');
-        $tpl2->writeCachedContent('hello world');
+        $tpl2->fetch();
         $tpl3 = $this->smartyBC->createTemplate('helloworld2.tpl', 'foo|bar', 'blar');
-        $tpl3->writeCachedContent('hello world');
+        $tpl3->fetch();
         $this->assertTrue(file_exists($tpl->cached->filepath));
         $this->assertTrue(file_exists($tpl2->cached->filepath));
         $this->assertTrue(file_exists($tpl3->cached->filepath));
@@ -234,11 +232,11 @@ class CacheResourceFileTests extends PHPUnit_Framework_TestCase
         $this->smarty->use_sub_dirs = true;
         $this->smarty->clearAllCache();
         $tpl = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar');
-        $tpl->writeCachedContent('hello world');
+        $tpl->fetch();
         $tpl2 = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar2', 'blar');
-        $tpl2->writeCachedContent('hello world');
+        $tpl2->fetch();
         $tpl3 = $this->smarty->createTemplate('helloworld2.tpl', 'foo|bar', 'blar');
-        $tpl3->writeCachedContent('hello world');
+        $tpl3->fetch();
         $this->assertTrue(file_exists($tpl->cached->filepath));
         $this->assertTrue(file_exists($tpl2->cached->filepath));
         $this->assertTrue(file_exists($tpl3->cached->filepath));
@@ -254,11 +252,11 @@ class CacheResourceFileTests extends PHPUnit_Framework_TestCase
         $this->smarty->clearAllCache();
         $this->smarty->use_sub_dirs = false;
         $tpl = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar');
-        $tpl->writeCachedContent('hello world');
+        $tpl->fetch();
         $tpl2 = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar2');
-        $tpl2->writeCachedContent('hello world');
+        $tpl2->fetch();
         $tpl3 = $this->smarty->createTemplate('helloworld2.tpl', 'foo|bar', 'blar');
-        $tpl3->writeCachedContent('hello world');
+        $tpl3->fetch();
         $this->assertTrue(file_exists($tpl->cached->filepath));
         $this->assertTrue(file_exists($tpl2->cached->filepath));
         $this->assertTrue(file_exists($tpl3->cached->filepath));
@@ -274,11 +272,11 @@ class CacheResourceFileTests extends PHPUnit_Framework_TestCase
         $this->smarty->clearAllCache();
         $this->smarty->use_sub_dirs = true;
         $tpl = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar');
-        $tpl->writeCachedContent('hello world');
+        $tpl->fetch();
         $tpl2 = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar2');
-        $tpl2->writeCachedContent('hello world');
+        $tpl2->fetch();
         $tpl3 = $this->smarty->createTemplate('helloworld2.tpl', 'foo|bar', 'blar');
-        $tpl3->writeCachedContent('hello world');
+        $tpl3->fetch();
         $this->assertTrue(file_exists($tpl->cached->filepath));
         $this->assertTrue(file_exists($tpl2->cached->filepath));
         $this->assertTrue(file_exists($tpl3->cached->filepath));
@@ -294,11 +292,11 @@ class CacheResourceFileTests extends PHPUnit_Framework_TestCase
         $this->smarty->use_sub_dirs = false;
         $this->smarty->clearAllCache();
         $tpl = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar');
-        $tpl->writeCachedContent('hello world');
+        $tpl->fetch();
         $tpl2 = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar2');
-        $tpl2->writeCachedContent('hello world');
+        $tpl2->fetch();
         $tpl3 = $this->smarty->createTemplate('helloworld2.tpl', 'foo|bar', 'blar');
-        $tpl3->writeCachedContent('hello world');
+        $tpl3->fetch();
         $this->assertTrue(file_exists($tpl->cached->filepath));
         $this->assertTrue(file_exists($tpl2->cached->filepath));
         $this->assertTrue(file_exists($tpl3->cached->filepath));
@@ -314,11 +312,11 @@ class CacheResourceFileTests extends PHPUnit_Framework_TestCase
         $this->smarty->use_sub_dirs = true;
         $this->smarty->clearAllCache();
         $tpl = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar');
-        $tpl->writeCachedContent('hello world');
+        $tpl->fetch();
         $tpl2 = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar2');
-        $tpl2->writeCachedContent('hello world');
+        $tpl2->fetch();
         $tpl3 = $this->smarty->createTemplate('helloworld2.tpl', 'foo|bar', 'blar');
-        $tpl3->writeCachedContent('hello world');
+        $tpl3->fetch();
         $this->assertTrue(file_exists($tpl->cached->filepath));
         $this->assertTrue(file_exists($tpl2->cached->filepath));
         $this->assertTrue(file_exists($tpl3->cached->filepath));
@@ -334,11 +332,11 @@ class CacheResourceFileTests extends PHPUnit_Framework_TestCase
         $this->smarty->use_sub_dirs = false;
         $this->smarty->clearAllCache();
         $tpl = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar');
-        $tpl->writeCachedContent('hello world');
+        $tpl->fetch();
         $tpl2 = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar2');
-        $tpl2->writeCachedContent('hello world');
+        $tpl2->fetch();
         $tpl3 = $this->smarty->createTemplate('helloworld2.tpl', 'foo|bar', 'blar');
-        $tpl3->writeCachedContent('hello world');
+        $tpl3->fetch();
         $this->assertTrue(file_exists($tpl->cached->filepath));
         $this->assertTrue(file_exists($tpl2->cached->filepath));
         $this->assertTrue(file_exists($tpl3->cached->filepath));
@@ -354,11 +352,11 @@ class CacheResourceFileTests extends PHPUnit_Framework_TestCase
         $this->smarty->use_sub_dirs = true;
         $this->smarty->clearAllCache();
         $tpl = $this->smarty->createTemplate('helloworld.tpl', 'foo|bar', 'blar');
-        $tpl->writeCachedContent('hello world');
+        $tpl->fetch();
         $tpl2 = $this->smarty->createTemplate('helloworld.tpl',  'foo|bar', 'blar2');
-        $tpl2->writeCachedContent('hello world');
+        $tpl2->fetch();
         $tpl3 = $this->smarty->createTemplate('helloworld2.tpl', 'foo|bar', 'blar');
-        $tpl3->writeCachedContent('hello world');
+        $tpl3->fetch();
         $this->assertTrue(file_exists($tpl->cached->filepath));
         $this->assertTrue(file_exists($tpl2->cached->filepath));
         $this->assertTrue(file_exists($tpl3->cached->filepath));
@@ -374,13 +372,13 @@ class CacheResourceFileTests extends PHPUnit_Framework_TestCase
         $this->smarty->use_sub_dirs = false;
         $this->smarty->clearAllCache();
         $tpl = $this->smarty->createTemplate('helloworld.tpl');
-        $tpl->writeCachedContent('hello world');
+        $tpl->fetch();
         $tpl2 = $this->smarty->createTemplate('helloworld.tpl',null,'bar');
-        $tpl2->writeCachedContent('hello world');
+        $tpl2->fetch();
         $tpl3 = $this->smarty->createTemplate('helloworld.tpl','buh|blar');
-        $tpl3->writeCachedContent('hello world');
+        $tpl3->fetch();
         $tpl4 = $this->smarty->createTemplate('helloworld2.tpl');
-        $tpl4->writeCachedContent('hello world');
+        $tpl4->fetch();
         $this->assertTrue(file_exists($tpl->cached->filepath));
         $this->assertTrue(file_exists($tpl2->cached->filepath));
         $this->assertTrue(file_exists($tpl3->cached->filepath));
@@ -398,13 +396,13 @@ class CacheResourceFileTests extends PHPUnit_Framework_TestCase
         $this->smarty->use_sub_dirs = true;
         $this->smarty->clearAllCache();
         $tpl = $this->smarty->createTemplate('helloworld.tpl');
-        $tpl->writeCachedContent('hello world');
+        $tpl->fetch();
         $tpl2 = $this->smarty->createTemplate('helloworld.tpl',null,'bar');
-        $tpl2->writeCachedContent('hello world');
+        $tpl2->fetch();
         $tpl3 = $this->smarty->createTemplate('helloworld.tpl','buh|blar');
-        $tpl3->writeCachedContent('hello world');
+        $tpl3->fetch();
         $tpl4 = $this->smarty->createTemplate('helloworld2.tpl');
-        $tpl4->writeCachedContent('hello world');
+        $tpl4->fetch();
         $this->assertTrue(file_exists($tpl->cached->filepath));
         $this->assertTrue(file_exists($tpl2->cached->filepath));
         $this->assertTrue(file_exists($tpl3->cached->filepath));
@@ -448,3 +446,5 @@ class CacheResourceFileTests extends PHPUnit_Framework_TestCase
         $this->smarty->clearAllCache();
     }
 }
+
+?>

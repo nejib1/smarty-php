@@ -1,26 +1,25 @@
 <?php
 /**
 * Smarty PHPunit tests of modifier
-*
+* 
 * @package PHPunit
-* @author Rodney Rehm
+* @author Rodney Rehm 
 */
 
 /**
 * class for modifier tests
 */
-class PluginModifierSpacifyTests extends PHPUnit_Framework_TestCase
-{
+class PluginModifierSpacifyTests extends PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->smarty = SmartyTests::$smarty;
         SmartyTests::init();
-    }
+    } 
 
-    static function isRunnable()
+    public static function isRunnable()
     {
         return true;
-    }
+    } 
 
     public function testDefault()
     {
@@ -36,4 +35,6 @@ class PluginModifierSpacifyTests extends PHPUnit_Framework_TestCase
         $this->assertEquals($result, $this->smarty->fetch($tpl));
     }
 
-}
+} 
+
+?>

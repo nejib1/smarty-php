@@ -9,15 +9,14 @@
 /**
 * class SmartyBC class tests
 */
-class SmartyBcTests extends PHPUnit_Framework_TestCase
-{
+class SmartyBcTests extends PHPUnit_Framework_TestCase {
     public function setUp()
     {
         SmartyTests::init();
         $this->smartyBC = SmartyTests::$smartyBC;
     }
 
-    static function isRunnable()
+    public static function isRunnable()
     {
         return true;
     }
@@ -31,3 +30,5 @@ class SmartyBcTests extends PHPUnit_Framework_TestCase
     }
 
 }
+
+?>
